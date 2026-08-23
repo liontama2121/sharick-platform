@@ -23,7 +23,7 @@ export default function Checklist({ section }) {
         {items.map((it, i) => (
           <li key={i}>
             <button
-              onClick={() => setChecked({ ...checked, [i]: !checked[i] })}
+              onClick={() => setChecked((prev) => ({ ...prev, [i]: !prev[i] }))}
               aria-pressed={!!checked[i]}
               className={`flex w-full items-center gap-2.5 rounded-lg border px-3 py-1.5
                 text-left text-[0.9rem] transition-colors

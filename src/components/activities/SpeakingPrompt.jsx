@@ -25,8 +25,9 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
   useEffect(() => () => clipUrl && URL.revokeObjectURL(clipUrl), [clipUrl])
 
   const toggle = (i) => {
+    // Actualización funcional: dos toques seguidos no deben pisarse.
     const next = { ...checked, [i]: !checked[i] }
-    setChecked(next)
+    setChecked((prev) => ({ ...prev, [i]: !prev[i] }))
     if (next[i]) celebrate(nodes.current[i])
     if (phrases.every((_, k) => next[k])) {
       setToast({ msg: '¡Practicaste todas las frases!', type: 'success' })
