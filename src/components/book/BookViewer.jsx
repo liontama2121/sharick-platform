@@ -82,6 +82,9 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
   const [box, setBox] = useState(null)
   const [showHint, setShowHint] = useState(false)
   const [wrapMax, setWrapMax] = useState(1120)
+  // En vertical el libro muestra UNA hoja: cambia el tamaño, los límites y el
+  // salto de las esquinas. La librería avisa con onChangeOrientation.
+  const [portrait, setPortrait] = useState(false)
 
   // Espejo del índice para leerlo dentro de efectos sin meterlo en sus deps.
   const indexRef = useRef(index)
@@ -91,7 +94,6 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
   }, [])
 
   const api = useCallback(() => bookRef.current?.pageFlip?.(), [])
-  const isPortrait = useCallback(() => api()?.getOrientation?.() === 'portrait', [api])
 
   /* El libro tiene que caber entero en la ventana: si sobresale por abajo, las
      esquinas inferiores —la forma principal de pasar página— quedan fuera de
@@ -99,14 +101,15 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
      (relación de hoja 520x720). */
   useEffect(() => {
     const calc = () => {
-      const avail = window.innerHeight - 190
-      const byHeight = Math.round((2 * 520 * Math.max(avail, 340)) / 720)
-      setWrapMax(Math.min(1120, Math.max(520, byHeight)))
+      const avail = Math.max(window.innerHeight - 190, 340)
+      const sheets = portrait ? 1 : 2
+      const byHeight = Math.round((sheets * 520 * avail) / 720)
+      setWrapMax(Math.min(1120, Math.max(portrait ? 260 : 520, byHeight)))
     }
     calc()
     window.addEventListener('resize', calc)
     return () => window.removeEventListener('resize', calc)
-  }, [])
+  }, [portrait])
 
   /* Ruta -> libro. Depende SOLO de targetIndex: si también dependiera de
      `index`, nuestro propio avance por esquina remontaría el libro a mitad de
@@ -117,14 +120,33 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
     honored.current = targetIndex
 
     const i = indexRef.current
-    const visible = i === 0 || isPortrait() ? [i] : [i, i + 1]
+    const visible = i === 0 || portrait ? [i] : [i, i + 1]
     if (visible.includes(targetIndex)) return
 
-    const start = isPortrait() ? targetIndex : spreadStart(targetIndex)
+    const start = portrait ? targetIndex : spreadStart(targetIndex)
     setMount((m) => ({ key: m.key + 1, start }))
     setSheet(start)
     setReady(false)
-  }, [targetIndex, isPortrait, setSheet])
+  }, [targetIndex, portrait, setSheet])
+
+  /* Al girar el teléfono cambia cuántas hojas se ven, y el índice interno de
+     la librería deja de coincidir con el nuestro (la ruta decía 10 y el lector
+     mostraba la 12). Remontamos en la hoja correcta para realinear. */
+  const prevPortrait = useRef(null)
+  useEffect(() => {
+    if (prevPortrait.current === null) {
+      prevPortrait.current = portrait
+      return
+    }
+    if (prevPortrait.current === portrait) return
+    prevPortrait.current = portrait
+
+    const start = portrait ? targetIndex : spreadStart(targetIndex)
+    honored.current = targetIndex
+    setMount((m) => ({ key: m.key + 1, start }))
+    setSheet(start)
+    setReady(false)
+  }, [portrait, targetIndex, setSheet])
 
   // Las esquinas se posicionan sobre el libro real, no sobre el contenedor.
   useEffect(() => {
@@ -170,7 +192,7 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
       ro.disconnect()
       window.removeEventListener('resize', schedule)
     }
-  }, [ready, mount.key])
+  }, [ready, mount.key, portrait])
 
   // Hint de primera vez
   useEffect(() => {
@@ -200,7 +222,6 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
       if (!fp) return
       dismissHint()
 
-      const portrait = isPortrait()
       const next = portrait
         ? Math.min(Math.max(index + dir, 0), lastChild)
         : dir > 0
@@ -220,7 +241,7 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
       const entry = pages[next - 1]
       if (entry && entry.page.id !== currentPageId) onPageChange?.(entry.page.id)
     },
-    [api, dismissHint, isPortrait, index, lastChild, lastStart, pages, currentPageId, onPageChange, setSheet],
+    [api, dismissHint, portrait, index, lastChild, lastStart, pages, currentPageId, onPageChange, setSheet],
   )
 
   const flipNext = useCallback(() => step(1), [step])
@@ -244,7 +265,7 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
 
   const current = pages[index - 1]
   const atStart = index === 0
-  const atEnd = index >= lastStart && index !== 0
+  const atEnd = portrait ? index >= lastChild : index >= lastStart && index !== 0
 
   const cornerStyle = (vertical, horizontal) => {
     if (!box) return { display: 'none' }
@@ -286,7 +307,11 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
           disableFlipByClick
           clickEventForward={false}
           flippingTime={800}
-          onInit={() => setReady(true)}
+          onInit={() => {
+            setReady(true)
+            setPortrait(api()?.getOrientation?.() === 'portrait')
+          }}
+          onChangeOrientation={(e) => setPortrait(e?.data === 'portrait')}
           className="mx-auto shadow-page"
           style={{}}
         >
