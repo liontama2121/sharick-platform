@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+/* ── Paleta oficial "¡Hola English! Colombia Edition" ───────────────── */
+@theme {
+  --color-col-blue: #003DA5;
+  --color-col-yellow: #FFD100;
+  --color-col-red: #CE1126;
+  --color-cream: #faf8f4;
+  --color-ink: #2c2c2c;
+
+  --font-title: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-body: "Sora", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 4px 20px rgba(0, 61, 165, 0.08);
+  --shadow-lift: 0 12px 32px rgba(0, 61, 165, 0.16);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-title);
+    color: var(--color-col-blue);
+    line-height: 1.15;
+  }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+  h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; }
+  h3 { font-size: 1.3rem; font-weight: 600; }
+
+  :focus-visible {
+    outline: 3px solid var(--color-col-blue);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer utilities {
+  /* Título con gradiente tricolor */
+  .text-tricolor {
+    background: linear-gradient(135deg, #003DA5 0%, #FFD100 50%, #CE1126 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card-soft {
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Estado inicial de los elementos animados por usePageAnimation:
+     evita el "flash" antes de que anime.js tome el control. */
+  .anim-hidden { opacity: 0; }
+
+  .scrollbar-slim::-webkit-scrollbar { width: 8px; }
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    background: rgba(0, 61, 165, 0.18);
+    border-radius: 999px;
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .anim-hidden { opacity: 1 !important; }
+}

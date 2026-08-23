@@ -1,0 +1,32 @@
+{
+  "books": [
+    {
+      "id": "english-a1",
+      "name": "¡Hola English! A1",
+      "language": "English",
+      "level": "A1",
+      "flag": "🇨🇴",
+      "available": true,
+      "description": "Inglés básico con la cultura colombiana como protagonista.",
+      "gradient": "from-[#FFD100] to-[#CE1126]"
+    },
+    {
+      "id": "portuguese-a1",
+      "name": "Olá Português! A1",
+      "language": "Português",
+      "level": "A1",
+      "flag": "🇧🇷",
+      "available": false,
+      "gradient": "from-green-600 to-[#FFD100]"
+    },
+    {
+      "id": "spanish-a1",
+      "name": "¡Hola Español! A1",
+      "language": "Español",
+      "level": "A1",
+      "flag": "🇪🇸",
+      "available": false,
+      "gradient": "from-[#CE1126] to-[#FFD100]"
+    }
+  ]
+}
