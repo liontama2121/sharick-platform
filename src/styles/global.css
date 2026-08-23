@@ -1,78 +1,159 @@
 @import "tailwindcss";
 
-/* ── Paleta oficial "¡Hola English! Colombia Edition" ───────────────── */
+/* ═══════════════════════════════════════════════════════════════════════
+   SISTEMA EDITORIAL — libro impreso estilo National Geographic Learning
+   Paleta suave de acuarela. Los colores tricolor de Colombia viven solo
+   en la PORTADA del libro (ver tokens col-*), nunca en páginas interiores.
+   ═══════════════════════════════════════════════════════════════════════ */
 @theme {
-  --color-col-blue: #003DA5;
-  --color-col-yellow: #FFD100;
-  --color-col-red: #CE1126;
-  --color-cream: #faf8f4;
-  --color-ink: #2c2c2c;
+  /* Papel */
+  --color-paper: #f7f2e9;        /* fondo de página (cream cálido) */
+  --color-paper-edge: #ece3d4;   /* borde/sombra interior de la hoja */
+  --color-box: #f0e9db;          /* cajas de contenido (beige) */
 
-  --font-title: "Fredoka", ui-rounded, system-ui, sans-serif;
-  --font-body: "Sora", ui-sans-serif, system-ui, sans-serif;
+  /* Tinta */
+  --color-navy: #1b3a5c;         /* títulos serif */
+  --color-ink: #33302b;          /* cuerpo de texto */
+  --color-ink-soft: #6b655c;     /* texto secundario */
 
-  --shadow-soft: 0 4px 20px rgba(0, 61, 165, 0.08);
-  --shadow-lift: 0 12px 32px rgba(0, 61, 165, 0.16);
+  /* Acentos decorativos (NO usar como texto pequeño: bajo contraste) */
+  --color-coral: #e05a47;
+  --color-sage: #6b9080;
+  --color-gold: #e9b44c;
+
+  /* Variantes legibles de los acentos, para texto y fondos con texto */
+  --color-coral-ink: #b23a28;    /* labels UNIT/LESSON, números */
+  --color-sage-ink: #4f6f60;     /* labels EXERCISE/VOCABULARY */
+  --color-tip: #e4ede8;          /* fondo de la caja Cultural Tip */
+
+  /* Tricolor Colombia — SOLO portada y branding */
+  --color-col-blue: #003da5;
+  --color-col-yellow: #ffd100;
+  --color-col-red: #ce1126;
+
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-page: 0 18px 45px rgba(27, 58, 92, 0.18);
+  --shadow-soft: 0 2px 10px rgba(27, 58, 92, 0.07);
+  --shadow-lift: 0 10px 26px rgba(27, 58, 92, 0.16);
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 
   body {
-    background-color: var(--color-cream);
+    background-color: #efe7d8;
     color: var(--color-ink);
     font-family: var(--font-body);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
-    font-family: var(--font-title);
-    color: var(--color-col-blue);
-    line-height: 1.15;
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-navy);
+    font-weight: 700;
+    line-height: 1.12;
   }
-  h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
-  h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; }
-  h3 { font-size: 1.3rem; font-weight: 600; }
+  h1 {
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+    font-weight: 800;
+  }
+  h2 {
+    font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  }
+  h3 {
+    font-size: 1.15rem;
+  }
 
   :focus-visible {
-    outline: 3px solid var(--color-col-blue);
+    outline: 3px solid var(--color-navy);
     outline-offset: 2px;
     border-radius: 6px;
   }
 }
 
 @layer utilities {
-  /* Título con gradiente tricolor */
+  /* Label pequeño en mayúsculas: UNIT 1 · LESSON 2 · EXERCISE 3 */
+  .label-caps {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* Caja de contenido beige */
+  .box-beige {
+    background: var(--color-box);
+    border-radius: 12px;
+  }
+
+  /* Divisor de línea punteada entre secciones */
+  .divider-dotted {
+    height: 0;
+    border-top: 2px dotted color-mix(in srgb, var(--color-navy) 22%, transparent);
+  }
+
+  /* Línea para completar (input underline, sin caja) */
+  .rule-fill {
+    border: 0;
+    border-bottom: 2px solid color-mix(in srgb, var(--color-navy) 35%, transparent);
+    background: transparent;
+    border-radius: 0;
+  }
+  .rule-fill:focus {
+    outline: none;
+    border-bottom-color: var(--color-coral-ink);
+  }
+
+  /* Hoja de papel del libro */
+  .paper {
+    background-color: var(--color-paper);
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(233, 180, 76, 0.06), transparent 42%),
+      radial-gradient(circle at 88% 92%, rgba(107, 144, 128, 0.07), transparent 45%);
+  }
+
+  /* Portada: aquí sí vive el tricolor */
   .text-tricolor {
-    background: linear-gradient(135deg, #003DA5 0%, #FFD100 50%, #CE1126 100%);
+    background: linear-gradient(135deg, #003da5 0%, #ffd100 50%, #ce1126 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  .card-soft {
-    background: #ffffff;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-soft);
+  .scrollbar-slim::-webkit-scrollbar {
+    width: 7px;
   }
-
-  /* Estado inicial de los elementos animados por usePageAnimation:
-     evita el "flash" antes de que anime.js tome el control. */
-  .anim-hidden { opacity: 0; }
-
-  .scrollbar-slim::-webkit-scrollbar { width: 8px; }
   .scrollbar-slim::-webkit-scrollbar-thumb {
-    background: rgba(0, 61, 165, 0.18);
+    background: color-mix(in srgb, var(--color-navy) 18%, transparent);
     border-radius: 999px;
+  }
+  .scrollbar-slim::-webkit-scrollbar-track {
+    background: transparent;
   }
 }
 
-/* Respeta la preferencia de movimiento reducido */
+/* react-pageflip: la sombra del lomo la pintamos nosotros */
+.stf__parent {
+  margin: 0 auto;
+}
+.stf__item {
+  background: var(--color-paper);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .anim-hidden { opacity: 1 !important; }
 }

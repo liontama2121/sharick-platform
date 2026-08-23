@@ -4,8 +4,9 @@ import { animate } from 'animejs'
 import { books, getModules, moduleActivityIds, bookActivityIds } from '../../books'
 import { useProgress } from '../../hooks/useProgress'
 import ProgressBar from '../ui/ProgressBar'
+import SectionLabel from '../ui/SectionLabel'
 
-function SidebarLink({ to, children, onNavigate }) {
+function SidebarLink({ to, number, children, onNavigate }) {
   const ref = useRef(null)
   const move = (x) => {
     if (!ref.current) return
@@ -19,13 +20,14 @@ function SidebarLink({ to, children, onNavigate }) {
       onMouseEnter={() => move(6)}
       onMouseLeave={() => move(0)}
       className={({ isActive }) =>
-        `block rounded-xl px-3 py-2 text-sm transition-colors
-         ${isActive
-           ? 'bg-col-blue text-white font-title font-semibold'
-           : 'text-ink/75 hover:text-col-yellow hover:bg-col-blue/5'}`
+        `flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[0.82rem] transition-colors
+         ${isActive ? 'bg-navy text-white' : 'text-ink hover:bg-box'}`
       }
     >
-      {children}
+      {number != null && (
+        <span className="font-display text-[0.78rem] text-coral-ink">{number}</span>
+      )}
+      <span className="min-w-0 flex-1 truncate">{children}</span>
     </NavLink>
   )
 }
@@ -50,36 +52,43 @@ export default function Sidebar({ open, onClose }) {
 
   return (
     <>
-      {/* Overlay en mobile */}
       {open && (
         <button
-          aria-label="Cerrar menu"
+          aria-label="Cerrar menú"
           onClick={onClose}
-          className="fixed inset-0 z-30 bg-ink/30 lg:hidden"
+          className="fixed inset-0 z-30 bg-navy/25 xl:hidden"
         />
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[280px] flex-col overflow-y-auto
-          border-r border-col-blue/8 bg-white px-5 py-6 scrollbar-slim
-          transition-transform duration-300 lg:translate-x-0
+        className={`fixed inset-y-0 left-0 z-40 flex w-[260px] flex-col overflow-y-auto
+          border-r border-navy/10 bg-paper px-4 py-5 scrollbar-slim
+          transition-transform duration-300 xl:translate-x-0
           ${open ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <Link to="/" onClick={onClose} className="mb-6 flex items-center gap-2.5">
-          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFD100] to-[#CE1126] text-xl">
-            🇨🇴
+        <Link to="/" onClick={onClose} className="mb-5 flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-navy">
+            <span
+              aria-hidden="true"
+              className="h-full w-1.5 bg-[#003DA5]"
+              style={{
+                background: 'linear-gradient(180deg,#FFD100 0 33%,#003DA5 33% 66%,#CE1126 66%)',
+                width: '100%',
+              }}
+            />
           </span>
-          <div>
-            <p className="font-title text-base font-bold leading-tight text-col-blue">Sharick</p>
-            <p className="text-[11px] leading-tight text-ink/55">Plataforma de idiomas</p>
-          </div>
+          <span>
+            <span className="block font-display text-[1.05rem] leading-tight text-navy">Sharick</span>
+            <span className="block text-[0.7rem] leading-tight text-ink-soft">
+              Plataforma de idiomas
+            </span>
+          </span>
         </Link>
 
-        {/* Selector de libro */}
-        <p className="mb-1 font-title text-[11px] font-semibold uppercase tracking-wide text-ink/45">
+        <SectionLabel tone="sage" className="mb-1.5">
           Libro
-        </p>
-        <div className="mb-6 flex flex-col gap-1.5">
+        </SectionLabel>
+        <div className="mb-5 flex flex-col gap-1">
           {books.map((b) => {
             const active = b.id === bookId
             return b.available ? (
@@ -87,28 +96,27 @@ export default function Sidebar({ open, onClose }) {
                 key={b.id}
                 to={`/book/${b.id}`}
                 onClick={onClose}
-                className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors
-                  ${active ? 'bg-col-yellow/25 font-title font-semibold text-col-blue' : 'text-ink/70 hover:bg-col-blue/5'}`}
+                className={`rounded-lg px-2.5 py-1.5 text-[0.85rem] transition-colors
+                  ${active ? 'bg-box font-semibold text-navy' : 'text-ink hover:bg-box'}`}
               >
-                <span aria-hidden="true">{b.flag}</span> {b.name}
+                {b.name}
               </Link>
             ) : (
               <span
                 key={b.id}
                 title="Próximamente"
-                className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-ink/35"
+                className="rounded-lg px-2.5 py-1.5 text-[0.85rem] text-ink-soft/60"
               >
-                <span aria-hidden="true">{b.flag}</span> {b.name}
+                {b.name}
               </span>
             )
           })}
         </div>
 
-        {/* Modulos en acordeon */}
-        <p className="mb-1 font-title text-[11px] font-semibold uppercase tracking-wide text-ink/45">
-          Módulos
-        </p>
-        <nav className="mb-6 flex flex-col gap-1">
+        <SectionLabel tone="sage" className="mb-1.5">
+          Contenido
+        </SectionLabel>
+        <nav className="mb-5 flex flex-col gap-0.5">
           {modules.map((mod) => {
             const isOpen = openModules.has(mod.moduleId)
             const empty = !(mod.pages ?? []).length
@@ -120,36 +128,31 @@ export default function Sidebar({ open, onClose }) {
                   onClick={() => !empty && toggleModule(mod.moduleId)}
                   disabled={empty}
                   aria-expanded={isOpen}
-                  className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left
-                    font-title text-sm font-semibold transition-colors
-                    ${empty ? 'cursor-default text-ink/35' : 'text-col-blue hover:bg-col-blue/5'}`}
+                  className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left
+                    transition-colors
+                    ${empty ? 'cursor-default text-ink-soft/55' : 'text-navy hover:bg-box'}`}
                 >
-                  <span aria-hidden="true">{mod.icon}</span>
-                  <span className="flex-1 leading-tight">{mod.moduleName}</span>
+                  <span className="label-caps shrink-0 text-coral-ink">U{mod.moduleId}</span>
+                  <span className="min-w-0 flex-1 font-display text-[0.92rem] leading-tight">
+                    {mod.moduleName}
+                  </span>
                   {!empty && (
-                    <span className="text-[11px] font-medium text-ink/45">
+                    <span className="text-[0.7rem] text-ink-soft">
                       {modDone}/{modIds.length}
-                    </span>
-                  )}
-                  {!empty && (
-                    <span
-                      aria-hidden="true"
-                      className={`text-[10px] transition-transform ${isOpen ? 'rotate-90' : ''}`}
-                    >
-                      &#9654;
                     </span>
                   )}
                 </button>
 
                 {isOpen && !empty && (
-                  <div className="ml-3 mt-1 flex flex-col gap-0.5 border-l-2 border-col-yellow/50 pl-2">
+                  <div className="ml-3 mt-0.5 flex flex-col gap-0.5 border-l-2 border-gold/60 pl-2">
                     {mod.pages.map((p) => (
                       <SidebarLink
                         key={p.id}
                         to={`/book/${bookId}/topic/${p.id}`}
+                        number={p.pageNumber}
                         onNavigate={onClose}
                       >
-                        {p.title}
+                        {p.navTitle ?? p.title}
                       </SidebarLink>
                     ))}
                   </div>
@@ -159,9 +162,9 @@ export default function Sidebar({ open, onClose }) {
           })}
         </nav>
 
-        <div className="mt-auto rounded-2xl bg-col-blue/4 p-4">
+        <div className="mt-auto rounded-xl bg-box p-3.5">
           <ProgressBar value={pct} label="Tu progreso" />
-          <p className="mt-2 text-[11px] text-ink/55">
+          <p className="mt-1.5 text-[0.7rem] text-ink-soft">
             {doneCount} de {allIds.length} actividades
           </p>
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import ActivityShell from './ActivityShell'
+import ExerciseBlock from './ExerciseBlock'
 import AnalogClock from '../ui/AnalogClock'
 import SmartImage from '../ui/ImagePlaceholder'
 import FeedbackToast from '../ui/FeedbackToast'
@@ -39,77 +39,94 @@ export default function FillBubbles({ section, completed, score, onComplete }) {
     } else {
       setErrors((e) => e + 1)
       shake(el)
-      setToast({ msg: 'Mira bien la hora del reloj 🕐', type: 'error' })
+      setToast({ msg: 'Mira bien la hora del reloj.', type: 'error' })
     }
   }
 
   return (
     <>
-      <ActivityShell
-        icon="💬"
+      <ExerciseBlock
+        number={section.number}
         title={section.title}
         instructions={section.instructions}
         completed={completed}
         score={score}
         footer={
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="text-sm text-ink/60">
+          <span className="flex flex-wrap items-center justify-between gap-2">
+            <span>
               {Object.keys(filled).length} de {items.length} completados
             </span>
-            <Button variant="ghost" size="sm" onClick={() => { setFilled({}); setErrors(0) }}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setFilled({})
+                setErrors(0)
+              }}
+            >
               Reiniciar
             </Button>
-          </div>
+          </span>
         }
       >
-        <div ref={gridRef} className="grid gap-5 sm:grid-cols-2">
+        <div ref={gridRef} className="flex flex-col gap-3">
           {items.map((item, idx) => {
             const solved = filled[idx]
             return (
               <div
                 key={idx}
                 data-bubble
-                ref={(el) => { nodes.current[idx] = el }}
-                className={`anim-hidden rounded-2xl border-2 bg-white p-4 shadow-soft
-                  ${solved ? 'border-[#2f9e5f]' : 'border-col-blue/10'}`}
+                ref={(el) => {
+                  nodes.current[idx] = el
+                }}
+                className={`rounded-xl border p-3
+                  ${solved ? 'border-sage-ink/50 bg-tip' : 'border-navy/12 bg-white'}`}
               >
-                <div className="flex items-center gap-4">
-                  <AnalogClock time={item.clockTime} size={96} />
-                  <div className="h-20 flex-1 overflow-hidden rounded-xl">
-                    <SmartImage
-                      src={item.scene}
-                      alt={item.sceneLabel}
-                      emoji={item.emoji ?? '🇨🇴'}
-                      rounded="rounded-xl"
-                    />
+                <div className="flex items-center gap-3">
+                  <AnalogClock time={item.clockTime} size={64} showDigital={false} />
+                  <div className="min-w-0 flex-1">
+                    <p className="label-caps text-coral-ink">{item.clockTime}</p>
+                    {item.sceneLabel && (
+                      <p className="mt-0.5 text-[0.78rem] leading-snug text-ink-soft">
+                        {item.sceneLabel}
+                      </p>
+                    )}
                   </div>
+                  {item.scene && (
+                    <div className="hidden h-12 w-12 shrink-0 sm:block">
+                      <SmartImage
+                        src={item.scene}
+                        alt={item.sceneLabel}
+                        emoji={item.emoji ?? '🌿'}
+                        rounded="rounded-lg"
+                        compact
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Burbuja de diálogo */}
-                <div className="relative mt-5 rounded-2xl bg-col-yellow/22 px-4 py-3">
+                <div className="relative mt-3 rounded-xl bg-box px-3 py-2">
                   <span
-                    className="absolute -top-2 left-7 h-4 w-4 rotate-45 bg-col-yellow/22"
+                    className="absolute -top-1.5 left-6 h-3 w-3 rotate-45 bg-box"
                     aria-hidden="true"
                   />
                   {solved ? (
-                    <p className="font-title text-lg font-bold text-col-blue">{solved}!</p>
+                    <p className="font-display text-[1.05rem] text-navy">“{solved}!”</p>
                   ) : (
-                    <p className="font-title text-lg font-semibold text-ink/35">_______________</p>
-                  )}
-                  {item.sceneLabel && (
-                    <p className="mt-1 text-xs text-ink/60">{item.sceneLabel}</p>
+                    <p className="font-display text-[1.05rem] text-ink-soft/50">“___________”</p>
                   )}
                 </div>
 
                 {!solved && (
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="mt-2 flex flex-wrap gap-1.5">
                     {options.map((opt) => (
                       <button
                         key={opt}
                         onClick={() => answer(idx, opt)}
-                        className="rounded-full border-2 border-col-blue/15 bg-white px-3.5 py-1.5
-                          font-title text-sm font-semibold text-col-blue transition-colors
-                          hover:border-col-red hover:text-col-red"
+                        className="rounded-full border border-navy/15 bg-white px-3 py-1
+                          text-[0.78rem] font-semibold text-navy transition-colors
+                          hover:border-coral-ink hover:text-coral-ink"
                       >
                         {opt}
                       </button>
@@ -120,7 +137,7 @@ export default function FillBubbles({ section, completed, score, onComplete }) {
             )
           })}
         </div>
-      </ActivityShell>
+      </ExerciseBlock>
 
       <FeedbackToast message={toast?.msg} type={toast?.type} onHide={() => setToast(null)} />
     </>

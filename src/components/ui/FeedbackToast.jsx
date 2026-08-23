@@ -2,15 +2,12 @@ import { useEffect, useRef } from 'react'
 import { animate } from 'animejs'
 
 const STYLES = {
-  success: { bg: 'bg-[#e8f8ee]', border: 'border-[#2f9e5f]', text: 'text-[#1d6b3f]', icon: '🎉' },
-  error: { bg: 'bg-[#fdeaec]', border: 'border-col-red', text: 'text-col-red', icon: '🤔' },
-  info: { bg: 'bg-[#eaf1fb]', border: 'border-col-blue', text: 'text-col-blue', icon: '💡' },
+  success: { bg: 'bg-tip', border: 'border-sage-ink/50', text: 'text-sage-ink', icon: '✓' },
+  error: { bg: 'bg-[#fbeae6]', border: 'border-coral-ink/50', text: 'text-coral-ink', icon: '↻' },
+  info: { bg: 'bg-box', border: 'border-navy/25', text: 'text-navy', icon: '•' },
 }
 
-/**
- * Toast de feedback. Se muestra mientras `message` no sea nulo.
- * El padre decide cuándo limpiarlo (o usa autoHideMs).
- */
+/** Toast de feedback. Visible mientras `message` no sea nulo. */
 export default function FeedbackToast({ message, type = 'info', autoHideMs = 2600, onHide }) {
   const ref = useRef(null)
 
@@ -39,11 +36,13 @@ export default function FeedbackToast({ message, type = 'info', autoHideMs = 260
       ref={ref}
       role="status"
       aria-live="polite"
-      className={`pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2
-        rounded-full border-2 px-6 py-3 font-title font-semibold shadow-lift
+      className={`pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full
+        border px-5 py-2.5 font-body text-sm font-semibold shadow-lift
         ${s.bg} ${s.border} ${s.text}`}
     >
-      <span className="mr-2" aria-hidden="true">{s.icon}</span>
+      <span className="mr-2" aria-hidden="true">
+        {s.icon}
+      </span>
       {message}
     </div>
   )

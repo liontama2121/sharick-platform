@@ -22,8 +22,8 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
         role="img"
         aria-label={`Reloj marcando las ${time}`}
       >
-        <circle cx="60" cy="60" r={R + 6} fill="#ffffff" stroke="#003DA5" strokeWidth="3" />
-        <circle cx="60" cy="60" r={R + 6} fill="none" stroke="#FFD100" strokeWidth="1.5" opacity="0.7" />
+        <circle cx="60" cy="60" r={R + 6} fill="#ffffff" stroke="var(--color-navy)" strokeWidth="3" />
+        <circle cx="60" cy="60" r={R + 6} fill="none" stroke="var(--color-gold)" strokeWidth="1.5" opacity="0.7" />
 
         {ticks.map((i) => {
           const a = (i * 30 * Math.PI) / 180
@@ -36,7 +36,7 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
               y1={60 - inner * Math.cos(a)}
               x2={60 + outer * Math.sin(a)}
               y2={60 - outer * Math.cos(a)}
-              stroke="#2c2c2c"
+              stroke="var(--color-ink)"
               strokeWidth={i % 3 === 0 ? 3 : 1.5}
               strokeLinecap="round"
             />
@@ -54,8 +54,8 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
               textAnchor="middle"
               fontSize="13"
               fontWeight="700"
-              fontFamily="Fredoka, sans-serif"
-              fill="#003DA5"
+              fontFamily="Nunito Sans, sans-serif"
+              fill="var(--color-navy)"
             >
               {n}
             </text>
@@ -67,20 +67,20 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
           x1="60" y1="60"
           x2={60 + 24 * Math.sin((hourAngle * Math.PI) / 180)}
           y2={60 - 24 * Math.cos((hourAngle * Math.PI) / 180)}
-          stroke="#2c2c2c" strokeWidth="5" strokeLinecap="round"
+          stroke="var(--color-ink)" strokeWidth="5" strokeLinecap="round"
         />
         {/* manecilla de los minutos */}
         <line
           x1="60" y1="60"
           x2={60 + 36 * Math.sin((minuteAngle * Math.PI) / 180)}
           y2={60 - 36 * Math.cos((minuteAngle * Math.PI) / 180)}
-          stroke="#CE1126" strokeWidth="3.5" strokeLinecap="round"
+          stroke="var(--color-coral-ink)" strokeWidth="3.5" strokeLinecap="round"
         />
-        <circle cx="60" cy="60" r="4" fill="#003DA5" />
+        <circle cx="60" cy="60" r="4" fill="var(--color-navy)" />
       </svg>
 
       {showDigital && (
-        <span className="font-title text-sm font-semibold text-col-blue/70">{time}</span>
+        <span className="label-caps text-ink-soft">{time}</span>
       )}
     </div>
   )

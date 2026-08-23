@@ -1,18 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { popIn } from '../../hooks/useFeedback'
 import AudioPlayer from './AudioPlayer'
+import SectionLabel from '../ui/SectionLabel'
 
-const AVATAR_COLORS = ['bg-col-blue', 'bg-col-red', 'bg-col-yellow']
+const AVATAR_TONES = ['bg-navy text-white', 'bg-coral-ink text-white', 'bg-sage-ink text-white']
 
 function initials(name = '') {
   return name.trim().charAt(0).toUpperCase() || '?'
 }
 
-/**
- * Diálogo A/B/C con avatares y burbujas alternadas.
- * @param {{id,label,audio,characters,lines,context}} dialogue
- */
-export default function DialogueBlock({ dialogue, badge }) {
+/** Diálogo A/B/C con avatares y burbujas alternadas, en caja beige. */
+export default function DialogueBlock({ dialogue }) {
   const listRef = useRef(null)
   const characters = dialogue.characters ?? []
 
@@ -23,49 +21,34 @@ export default function DialogueBlock({ dialogue, badge }) {
   }, [dialogue.id])
 
   return (
-    <article className="card-soft overflow-hidden">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-col-blue/8 px-5 py-4">
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-col-yellow font-title text-lg font-bold text-ink">
-            {badge ?? dialogue.id}
-          </span>
-          <div>
-            <h3 className="text-base">{dialogue.label}</h3>
-            {dialogue.context && (
-              <p className="text-xs text-ink/55">{dialogue.context}</p>
-            )}
-          </div>
-        </div>
-        <AudioPlayer src={dialogue.audio} label={dialogue.label} />
+    <article className="box-beige px-4 py-3.5">
+      <header className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+        <span className="flex items-baseline gap-2">
+          <SectionLabel tone="coral">{dialogue.label}</SectionLabel>
+          {dialogue.context && (
+            <span className="text-[0.74rem] italic text-ink-soft">{dialogue.context}</span>
+          )}
+        </span>
+        <AudioPlayer src={dialogue.audio} label="Listen" compact />
       </header>
 
-      <div ref={listRef} className="flex flex-col gap-3 px-5 py-5">
+      <div ref={listRef} className="flex flex-col gap-2">
         {(dialogue.lines ?? []).map((line, i) => {
           const idx = Math.max(0, characters.indexOf(line.speaker))
-          const mine = idx % 2 === 0
           return (
-            <div
-              key={i}
-              data-bubble
-              className={`anim-hidden flex items-end gap-2.5 ${mine ? '' : 'flex-row-reverse'}`}
-            >
+            <div key={i} data-bubble className="flex items-start gap-2.5">
               <span
-                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full
-                  font-title text-sm font-bold text-white ${AVATAR_COLORS[idx % AVATAR_COLORS.length]}
-                  ${idx % AVATAR_COLORS.length === 2 ? 'text-ink' : ''}`}
+                className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full
+                  font-body text-[0.72rem] font-bold ${AVATAR_TONES[idx % AVATAR_TONES.length]}`}
                 title={line.speaker}
                 aria-hidden="true"
               >
                 {initials(line.speaker)}
               </span>
-              <div
-                className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
-                  mine ? 'rounded-bl-sm bg-col-blue/6' : 'rounded-br-sm bg-col-yellow/22'
-                }`}
-              >
-                <p className="font-title text-xs font-semibold text-col-blue/70">{line.speaker}</p>
-                <p className="text-[0.95rem] leading-relaxed">{line.text}</p>
-              </div>
+              <p className="text-[0.92rem] leading-relaxed">
+                <span className="font-semibold text-navy">{line.speaker}: </span>
+                {line.text}
+              </p>
             </div>
           )
         })}

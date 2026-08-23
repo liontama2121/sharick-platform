@@ -1,5 +1,6 @@
 import { books } from '../books'
 import BookCard from '../components/cards/BookCard'
+import Swirl from '../components/decor/Swirl'
 import { usePageAnimation } from '../hooks/usePageAnimation'
 
 export default function Home() {
@@ -7,18 +8,19 @@ export default function Home() {
 
   return (
     <div ref={ref}>
-      <section data-anim className="anim-hidden mb-10 text-center">
-        <p className="mb-2 font-title text-sm font-semibold uppercase tracking-wider text-col-red">
-          Profesora Sharick Prieto
-        </p>
-        <h1 className="text-tricolor mb-3">Libros interactivos de idiomas</h1>
-        <p className="mx-auto max-w-xl text-ink/70">
+      <section data-anim className="mb-10 text-center">
+        <p className="label-caps text-coral-ink">Profesora Sharick Prieto</p>
+        <h1 className="mt-2">Libros interactivos de idiomas</h1>
+        <div className="mt-2 flex justify-center">
+          <Swirl width={128} />
+        </div>
+        <p className="mx-auto mt-3 max-w-xl text-[0.95rem] leading-relaxed text-ink-soft">
           Elige tu libro y empieza a aprender. Cada lección mezcla lectura, audio,
           juegos y práctica oral con la cultura colombiana como protagonista.
         </p>
       </section>
 
-      <section data-anim className="anim-hidden">
+      <section data-anim>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {books.map((b) => (
             <BookCard key={b.id} book={b} />
@@ -28,12 +30,12 @@ export default function Home() {
 
       <section
         data-anim
-        className="anim-hidden mt-10 rounded-2xl bg-gradient-to-r from-[#003DA5]/6 to-[#FFD100]/16 p-6 text-center"
+        className="mt-10 rounded-2xl bg-tip px-6 py-5 text-center"
       >
-        <p className="font-title font-semibold text-col-blue">
+        <p className="font-display text-[1.05rem] text-navy">
           Tu progreso se guarda solo en este dispositivo
         </p>
-        <p className="mt-1 text-sm text-ink/65">
+        <p className="mt-1 text-[0.88rem] text-ink-soft">
           No necesitas cuenta ni internet permanente: puedes seguir donde quedaste.
         </p>
       </section>

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import ActivityShell from './ActivityShell'
+import ExerciseBlock from './ExerciseBlock'
 import AudioPlayer from '../media/AudioPlayer'
 import MultipleChoice from './MultipleChoice'
-import Button from '../ui/Button'
+import PillButton from '../ui/PillButton'
 import FeedbackToast from '../ui/FeedbackToast'
 
 export default function ListeningActivity({ section, completed, score, onComplete }) {
@@ -11,27 +11,27 @@ export default function ListeningActivity({ section, completed, score, onComplet
 
   return (
     <>
-      <ActivityShell
-        icon="🎧"
+      <ExerciseBlock
+        number={section.number}
         title={section.title}
         instructions={section.instructions}
         completed={completed}
         score={score}
       >
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <AudioPlayer src={section.audio} label={section.audioLabel ?? 'Listening'} />
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <AudioPlayer src={section.audio} label={section.audioLabel ?? 'Listen'} />
           {section.transcript && (
-            <Button variant="ghost" size="sm" onClick={() => setShowTranscript((v) => !v)}>
+            <PillButton icon="none" onClick={() => setShowTranscript((v) => !v)}>
               {showTranscript ? 'Ocultar transcripción' : 'Ver transcripción'}
-            </Button>
+            </PillButton>
           )}
         </div>
 
         {showTranscript && section.transcript && (
-          <div className="mb-6 rounded-2xl bg-col-blue/4 p-4">
+          <div className="mb-4 box-beige p-3.5">
             {section.transcript.map((line, i) => (
-              <p key={i} className="text-[0.95rem] leading-relaxed">
-                <span className="font-title font-semibold text-col-blue">{line.speaker}: </span>
+              <p key={i} className="text-[0.88rem] leading-relaxed">
+                <span className="font-semibold text-navy">{line.speaker}: </span>
                 {line.text}
               </p>
             ))}
@@ -46,7 +46,7 @@ export default function ListeningActivity({ section, completed, score, onComplet
             onComplete?.(s)
           }}
         />
-      </ActivityShell>
+      </ExerciseBlock>
 
       <FeedbackToast message={toast?.msg} type={toast?.type} onHide={() => setToast(null)} />
     </>

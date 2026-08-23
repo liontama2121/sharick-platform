@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
-import ActivityShell from './ActivityShell'
+import ExerciseBlock from './ExerciseBlock'
 import Button from '../ui/Button'
 import FeedbackToast from '../ui/FeedbackToast'
 import { popIn } from '../../hooks/useFeedback'
@@ -17,23 +17,26 @@ const PIPS = {
 
 function Dice({ value }) {
   return (
-    <svg width="120" height="120" viewBox="0 0 120 120" role="img" aria-label={`Dado: ${value}`}>
-      <rect x="6" y="6" width="108" height="108" rx="22" fill="#ffffff" stroke="#003DA5" strokeWidth="4" />
-      <rect x="6" y="6" width="108" height="108" rx="22" fill="url(#diceGlow)" opacity="0.18" />
-      <defs>
-        <linearGradient id="diceGlow" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FFD100" />
-          <stop offset="100%" stopColor="#CE1126" />
-        </linearGradient>
-      </defs>
+    <svg width="104" height="104" viewBox="0 0 120 120" role="img" aria-label={`Dado: ${value}`}>
+      <rect
+        x="7"
+        y="7"
+        width="106"
+        height="106"
+        rx="22"
+        fill="#fff"
+        stroke="var(--color-navy)"
+        strokeWidth="3"
+      />
+      <rect x="7" y="7" width="106" height="106" rx="22" fill="var(--color-gold)" opacity=".1" />
       {(PIPS[value] ?? []).map(([col, row], i) => (
-        <circle key={i} cx={col * 30} cy={row * 30} r="9" fill="#CE1126" />
+        <circle key={i} cx={col * 30} cy={row * 30} r="8.5" fill="var(--color-coral-ink)" />
       ))}
     </svg>
   )
 }
 
-/** "1-2" -> [1,2] */
+/** "1-2" -> incluye n */
 function inRange(key, n) {
   const [a, b] = key.split('-').map(Number)
   return n >= a && n <= b
@@ -42,8 +45,8 @@ function inRange(key, n) {
 export default function DiceGame({ section, completed, score, onComplete }) {
   const ranges = section.ranges ?? {}
   const [value, setValue] = useState(1)
-  const [current, setCurrent] = useState(null)   // clave del rango actual
-  const [seen, setSeen] = useState([])           // rangos ya practicados
+  const [current, setCurrent] = useState(null)
+  const [seen, setSeen] = useState([])
   const [rolling, setRolling] = useState(false)
   const [toast, setToast] = useState(null)
 
@@ -63,8 +66,6 @@ export default function DiceGame({ section, completed, score, onComplete }) {
     setCurrent(null)
 
     const result = 1 + Math.floor(Math.random() * 6)
-
-    // ruleta visual mientras gira
     const spin = setInterval(() => setValue(1 + Math.floor(Math.random() * 6)), 90)
 
     if (diceRef.current) {
@@ -87,7 +88,7 @@ export default function DiceGame({ section, completed, score, onComplete }) {
         const nextSeen = [...seen, key]
         setSeen(nextSeen)
         if (nextSeen.length === rangeKeys.length) {
-          setToast({ msg: '¡Practicaste las 3 formas de responder! 🎲', type: 'success' })
+          setToast({ msg: '¡Practicaste las 3 formas de responder!', type: 'success' })
           onComplete?.(100)
         }
       }
@@ -98,67 +99,67 @@ export default function DiceGame({ section, completed, score, onComplete }) {
 
   return (
     <>
-      <ActivityShell
-        icon="🎲"
+      <ExerciseBlock
+        number={section.number}
         title={section.title}
         instructions={section.instructions}
         completed={completed}
         score={score}
         footer={
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="text-sm text-ink/60">
+          <span className="flex flex-wrap items-center justify-between gap-2">
+            <span>
               Respuestas practicadas: {seen.length} de {rangeKeys.length}
             </span>
-            <div className="flex gap-1.5">
+            <span className="flex gap-1">
               {rangeKeys.map((k) => (
                 <span
                   key={k}
                   title={ranges[k].label}
-                  className={`h-2.5 w-8 rounded-full ${seen.includes(k) ? 'bg-col-red' : 'bg-col-blue/15'}`}
+                  className={`h-2 w-7 rounded-full ${seen.includes(k) ? 'bg-coral-ink' : 'bg-navy/12'}`}
                 />
               ))}
-            </div>
-          </div>
+            </span>
+          </span>
         }
       >
-        <div className="grid items-center gap-8 sm:grid-cols-[auto_1fr]">
-          <div className="flex flex-col items-center gap-4">
-            <div ref={diceRef}><Dice value={value} /></div>
-            <Button onClick={roll} disabled={rolling}>
+        <div className="box-beige grid grid-cols-[auto_1fr] items-center gap-4 p-3.5">
+          <div className="flex flex-col items-center gap-3">
+            <div ref={diceRef}>
+              <Dice value={value} />
+            </div>
+            <Button onClick={roll} disabled={rolling} size="sm">
               {rolling ? 'Rodando…' : '🎲 ¡Lanza el dado!'}
             </Button>
           </div>
 
-          <div ref={phrasesRef} className="min-h-[180px]">
+          <div ref={phrasesRef} className="min-h-[150px]">
             {!active && !rolling && (
-              <p className="text-ink/55">
+              <p className="text-[0.9rem] text-ink-soft">
                 Lanza el dado y responde <em>“How are you?”</em> con las frases que te toquen.
               </p>
             )}
             {active && (
               <>
-                <p className="mb-1 font-title text-sm font-semibold text-col-blue/70">
-                  Salió {value} → responde así:
-                </p>
-                <h4 className="mb-4 font-title text-2xl font-bold text-col-red">{active.label}</h4>
-                <ul className="flex flex-col gap-2.5">
+                <p className="label-caps text-sage-ink">Salió {value}</p>
+                <h3 className="mb-2.5">{active.label}</h3>
+                <ul className="flex flex-col gap-1.5">
                   {active.phrases.map((p, i) => (
                     <li
                       key={i}
                       data-bubble
-                      className="anim-hidden relative rounded-2xl rounded-bl-sm bg-col-yellow/25 px-4 py-3
-                        font-title text-lg font-semibold"
+                      className="rounded-xl border border-navy/12 bg-white px-3 py-2
+                        font-display text-[1.05rem] text-navy"
                     >
                       “{p}”
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-sm text-ink/55">Dilas en voz alta 🗣️</p>
+                <p className="mt-2 text-[0.8rem] italic text-ink-soft">Dilas en voz alta.</p>
               </>
             )}
           </div>
         </div>
-      </ActivityShell>
+      </ExerciseBlock>
 
       <FeedbackToast message={toast?.msg} type={toast?.type} onHide={() => setToast(null)} />
     </>

@@ -29,10 +29,28 @@ export function shake(el) {
   })
 }
 
-/** Pop-in de burbujas / frases: scale [0.8, 1] + fade, stagger 120ms. */
+/**
+ * Pop-in de burbujas / frases: scale [0.8, 1] + fade, stagger 120ms.
+ * Igual que usePageAnimation, el estado inicial se aplica inline y no con
+ * una clase: React lo restauraría en cada re-render.
+ */
 export function popIn(targets, delay = 120) {
-  if (!targets || reduced()) return
-  animate(targets, {
+  if (!targets) return
+  const list = Array.from(targets)
+  if (!list.length) return
+
+  if (reduced()) {
+    list.forEach((el) => {
+      el.style.opacity = '1'
+    })
+    return
+  }
+
+  list.forEach((el) => {
+    el.style.opacity = '0'
+  })
+
+  animate(list, {
     scale: [0.8, 1],
     opacity: [0, 1],
     duration: 400,

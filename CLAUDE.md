@@ -23,234 +23,224 @@ Contendrá múltiples libros digitales interactivos: **Inglés A1** (primero), l
 | Tailwind CSS | v4 | Estilos utility-first |
 | Anime.js | v4 (`animejs`) | TODAS las animaciones |
 | React Router | v7 | Navegación SPA |
+| react-pageflip | v2 | Pasada de página del libro |
 | localStorage | nativo | Progreso del estudiante (sin backend) |
 
 **NO usar:** Redux, styled-components, CSS modules, Framer Motion, jQuery, Bootstrap.
 
 ### Build & Deploy
-- Build output: `dist/`
-- Deploy: Cloudflare Pages (repo conectado, branch `main`, build command `npm run build`, output `dist`)
-- Electron se agrega en FASE FINAL. `vite.config.js` ya usa `base: './'` para rutas relativas.
+- Build output: `dist/` · Deploy: Cloudflare Pages (branch `main`, build `npm run build`, output `dist`)
+- Electron en FASE FINAL. `vite.config.js` ya usa `base: './'`.
 
 ### Decisiones de implementación (ya tomadas)
-- **Tailwind v4 sin `tailwind.config.js`:** v4 es CSS-first. La paleta, las fuentes y las sombras
-  se declaran con `@theme` en `src/styles/global.css`. No crear `tailwind.config.js`.
-- **Pesos de fuente:** usar `font-medium` / `font-semibold` / `font-bold`.
+- **Tailwind v4 sin `tailwind.config.js`:** v4 es CSS-first. Paleta, fuentes y sombras se
+  declaran con `@theme` en `src/styles/global.css`. No crear `tailwind.config.js`.
+- **Pesos de fuente:** `font-medium` / `font-semibold` / `font-bold`.
   Tailwind v4 NO genera utilidades numéricas tipo `font-600`.
-- **HashRouter:** las rutas usan `#/` para que funcionen igual en Cloudflare Pages,
-  dentro de un iframe y en Electron (`file://`) sin configurar rewrites.
+- **HashRouter:** rutas con `#/` para que el mismo build sirva en Cloudflare Pages,
+  dentro de un iframe y en Electron (`file://`) sin rewrites.
+- **Nada de estado inicial oculto por clase CSS.** Las animaciones de entrada aplican
+  `opacity` como **estilo inline** desde `usePageAnimation` / `popIn`. Motivo: react-pageflip
+  provoca re-renders y React restauraría una clase `.anim-hidden`, dejando la hoja invisible.
+- **Ancho de página fijo:** dentro del libro la hoja mide ~460–520px pase lo que pase, así que
+  los breakpoints de viewport (`sm:`, `lg:`) NO sirven para el contenido de la página.
+  Todas las rejillas internas van a **una sola columna** (excepto el vocabulario, a 2).
 
 ---
 
-## 🎨 SISTEMA DE DISEÑO — "¡Hola English! Colombia Edition"
+## 🎨 SISTEMA DE DISEÑO — LIBRO EDITORIAL IMPRESO
 
-Estilo inspirado en los libros educativos ¡Hola English!: **minimalista, elegante, cálido, lúdico**. NADA de fondos oscuros. NADA de glassmorphism oscuro. Este proyecto es LUZ, CALIDEZ y COLOR COLOMBIANO.
+Referencia: libro educativo impreso profesional estilo **National Geographic Learning / Cambridge**.
+Minimalista, cálido, acuarela. Doble página con pasada real.
+El **tricolor de Colombia vive SOLO en la portada y el branding**, nunca en páginas interiores.
 
-### Paleta Oficial (tokens `@theme` en global.css)
+### Paleta (tokens `@theme` en global.css)
 
 ```css
---color-col-blue:   #003DA5;  /* Azul Colombia — títulos, headings, énfasis, sidebar activo */
---color-col-yellow: #FFD100;  /* Amarillo tricolor — acentos, highlights, hover, decorativos */
---color-col-red:    #CE1126;  /* Rojo tricolor — botones CTA, detalles importantes */
---color-cream:      #faf8f4;  /* Fondo principal cálido (body) */
---color-ink:        #2c2c2c;  /* Texto principal */
+/* Papel */
+--color-paper:     #F7F2E9;  /* fondo de la hoja */
+--color-box:       #F0E9DB;  /* cajas de contenido (beige) */
+/* Tinta */
+--color-navy:      #1B3A5C;  /* títulos serif */
+--color-ink:       #33302B;  /* cuerpo */
+--color-ink-soft:  #6B655C;  /* secundario */
+/* Acentos DECORATIVOS — nunca como texto pequeño */
+--color-coral:     #E05A47;
+--color-sage:      #6B9080;
+--color-gold:      #E9B44C;
+/* Variantes legibles de esos acentos, para texto y fondos con texto */
+--color-coral-ink: #B23A28;  /* labels UNIT/LESSON, números, botones */
+--color-sage-ink:  #4F6F60;  /* labels EXERCISE/VOCABULARY */
+--color-tip:       #E4EDE8;  /* fondo Cultural Tip */
+/* Tricolor — SOLO portada */
+--color-col-blue: #003DA5; --color-col-yellow: #FFD100; --color-col-red: #CE1126;
 ```
 
-### Reglas de uso de color
-- Fondo body: `cream` (#faf8f4) SIEMPRE. Nunca blanco puro de fondo general.
-- Cards y elementos principales: blanco `#ffffff` con `shadow-soft` (`0 4px 20px rgba(0,61,165,0.08)`), o la utilidad `.card-soft`.
-- Títulos grandes: utilidad `.text-tricolor` (gradiente azul → amarillo → rojo con `bg-clip-text`).
-- Gradientes por módulo (definidos en `modules.json`, no en componentes):
-  - Module 1: `from-[#FFD100] to-[#CE1126]`
-  - Module 2: `from-[#003DA5] to-[#FFD100]`
-  - Module 3: `from-[#CE1126] to-[#003DA5]`
-  - Module 4: `from-[#FFD100] to-[#003DA5]`
+**Contraste (verificado sobre `paper` #F7F2E9):** navy 10.4:1 · ink 11.9:1 · coral-ink 5.3:1 ·
+sage-ink 5.0:1 · blanco sobre coral-ink 6.0:1. Coral, sage y gold "puros" están por debajo de
+4.5:1 — úsalos solo para rellenos, iconos y florituras, **jamás para texto**.
 
 ### Tipografía
-- **Títulos:** `Fredoka` (500/600/700) → utilidad `font-title`
-- **Cuerpo:** `Sora` (400/500/600) → utilidad `font-body` (por defecto en `body`)
-- Jerarquía: h1 ~2.5-3rem · h2 ~2rem · h3 ~1.3rem · body 1rem
+- **Títulos:** `Playfair Display` (700/800) → utilidad `font-display`, siempre en navy
+- **Cuerpo:** `Nunito Sans` (400/600/700) → `font-body` (por defecto en `body`)
+- **Labels:** utilidad `.label-caps` — sans bold, MAYÚSCULAS, `letter-spacing .16em`, 0.78rem
+  (UNIT 1 · LESSON 2 · VOCABULARY · EXERCISE 3 · CULTURAL TIP)
+- **Fredoka y Sora están eliminadas del proyecto.**
 
-### Layout Principal
+### Estructura de una página del libro (`BookPage` + `PageContent`)
+1. `UNIT X` en coral + título grande serif navy (`unitTitle`)
+2. `LESSON X` en coral + nombre de lección serif (`title`) + floritura dorada (`Swirl`)
+3. Cajas beige (`.box-beige`, radio 12px): vocabulario, diálogos, dado
+4. Botones pill blancos con icono (`PillButton`): 🔊 Listen · 🎙️ Record · ▶️ Practice
+5. Divisor `.divider-dotted` entre secciones
+6. `EXERCISE N` verde con hojita + instrucción bold + items numerados en coral,
+   con **líneas para completar** (`.rule-fill`, input underline, sin caja)
+7. `CULTURAL TIP`: caja verde salvia con solecito dorado y corazón
+8. Ilustración grande, radio 20px (placeholder mientras no exista el archivo)
+9. Pie: número en círculo coral + número **escrito en letras** (`numberToWords`),
+   a la izquierda en páginas pares y a la derecha en impares
+10. Decoración: flor tropical SVG en la esquina inferior + onda de acuarela
 
-```
-┌──────────────────────────────────────────────────────┐
-│ SIDEBAR (izq, 280px)     │   CONTENIDO PRINCIPAL     │
-│ • Logo plataforma        │ • Título grande (Fredoka) │
-│ • Selector de libro      │ • Descripción             │
-│ • Módulos (acordeón)     │ • Imagen grande           │
-│ • Temas por módulo       │ • Contenido de la página  │
-│ • Barra de progreso      │ • Actividades interactivas│
-│                          │ • Navegación ant/sig      │
-└──────────────────────────────────────────────────────┘
-```
-
-- Sidebar colapsable en mobile (hamburger en `Header.jsx`)
-- Bordes redondeados generosos: `rounded-2xl` en cards, `rounded-full` en pills/botones
-- Botones CTA: fondo `col-red`, texto blanco, `rounded-full`, hover con scale 1.05
-- Espaciado generoso: padding 40-50px en secciones desktop
+### Decoración SVG reutilizable (`src/components/decor/`)
+`Swirl` (floritura ~ dorada) · `Leaf` (hojita de los labels) ·
+`TropicalFlower` (variantes `bird` / `heliconia` / `leaves`) ·
+`WaterWave` (onda inferior) · `SunBurst` (solecito del Cultural Tip)
 
 ---
 
-## ✨ ANIMACIONES (Anime.js v4) — ESPECIFICACIÓN
+## ✨ ANIMACIONES (Anime.js v4)
 
-Importar: `import { animate, stagger } from 'animejs'`
-En v4 la propiedad es `ease` (no `easing`): `'outQuad'`, `'outBack'`, `'outElastic(1, .6)'`.
-
-Helpers compartidos en `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`)
-y `src/hooks/usePageAnimation.js` (`usePageAnimation`, `usePageSlide`).
+`import { animate, stagger } from 'animejs'` — en v4 la propiedad es `ease`, no `easing`.
+Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`) y
+`src/hooks/usePageAnimation.js` (`usePageAnimation`, `usePageSlide`).
 
 | Elemento | Animación | Specs |
 |----------|-----------|-------|
-| Entrada de página | fadeIn + translateY | `[20, 0]`, opacity `[0,1]`, 600ms, `outQuad`, stagger 80ms sobre `[data-anim]` |
-| Cards de módulo/tema | hover float | scale 1.05, translateY -8, 300ms |
-| Sidebar items | hover | translateX 6px, color → col-yellow, 200ms |
-| Respuesta correcta | celebración | scale [1, 1.15, 1] + fondo verde suave, 500ms |
-| Respuesta incorrecta | shake | translateX [-8, 8, -5, 5, 0], 400ms + borde col-red |
-| ProgressBar | fill animado | width animada + número contando, 800ms `inOutQuad` |
-| Dado (DiceGame) | roll | rotate 720deg + scale bounce, 900ms, `outElastic(1, .6)` |
-| Speech bubbles | pop-in | scale [0.8, 1] + opacity, stagger 120ms |
-| Transición entre páginas | slide | entrada translateX [30, 0] + fade |
+| Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
+| Cards | hover float | scale 1.05, translateY -8, 300ms |
+| Sidebar items | hover | translateX 6px, 200ms |
+| Respuesta correcta | celebración | scale [1,1.15,1] + verde suave, 500ms |
+| Respuesta incorrecta | shake | translateX [-8,8,-5,5,0], 400ms |
+| ProgressBar | fill + número contando | 800ms `inOutQuad` |
+| Dado | roll | rotate 720 + bounce, 900ms `outElastic(1, .6)` |
+| Burbujas / frases | pop-in | scale [0.8,1], stagger 120ms |
+| Pasada de página | react-pageflip | 800ms |
 
-Regla: **TODA interacción visible tiene feedback animado.** Nada aparece de golpe.
-Todos los helpers respetan `prefers-reduced-motion`.
+Todo respeta `prefers-reduced-motion`.
 
 ---
 
-## 📁 ESTRUCTURA DE CARPETAS
+## 📁 ESTRUCTURA
 
 ```
-sharick-platform/
-├── CLAUDE.md
-├── package.json
-├── vite.config.js               ← base './' para Electron/iframe
-├── index.html                   ← carga Fredoka + Sora desde Google Fonts
-├── public/
-│   ├── images/english/module1..4/
-│   └── audio/english/module1/
-├── src/
-│   ├── main.jsx
-│   ├── App.jsx                  ← HashRouter + Shell (sidebar/header/main)
-│   ├── components/
-│   │   ├── layout/    Sidebar · Header · MainContent · PageNavigation
-│   │   ├── cards/     BookCard · ModuleCard · TopicCard
-│   │   ├── activities/ ActivityShell · MatchActivity · MultipleChoice ·
-│   │   │               FillBubbles · ListeningActivity · SpeakingPrompt · DiceGame
-│   │   ├── media/     AudioPlayer · DialogueBlock · RoutineBlock
-│   │   └── ui/        ProgressBar · Button · FeedbackToast ·
-│   │                  ImagePlaceholder (SmartImage) · AnalogClock
-│   ├── pages/         Home · BookHome · TopicPage
-│   ├── books/
-│   │   ├── index.js             ← loader + helpers (findPage, activityId, …)
-│   │   ├── registry.json        ← índice de libros
-│   │   └── english-a1/modules.json  ← TODO el contenido del libro
-│   ├── hooks/         useProgress · usePageAnimation · useFeedback
-│   └── styles/global.css        ← Tailwind v4 + @theme + utilidades
+src/
+├── App.jsx                    ← HashRouter + Shell (sidebar / header / main)
+├── components/
+│   ├── book/     BookViewer · BookPage · BookCover · PageContent
+│   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
+│   ├── content/  VocabularyBox · CulturalTip · Checklist
+│   ├── activities/ ExerciseBlock · MatchActivity · MultipleChoice · FillBubbles ·
+│   │              FillInSentence · ListeningActivity · SpeakingPrompt ·
+│   │              RecordPrompt · DiceGame
+│   ├── media/    AudioPlayer · DialogueBlock · RoutineBlock
+│   ├── layout/   Sidebar · Header · MainContent
+│   ├── cards/    BookCard
+│   └── ui/       Button · PillButton · ProgressBar · FeedbackToast ·
+│                 SectionLabel · AnalogClock · ImagePlaceholder (SmartImage)
+├── pages/        Home · TopicPage (lector del libro)
+├── books/        index.js · registry.json · english-a1/modules.json
+├── hooks/        useProgress · usePageAnimation · useFeedback
+├── utils/        numberWords.js
+└── styles/       global.css
 ```
 
-### Agregar un libro nuevo
-1. Añadirlo a `src/books/registry.json`.
-2. Crear `src/books/<id>/modules.json`.
-3. Importarlo en el mapa `CONTENT` de `src/books/index.js`.
+### Agregar un libro
+1. Añadirlo a `registry.json` · 2. Crear `<id>/modules.json` · 3. Importarlo en `CONTENT` de `books/index.js`.
 
 ### Agregar un tipo de sección o actividad
-1. Crear el componente en `components/activities/` (o `media/`).
-2. Registrarlo en el mapa `ACTIVITIES` (o en el renderer) de `src/pages/TopicPage.jsx`.
-3. Usarlo desde el JSON. **Nunca hardcodear contenido en componentes.**
+Crear el componente y registrarlo en `components/book/PageContent.jsx`
+(mapa `ACTIVITIES` para actividades, un `if` por `section.type` para el resto).
+**Nunca hardcodear contenido en componentes.**
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1: GREETINGS AND INTRODUCTIONS
+## 📖 CONTENIDO — MÓDULO 1 (12 páginas, 6 → 17)
 
-**⚠️ CONTENIDO QUE PIDIÓ SHARICK. No cambiar títulos ni mecánicas.**
+**⚠️ Contenido de Sharick. Títulos y mecánicas exactos.**
 
-### PÁGINA 1 — "Let's say hi to Colombia!"
-- 3 diálogos con audio (A formal, B informal, C presentando a un tercero), nombres colombianos,
-  ambientados en Cartagena.
-- Actividad 1 (`match`): emparejar cada diálogo con las personas correctas.
-- Actividad 2 (`speaking`): presentarse y despedirse, con frases modelo y grabación opcional.
+| Pág | Contenido |
+|-----|-----------|
+| 6 | LESSON 1 · **"Let's say hi to Colombia!"** + VOCABULARY (greetings) |
+| 7 | Ilustración Cartagena + CULTURAL TIP (¿usted o parcero?) |
+| 8 | Reading · Dialogue A (formal) y B (informal) |
+| 9 | Dialogue C (presenta a un tercero) + EXERCISE 1 (match A/B/C) |
+| 10 | EXERCISE 2 (fill in sentence) + EXERCISE 3 (speaking: preséntate y despídete) |
+| 11 | Ilustración + EXERCISE 4 (record prompt) |
+| 12 | LESSON 2 · **"Hello parcero!"** + rutina del día (mañana/tarde/noche/dormir) |
+| 13 | Ilustración + VOCABULARY (times of the day) + CULTURAL TIP (las onces) |
+| 14 | EXERCISE 1 (fill bubbles con **reloj analógico clásico**) |
+| 15 | EXERCISE 2 (listening + preguntas) |
+| 16 | EXERCISE 3 (**dado de emociones**: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so) |
+| 17 | Can-do check + ilustración de cierre |
 
-### PÁGINA 2 — "Hello parcero!"
-**⚠️ El título ES "Hello parcero!". NO cambiarlo.**
-- Sección `routine`: mañana / tarde / noche / al dormir, con su saludo.
-- Actividad 1 (`fillBubbles`): completar la burbuja según la hora.
-  **Reloj analógico clásico** (`AnalogClock.jsx`) — Sharick lo pidió explícitamente.
-- Actividad 2 (`listening`): audio + preguntas de comprensión (con transcripción).
-- Actividad 3 (`diceGame`): "How are you REALLY doing?" — dado de emociones.
-  - 1-2 → "I'm fine" · 3-4 → "Not bad" · 5-6 → "So-so..."
+Las páginas siguientes se agregan al array `pages` de `modules.json` con su `pageNumber`.
+Mantener las páginas **pares a la izquierda** e impares a la derecha para que las
+dobles páginas queden balanceadas.
 
-### Páginas siguientes
-Sharick las enviará progresivamente. Se agregan al array `pages` de `modules.json`
-sin tocar código, siempre que usen tipos de sección ya soportados.
-
----
-
-## 📊 ESQUEMA modules.json
-
-Raíz: `{ bookId, bookName, country, modules: [ ... ] }`.
-Cada módulo: `{ moduleId, moduleName, gradient, icon, description, pages: [ ... ] }`.
-Cada página: `{ id, title, subtitle, backgroundImage, imageAlt, intro, sections: [ ... ] }`.
-
-Tipos de sección soportados hoy:
-- `dialogues` → `items[{ id, label, context, audio, characters, lines[{speaker,text}] }]`
-- `routine` → `items[{ time, label, greeting, note, clockTime, emoji, image }]`
-- `activity` con `activity`: `match` · `speaking` · `fillBubbles` · `listening` · `diceGame` · `multipleChoice`
-
-Los ids de actividad se derivan como `` `${page.id}-${section.id ?? section.activity}` ``
-(p. ej. `m1-p1-match`) — ver `activityId()` en `src/books/index.js`.
-
----
-
-## 💾 PROGRESO (useProgress hook)
-
-localStorage key: `sharick-progress`
+### Esquema de página
 ```json
 {
-  "english-a1": {
-    "currentPage": "m1-p2",
-    "completedActivities": ["m1-p1-match"],
-    "scores": { "m1-p1-match": 100 },
-    "lastVisit": "2026-08-23"
-  }
+  "id": "m1-p06", "pageNumber": 6,
+  "unitTitle": "...", "lessonLabel": "Lesson 1", "title": "...",
+  "navTitle": "texto corto para el sidebar",
+  "hideHeader": false, "showUnit": true, "intro": "...",
+  "sections": [ ... ]
 }
 ```
-- Se guarda automáticamente al completar una actividad; se conserva el mejor puntaje.
-- El hook usa un store de módulo + `useSyncExternalStore`, así el ProgressBar del sidebar
-  reacciona al instante cuando se completa una actividad en el contenido principal.
+Tipos de sección: `vocabulary` · `dialogues` · `routine` · `illustration` · `culturalTip` ·
+`checklist` · `actions` · `divider` · `activity`.
+Actividades (`section.activity`): `match` · `fillInSentence` · `fillBubbles` · `listening` ·
+`multipleChoice` · `speaking` · `recordPrompt` · `diceGame`.
+
+---
+
+## 💾 PROGRESO (useProgress)
+
+localStorage key `sharick-progress`. Id de actividad = `` `${page.id}-${section.id ?? section.activity}` ``
+(p. ej. `m1-p09-match`). Guarda el mejor puntaje. El store usa `useSyncExternalStore`, así que el
+ProgressBar del sidebar reacciona al instante.
 
 ---
 
 ## 🖼️ IMÁGENES Y AUDIO
 
-- Imágenes finales con Gemini. Prompt de estilo: *"Illustration style inspired by ¡Hola English!
-  educational books. Modern, minimalist, warm aesthetic. Vector-based. Colombian tricolor
-  #003DA5 blue, #FFD100 yellow, #CE1126 red. Soft shadows, rounded elements, friendly.
+- Estilo Gemini: *"Editorial illustration for a printed language textbook, National Geographic
+  Learning style. Soft watercolor, warm cream background #F7F2E9, navy #1B3A5C, coral #E05A47,
+  sage green #6B9080, golden yellow #E9B44C. Minimalist, elegant, rounded shapes,
   Colombian culture focus."*
-- Mientras no existan, `SmartImage` (`ui/ImagePlaceholder.jsx`) muestra un gradiente + emoji +
-  **la ruta exacta del archivo que falta**, para saber qué generar y dónde ponerlo.
-- Audio: si el mp3 no existe, `AudioPlayer` muestra "Audio próximamente" sin romper la página.
+- Mientras no exista el archivo, `SmartImage` muestra un marco punteado con emoji y
+  **la ruta exacta** que falta (`compact` para miniaturas: solo emoji).
+- Audio: si falta el mp3, `AudioPlayer` muestra "Audio próximamente" sin romper nada.
 
 ---
 
-## 🚦 FASES DE DESARROLLO
+## 🚦 ESTADO
 
-- **FASE 1 — HECHA:** setup, layout, routing, registry, useProgress.
-- **FASE 2 — HECHA:** todos los componentes de actividades + animaciones.
-- **FASE 3 — HECHA:** contenido de las páginas 1 y 2 del Módulo 1.
-- **FASE 4 — PENDIENTE:** deploy en Cloudflare Pages y, después, Electron para el `.exe`.
-- **PENDIENTE de Sharick:** imágenes (Gemini), audios (mp3) y el contenido de las
-  páginas siguientes y de los módulos 2-4.
+- **HECHO:** setup, formato libro con pasada de página, sistema editorial completo,
+  todas las actividades, contenido del Módulo 1 (12 páginas).
+- **PENDIENTE:** imágenes (Gemini), audios (mp3), páginas siguientes y módulos 2-4,
+  deploy en Cloudflare Pages y Electron.
 
 ---
 
 ## ✅ REGLAS DE ORO
 
-1. **Contenido de Sharick es sagrado** — títulos exactos ("Let's say hi to Colombia!",
-   "Hello parcero!"), mecánicas exactas (dado 1-2/3-4/5-6, reloj normal, match A/B/C).
+1. **Contenido de Sharick es sagrado** — títulos exactos, mecánicas exactas
+   (dado 1-2/3-4/5-6, reloj analógico normal, match A/B/C).
 2. **Todo en JSON** — cero contenido hardcodeado en componentes.
 3. **Todo animado** — Anime.js en cada interacción.
-4. **Fondo cream, cero dark mode.**
-5. **Mobile responsive** — los estudiantes usarán celular.
+4. **Papel cálido, cero dark mode.** Tricolor solo en portada.
+5. **Mobile responsive** — react-pageflip pasa a una sola hoja en vertical.
 6. **Español en la UI de instrucciones, inglés en el contenido de aprendizaje.**
 7. Redactar diálogos/ejercicios PROPIOS — nunca copiar texto de otros libros.
 8. Commits frecuentes y descriptivos en español.

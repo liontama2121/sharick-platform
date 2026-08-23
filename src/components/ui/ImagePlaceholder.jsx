@@ -1,29 +1,18 @@
 import { useState } from 'react'
 
-const GRADIENTS = [
-  'from-[#FFD100] to-[#CE1126]',
-  'from-[#003DA5] to-[#FFD100]',
-  'from-[#CE1126] to-[#003DA5]',
-  'from-[#FFD100] to-[#003DA5]',
-]
-
-function pickGradient(seed = '') {
-  let h = 0
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0
-  return GRADIENTS[h % GRADIENTS.length]
-}
-
 /**
- * Muestra la imagen si existe. Si no, un placeholder con gradiente + emoji +
- * la ruta exacta del archivo que hay que generar con Gemini y dónde ponerlo.
+ * Muestra la imagen si existe. Si no, un marco editorial suave con emoji +
+ * la ruta exacta del archivo que hay que generar y dónde ponerlo.
  */
 export default function SmartImage({
   src,
   alt = '',
-  emoji = '🇨🇴',
+  emoji = '🌿',
   className = '',
   imgClassName = 'object-cover',
-  rounded = 'rounded-2xl',
+  rounded = 'rounded-[20px]',
+  showPath = true,
+  compact = false,
 }) {
   const [failed, setFailed] = useState(false)
   const show = src && !failed
@@ -43,14 +32,17 @@ export default function SmartImage({
   return (
     <div
       role="img"
-      aria-label={alt || 'Imagen pendiente de generar'}
-      className={`flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br
-        p-4 text-center ${pickGradient(src || alt)} ${rounded} ${className}`}
+      aria-label={alt || 'Ilustración pendiente de generar'}
+      className={`flex h-full w-full flex-col items-center justify-center gap-1.5 overflow-hidden
+        border border-dashed border-sage/60 bg-box text-center
+        ${compact ? 'p-1' : 'p-4'} ${rounded} ${className}`}
     >
-      <span className="text-4xl drop-shadow-sm" aria-hidden="true">{emoji}</span>
-      {alt && <span className="font-title text-sm font-semibold text-white drop-shadow">{alt}</span>}
-      {src && (
-        <code className="max-w-full break-all rounded-full bg-black/25 px-3 py-1 text-[11px] font-medium text-white">
+      <span className={`opacity-80 ${compact ? 'text-xl' : 'text-3xl'}`} aria-hidden="true">
+        {emoji}
+      </span>
+      {alt && !compact && <span className="font-display text-[0.9rem] text-navy">{alt}</span>}
+      {showPath && !compact && src && (
+        <code className="max-w-full break-all rounded-full bg-navy/8 px-2.5 py-0.5 text-[10px] text-ink-soft">
           {src}
         </code>
       )}

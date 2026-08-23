@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import ActivityShell from './ActivityShell'
+import ExerciseBlock from './ExerciseBlock'
 import SmartImage from '../ui/ImagePlaceholder'
-import Button from '../ui/Button'
+import PillButton from '../ui/PillButton'
 import FeedbackToast from '../ui/FeedbackToast'
 import { celebrate, popIn } from '../../hooks/useFeedback'
 
@@ -22,15 +22,14 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
     if (listRef.current) popIn(listRef.current.querySelectorAll('[data-bubble]'), 120)
   }, [section.id])
 
-  // libera el objectURL del clip anterior
-  useEffect(() => () => { if (clipUrl) URL.revokeObjectURL(clipUrl) }, [clipUrl])
+  useEffect(() => () => clipUrl && URL.revokeObjectURL(clipUrl), [clipUrl])
 
   const toggle = (i) => {
     const next = { ...checked, [i]: !checked[i] }
     setChecked(next)
     if (next[i]) celebrate(nodes.current[i])
     if (phrases.every((_, k) => next[k])) {
-      setToast({ msg: '¡Muy bien! Practicaste todas las frases 🎤', type: 'success' })
+      setToast({ msg: '¡Practicaste todas las frases!', type: 'success' })
       onComplete?.(100)
     }
   }
@@ -50,7 +49,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
       recorderRef.current = rec
       setRecording(true)
     } catch {
-      setRecError('No pudimos acceder al micrófono. Puedes practicar en voz alta sin grabar.')
+      setRecError('No pudimos usar el micrófono. Puedes practicar en voz alta sin grabar.')
     }
   }
 
@@ -66,64 +65,68 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
 
   return (
     <>
-      <ActivityShell
-        icon="🎤"
+      <ExerciseBlock
+        number={section.number}
         title={section.title}
         instructions={section.instructions}
         completed={completed}
         score={score}
       >
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="flex flex-col gap-4">
           <div>
-            <p className="mb-3 font-title text-sm font-semibold text-col-blue/70">
-              Marca cada frase cuando la digas en voz alta:
-            </p>
-            <ul ref={listRef} className="flex flex-col gap-2.5">
+            <p className="mb-2 text-[0.8rem] italic text-ink-soft">Marca cada frase al decirla en voz alta.</p>
+            <ul ref={listRef} className="flex flex-col gap-1.5">
               {phrases.map((p, i) => (
-                <li key={i} data-bubble className="anim-hidden">
+                <li key={i} data-bubble>
                   <button
-                    ref={(el) => { nodes.current[i] = el }}
+                    ref={(el) => {
+                      nodes.current[i] = el
+                    }}
                     onClick={() => toggle(i)}
                     aria-pressed={!!checked[i]}
-                    className={`flex w-full items-center gap-3 rounded-2xl border-2 bg-white px-4 py-3
-                      text-left shadow-soft transition-colors
-                      ${checked[i] ? 'border-[#2f9e5f] bg-[#e8f8ee]' : 'border-col-blue/12 hover:border-col-blue/45'}`}
+                    className={`flex w-full items-center gap-2.5 rounded-xl border px-3 py-2
+                      text-left text-[0.92rem] transition-colors
+                      ${checked[i]
+                        ? 'border-sage-ink/50 bg-tip'
+                        : 'border-navy/12 bg-white hover:border-coral-ink/55'}`}
                   >
-                    <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full
-                      border-2 font-title text-xs font-bold
-                      ${checked[i] ? 'border-[#2f9e5f] bg-[#2f9e5f] text-white' : 'border-col-blue/25 text-transparent'}`}>
+                    <span
+                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full
+                        border text-[0.7rem] font-bold
+                        ${checked[i]
+                          ? 'border-sage-ink bg-sage-ink text-white'
+                          : 'border-navy/25 text-transparent'}`}
+                    >
                       ✓
                     </span>
-                    <span className="font-title font-semibold">{p}</span>
+                    <span className="font-semibold text-navy">{p}</span>
                   </button>
                 </li>
               ))}
             </ul>
 
             {canRecord && (
-              <div className="mt-5 flex flex-wrap items-center gap-3">
-                <Button
-                  variant={recording ? 'blue' : 'ghost'}
-                  size="sm"
-                  onClick={recording ? stopRec : startRec}
-                >
-                  {recording ? '⏹ Detener grabación' : '⏺ Grabar mi voz (opcional)'}
-                </Button>
-                {clipUrl && <audio controls src={clipUrl} className="h-9" />}
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <PillButton icon="record" active={recording} onClick={recording ? stopRec : startRec}>
+                  {recording ? 'Detener grabación' : 'Grabar mi voz (opcional)'}
+                </PillButton>
+                {clipUrl && <audio controls src={clipUrl} className="h-8 max-w-[190px]" />}
               </div>
             )}
-            {recError && <p className="mt-2 text-sm text-col-red">{recError}</p>}
+            {recError && <p className="mt-2 text-[0.82rem] text-coral-ink">{recError}</p>}
           </div>
 
-          <div className="min-h-[220px] overflow-hidden rounded-2xl">
-            <SmartImage
-              src={section.backgroundImage}
-              alt={section.imageAlt ?? 'Paisaje colombiano'}
-              emoji="🏞️"
-            />
-          </div>
+          {section.backgroundImage && (
+            <div className="min-h-[150px] overflow-hidden rounded-[20px]">
+              <SmartImage
+                src={section.backgroundImage}
+                alt={section.imageAlt ?? 'Paisaje colombiano'}
+                emoji="🏞️"
+              />
+            </div>
+          )}
         </div>
-      </ActivityShell>
+      </ExerciseBlock>
 
       <FeedbackToast message={toast?.msg} type={toast?.type} onHide={() => setToast(null)} />
     </>

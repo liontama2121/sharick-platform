@@ -9,10 +9,10 @@ function fmt(s) {
 }
 
 /**
- * Reproductor estilizado. Si el mp3 aún no existe muestra
+ * Reproductor en pill blanco. Si el mp3 aún no existe muestra
  * "Audio próximamente" sin romper la página.
  */
-export default function AudioPlayer({ src, label = 'Escuchar', compact = false }) {
+export default function AudioPlayer({ src, label = 'Listen', compact = false }) {
   const audioRef = useRef(null)
   const btnRef = useRef(null)
   const [playing, setPlaying] = useState(false)
@@ -48,22 +48,21 @@ export default function AudioPlayer({ src, label = 'Escuchar', compact = false }
 
   if (unavailable) {
     return (
-      <div
-        className={`inline-flex items-center gap-2 rounded-full border-2 border-dashed
-          border-col-blue/25 bg-white/70 px-4 py-2 font-title text-sm font-medium text-col-blue/60
-          ${compact ? '' : 'shadow-soft'}`}
+      <span
+        className="inline-flex items-center gap-1.5 rounded-full border border-dashed
+          border-navy/25 bg-white/60 px-3.5 py-1.5 text-[0.78rem] font-semibold text-ink-soft"
         title={src ? `Falta el archivo: ${src}` : 'Sin audio asignado'}
       >
-        <span aria-hidden="true">🎧</span>
+        <span aria-hidden="true">🔊</span>
         Audio próximamente
-      </div>
+      </span>
     )
   }
 
   const pct = duration ? (time / duration) * 100 : 0
 
   return (
-    <div className="inline-flex items-center gap-3 rounded-full bg-white px-3 py-2 shadow-soft">
+    <span className="inline-flex items-center gap-2.5 rounded-full border border-navy/12 bg-white px-2.5 py-1.5 shadow-soft">
       <audio
         ref={audioRef}
         src={src}
@@ -71,38 +70,40 @@ export default function AudioPlayer({ src, label = 'Escuchar', compact = false }
         onError={() => setUnavailable(true)}
         onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
         onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
-        onEnded={() => { setPlaying(false); setTime(0) }}
+        onEnded={() => {
+          setPlaying(false)
+          setTime(0)
+        }}
       />
       <button
         ref={btnRef}
         onClick={toggle}
         aria-label={playing ? `Pausar ${label}` : `Reproducir ${label}`}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full
-          bg-col-red text-white shadow-soft"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-coral-ink text-white"
       >
         {playing ? (
-          <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
+          <svg width="12" height="13" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
             <rect x="0" y="0" width="4.5" height="16" rx="1.5" />
             <rect x="9.5" y="0" width="4.5" height="16" rx="1.5" />
           </svg>
         ) : (
-          <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
+          <svg width="12" height="13" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
             <path d="M1 1.6c0-1.2 1.3-2 2.4-1.4l9 6.4c1 .7 1 2.1 0 2.8l-9 6.4C2.3 16.4 1 15.6 1 14.4V1.6Z" />
           </svg>
         )}
       </button>
 
       {!compact && (
-        <div className="flex min-w-[130px] flex-col gap-1">
-          <span className="font-title text-xs font-semibold text-col-blue">{label}</span>
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-col-blue/10">
-            <div className="h-full rounded-full bg-col-yellow" style={{ width: `${pct}%` }} />
-          </div>
-        </div>
+        <span className="flex min-w-[110px] flex-col gap-1">
+          <span className="label-caps text-sage-ink">{label}</span>
+          <span className="block h-1 w-full overflow-hidden rounded-full bg-navy/10">
+            <span className="block h-full rounded-full bg-gold" style={{ width: `${pct}%` }} />
+          </span>
+        </span>
       )}
-      <span className="font-title text-xs font-medium text-col-blue/60">
+      <span className="text-[0.72rem] text-ink-soft">
         {fmt(time)} / {fmt(duration)}
       </span>
-    </div>
+    </span>
   )
 }

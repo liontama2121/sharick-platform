@@ -2,16 +2,16 @@ import { useRef } from 'react'
 import { animate } from 'animejs'
 
 const VARIANTS = {
-  primary: 'bg-col-red text-white hover:brightness-110',
-  blue: 'bg-col-blue text-white hover:brightness-110',
-  yellow: 'bg-col-yellow text-ink hover:brightness-105',
-  ghost: 'bg-white text-col-blue border-2 border-col-blue/15 hover:border-col-blue/40',
+  primary: 'bg-coral-ink text-white hover:brightness-110',
+  navy: 'bg-navy text-white hover:brightness-115',
+  sage: 'bg-sage-ink text-white hover:brightness-110',
+  ghost: 'bg-white text-navy border border-navy/15 hover:border-coral-ink/60 hover:text-coral-ink',
 }
 
 const SIZES = {
   sm: 'px-4 py-2 text-sm',
-  md: 'px-6 py-3 text-base',
-  lg: 'px-8 py-4 text-lg',
+  md: 'px-5 py-2.5 text-[0.95rem]',
+  lg: 'px-7 py-3.5 text-base',
 }
 
 export default function Button({
@@ -33,11 +33,11 @@ export default function Button({
     <button
       ref={ref}
       disabled={disabled}
-      onMouseEnter={() => scaleTo(1.05)}
+      onMouseEnter={() => scaleTo(1.04)}
       onMouseLeave={() => scaleTo(1)}
-      onFocus={() => scaleTo(1.05)}
+      onFocus={() => scaleTo(1.04)}
       onBlur={() => scaleTo(1)}
-      className={`inline-flex items-center justify-center gap-2 rounded-full font-title font-semibold
+      className={`inline-flex items-center justify-center gap-2 rounded-full font-body font-semibold
         shadow-soft transition-colors disabled:cursor-not-allowed disabled:opacity-45
         ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
       {...props}

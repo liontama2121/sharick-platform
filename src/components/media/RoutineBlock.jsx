@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react'
 import SmartImage from '../ui/ImagePlaceholder'
 import AnalogClock from '../ui/AnalogClock'
+import SectionLabel from '../ui/SectionLabel'
 import { popIn } from '../../hooks/useFeedback'
 
-/** Rutina del día: mañana, tarde, noche y al dormir, con su saludo. */
+/**
+ * Rutina del día: mañana, tarde, noche y al dormir, con su saludo.
+ * Una fila por momento: dentro de la hoja del libro no cabe una rejilla.
+ */
 export default function RoutineBlock({ section }) {
   const ref = useRef(null)
   const items = section.items ?? []
@@ -13,39 +17,41 @@ export default function RoutineBlock({ section }) {
   }, [section.title])
 
   return (
-    <section className="card-soft overflow-hidden">
-      <header className="border-b border-col-blue/8 px-5 py-4 sm:px-7">
-        <h3>{section.title}</h3>
-        {section.instructions && (
-          <p className="mt-0.5 text-sm text-ink/65">{section.instructions}</p>
-        )}
-      </header>
+    <section>
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+        <SectionLabel tone="sage" leaf>
+          {section.label ?? 'Through the day'}
+        </SectionLabel>
+        {section.title && <h3>{section.title}</h3>}
+      </div>
+      {section.instructions && (
+        <p className="mb-3 text-[0.9rem] text-ink-soft">{section.instructions}</p>
+      )}
 
-      <div ref={ref} className="grid gap-5 px-5 py-6 sm:grid-cols-2 sm:px-7">
+      <div ref={ref} className="flex flex-col gap-2.5">
         {items.map((item) => (
-          <article
-            key={item.time}
-            data-bubble
-            className="anim-hidden overflow-hidden rounded-2xl border-2 border-col-blue/10"
-          >
-            <div className="h-32 w-full">
-              <SmartImage
-                src={item.image}
-                alt={item.label ?? item.time}
-                emoji={item.emoji ?? '🇨🇴'}
-                rounded="rounded-none"
-              />
+          <article key={item.time} data-bubble className="box-beige flex items-center gap-3 p-2.5">
+            {item.clockTime && <AnalogClock time={item.clockTime} size={54} showDigital={false} />}
+
+            <div className="min-w-0 flex-1">
+              <p className="label-caps text-coral-ink">{item.label ?? item.time}</p>
+              <p className="font-display text-[1.15rem] leading-tight text-navy">{item.greeting}</p>
+              {item.note && (
+                <p className="mt-0.5 text-[0.76rem] leading-snug text-ink-soft">{item.note}</p>
+              )}
             </div>
-            <div className="flex items-center gap-4 p-4">
-              {item.clockTime && <AnalogClock time={item.clockTime} size={72} showDigital={false} />}
-              <div>
-                <p className="font-title text-xs font-semibold uppercase tracking-wide text-col-red">
-                  {item.label ?? item.time}
-                </p>
-                <p className="font-title text-xl font-bold text-col-blue">{item.greeting}</p>
-                {item.note && <p className="mt-1 text-sm text-ink/65">{item.note}</p>}
+
+            {item.image && (
+              <div className="h-12 w-14 shrink-0">
+                <SmartImage
+                  src={item.image}
+                  alt={item.label ?? item.time}
+                  emoji={item.emoji ?? '🌿'}
+                  rounded="rounded-lg"
+                  compact
+                />
               </div>
-            </div>
+            )}
           </article>
         ))}
       </div>
