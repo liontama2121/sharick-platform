@@ -7,6 +7,7 @@ import {
   getBookContent,
   getBookMeta,
   getModule,
+  getModuleGames,
   getModulePages,
   lessonOfPage,
 } from '../books'
@@ -20,7 +21,7 @@ const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
-function DoneOverlay({ moduleName, onBack }) {
+function DoneOverlay({ moduleName, onBack, onGames }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -47,8 +48,11 @@ function DoneOverlay({ moduleName, onBack }) {
         <p className="mt-2 text-[0.92rem] text-ink-soft">
           Llegaste al final de {moduleName}. Puedes repasar cualquier lección cuando quieras.
         </p>
-        <div className="mt-5">
-          <Button onClick={onBack}>Volver al módulo</Button>
+        <div className="mt-5 flex flex-wrap justify-center gap-2.5">
+          <Button onClick={onGames}>🎮 Jugar los juegos del módulo</Button>
+          <Button variant="ghost" onClick={onBack}>
+            Volver al módulo
+          </Button>
         </div>
       </div>
     </div>
@@ -66,6 +70,7 @@ export default function LessonReader() {
   const mod = getModule(bookId, moduleId)
   const pages = getModulePages(bookId, moduleId)
   const lesson = findLesson(bookId, moduleId, lessonId)
+  const hasGames = getModuleGames(bookId, moduleId).length > 0
   const progress = useProgress(bookId)
   const { setCurrentPage } = progress
 
@@ -90,6 +95,7 @@ export default function LessonReader() {
   )
 
   const toModule = () => navigate(`/book/${bookId}/module/${moduleId}`)
+  const toGames = () => navigate(`/book/${bookId}/module/${moduleId}/games`)
 
   if (!mod || !lesson) {
     return (
@@ -112,6 +118,7 @@ export default function LessonReader() {
       <ReaderBar
         title={label}
         onHome={() => navigate(`/book/${bookId}`)}
+        onGames={hasGames ? toGames : null}
         onClose={toModule}
       />
 
@@ -133,6 +140,10 @@ export default function LessonReader() {
           onBack={() => {
             setDone(false)
             toModule()
+          }}
+          onGames={() => {
+            setDone(false)
+            toGames()
           }}
         />
       )}

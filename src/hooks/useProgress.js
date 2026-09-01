@@ -83,21 +83,25 @@ export function useProgress(bookId) {
   )
 
   /**
-   * Resultado de una partida del hub de juegos.
-   * Se conserva el mejor puntaje y las mejores estrellas.
+   * Resultado de una partida. El progreso de juegos va POR MÓDULO:
+   * games["1"] = { played: [ids], stars: {id: n}, bestScores: {id: n} }
    */
   const recordGame = useCallback(
-    (gameId, { score = 0, stars = 1 } = {}) =>
+    (moduleId, gameId, { score = 0, stars = 1 } = {}) =>
       update((prev) => {
-        const before = prev.games?.[gameId] ?? { plays: 0, bestScore: 0, stars: 0 }
+        const key = String(moduleId)
+        const all = prev.games ?? {}
+        const mod = all[key] ?? { played: [], stars: {}, bestScores: {} }
         return {
           games: {
-            ...(prev.games ?? {}),
-            [gameId]: {
-              played: true,
-              plays: before.plays + 1,
-              bestScore: Math.max(before.bestScore, score),
-              stars: Math.max(before.stars, stars),
+            ...all,
+            [key]: {
+              played: mod.played.includes(gameId) ? mod.played : [...mod.played, gameId],
+              stars: { ...mod.stars, [gameId]: Math.max(mod.stars[gameId] ?? 0, stars) },
+              bestScores: {
+                ...mod.bestScores,
+                [gameId]: Math.max(mod.bestScores[gameId] ?? 0, score),
+              },
             },
           },
         }
@@ -106,12 +110,27 @@ export function useProgress(bookId) {
   )
 
   const getGameResult = useCallback(
-    (gameId) => book.games?.[gameId] ?? null,
+    (moduleId, gameId) => {
+      const mod = book.games?.[String(moduleId)]
+      if (!mod?.played?.includes(gameId)) return null
+      return {
+        played: true,
+        stars: mod.stars?.[gameId] ?? 0,
+        bestScore: mod.bestScores?.[gameId] ?? 0,
+      }
+    },
     [book.games],
   )
 
-  const playedGames = useCallback(
-    (ids = []) => ids.filter((id) => book.games?.[id]?.played).length,
+  /** Resumen de un módulo: cuántos jugados y estrellas acumuladas. */
+  const getModuleGameStats = useCallback(
+    (moduleId, gameIds = []) => {
+      const mod = book.games?.[String(moduleId)]
+      if (!mod) return { played: 0, total: gameIds.length, stars: 0 }
+      const played = gameIds.filter((id) => mod.played?.includes(id)).length
+      const stars = gameIds.reduce((sum, id) => sum + (mod.stars?.[id] ?? 0), 0)
+      return { played, total: gameIds.length, stars }
+    },
     [book.games],
   )
 
@@ -146,7 +165,7 @@ export function useProgress(bookId) {
     percent,
     recordGame,
     getGameResult,
-    playedGames,
+    getModuleGameStats,
   }
 }
 

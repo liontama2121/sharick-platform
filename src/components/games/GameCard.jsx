@@ -25,7 +25,7 @@ function Stars({ n = 0 }) {
 }
 
 /** Tarjeta del hub de juegos. */
-export default function GameCard({ game, result, onPlay }) {
+export default function GameCard({ game, moduleId, result, onPlay }) {
   const ref = useRef(null)
 
   const hover = (on) => {
@@ -54,7 +54,7 @@ export default function GameCard({ game, result, onPlay }) {
       </div>
 
       <h3 className="mt-1">{game.title}</h3>
-      <p className="label-caps text-coral-ink">Module {game.module}</p>
+      {moduleId != null && <p className="label-caps text-coral-ink">Module {moduleId}</p>}
       {game.blurb && <p className="text-[0.86rem] leading-relaxed text-ink-soft">{game.blurb}</p>}
 
       <div className="mt-auto flex items-center justify-between gap-2 pt-2">

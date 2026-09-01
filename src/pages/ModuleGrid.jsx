@@ -3,8 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { animate, stagger } from 'animejs'
 import { Gamepad2, Home, Video, Volume2, X } from 'lucide-react'
 
-import { getBookContent, getBookMeta, getGames, getLessons, getModule } from '../books'
+import { getBookContent, getBookMeta, getLessons, getModule, getModuleGames } from '../books'
 import { useLevelIntro } from '../hooks/useLevelIntro'
+import { useProgress } from '../hooks/useProgress'
 import SpreadThumb from '../components/book/SpreadThumb'
 import RoundButton from '../components/nav/RoundButton'
 
@@ -29,6 +30,9 @@ export default function ModuleGrid() {
   const content = getBookContent(bookId)
   const mod = getModule(bookId, moduleId)
   const lessons = getLessons(bookId, moduleId)
+  const games = getModuleGames(bookId, moduleId)
+  const { getModuleGameStats } = useProgress(bookId)
+  const gameStats = getModuleGameStats(moduleId, games.map((g) => g.id))
 
   useEffect(() => {
     const grid = gridRef.current
@@ -178,6 +182,46 @@ export default function ModuleGrid() {
             </div>
           )
         })}
+
+        {/* Tarjeta especial: los juegos del módulo */}
+        <div
+          data-card
+          role="button"
+          tabIndex={0}
+          onClick={() => navigate(`/book/${bookId}/module/${moduleId}/games`)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              navigate(`/book/${bookId}/module/${moduleId}/games`)
+            }
+          }}
+          onMouseEnter={(e) =>
+            !reduced() && animate(e.currentTarget, { scale: 1.04, duration: 260, ease: 'outQuad' })
+          }
+          onMouseLeave={(e) =>
+            !reduced() && animate(e.currentTarget, { scale: 1, duration: 260, ease: 'outQuad' })
+          }
+          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl
+            border border-sage-ink/35 bg-tip p-5 text-center shadow-soft transition-shadow
+            hover:shadow-lift"
+        >
+          <span className="text-4xl" aria-hidden="true">
+            🎮
+          </span>
+          <span className="font-display text-[1.05rem] leading-tight text-navy">
+            Games · Module {mod.moduleId}
+          </span>
+          {games.length > 0 ? (
+            <>
+              <span className="label-caps text-sage-ink">{games.length} juegos</span>
+              <span className="text-[0.76rem] text-ink-soft">
+                {gameStats.played} de {gameStats.total} jugados · ⭐ {gameStats.stars}
+              </span>
+            </>
+          ) : (
+            <span className="label-caps text-coral-ink">Próximamente</span>
+          )}
+        </div>
       </div>
 
       <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -185,16 +229,6 @@ export default function ModuleGrid() {
           <Home size={19} strokeWidth={2.4} />
         </RoundButton>
 
-        {getGames(bookId, moduleId).length > 0 && (
-          <button
-            onClick={() => navigate(`/book/${bookId}/games?module=${moduleId}`)}
-            className="rounded-full border border-navy/15 bg-white px-4 py-2 text-[0.88rem]
-              font-semibold text-navy shadow-soft transition-colors hover:border-coral-ink
-              hover:text-coral-ink"
-          >
-            🎮 Juegos de este módulo
-          </button>
-        )}
       </div>
     </div>
   )

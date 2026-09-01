@@ -4,13 +4,15 @@ import Home from './pages/Home'
 import BookMenu from './pages/BookMenu'
 import ModuleGrid from './pages/ModuleGrid'
 import LessonReader from './pages/LessonReader'
-import GamesHub from './pages/GamesHub'
+import GamesPicker from './pages/GamesPicker'
+import ModuleGames from './pages/ModuleGames'
 
 /**
  * Navegación de 3 niveles, como un libro digital de editorial:
  *   /                                       Home · selector de libros
  *   /book/:bookId                           Nivel 1 · menú del libro
- *   /book/:bookId/games                     Hub de juegos
+ *   /book/:bookId/games                     Selector de módulo para jugar
+ *   /book/:bookId/module/:moduleId/games    Juegos de ese módulo
  *   /book/:bookId/module/:moduleId          Nivel 2 · lecciones del módulo
  *   /book/:bookId/module/:moduleId/lesson/:lessonId
  *                                           Nivel 3 · libro abierto
@@ -23,8 +25,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/book/:bookId" element={<BookMenu />} />
-          <Route path="/book/:bookId/games" element={<GamesHub />} />
+          <Route path="/book/:bookId/games" element={<GamesPicker />} />
           <Route path="/book/:bookId/module/:moduleId" element={<ModuleGrid />} />
+          <Route path="/book/:bookId/module/:moduleId/games" element={<ModuleGames />} />
           <Route
             path="/book/:bookId/module/:moduleId/lesson/:lessonId"
             element={<LessonReader />}

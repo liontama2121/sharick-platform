@@ -37,21 +37,25 @@ export function getResources(bookId) {
   return getBookContent(bookId)?.resources ?? []
 }
 
-/** Juegos del libro. `moduleId` opcional para filtrar por módulo. */
-export function getGames(bookId, moduleId) {
-  const list = GAMES[bookId]?.games ?? []
-  if (moduleId == null || moduleId === 'all') return list
-  return list.filter((g) => String(g.module) === String(moduleId))
+/* ── Juegos ───────────────────────────────────────────────────────────────
+   Los juegos van POR MÓDULO: cada uno usa solo el contenido de su módulo.  */
+
+/** Juegos de un módulo concreto. */
+export function getModuleGames(bookId, moduleId) {
+  return GAMES[bookId]?.modules?.[String(moduleId)]?.games ?? []
 }
 
-export function findGame(bookId, gameId) {
-  return (GAMES[bookId]?.games ?? []).find((g) => g.id === gameId) ?? null
+export function findGame(bookId, moduleId, gameId) {
+  return getModuleGames(bookId, moduleId).find((g) => g.id === gameId) ?? null
 }
 
-/** Módulos que tienen al menos un juego. */
-export function getGameModules(bookId) {
-  const ids = [...new Set((GAMES[bookId]?.games ?? []).map((g) => g.module))]
-  return ids.sort((a, b) => a - b)
+/** Módulos del libro con al menos un juego publicado. */
+export function getModulesWithGames(bookId) {
+  const byModule = GAMES[bookId]?.modules ?? {}
+  return Object.keys(byModule)
+    .filter((k) => (byModule[k].games ?? []).length > 0)
+    .map(Number)
+    .sort((a, b) => a - b)
 }
 
 /** Secciones extra de la columna izquierda (Self-Check, Cultural…). */

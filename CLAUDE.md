@@ -149,8 +149,9 @@ navy / coral / salvia con Playfair Display se mantiene tal cual.
 ```
 /                                                 Home · selector de libros
 /book/:bookId                                     NIVEL 1 · menú del libro
-/book/:bookId/games[?module=N]                    Hub de juegos
+/book/:bookId/games                               Selector de módulo para jugar
 /book/:bookId/module/:moduleId                    NIVEL 2 · lecciones del módulo
+/book/:bookId/module/:moduleId/games              Juegos de ese módulo
 /book/:bookId/module/:moduleId/lesson/:lessonId   NIVEL 3 · libro abierto
 ```
 
@@ -323,19 +324,33 @@ Dos detalles de implementación que hay que respetar:
 
 ---
 
-## 🎮 SECCIÓN GAMES (hub de juegos)
+## 🎮 SECCIÓN GAMES (por módulo)
 
-Ruta `/book/:bookId/games`, con `?module=N` para filtrar. Se entra desde el
-botón **Games** del Nivel 1 y desde "🎮 Juegos de este módulo" en el Nivel 2.
+**Los juegos van por módulo, no en un hub global.** Cada módulo tiene su
+pantalla con solo sus juegos, hechos con su propio vocabulario y sus diálogos.
 
-- `pages/GamesHub.jsx` — cabecera, pills de filtro por módulo y rejilla de
-  `games/GameCard.jsx` (3 / 1 columnas, hover scale 1.04, badge "Jugado ✓",
-  estrellas y mejor puntaje).
-- Al elegir un juego se abre `games/GameShell.jsx`, un overlay a pantalla
-  completa con [X] y cierre con Escape. **Los juegos del hub viven fuera del
-  flipbook**, así que no compiten con las esquinas de pasar página.
-- Al terminar, `games/GameResult.jsx`: "¡Bien hecho!", estrellas con pop-in
-  escalonado, confeti en la paleta y botones "Jugar otra vez" / "Volver a Games".
+```
+/book/:bookId/games                    selector: "¿De qué módulo quieres jugar?"
+/book/:bookId/module/:moduleId/games   juegos de ese módulo
+```
+
+### Cuatro entradas
+1. **Nivel 2** — tarjeta especial al final de la rejilla, "🎮 Games · Module N",
+   en verde salvia suave, con "3 de 6 jugados · ⭐ 7".
+2. **Nivel 3** — icono 🎮 en la barra superior, solo si el módulo tiene juegos.
+3. **Nivel 1** — el botón Games abre `pages/GamesPicker.jsx`, con una barra por
+   módulo (los que no tienen juegos salen como "Próximamente").
+4. **Fin de módulo** — el overlay "¡Módulo completado!" trae
+   "🎮 Jugar los juegos del módulo".
+
+### Pantallas y piezas
+- `pages/ModuleGames.jsx` — cabecera "Module N · Nombre", [X] al Nivel 2 y
+  rejilla de `games/GameCard.jsx` (3 / 1 columnas, hover scale 1.04, badge
+  "Jugado ✓", estrellas y mejor puntaje). Sin filtro de pills: ya no hace falta.
+- `games/GameShell.jsx` abre cada juego a pantalla completa con [X] y Escape.
+  **Los juegos viven fuera del flipbook**, así que no compiten con las esquinas.
+- `games/GameResult.jsx` cierra la partida: estrellas con pop-in escalonado,
+  confeti de la paleta y "Jugar otra vez" / "Volver a Games".
 
 ### Juegos
 | `type` | Componente | Origen |
@@ -347,19 +362,24 @@ botón **Games** del Nivel 1 y desde "🎮 Juegos de este módulo" en el Nivel 2
 
 ### `books/<libro>/games.json`
 ```json
-{ "games": [
-  { "id": "memory-m1", "type": "memory", "module": 1, "icon": "🃏",
-    "title": "Memory Cards", "blurb": "…",
-    "data": { "pairs": [["Good morning","Buenos días"]] } }
-] }
+{ "modules": {
+  "1": { "games": [
+    { "id": "memory-m1", "type": "memory", "icon": "🃏",
+      "title": "Memory Cards", "blurb": "…",
+      "data": { "pairs": [["Good morning","Buenos días"]] } }
+  ]},
+  "2": { "games": [] }
+} }
 ```
-Agregar un juego = agregar un objeto al JSON. Si es un tipo nuevo, además
-registrarlo en `renderGame()` de `GamesHub.jsx`.
+Agregar un juego = agregar un objeto al módulo que corresponda, **usando solo
+contenido de ese módulo**. Si es un tipo nuevo, registrarlo además en
+`renderGame()` de `ModuleGames.jsx`.
 
 ### Progreso de juegos
-Va en `sharick-progress` bajo `games`: `{ played, plays, bestScore, stars }`
-por juego, quedándose siempre con el mejor resultado. El hook expone
-`recordGame`, `getGameResult` y `playedGames`.
+En `sharick-progress`, agrupado por módulo:
+`games["1"] = { played: [ids], stars: {id: n}, bestScores: {id: n} }`.
+El hook expone `recordGame(moduleId, gameId, {score, stars})`,
+`getGameResult(moduleId, gameId)` y `getModuleGameStats(moduleId, ids)`.
 
 **Ojo con el fin de partida:** el aviso `onFinish` va detrás de un `useRef`,
 no de un estado. El store de progreso notifica de forma síncrona, así que un
