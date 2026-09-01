@@ -101,7 +101,7 @@ export default function ModuleGrid() {
 
       <div
         ref={gridRef}
-        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        className="grid gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(276px, 1fr))' }}
       >
         {lessons.map((lesson) => {
           const isCover = lesson.type === 'cover'
@@ -132,12 +132,12 @@ export default function ModuleGrid() {
                 !reduced() &&
                 animate(e.currentTarget, { scale: 1, duration: 260, ease: 'outQuad' })
               }
-              className="group relative flex cursor-pointer flex-col items-center gap-2 rounded-2xl
-                border border-navy/10 bg-white p-3 text-left shadow-soft transition-shadow
-                hover:shadow-lift"
+              className="group relative flex cursor-pointer flex-col items-center gap-2
+                overflow-hidden rounded-2xl border border-navy/10 bg-white p-3 text-left
+                shadow-soft transition-shadow hover:shadow-lift"
             >
               <span className="relative block">
-                <SpreadThumb lesson={lesson} module={mod} meta={meta} content={content} />
+                <SpreadThumb lesson={lesson} meta={meta} content={content} />
 
                 {/* Etiqueta de lección */}
                 <span
@@ -171,11 +171,11 @@ export default function ModuleGrid() {
 
               <span className="w-full px-0.5 pb-0.5">
                 <span className="block font-display text-[0.92rem] leading-tight text-navy">
-                  {lesson.title}
+                  {lesson.shortTitle ?? lesson.title}
                 </span>
                 {!isCover && (
                   <span className="mt-0.5 block text-[0.72rem] text-ink-soft">
-                    Páginas {lesson.pages.map((p) => p.pageNumber).join('–')}
+                    {(lesson.screens ?? []).length} pantallas
                   </span>
                 )}
               </span>

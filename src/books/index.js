@@ -63,9 +63,9 @@ export function getExtraSections(bookId) {
   return getBookContent(bookId)?.extraSections ?? []
 }
 
-/* ── Lecciones ────────────────────────────────────────────────────────────
-   Una lección es UNA doble página: `pages` trae la hoja izquierda y la
-   derecha. La lección "cover" es la portada, que va sola.                */
+/* ── Lecciones y pantallas ────────────────────────────────────────────────
+   Una lección son varias PANTALLAS completas (`screens`); cada pantalla es
+   lo que cabe sin scroll en el lienzo de 1600x1000.                        */
 
 export function getLessons(bookId, moduleId) {
   return getModule(bookId, moduleId)?.lessons ?? []
@@ -73,63 +73,35 @@ export function getLessons(bookId, moduleId) {
 
 /** Lecciones con contenido real (excluye la portada). */
 export function getContentLessons(bookId, moduleId) {
-  return getLessons(bookId, moduleId).filter((l) => (l.pages ?? []).length > 0)
+  return getLessons(bookId, moduleId).filter((l) => l.type !== 'cover')
 }
 
 export function findLesson(bookId, moduleId, lessonId) {
   return getLessons(bookId, moduleId).find((l) => l.id === lessonId) ?? null
 }
 
-/** Todas las páginas del módulo, en orden, con su módulo y su lección. */
-export function getModulePages(bookId, moduleId) {
-  const mod = getModule(bookId, moduleId)
-  if (!mod) return []
-  return (mod.lessons ?? []).flatMap((lesson) =>
-    (lesson.pages ?? []).map((page) => ({ page, module: mod, lesson })),
-  )
+export function getScreens(lesson) {
+  return lesson?.screens ?? []
 }
 
-/** Todas las páginas del libro (todos los módulos). */
-export function getAllPages(bookId) {
-  return getModules(bookId).flatMap((mod) =>
-    (mod.lessons ?? []).flatMap((lesson) =>
-      (lesson.pages ?? []).map((page) => ({ page, module: mod, lesson })),
-    ),
-  )
-}
-
-/** Página + módulo + lección, buscada por id de página. */
-export function findPage(bookId, pageId) {
-  const all = getAllPages(bookId)
-  const index = all.findIndex((p) => p.page.id === pageId)
-  if (index === -1) return null
-  return { ...all[index], index, total: all.length }
-}
-
-/** Lección a la que pertenece una página. */
-export function lessonOfPage(bookId, moduleId, pageId) {
-  return (
-    getLessons(bookId, moduleId).find((l) =>
-      (l.pages ?? []).some((p) => p.id === pageId),
-    ) ?? null
-  )
+/** Índice de una lección dentro de su módulo (para anterior/siguiente). */
+export function lessonIndex(bookId, moduleId, lessonId) {
+  return getLessons(bookId, moduleId).findIndex((l) => l.id === lessonId)
 }
 
 /* ── Actividades y progreso ───────────────────────────────────────────── */
 
-/** Id canónico de una actividad: "m1-p09-match". */
-export function activityId(pageId, section) {
-  return `${pageId}-${section.id ?? section.activity}`
+/** Id canónico de una actividad: "1.1-s1-matchMarkers". */
+export function activityId(screenId, activity) {
+  return `${screenId}-${activity.id ?? activity.activity}`
 }
 
-export function pageActivityIds(page) {
-  return (page.sections ?? [])
-    .filter((s) => s.type === 'activity')
-    .map((s) => activityId(page.id, s))
+export function screenActivityIds(screen) {
+  return screen.activity ? [activityId(screen.id, screen.activity)] : []
 }
 
 export function lessonActivityIds(lesson) {
-  return (lesson.pages ?? []).flatMap(pageActivityIds)
+  return getScreens(lesson).flatMap(screenActivityIds)
 }
 
 export function moduleActivityIds(mod) {

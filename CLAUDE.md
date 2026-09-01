@@ -28,7 +28,6 @@ Chile, Ecuador y Brasil. En `modules.json` el libro lleva `region: "Latin Americ
 | Tailwind CSS | v4 | Estilos utility-first |
 | Anime.js | v4 (`animejs`) | TODAS las animaciones |
 | React Router | v7 | Navegación SPA |
-| react-pageflip | v2 | Pasada de página del libro |
 | lucide-react | v1 | Iconos de línea del menú y las tarjetas |
 | localStorage | nativo | Progreso del estudiante (sin backend) |
 
@@ -93,19 +92,38 @@ sage-ink 5.0:1 · blanco sobre coral-ink 6.0:1. Coral, sage y gold "puros" está
   (UNIT 1 · LESSON 2 · VOCABULARY · EXERCISE 3 · CULTURAL TIP)
 - **Fredoka y Sora están eliminadas del proyecto.**
 
-### Estructura de una página del libro (`BookPage` + `PageContent`)
-1. `UNIT X` en coral + título grande serif navy (`unitTitle`)
-2. `LESSON X` en coral + nombre de lección serif (`title`) + floritura dorada (`Swirl`)
-3. Cajas beige (`.box-beige`, radio 12px): vocabulario, diálogos, dado
-4. Botones pill blancos con icono (`PillButton`): 🔊 Listen · 🎙️ Record · ▶️ Practice
-5. Divisor `.divider-dotted` entre secciones
-6. `EXERCISE N` verde con hojita + instrucción bold + items numerados en coral,
-   con **líneas para completar** (`.rule-fill`, input underline, sin caja)
-7. `CULTURAL TIP`: caja verde salvia con solecito dorado y corazón
-8. Ilustración grande, radio 20px (placeholder mientras no exista el archivo)
-9. Pie: número en círculo coral + número **escrito en letras** (`numberToWords`),
-   a la izquierda en páginas pares y a la derecha en impares
-10. Decoración: flor tropical SVG en la esquina inferior + onda de acuarela
+### Formato de página — pantalla completa tipo Express Publishing
+Referencia: libro interactivo **Express Publishing "Upload"**. Se replica la
+estructura; el color y la tipografía son los nuestros.
+
+- **Nada de doble página ni de pasada de hoja.** Cada pantalla es un lienzo fijo
+  de **1600x1000** escalado al viewport con `transform: scale()`
+  (`page/PageStage.jsx`), con letterbox cream. **Nunca hay scroll**: si el
+  contenido no cabe, se parte en otra pantalla.
+- Una lección tiene varias pantallas (`screens` en el JSON). Se pasa de una a
+  otra desde la barra inferior, con transición de Anime.js (sale translateX -60
+  + fade, entra translateX [60,0] + fade, 400ms).
+
+Anatomía (todo en `src/components/page/`):
+| Componente | Qué es |
+|---|---|
+| `PageStage` | lienzo 1600x1000 escalado al viewport |
+| `PageFrame` | marco coral de 3px, radio 20px, número de página en círculo |
+| `LessonTag` | [1.1] coral + [título corto] navy, con cuadritos pixel art |
+| `CloseButton` | círculo coral de 64px con borde blanco → Nivel 2 |
+| `SectionHeading` | "Reading" / "Listening"… en Playfair coral con subrayado dorado |
+| `ExerciseInstruction` | número grande coral + icono de habilidad + instrucción |
+| `DialogueBubble` | caja de color con la letra fuera; nombres en columna propia |
+| `IllustrationWithMarkers` | ilustración + marcadores numerados por % |
+| `BottomToolbar` | 88px: home, reiniciar, ←/→ pantalla, índice, juegos, fullscreen, ◀/▶ lección |
+| `ScreenRenderer` | elige el layout y coloca todo |
+
+Colores fijos de los diálogos por letra: A `#8E7CC3` · B `#E05A47` ·
+C `#3F86B8` · D `#6B9080` · E `#E9B44C` (E lleva texto navy, el resto blanco).
+
+`media/AudioPlayer.jsx` es un reproductor real estilo casete: barra
+arrastrable, play / pause / stop y atajo de barra espaciadora. Si el mp3 no
+existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 
 ### Decoración SVG reutilizable (`src/components/decor/`)
 `Swirl` (floritura ~ dorada) · `Leaf` (hojita de los labels) ·
@@ -133,7 +151,7 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 | Dado | roll | rotate 720 + bounce, 900ms `outElastic(1, .6)` |
 | Ruleta | giro | rotate 1800°+ , 3500ms, transición CSS `cubic-bezier(.16,.72,.16,1)` |
 | Burbujas / frases | pop-in | scale [0.8,1], stagger 120ms |
-| Pasada de página | react-pageflip | 800ms |
+| Cambio de pantalla | slide + fade | sale translateX -60, entra [60,0], 400ms `outQuad` |
 
 Todo respeta `prefers-reduced-motion`.
 
@@ -166,11 +184,10 @@ alto 90px, radio 12px, fondo `box`, hover translateX 6px):
 - Botón circular coral [X] arriba a la derecha → Home.
 
 ### Nivel 2 — lecciones del módulo (`pages/ModuleGrid.jsx`)
-Rejilla responsive (4 / 2 / 1 columnas) con una tarjeta por doble página:
-- **Miniatura real** (`book/SpreadThumb.jsx`): se renderiza el libro de verdad
-  a `scale(0.22)` con `pointer-events: none` y un progreso inerte, para que
-  ninguna actividad se marque desde la miniatura. La portada va sola y por eso
-  su tarjeta es más angosta.
+Rejilla auto-fill (mínimo 276px) con una tarjeta por lección:
+- **Miniatura real** (`book/SpreadThumb.jsx`): se renderiza la PRIMERA pantalla
+  de la lección a `scale(0.16)` (landscape 16:10) con `pointer-events: none` y
+  un progreso inerte, para que ninguna actividad se marque desde la miniatura.
 - Etiqueta "1.1", "1.2"… en cuadro coral, esquina superior izquierda.
 - Badges de recursos abajo a la derecha, leídos de `lesson.resources`:
   🔊 audio · 🎮 game · 🎬 video.
@@ -259,33 +276,38 @@ impares a la derecha para que las dobles páginas queden balanceadas.
 | 1.5 | 14–15 | Exercise 1 (relojes) · Exercise 2 (listening) |
 | 1.6 | 16–17 | Exercise 3 (el dado) · Can-do check |
 
-### Esquema de lección
+### Esquema de lección y pantalla
 ```json
 {
-  "id": "1.1",
-  "title": "Let's say hi to Colombia!",
-  "resources": ["audio", "game", "video"],
-  "pages": [ { …hoja izquierda… }, { …hoja derecha… } ]
+  "id": "1.1", "shortTitle": "Let's say hi!", "resources": ["audio","game"],
+  "screens": [
+    { "id": "1.1-s1", "pageNumber": 6, "section": "Reading",
+      "layout": "dialogues-left-image-right",
+      "audio": "/audio/english/module1/1-1-dialogues.mp3",
+      "exercise": { "number": 1, "skill": "listen",
+                    "instruction": "Listen and read the dialogues (A-C)." },
+      "dialogues": [ { "letter": "A", "audio": "…",
+                       "lines": [ { "speaker": "Camila", "text": "Hi! I'm Camila." } ] } ],
+      "illustration": { "src": "…", "alt": "…",
+                        "markers": [ { "n": 1, "x": 20, "y": 62, "label": "Camila & Mateo" } ] },
+      "activity": { "activity": "matchMarkers",
+                    "pairs": [ { "dialogue": "A", "marker": 1 } ] } }
+  ]
 }
 ```
-La portada es `{ "id": "cover", "type": "cover", "pages": [] }`.
+La portada es `{ "id": "cover", "type": "cover", "screens": [{ "layout": "cover" }] }`.
 
-### Esquema de página
-```json
-{
-  "id": "m1-p06", "pageNumber": 6,
-  "unitTitle": "...", "lessonLabel": "Lesson 1", "title": "...",
-  "navTitle": "texto corto para el sidebar",
-  "hideHeader": false, "showUnit": true, "intro": "...",
-  "sections": [ ... ]
-}
-```
-Tipos de sección: `vocabulary` · `dialogues` · `routine` · `illustration` · `culturalTip` ·
-`checklist` · `actions` · `divider` · `activity`.
-Actividades (`section.activity`): `match` · `fillInSentence` · `fillBubbles` · `listening` ·
-`multipleChoice` · `speaking` · `recordPrompt` · `diceGame`.
+**Layouts** (`layout`): `dialogues-left-image-right` · `two-columns` ·
+`image-top-activity-bottom` · `activity-full` · `dialogues-only` · `cover`.
+Los bloques de contenido (`blocks`) reutilizan `vocabulary`, `culturalTip`,
+`routine`, `checklist` y `text`.
+
+**Regla de oro del formato:** una pantalla = lo que cabe sin scroll. Si algo se
+sale, se parte en otra pantalla, no se encoge el texto.
 
 ---
+
+
 
 ## 🎲 ACTIVIDADES LÚDICAS DISPONIBLES
 

@@ -3,51 +3,41 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { animate } from 'animejs'
 
 import {
+  activityId,
   findLesson,
   getBookContent,
   getBookMeta,
+  getLessons,
   getModule,
   getModuleGames,
-  getModulePages,
-  lessonOfPage,
+  getScreens,
 } from '../books'
 import { useProgress } from '../hooks/useProgress'
-import { useLevelIntro } from '../hooks/useLevelIntro'
-import BookViewer from '../components/book/BookViewer'
-import ReaderBar from '../components/layout/ReaderBar'
+import PageStage from '../components/page/PageStage'
+import PageFrame from '../components/page/PageFrame'
+import LessonTag from '../components/page/LessonTag'
+import CloseButton from '../components/page/CloseButton'
+import BottomToolbar from '../components/page/BottomToolbar'
+import ScreenRenderer from '../components/page/ScreenRenderer'
 import Button from '../components/ui/Button'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
+function typingInField() {
+  const el = document.activeElement
+  const tag = el?.tagName
+  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el?.isContentEditable
+}
+
 function DoneOverlay({ moduleName, onBack, onGames }) {
-  const ref = useRef(null)
-
-  useEffect(() => {
-    if (ref.current && !reduced()) {
-      animate(ref.current, {
-        opacity: [0, 1],
-        scale: [0.94, 1],
-        duration: 380,
-        ease: 'outBack',
-      })
-    }
-  }, [])
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/35 px-6">
-      <div
-        ref={ref}
-        role="dialog"
-        aria-modal="true"
-        className="w-full max-w-md rounded-2xl bg-paper p-7 text-center shadow-lift"
-      >
+    <div className="absolute inset-0 z-40 flex items-center justify-center bg-navy/35 px-6">
+      <div className="w-full max-w-md rounded-2xl bg-paper p-7 text-center shadow-lift">
         <p className="label-caps text-sage-ink">Fin del módulo</p>
         <h2 className="mt-1.5">¡Módulo completado!</h2>
-        <p className="mt-2 text-[0.92rem] text-ink-soft">
-          Llegaste al final de {moduleName}. Puedes repasar cualquier lección cuando quieras.
-        </p>
+        <p className="mt-2 text-[0.92rem] text-ink-soft">Llegaste al final de {moduleName}.</p>
         <div className="mt-5 flex flex-wrap justify-center gap-2.5">
           <Button onClick={onGames}>🎮 Jugar los juegos del módulo</Button>
           <Button variant="ghost" onClick={onBack}>
@@ -59,45 +49,171 @@ function DoneOverlay({ moduleName, onBack, onGames }) {
   )
 }
 
-/** NIVEL 3 — el libro abierto en una doble página. */
+/** Índice de lecciones en modal, desde la toolbar. */
+function IndexOverlay({ lessons, currentId, onPick, onClose }) {
+  return (
+    <div className="absolute inset-0 z-40 flex items-center justify-center bg-navy/40 px-10">
+      <div className="max-h-[80%] w-full max-w-3xl overflow-y-auto rounded-2xl bg-paper p-7 scrollbar-slim">
+        <div className="mb-4 flex items-center justify-between">
+          <h2>Índice de lecciones</h2>
+          <Button size="sm" variant="ghost" onClick={onClose}>
+            Cerrar
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {lessons.map((l) => (
+            <button
+              key={l.id}
+              onClick={() => onPick(l.id)}
+              className={`rounded-xl border px-4 py-3 text-left transition-colors
+                ${l.id === currentId
+                  ? 'border-coral-ink bg-tip'
+                  : 'border-navy/12 bg-white hover:border-coral-ink/60'}`}
+            >
+              <span className="label-caps text-coral-ink">
+                {l.type === 'cover' ? 'Portada' : l.id}
+              </span>
+              <span className="mt-0.5 block font-display text-[1.05rem] text-navy">
+                {l.shortTitle ?? l.title}
+              </span>
+              <span className="text-[0.75rem] text-ink-soft">{getScreens(l).length} pantallas</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** NIVEL 3 — la lección a pantalla completa, una pantalla a la vez. */
 export default function LessonReader() {
   const { bookId, moduleId, lessonId } = useParams()
   const navigate = useNavigate()
-  const ref = useLevelIntro(`${bookId}-${moduleId}`)
 
   const meta = getBookMeta(bookId)
   const content = getBookContent(bookId)
   const mod = getModule(bookId, moduleId)
-  const pages = getModulePages(bookId, moduleId)
+  const lessons = getLessons(bookId, moduleId)
   const lesson = findLesson(bookId, moduleId, lessonId)
+  const screens = getScreens(lesson)
   const hasGames = getModuleGames(bookId, moduleId).length > 0
   const progress = useProgress(bookId)
-  const { setCurrentPage } = progress
 
+  const [screenIdx, setScreenIdx] = useState(0)
+  const [resetKey, setResetKey] = useState(0)
+  const [showIndex, setShowIndex] = useState(false)
   const [done, setDone] = useState(false)
+  const [isFullscreen, setFullscreen] = useState(false)
+  const [barHidden, setBarHidden] = useState(false)
+  const [playingLetter, setPlayingLetter] = useState(null)
 
-  const currentPageId = lesson?.pages?.[0]?.id ?? null
+  const slideRef = useRef(null)
+  const dialogueAudioRef = useRef(null)
+
+  const lessonPos = lessons.findIndex((l) => l.id === lessonId)
+  const screen = screens[screenIdx] ?? null
 
   useEffect(() => {
-    if (currentPageId) setCurrentPage(currentPageId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPageId])
+    setScreenIdx(0)
+    setDone(false)
+  }, [lessonId])
 
-  const handlePageChange = useCallback(
-    (pageId) => {
-      // pageId nulo = el lector está en la portada del libro.
-      const nextId = pageId === null ? 'cover' : lessonOfPage(bookId, moduleId, pageId)?.id
-      if (nextId && nextId !== lessonId) {
-        navigate(`/book/${bookId}/module/${moduleId}/lesson/${nextId}`, { replace: true })
+  // Entrada de cada pantalla
+  useEffect(() => {
+    const el = slideRef.current
+    if (!el || reduced()) return
+    el.style.opacity = '0'
+    animate(el, { opacity: [0, 1], translateX: [60, 0], duration: 400, ease: 'outQuad' })
+  }, [screenIdx, lessonId])
+
+  const go = useCallback(
+    (dir) => {
+      const el = slideRef.current
+      const apply = () => {
+        if (dir > 0) {
+          if (screenIdx + 1 < screens.length) setScreenIdx((i) => i + 1)
+          else if (lessonPos + 1 < lessons.length)
+            navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos + 1].id}`)
+          else setDone(true)
+        } else if (screenIdx > 0) setScreenIdx((i) => i - 1)
+        else if (lessonPos > 0)
+          navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos - 1].id}`)
       }
+
+      if (!el || reduced()) return apply()
+      animate(el, {
+        opacity: [1, 0],
+        translateX: dir > 0 ? -60 : 60,
+        duration: 260,
+        ease: 'outQuad',
+      })
+      setTimeout(apply, 240)
     },
-    [bookId, moduleId, lessonId, navigate],
+    [screenIdx, screens.length, lessonPos, lessons, bookId, moduleId, navigate],
   )
 
-  const toModule = () => navigate(`/book/${bookId}/module/${moduleId}`)
-  const toGames = () => navigate(`/book/${bookId}/module/${moduleId}/games`)
+  useEffect(() => {
+    const onKey = (e) => {
+      if (typingInField()) return
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        go(1)
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        go(-1)
+      } else if (e.key === 'Escape' && showIndex) {
+        setShowIndex(false)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [go, showIndex])
 
-  if (!mod || !lesson) {
+  useEffect(() => {
+    const onFs = () => setFullscreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', onFs)
+    return () => document.removeEventListener('fullscreenchange', onFs)
+  }, [])
+
+  // En pantalla completa la barra se esconde tras 2s sin mover el mouse
+  useEffect(() => {
+    if (!isFullscreen) {
+      setBarHidden(false)
+      return
+    }
+    let t = setTimeout(() => setBarHidden(true), 2000)
+    const wake = () => {
+      setBarHidden(false)
+      clearTimeout(t)
+      t = setTimeout(() => setBarHidden(true), 2000)
+    }
+    window.addEventListener('mousemove', wake)
+    return () => {
+      clearTimeout(t)
+      window.removeEventListener('mousemove', wake)
+    }
+  }, [isFullscreen])
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) document.exitFullscreen?.()
+    else document.documentElement.requestFullscreen?.()
+  }
+
+  /** Audio propio de un diálogo al hacer click en su caja. */
+  const playDialogue = useCallback((dialogue) => {
+    if (!dialogue?.audio) return
+    dialogueAudioRef.current?.pause()
+    const a = new Audio(dialogue.audio)
+    dialogueAudioRef.current = a
+    setPlayingLetter(dialogue.letter)
+    a.onended = () => setPlayingLetter(null)
+    a.onerror = () => setPlayingLetter(null)
+    a.play().catch(() => setPlayingLetter(null))
+  }, [])
+
+  useEffect(() => () => dialogueAudioRef.current?.pause(), [])
+
+  if (!mod || !lesson || !screen) {
     return (
       <div className="p-10 text-center">
         <h1 className="mb-4">Lección no encontrada</h1>
@@ -108,45 +224,81 @@ export default function LessonReader() {
     )
   }
 
-  const label =
-    lesson.type === 'cover'
-      ? `Module ${mod.moduleId} · Portada`
-      : `Module ${mod.moduleId} · ${lesson.id}`
+  const toModule = () => navigate(`/book/${bookId}/module/${moduleId}`)
+  const toGames = () => navigate(`/book/${bookId}/module/${moduleId}/games`)
 
   return (
-    <div ref={ref}>
-      <ReaderBar
-        title={label}
-        onHome={() => navigate(`/book/${bookId}`)}
-        onGames={hasGames ? toGames : null}
-        onClose={toModule}
-      />
+    <PageStage>
+      <PageFrame pageNumber={screen.pageNumber}>
+        {lesson.type !== 'cover' && (
+          <LessonTag id={lesson.id} title={lesson.shortTitle ?? lesson.title} />
+        )}
+        <CloseButton onClick={toModule} />
 
-      <div className="mx-auto w-full max-w-[1140px] px-4 pb-8 sm:px-8">
-        <BookViewer
-          meta={meta}
-          content={content}
-          pages={pages}
-          currentPageId={currentPageId}
-          onPageChange={handlePageChange}
-          onReachEnd={() => setDone(true)}
-          progress={progress}
-        />
-      </div>
+        <div ref={slideRef} className="h-full w-full">
+          <ScreenRenderer
+            screen={screen}
+            meta={meta}
+            content={content}
+            progress={progress}
+            activityId={activityId}
+            resetKey={resetKey}
+            playingLetter={playingLetter}
+            onPlayDialogue={playDialogue}
+          />
+        </div>
 
-      {done && (
-        <DoneOverlay
-          moduleName={mod.moduleName}
-          onBack={() => {
-            setDone(false)
-            toModule()
-          }}
-          onGames={() => {
-            setDone(false)
-            toGames()
-          }}
+        <BottomToolbar
+          hidden={barHidden}
+          onHome={() => navigate(`/book/${bookId}`)}
+          onReset={() => setResetKey((k) => k + 1)}
+          onPrevScreen={() => go(-1)}
+          onNextScreen={() => go(1)}
+          onIndex={() => setShowIndex(true)}
+          onGames={hasGames ? toGames : null}
+          onFullscreen={toggleFullscreen}
+          isFullscreen={isFullscreen}
+          onPrevLesson={() =>
+            lessonPos > 0 &&
+            navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos - 1].id}`)
+          }
+          onNextLesson={() =>
+            lessonPos + 1 < lessons.length
+              ? navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos + 1].id}`)
+              : setDone(true)
+          }
+          canPrevScreen={screenIdx > 0 || lessonPos > 0}
+          canNextScreen={screenIdx + 1 < screens.length || lessonPos + 1 < lessons.length}
+          canPrevLesson={lessonPos > 0}
+          canNextLesson={lessonPos + 1 < lessons.length}
         />
-      )}
-    </div>
+
+        {showIndex && (
+          <IndexOverlay
+            lessons={lessons}
+            currentId={lessonId}
+            onClose={() => setShowIndex(false)}
+            onPick={(id) => {
+              setShowIndex(false)
+              navigate(`/book/${bookId}/module/${moduleId}/lesson/${id}`)
+            }}
+          />
+        )}
+
+        {done && (
+          <DoneOverlay
+            moduleName={mod.moduleName}
+            onBack={() => {
+              setDone(false)
+              toModule()
+            }}
+            onGames={() => {
+              setDone(false)
+              toGames()
+            }}
+          />
+        )}
+      </PageFrame>
+    </PageStage>
   )
 }

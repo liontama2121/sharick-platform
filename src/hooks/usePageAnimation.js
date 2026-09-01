@@ -10,8 +10,8 @@ const reduced = () =>
  * stagger de 80ms sobre los hijos marcados con [data-anim].
  *
  * El estado inicial (opacity 0) se aplica como estilo inline desde aquí,
- * NO como clase en el JSX: react-pageflip provoca re-renders que
- * restaurarían la clase y dejarían la página invisible.
+ * NO como clase en el JSX: un re-render de React restauraría la clase y
+ * dejaría la pantalla invisible.
  *
  * @param {any} key  cambiar este valor re-dispara la animación (p.ej. el id de página)
  */

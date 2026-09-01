@@ -141,12 +141,24 @@
   }
 }
 
-/* react-pageflip: la sombra del lomo la pintamos nosotros */
-.stf__parent {
-  margin: 0 auto;
+/* Slider del reproductor de audio */
+.audio-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-coral-ink);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(27, 58, 92, 0.3);
+  cursor: pointer;
 }
-.stf__item {
-  background: var(--color-paper);
+.audio-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--color-coral-ink);
+  border: 2px solid #fff;
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {

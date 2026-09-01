@@ -13,26 +13,162 @@
         {
           "id": "cover",
           "type": "cover",
-          "title": "Portada del libro",
+          "shortTitle": "Portada",
           "resources": [],
-          "pages": []
+          "screens": [
+            {
+              "id": "cover-s1",
+              "layout": "cover"
+            }
+          ]
         },
         {
           "id": "1.1",
+          "shortTitle": "Let's say hi!",
           "title": "Let's say hi to Colombia!",
           "resources": [
-            "audio"
+            "audio",
+            "game"
           ],
-          "pages": [
+          "screens": [
             {
-              "id": "m1-p06",
+              "id": "1.1-s1",
               "pageNumber": 6,
-              "unitTitle": "Greetings and Introductions",
-              "lessonLabel": "Lesson 1",
-              "title": "Let's say hi to Colombia!",
-              "navTitle": "Let's say hi to Colombia!",
-              "intro": "En Cartagena todo empieza con un saludo. Aprende las palabras que abren cualquier conversación en inglés.",
-              "sections": [
+              "section": "Reading",
+              "audio": "/audio/english/module1/1-1-dialogues.mp3",
+              "audioLabel": "Dialogues A-C",
+              "layout": "dialogues-left-image-right",
+              "exercise": {
+                "number": 1,
+                "skill": "listen",
+                "instruction": "Listen and read the dialogues (A-C)."
+              },
+              "dialogues": [
+                {
+                  "letter": "A",
+                  "audio": "/audio/english/module1/1-1-a.mp3",
+                  "lines": [
+                    {
+                      "speaker": "Camila",
+                      "text": "Hi! I'm Camila. I'm from Bogotá."
+                    },
+                    {
+                      "speaker": "Mateo",
+                      "text": "Hi, Camila. I'm Mateo, from Buenos Aires."
+                    },
+                    {
+                      "speaker": "Camila",
+                      "text": "Nice to meet you, Mateo."
+                    },
+                    {
+                      "speaker": "Mateo",
+                      "text": "Nice to meet you, too."
+                    }
+                  ]
+                },
+                {
+                  "letter": "B",
+                  "audio": "/audio/english/module1/1-1-b.mp3",
+                  "lines": [
+                    {
+                      "speaker": "Valentina",
+                      "text": "Hey, Diego! How are you?"
+                    },
+                    {
+                      "speaker": "Diego",
+                      "text": "I'm great, thanks! And you?"
+                    },
+                    {
+                      "speaker": "Valentina",
+                      "text": "Pretty good. Are you going to the beach?"
+                    },
+                    {
+                      "speaker": "Diego",
+                      "text": "Yes! See you there, amiga."
+                    }
+                  ]
+                },
+                {
+                  "letter": "C",
+                  "audio": "/audio/english/module1/1-1-c.mp3",
+                  "lines": [
+                    {
+                      "speaker": "Santiago",
+                      "text": "Valentina, this is my friend Lucía."
+                    },
+                    {
+                      "speaker": "Lucía",
+                      "text": "Hello! I'm from Lima. Nice to meet you."
+                    },
+                    {
+                      "speaker": "Valentina",
+                      "text": "Nice to meet you, Lucía. Welcome!"
+                    }
+                  ]
+                }
+              ],
+              "illustration": {
+                "src": "/images/english/module1/cartagena-plaza.png",
+                "alt": "Amigos saludándose en una plaza de Cartagena",
+                "emoji": "🏛️",
+                "markers": [
+                  {
+                    "n": 1,
+                    "x": 20,
+                    "y": 62,
+                    "label": "Camila & Mateo"
+                  },
+                  {
+                    "n": 2,
+                    "x": 52,
+                    "y": 56,
+                    "label": "Valentina & Diego"
+                  },
+                  {
+                    "n": 3,
+                    "x": 82,
+                    "y": 52,
+                    "label": "Santiago & Lucía"
+                  }
+                ]
+              },
+              "activity": {
+                "activity": "matchMarkers",
+                "id": "matchMarkers",
+                "exercise": {
+                  "number": 2,
+                  "skill": "read",
+                  "instruction": "Match the dialogues (A-C) to the people (1-3)."
+                },
+                "pairs": [
+                  {
+                    "dialogue": "A",
+                    "marker": 1
+                  },
+                  {
+                    "dialogue": "B",
+                    "marker": 2
+                  },
+                  {
+                    "dialogue": "C",
+                    "marker": 3
+                  }
+                ]
+              }
+            },
+            {
+              "id": "1.1-s2",
+              "pageNumber": 7,
+              "section": "Vocabulary",
+              "layout": "two-columns",
+              "audio": "/audio/english/module1/1-1-vocab.mp3",
+              "audioLabel": "Greetings",
+              "exercise": {
+                "number": 3,
+                "skill": "listen",
+                "instruction": "Listen and repeat the greetings."
+              },
+              "blocks": [
                 {
                   "type": "vocabulary",
                   "id": "vocab-greetings",
@@ -96,23 +232,6 @@
                       "icon": "practice"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "id": "m1-p07",
-              "pageNumber": 7,
-              "hideHeader": true,
-              "title": "Let's say hi to Colombia!",
-              "navTitle": "Cartagena · Cultural tip",
-              "sections": [
-                {
-                  "type": "illustration",
-                  "id": "hero-cartagena",
-                  "image": "/images/english/module1/cartagena-hero.png",
-                  "alt": "Murallas y calles coloniales de Cartagena",
-                  "emoji": "🏛️",
-                  "caption": "Cartagena de Indias — la ciudad amurallada."
                 },
                 {
                   "type": "culturalTip",
@@ -122,339 +241,147 @@
                   "float": false,
                   "text": "En Colombia el saludo casi siempre trae una pregunta pegada: «¿bien o qué?». En el trabajo y con desconocidos se usa usted; entre amigos, tú o vos según la región. En inglés la diferencia no está en el pronombre sino en el saludo: Good morning es formal, Hi es de confianza."
                 }
-              ]
+              ],
+              "illustration": {
+                "src": "/images/english/module1/latinoamerica-bg.png",
+                "alt": "Escenas de Latinoamérica: Buenos Aires, Ciudad de México, Lima y Medellín",
+                "emoji": "🌎"
+              }
+            },
+            {
+              "id": "1.1-s3",
+              "pageNumber": 8,
+              "section": "Speaking",
+              "layout": "two-columns",
+              "exercise": {
+                "number": 4,
+                "skill": "speak",
+                "instruction": "Introduce yourself and say goodbye."
+              },
+              "blocks": [],
+              "illustration": {
+                "src": "/images/english/module1/colombia-bg.png",
+                "alt": "Paisaje latinoamericano",
+                "emoji": "🏞️"
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "speaking",
+                "id": "speaking",
+                "number": 4,
+                "title": "Introduce yourself",
+                "instructions": "Preséntate en voz alta y luego despídete.",
+                "modelPhrases": [
+                  "Hello! My name is ...",
+                  "I'm from ...",
+                  "Nice to meet you!",
+                  "Goodbye! See you later!"
+                ]
+              }
+            },
+            {
+              "id": "1.1-s3b",
+              "pageNumber": 9,
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 5,
+                "skill": "speak",
+                "instruction": "Answer these questions out loud."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "recordPrompt",
+                "id": "record",
+                "number": 5,
+                "title": "Answer out loud",
+                "instructions": "Responde cada pregunta en voz alta. Puedes grabarte para escucharte.",
+                "items": [
+                  {
+                    "question": "What's your name?",
+                    "hint": "My name is…"
+                  },
+                  {
+                    "question": "Where are you from?",
+                    "hint": "I'm from…"
+                  },
+                  {
+                    "question": "How are you today?",
+                    "hint": "I'm fine, thanks. / Not bad."
+                  }
+                ]
+              }
+            },
+            {
+              "id": "1.1-s4",
+              "pageNumber": 10,
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 6,
+                "skill": "speak",
+                "instruction": "Spin the wheel and speak."
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "roulette",
+                "id": "roulette",
+                "number": 6,
+                "title": "Spin & Speak!",
+                "instructions": "Gira la ruleta y responde en voz alta la consigna que salga.",
+                "segments": [
+                  {
+                    "label": "Your name",
+                    "prompt": "Say: My name is ___."
+                  },
+                  {
+                    "label": "Your city",
+                    "prompt": "Say: I'm from ___."
+                  },
+                  {
+                    "label": "Formal hi",
+                    "prompt": "Greet someone formally."
+                  },
+                  {
+                    "label": "Friendly hi",
+                    "prompt": "Greet a friend informally."
+                  },
+                  {
+                    "label": "Goodbye",
+                    "prompt": "Say goodbye in two different ways."
+                  },
+                  {
+                    "label": "How are you?",
+                    "prompt": "Answer “How are you?” honestly."
+                  }
+                ]
+              }
             }
           ]
         },
         {
           "id": "1.2",
-          "title": "Reading · Dialogues A, B & C",
+          "shortTitle": "Hello, amigo!",
+          "title": "Hello, amigo!",
           "resources": [
             "audio",
             "game"
           ],
-          "pages": [
+          "screens": [
             {
-              "id": "m1-p08",
-              "pageNumber": 8,
-              "hideHeader": true,
-              "title": "Reading · Dialogues A & B",
-              "navTitle": "Reading · Dialogues A & B",
-              "sections": [
-                {
-                  "type": "dialogues",
-                  "id": "dialogues-ab",
-                  "label": "Reading",
-                  "items": [
-                    {
-                      "id": "A",
-                      "label": "Dialogue A",
-                      "context": "Formal · Bogotá y Buenos Aires se conocen en Cartagena",
-                      "audio": "/audio/english/module1/dialogue-a.mp3",
-                      "characters": [
-                        "Camila",
-                        "Mateo"
-                      ],
-                      "lines": [
-                        {
-                          "speaker": "Camila",
-                          "text": "Good morning. I'm Camila Restrepo, from the tourism office of Cartagena."
-                        },
-                        {
-                          "speaker": "Mateo",
-                          "text": "Good morning, Ms. Restrepo. My name is Mateo Ferreyra. It's a pleasure to meet you."
-                        },
-                        {
-                          "speaker": "Camila",
-                          "text": "Nice to meet you too, Mr. Ferreyra. Where are you from?"
-                        },
-                        {
-                          "speaker": "Mateo",
-                          "text": "I'm from Buenos Aires, in Argentina. This is my first time in Colombia."
-                        },
-                        {
-                          "speaker": "Camila",
-                          "text": "Welcome! I'm from Bogotá, but I live here now. Shall we start the tour?"
-                        }
-                      ]
-                    },
-                    {
-                      "id": "B",
-                      "label": "Dialogue B",
-                      "context": "Informal · Medellín y Ciudad de México camino a la playa",
-                      "audio": "/audio/english/module1/dialogue-b.mp3",
-                      "characters": [
-                        "Valentina",
-                        "Diego"
-                      ],
-                      "lines": [
-                        {
-                          "speaker": "Valentina",
-                          "text": "Hey, Diego! Hi! How are you?"
-                        },
-                        {
-                          "speaker": "Diego",
-                          "text": "Hi, Vale! I'm great, thanks. And you?"
-                        },
-                        {
-                          "speaker": "Valentina",
-                          "text": "Pretty good! Are you going to the beach?"
-                        },
-                        {
-                          "speaker": "Diego",
-                          "text": "Yes! I'm from Mexico City, so the sea is a treat for me."
-                        },
-                        {
-                          "speaker": "Valentina",
-                          "text": "Ha! I'm from Medellín, same thing. See you later, amigo!"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "id": "m1-p09",
-              "pageNumber": 9,
-              "hideHeader": true,
-              "title": "Dialogue C · Exercise 1",
-              "navTitle": "Dialogue C · Exercise 1",
-              "sections": [
-                {
-                  "type": "dialogues",
-                  "id": "dialogue-c",
-                  "label": "Reading",
-                  "items": [
-                    {
-                      "id": "C",
-                      "label": "Dialogue C",
-                      "context": "Presentando a un tercero · Santiago presenta a Lucía, de Lima",
-                      "audio": "/audio/english/module1/dialogue-c.mp3",
-                      "characters": [
-                        "Santiago",
-                        "Lucía",
-                        "Valentina"
-                      ],
-                      "lines": [
-                        {
-                          "speaker": "Santiago",
-                          "text": "Hi, Valentina! This is my friend Lucía. She's from Lima."
-                        },
-                        {
-                          "speaker": "Valentina",
-                          "text": "Hello, Lucía! Nice to meet you. I'm Valentina."
-                        },
-                        {
-                          "speaker": "Lucía",
-                          "text": "Nice to meet you too, Valentina. Where are you from?"
-                        },
-                        {
-                          "speaker": "Valentina",
-                          "text": "I'm from Medellín. And Santiago is from Cartagena."
-                        },
-                        {
-                          "speaker": "Lucía",
-                          "text": "Latin America is a small world! Thank you for the welcome."
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "type": "activity",
-                  "activity": "match",
-                  "id": "match",
-                  "number": 1,
-                  "title": "Who says what?",
-                  "instructions": "Empareja cada diálogo con las personas correctas.",
-                  "pairs": [
-                    {
-                      "id": "A",
-                      "left": "Dialogue A",
-                      "rightLabel": "Camila (Bogotá) y Mateo (Buenos Aires) — reunión de trabajo",
-                      "rightImage": "/images/english/module1/camila-mateo.png",
-                      "emoji": "🤝"
-                    },
-                    {
-                      "id": "B",
-                      "left": "Dialogue B",
-                      "rightLabel": "Valentina (Medellín) y Diego (Ciudad de México) — camino a la playa",
-                      "rightImage": "/images/english/module1/valentina-diego.png",
-                      "emoji": "🏖️"
-                    },
-                    {
-                      "id": "C",
-                      "left": "Dialogue C",
-                      "rightLabel": "Santiago presenta a Lucía (Lima) a Valentina",
-                      "rightImage": "/images/english/module1/santiago-lucia-valentina.png",
-                      "emoji": "👋"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "1.3",
-          "title": "Practice · Introduce yourself",
-          "resources": [
-            "game"
-          ],
-          "pages": [
-            {
-              "id": "m1-p10",
-              "pageNumber": 10,
-              "hideHeader": true,
-              "title": "Practice · Greetings",
-              "navTitle": "Exercises 2 y 3",
-              "sections": [
-                {
-                  "type": "activity",
-                  "activity": "fillInSentence",
-                  "id": "fillSentence",
-                  "number": 2,
-                  "title": "Complete the greeting",
-                  "instructions": "Escribe la palabra que falta en cada frase.",
-                  "items": [
-                    {
-                      "sentence": "___ morning, Camila!",
-                      "answer": "Good"
-                    },
-                    {
-                      "sentence": "My name ___ Santiago.",
-                      "answer": "is"
-                    },
-                    {
-                      "sentence": "Nice to ___ you!",
-                      "answer": "meet"
-                    },
-                    {
-                      "sentence": "I'm ___ Medellín.",
-                      "answer": "from"
-                    },
-                    {
-                      "sentence": "___ are you today?",
-                      "answer": "How"
-                    }
-                  ]
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "type": "activity",
-                  "activity": "speaking",
-                  "id": "speaking",
-                  "number": 3,
-                  "title": "Introduce yourself",
-                  "instructions": "Preséntate en voz alta y luego despídete.",
-                  "modelPhrases": [
-                    "Hello! My name is ...",
-                    "I'm from ...",
-                    "Nice to meet you!",
-                    "Goodbye! See you later!"
-                  ]
-                }
-              ]
-            },
-            {
-              "id": "m1-p11",
+              "id": "1.2-s1",
               "pageNumber": 11,
-              "hideHeader": true,
-              "title": "Speaking · Answer out loud",
-              "navTitle": "Exercise 4 · Record",
-              "sections": [
-                {
-                  "type": "illustration",
-                  "id": "hero-colombia",
-                  "image": "/images/english/module1/latinoamerica-bg.png",
-                  "alt": "Escenas de Latinoamérica: Buenos Aires, Ciudad de México, Lima y Medellín",
-                  "emoji": "🏞️"
-                },
-                {
-                  "type": "activity",
-                  "activity": "recordPrompt",
-                  "id": "record",
-                  "number": 4,
-                  "title": "Answer out loud",
-                  "instructions": "Responde cada pregunta en voz alta. Puedes grabarte para escucharte.",
-                  "items": [
-                    {
-                      "question": "What's your name?",
-                      "hint": "My name is…"
-                    },
-                    {
-                      "question": "Where are you from?",
-                      "hint": "I'm from…"
-                    },
-                    {
-                      "question": "How are you today?",
-                      "hint": "I'm fine, thanks. / Not bad."
-                    }
-                  ]
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "type": "activity",
-                  "activity": "roulette",
-                  "id": "roulette",
-                  "number": 5,
-                  "title": "Spin & Speak!",
-                  "instructions": "Gira la ruleta y responde en voz alta la consigna que salga.",
-                  "segments": [
-                    {
-                      "label": "Your name",
-                      "prompt": "Say: My name is ___."
-                    },
-                    {
-                      "label": "Your city",
-                      "prompt": "Say: I'm from ___."
-                    },
-                    {
-                      "label": "Formal hi",
-                      "prompt": "Greet someone formally."
-                    },
-                    {
-                      "label": "Friendly hi",
-                      "prompt": "Greet a friend informally."
-                    },
-                    {
-                      "label": "Goodbye",
-                      "prompt": "Say goodbye in two different ways."
-                    },
-                    {
-                      "label": "How are you?",
-                      "prompt": "Answer “How are you?” honestly."
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "1.4",
-          "title": "Hello, amigo!",
-          "resources": [
-            "audio"
-          ],
-          "pages": [
-            {
-              "id": "m1-p12",
-              "pageNumber": 12,
-              "showUnit": false,
-              "lessonLabel": "Lesson 2",
-              "title": "Hello, amigo!",
-              "navTitle": "Hello, amigo!",
-              "intro": "Un día latinoamericano completo: cada momento tiene su propio saludo en inglés.",
-              "sections": [
+              "section": "Vocabulary",
+              "layout": "two-columns",
+              "audio": "/audio/english/module1/1-2-times.mp3",
+              "audioLabel": "Times of the day",
+              "exercise": {
+                "number": 1,
+                "skill": "read",
+                "instruction": "Read the daily routine and the greeting for each moment."
+              },
+              "blocks": [
                 {
                   "type": "routine",
                   "id": "routine",
@@ -499,22 +426,24 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "illustration": {
+                "src": "/images/english/module1/parcero-hero.png",
+                "alt": "Un día latinoamericano: del desayuno a la noche",
+                "emoji": "🫓"
+              }
             },
             {
-              "id": "m1-p13",
-              "pageNumber": 13,
-              "hideHeader": true,
-              "title": "Times of the day",
-              "navTitle": "Times of the day",
-              "sections": [
-                {
-                  "type": "illustration",
-                  "id": "hero-parcero",
-                  "image": "/images/english/module1/parcero-hero.png",
-                  "alt": "Un día colombiano: de la arepa del desayuno a la noche",
-                  "emoji": "🫓"
-                },
+              "id": "1.2-s2",
+              "pageNumber": 12,
+              "section": "Vocabulary",
+              "layout": "two-columns",
+              "exercise": {
+                "number": 2,
+                "skill": "read",
+                "instruction": "Learn the parts of the day and how friends greet each other."
+              },
+              "blocks": [
                 {
                   "type": "vocabulary",
                   "id": "vocab-times",
@@ -562,233 +491,262 @@
                 },
                 {
                   "type": "culturalTip",
-                  "id": "tip-onces",
-                  "label": "Cultural Tip",
-                  "title": "Las onces",
-                  "float": false,
-                  "text": "A media tarde en Colombia llegan las onces: café con pandebono, almojábana o buñuelo. Si te invitan a onces, todavía saludas con Good afternoon; Good evening empieza cuando cae el sol, más o menos a las seis."
-                },
-                {
-                  "type": "culturalTip",
                   "id": "tip-amigo",
                   "label": "Cultural Tip",
                   "title": "How do you say “friend” in Latin America?",
                   "float": false,
                   "text": "parcero (🇨🇴 Colombia) · pana (🇻🇪 Venezuela, 🇪🇨 Ecuador) · che (🇦🇷 Argentina) · güey o cuate (🇲🇽 México) · causa (🇵🇪 Perú) · weón (🇨🇱 Chile, muy informal) · mano (🇧🇷 Brasil). En inglés basta con friend, buddy o mate, pero cada país tiene la suya."
                 }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "1.5",
-          "title": "What time is it? · Listening",
-          "resources": [
-            "audio",
-            "game"
-          ],
-          "pages": [
-            {
-              "id": "m1-p14",
-              "pageNumber": 14,
-              "hideHeader": true,
-              "title": "What time is it?",
-              "navTitle": "Exercise 1 · Relojes",
-              "sections": [
-                {
-                  "type": "activity",
-                  "activity": "fillBubbles",
-                  "id": "fillBubbles",
-                  "number": 1,
-                  "title": "What time is it? What do you say?",
-                  "instructions": "Mira el reloj y completa la burbuja con el saludo correcto.",
-                  "options": [
-                    "Good morning",
-                    "Good afternoon",
-                    "Good evening",
-                    "Good night"
-                  ],
-                  "items": [
-                    {
-                      "clockTime": "07:00",
-                      "sceneLabel": "Desayuno: arepa y tinto en la cocina.",
-                      "scene": "/images/english/module1/breakfast-arepa.png",
-                      "emoji": "🫓",
-                      "answer": "Good morning"
-                    },
-                    {
-                      "clockTime": "09:15",
-                      "sceneLabel": "Comprando frutas en la plaza de mercado.",
-                      "scene": "/images/english/module1/market-paloquemao.png",
-                      "emoji": "🥭",
-                      "answer": "Good morning"
-                    },
-                    {
-                      "clockTime": "12:30",
-                      "sceneLabel": "Almuerzo con los compañeros de trabajo.",
-                      "scene": "/images/english/module1/lunch-sancocho.png",
-                      "emoji": "🍲",
-                      "answer": "Good afternoon"
-                    },
-                    {
-                      "clockTime": "16:45",
-                      "sceneLabel": "Las onces: café con pandebono.",
-                      "scene": "/images/english/module1/onces-pandebono.png",
-                      "emoji": "☕",
-                      "answer": "Good afternoon"
-                    },
-                    {
-                      "clockTime": "19:00",
-                      "sceneLabel": "Llegando a casa y saludando a la familia.",
-                      "scene": "/images/english/module1/arriving-home.png",
-                      "emoji": "🏠",
-                      "answer": "Good evening"
-                    },
-                    {
-                      "clockTime": "21:30",
-                      "sceneLabel": "Apagando la luz para dormir.",
-                      "scene": "/images/english/module1/bedtime.png",
-                      "emoji": "🛏️",
-                      "answer": "Good night"
-                    }
-                  ]
-                }
-              ]
+              ],
+              "illustration": {
+                "src": "/images/english/module1/onces-pandebono.png",
+                "alt": "Las onces: café con pandebono",
+                "emoji": "☕"
+              }
             },
             {
-              "id": "m1-p15",
-              "pageNumber": 15,
-              "hideHeader": true,
-              "title": "Listening · Mariana's day",
-              "navTitle": "Exercise 2 · Listening",
-              "sections": [
-                {
-                  "type": "activity",
-                  "activity": "listening",
-                  "id": "listening",
-                  "number": 2,
-                  "title": "Mariana's day",
-                  "instructions": "Escucha el audio y responde las preguntas.",
-                  "audio": "/audio/english/module1/listening-1.mp3",
-                  "audioLabel": "Listen",
-                  "transcript": [
-                    {
-                      "speaker": "Mariana",
-                      "text": "Good afternoon! My name is Mariana. I'm from Bogotá, but I live in Cali now."
-                    },
-                    {
-                      "speaker": "Mariana",
-                      "text": "I work in a coffee shop near the park. I start at two in the afternoon."
-                    },
-                    {
-                      "speaker": "Mariana",
-                      "text": "When people arrive, I say \"Good afternoon\". At eight in the evening, I say \"Good evening\"."
-                    },
-                    {
-                      "speaker": "Mariana",
-                      "text": "And when I go home at ten, my grandmother always says \"Good night, mija\"."
-                    }
-                  ],
-                  "questions": [
-                    {
-                      "q": "Where is Mariana from?",
-                      "options": [
-                        "Bogotá",
-                        "Cali",
-                        "Cartagena"
-                      ],
-                      "correct": 0
-                    },
-                    {
-                      "q": "What time does she start work?",
-                      "options": [
-                        "At ten in the morning",
-                        "At two in the afternoon",
-                        "At eight in the evening"
-                      ],
-                      "correct": 1
-                    },
-                    {
-                      "q": "What does she say at eight in the evening?",
-                      "options": [
-                        "Good morning",
-                        "Good afternoon",
-                        "Good evening"
-                      ],
-                      "correct": 2
-                    },
-                    {
-                      "q": "What does her grandmother say at home?",
-                      "options": [
-                        "Good night",
-                        "See you later",
-                        "Nice to meet you"
-                      ],
-                      "correct": 0
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "1.6",
-          "title": "How are you REALLY doing?",
-          "resources": [
-            "game"
-          ],
-          "pages": [
+              "id": "1.2-s3",
+              "pageNumber": 13,
+              "section": "Writing",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 3,
+                "skill": "write",
+                "instruction": "Look at the clock and complete each speech bubble."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "fillBubbles",
+                "id": "fillBubbles",
+                "number": 3,
+                "title": "What time is it? What do you say?",
+                "instructions": "Mira el reloj y completa la burbuja con el saludo correcto.",
+                "options": [
+                  "Good morning",
+                  "Good afternoon",
+                  "Good evening",
+                  "Good night"
+                ],
+                "items": [
+                  {
+                    "clockTime": "07:00",
+                    "sceneLabel": "Desayuno: arepa y tinto en la cocina.",
+                    "scene": "/images/english/module1/breakfast-arepa.png",
+                    "emoji": "🫓",
+                    "answer": "Good morning"
+                  },
+                  {
+                    "clockTime": "09:15",
+                    "sceneLabel": "Comprando frutas en la plaza de mercado.",
+                    "scene": "/images/english/module1/market-paloquemao.png",
+                    "emoji": "🥭",
+                    "answer": "Good morning"
+                  },
+                  {
+                    "clockTime": "12:30",
+                    "sceneLabel": "Almuerzo con los compañeros de trabajo.",
+                    "scene": "/images/english/module1/lunch-sancocho.png",
+                    "emoji": "🍲",
+                    "answer": "Good afternoon"
+                  },
+                  {
+                    "clockTime": "16:45",
+                    "sceneLabel": "Las onces: café con pandebono.",
+                    "scene": "/images/english/module1/onces-pandebono.png",
+                    "emoji": "☕",
+                    "answer": "Good afternoon"
+                  },
+                  {
+                    "clockTime": "19:00",
+                    "sceneLabel": "Llegando a casa y saludando a la familia.",
+                    "scene": "/images/english/module1/arriving-home.png",
+                    "emoji": "🏠",
+                    "answer": "Good evening"
+                  },
+                  {
+                    "clockTime": "21:30",
+                    "sceneLabel": "Apagando la luz para dormir.",
+                    "scene": "/images/english/module1/bedtime.png",
+                    "emoji": "🛏️",
+                    "answer": "Good night"
+                  }
+                ]
+              }
+            },
             {
-              "id": "m1-p16",
+              "id": "1.2-s4",
+              "pageNumber": 14,
+              "section": "Listening",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 4,
+                "skill": "listen",
+                "instruction": "Listen to Mariana and answer the questions."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "listening",
+                "id": "listening",
+                "number": 4,
+                "title": "Mariana's day",
+                "instructions": "Escucha el audio y responde las preguntas.",
+                "audio": "/audio/english/module1/listening-1.mp3",
+                "audioLabel": "Listen",
+                "transcript": [
+                  {
+                    "speaker": "Mariana",
+                    "text": "Good afternoon! My name is Mariana. I'm from Bogotá, but I live in Cali now."
+                  },
+                  {
+                    "speaker": "Mariana",
+                    "text": "I work in a coffee shop near the park. I start at two in the afternoon."
+                  },
+                  {
+                    "speaker": "Mariana",
+                    "text": "When people arrive, I say \"Good afternoon\". At eight in the evening, I say \"Good evening\"."
+                  },
+                  {
+                    "speaker": "Mariana",
+                    "text": "And when I go home at ten, my grandmother always says \"Good night, mija\"."
+                  }
+                ],
+                "questions": [
+                  {
+                    "q": "Where is Mariana from?",
+                    "options": [
+                      "Bogotá",
+                      "Cali",
+                      "Cartagena"
+                    ],
+                    "correct": 0
+                  },
+                  {
+                    "q": "What time does she start work?",
+                    "options": [
+                      "At ten in the morning",
+                      "At two in the afternoon",
+                      "At eight in the evening"
+                    ],
+                    "correct": 1
+                  },
+                  {
+                    "q": "What does she say at eight in the evening?",
+                    "options": [
+                      "Good morning",
+                      "Good afternoon",
+                      "Good evening"
+                    ],
+                    "correct": 2
+                  },
+                  {
+                    "q": "What does her grandmother say at home?",
+                    "options": [
+                      "Good night",
+                      "See you later",
+                      "Nice to meet you"
+                    ],
+                    "correct": 0
+                  }
+                ]
+              }
+            },
+            {
+              "id": "1.2-s5",
+              "pageNumber": 15,
+              "section": "Writing",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 5,
+                "skill": "write",
+                "instruction": "Complete the greetings with the missing word."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "fillInSentence",
+                "id": "fillSentence",
+                "number": 5,
+                "title": "Complete the greeting",
+                "instructions": "Escribe la palabra que falta en cada frase.",
+                "items": [
+                  {
+                    "sentence": "___ morning, Camila!",
+                    "answer": "Good"
+                  },
+                  {
+                    "sentence": "My name ___ Santiago.",
+                    "answer": "is"
+                  },
+                  {
+                    "sentence": "Nice to ___ you!",
+                    "answer": "meet"
+                  },
+                  {
+                    "sentence": "I'm ___ Medellín.",
+                    "answer": "from"
+                  },
+                  {
+                    "sentence": "___ are you today?",
+                    "answer": "How"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "1.2-s6",
               "pageNumber": 16,
-              "hideHeader": true,
-              "title": "How are you REALLY doing?",
-              "navTitle": "Exercise 3 · El dado",
-              "sections": [
-                {
-                  "type": "activity",
-                  "activity": "diceGame",
-                  "id": "diceGame",
-                  "number": 3,
-                  "title": "How are you REALLY doing?",
-                  "instructions": "Lanza el dado y responde \"How are you?\" de una forma diferente cada vez.",
-                  "ranges": {
-                    "1-2": {
-                      "label": "I'm fine",
-                      "phrases": [
-                        "I'm great!",
-                        "I'm doing well!",
-                        "Everything's good!"
-                      ]
-                    },
-                    "3-4": {
-                      "label": "Not bad",
-                      "phrases": [
-                        "Not bad!",
-                        "Pretty good",
-                        "Can't complain"
-                      ]
-                    },
-                    "5-6": {
-                      "label": "So-so...",
-                      "phrases": [
-                        "So-so",
-                        "More or less",
-                        "I've been better"
-                      ]
-                    }
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 6,
+                "skill": "speak",
+                "instruction": "Roll the dice and answer “How are you?” in a different way."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "diceGame",
+                "id": "diceGame",
+                "number": 6,
+                "title": "How are you REALLY doing?",
+                "instructions": "Lanza el dado y responde \"How are you?\" de una forma diferente cada vez.",
+                "ranges": {
+                  "1-2": {
+                    "label": "I'm fine",
+                    "phrases": [
+                      "I'm great!",
+                      "I'm doing well!",
+                      "Everything's good!"
+                    ]
+                  },
+                  "3-4": {
+                    "label": "Not bad",
+                    "phrases": [
+                      "Not bad!",
+                      "Pretty good",
+                      "Can't complain"
+                    ]
+                  },
+                  "5-6": {
+                    "label": "So-so...",
+                    "phrases": [
+                      "So-so",
+                      "More or less",
+                      "I've been better"
+                    ]
                   }
                 }
-              ]
+              }
             },
             {
-              "id": "m1-p17",
+              "id": "1.2-s7",
               "pageNumber": 17,
-              "hideHeader": true,
-              "title": "Can-do check",
-              "navTitle": "Can-do check",
-              "sections": [
+              "section": "Review",
+              "layout": "two-columns",
+              "exercise": {
+                "number": 7,
+                "skill": "read",
+                "instruction": "Check what you can do now."
+              },
+              "blocks": [
                 {
                   "type": "checklist",
                   "id": "cando",
@@ -803,14 +761,19 @@
                   ]
                 },
                 {
-                  "type": "illustration",
-                  "id": "hero-goodbye",
-                  "image": "/images/english/module1/goodbye-colombia.png",
-                  "alt": "Amigos despidiéndose en un pueblo colombiano",
-                  "emoji": "👋",
-                  "caption": "See you later, parcero!"
+                  "type": "culturalTip",
+                  "id": "tip-onces",
+                  "label": "Cultural Tip",
+                  "title": "Las onces",
+                  "float": false,
+                  "text": "A media tarde en Colombia llegan las onces: café con pandebono, almojábana o buñuelo. Si te invitan a onces, todavía saludas con Good afternoon; Good evening empieza cuando cae el sol, más o menos a las seis."
                 }
-              ]
+              ],
+              "illustration": {
+                "src": "/images/english/module1/goodbye-colombia.png",
+                "alt": "Amigos despidiéndose en un pueblo latinoamericano",
+                "emoji": "👋"
+              }
             }
           ]
         }
