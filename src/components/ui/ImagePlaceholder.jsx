@@ -15,26 +15,32 @@ export default function SmartImage({
   compact = false,
 }) {
   const [failed, setFailed] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const show = src && !failed
 
-  if (show) {
-    return (
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        onError={() => setFailed(true)}
-        className={`h-full w-full ${imgClassName} ${rounded} ${className}`}
-      />
-    )
-  }
+  /* La imagen se monta invisible hasta que carga: si el archivo aún no
+     existe, el navegador alcanzaba a pintar su icono de imagen rota antes
+     de que saltara el placeholder. */
+  const picture = show && (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onLoad={() => setLoaded(true)}
+      onError={() => setFailed(true)}
+      className={`h-full w-full ${imgClassName} ${rounded} ${className}
+        ${loaded ? 'opacity-100' : 'absolute inset-0 opacity-0'}`}
+    />
+  )
+
+  if (show && loaded) return picture
 
   return (
     <div
       role="img"
       aria-label={alt || 'Ilustración pendiente de generar'}
-      className={`flex h-full w-full flex-col items-center justify-center gap-1.5 overflow-hidden
-        border border-dashed border-sage/60 bg-box text-center
+      className={`relative flex h-full w-full flex-col items-center justify-center gap-1.5
+        overflow-hidden border border-dashed border-sage/60 bg-box text-center
         ${compact ? 'p-1' : 'p-4'} ${rounded} ${className}`}
     >
       <span className={`opacity-80 ${compact ? 'text-xl' : 'text-3xl'}`} aria-hidden="true">
@@ -46,6 +52,7 @@ export default function SmartImage({
           {src}
         </code>
       )}
+      {picture}
     </div>
   )
 }

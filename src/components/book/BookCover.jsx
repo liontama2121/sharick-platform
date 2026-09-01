@@ -30,7 +30,7 @@ const BookCover = forwardRef(function BookCover({ meta, content }, ref) {
           className="absolute -right-3 top-10 opacity-40"
         />
 
-        <p className="label-caps text-[#FFD100]">{content?.country ?? 'Colombia'} edition</p>
+        <p className="label-caps text-[#FFD100]">{content?.region ?? content?.country ?? 'Latin America'} edition</p>
         <h1 className="mt-3 font-display text-white">{meta?.name ?? 'Libro'}</h1>
         <Swirl width={120} className="mt-3" />
         <p className="mt-4 max-w-[22ch] text-[0.92rem] text-white/80">

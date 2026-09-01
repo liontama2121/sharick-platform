@@ -5,7 +5,12 @@
 Plataforma educativa interactiva de idiomas para la profesora **Sharick Prieto**.
 Contendrá múltiples libros digitales interactivos: **Inglés A1** (primero), luego Portugués A1 y Español A1.
 
-**IMPORTANTE:** Todo el contenido del libro de Inglés A1 está enfocado 100% en **CULTURA COLOMBIANA**. Los temas gramaticales estándar de A1 se mantienen, pero todos los ejemplos, lecturas, imágenes y contextos son sobre Colombia.
+**IMPORTANTE — enfoque LATINOAMERICANO.** Los temas gramaticales estándar de A1 se
+mantienen, pero los ejemplos, personajes, lugares, lecturas e ilustraciones son de
+**Latinoamérica**, con **Colombia como país base**: Cartagena, Bogotá y Medellín siguen
+siendo el escenario principal, y alrededor entran México, Argentina, Perú, Venezuela,
+Chile, Ecuador y Brasil. En `modules.json` el libro lleva `region: "Latin America"` y
+`baseCountry: "Colombia"`; el Módulo 1 conserva `country: "Colombia"`.
 
 ### Distribución (3 formatos, 1 código):
 1. **Web:** Cloudflare Pages (deploy automático con git push)
@@ -126,6 +131,7 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 | Respuesta incorrecta | shake | translateX [-8,8,-5,5,0], 400ms |
 | ProgressBar | fill + número contando | 800ms `inOutQuad` |
 | Dado | roll | rotate 720 + bounce, 900ms `outElastic(1, .6)` |
+| Ruleta | giro | rotate 1800°+ , 3500ms, transición CSS `cubic-bezier(.16,.72,.16,1)` |
 | Burbujas / frases | pop-in | scale [0.8,1], stagger 120ms |
 | Pasada de página | react-pageflip | 800ms |
 
@@ -246,8 +252,8 @@ impares a la derecha para que las dobles páginas queden balanceadas.
 | cover | — | Portada del libro (va sola) |
 | 1.1 | 6–7 | Let's say hi to Colombia! · vocabulario · Cultural Tip |
 | 1.2 | 8–9 | Dialogues A, B y C · Exercise 1 (match) |
-| 1.3 | 10–11 | Exercises 2, 3 y 4 (fill in, speaking, record) |
-| 1.4 | 12–13 | Hello parcero! · times of the day · Cultural Tip |
+| 1.3 | 10–11 | Exercises 2 a 5 (fill in, speaking, record, **ruleta**) |
+| 1.4 | 12–13 | Hello, amigo! · times of the day · Cultural Tips |
 | 1.5 | 14–15 | Exercise 1 (relojes) · Exercise 2 (listening) |
 | 1.6 | 16–17 | Exercise 3 (el dado) · Can-do check |
 
@@ -279,6 +285,42 @@ Actividades (`section.activity`): `match` · `fillInSentence` · `fillBubbles` �
 
 ---
 
+## 🎲 ACTIVIDADES LÚDICAS DISPONIBLES
+
+Todas se declaran desde `modules.json` con `{"type":"activity","activity":"<nombre>"}`
+y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
+
+| `activity` | Componente | Qué hace | Se completa cuando |
+|---|---|---|---|
+| `diceGame` | DiceGame | Dado de emociones: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so | salieron los 3 rangos |
+| `roulette` | RouletteWheel | Ruleta de consignas de speaking | salieron todos los segmentos |
+| `match` | MatchActivity | Emparejar diálogo ↔ personas | todos los pares |
+| `fillBubbles` | FillBubbles | Saludo según el reloj analógico | todas las burbujas |
+| `fillInSentence` | FillInSentence | Frases con hueco, input con línea | todas las frases |
+| `listening` | ListeningActivity | Audio + preguntas de opción múltiple | todas correctas |
+| `multipleChoice` | MultipleChoice | Preguntas sueltas de opción múltiple | todas correctas |
+| `speaking` | SpeakingPrompt | Checklist de frases modelo + grabación | todas marcadas |
+| `recordPrompt` | RecordPrompt | Preguntas numeradas para responder en voz alta | todas respondidas |
+
+### Ruleta (`roulette`)
+Rueda SVG de 240px (280px en desktop) con 6-8 segmentos de colores alternados
+navy / coral / salvia / dorado, puntero coral arriba y botón pill "¡Girar!".
+
+```json
+{ "type": "activity", "activity": "roulette", "title": "Spin & Speak!",
+  "instructions": "…",
+  "segments": [ { "label": "Your name", "prompt": "Say: My name is ___." } ] }
+```
+
+Dos detalles de implementación que hay que respetar:
+- **El giro va con transición CSS y el pulso con Anime.js, sobre elementos
+  distintos.** Si los dos animan el mismo nodo, anime reconstruye el `transform`
+  y pierde la rotación: la rueda acierta el segmento pero se queda quieta.
+- **El aterrizaje va por `setTimeout`, no por `onComplete`.** Ese callback no
+  llegó a dispararse y la ruleta se quedaba en "Girando…" para siempre.
+
+---
+
 ## 💾 PROGRESO (useProgress)
 
 localStorage key `sharick-progress`. Id de actividad = `` `${page.id}-${section.id ?? section.activity}` ``
@@ -292,7 +334,7 @@ ProgressBar del sidebar reacciona al instante.
 - Estilo Gemini: *"Editorial illustration for a printed language textbook, National Geographic
   Learning style. Soft watercolor, warm cream background #F7F2E9, navy #1B3A5C, coral #E05A47,
   sage green #6B9080, golden yellow #E9B44C. Minimalist, elegant, rounded shapes,
-  Colombian culture focus."*
+  Latin American culture focus: Colombia como base, más México, Argentina, Perú, Venezuela, Chile, Ecuador y Brasil."*
 - Mientras no exista el archivo, `SmartImage` muestra un marco punteado con emoji y
   **la ruta exacta** que falta (`compact` para miniaturas: solo emoji).
 - Audio: si falta el mp3, `AudioPlayer` muestra "Audio próximamente" sin romper nada.
@@ -310,8 +352,10 @@ ProgressBar del sidebar reacciona al instante.
 
 ## ✅ REGLAS DE ORO
 
-1. **Contenido de Sharick es sagrado** — títulos exactos, mecánicas exactas
-   (dado 1-2/3-4/5-6, reloj analógico normal, match A/B/C).
+1. **Contenido de Sharick es sagrado** — mecánicas exactas (dado 1-2/3-4/5-6,
+   reloj analógico normal, match A/B/C) y títulos exactos, salvo cambio explícito
+   del cliente. Cambios ya aprobados: "Hello parcero!" → **"Hello, amigo!"** (lección 1.4),
+   al pasar el libro a enfoque latinoamericano.
 2. **Todo en JSON** — cero contenido hardcodeado en componentes.
 3. **Todo animado** — Anime.js en cada interacción.
 4. **Papel cálido, cero dark mode.** Tricolor solo en portada.

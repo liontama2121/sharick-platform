@@ -20,6 +20,7 @@ import DiceGame from '../activities/DiceGame'
 import MultipleChoice from '../activities/MultipleChoice'
 import FillInSentence from '../activities/FillInSentence'
 import RecordPrompt from '../activities/RecordPrompt'
+import RouletteWheel from '../activities/RouletteWheel'
 import ExerciseBlock from '../activities/ExerciseBlock'
 
 /* Registro de actividades: agregar un tipo = agregar un componente aquí. */
@@ -31,6 +32,7 @@ const ACTIVITIES = {
   diceGame: DiceGame,
   fillInSentence: FillInSentence,
   recordPrompt: RecordPrompt,
+  roulette: RouletteWheel,
   multipleChoice: ({ section, completed, score, onComplete }) => (
     <ExerciseBlock
       number={section.number}
