@@ -143,7 +143,8 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 | Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
 | Barras del menú (Nivel 1) | hover | translateX 6px, 260ms |
-| Tarjetas del Nivel 2 | entrada + hover | stagger 60ms · scale 1.04 |
+| Tarjetas del Nivel 2 | entrada + hover | stagger 40ms · scale 1.04 |
+| Vuelta al Nivel 2 | scroll + pulso dorado | anillo gold, 260ms entra / 950ms sale |
 | Cambio de nivel | fade + scale | 0.985→1, 350ms `outQuad` |
 | Respuesta correcta | celebración | scale [1,1.15,1] + verde suave, 500ms |
 | Respuesta incorrecta | shake | translateX [-8,8,-5,5,0], 400ms |
@@ -171,7 +172,13 @@ navy / coral / salvia con Playfair Display se mantiene tal cual.
 /book/:bookId/module/:moduleId                    NIVEL 2 · lecciones del módulo
 /book/:bookId/module/:moduleId/games              Juegos de ese módulo
 /book/:bookId/module/:moduleId/lesson/:lessonId   NIVEL 3 · libro abierto
+/book/:bookId/module/:moduleId/lesson/:lessonId/screen/:screenNo
+                                                  NIVEL 3 en una pantalla concreta
 ```
+
+La pantalla vive en la URL: el Nivel 2 abre cualquier miniatura directamente
+(`…/lesson/1.1/screen/2`), el refresco no pierde el sitio y al salir con [X]
+la rejilla sabe dónde estaba el estudiante.
 
 ### Nivel 1 — menú principal (`pages/BookMenu.jsx`)
 Pantalla completa, dos columnas de barras horizontales (`nav/MenuButton.jsx`,
@@ -183,18 +190,46 @@ alto 90px, radio 12px, fondo `box`, hover translateX 6px):
 - Lo que no tiene contenido se ve atenuado y avisa "Próximamente" con un toast.
 - Botón circular coral [X] arriba a la derecha → Home.
 
-### Nivel 2 — lecciones del módulo (`pages/ModuleGrid.jsx`)
-Rejilla auto-fill (mínimo 276px) con una tarjeta por lección:
-- **Miniatura real** (`book/SpreadThumb.jsx`): se renderiza la PRIMERA pantalla
-  de la lección a `scale(0.16)` (landscape 16:10) con `pointer-events: none` y
-  un progreso inerte, para que ninguna actividad se marque desde la miniatura.
-- Etiqueta "1.1", "1.2"… en cuadro coral, esquina superior izquierda.
-- Badges de recursos abajo a la derecha, leídos de `lesson.resources`:
-  🔊 audio · 🎮 game · 🎬 video.
-- Entrada con stagger de 60ms; hover scale 1.04; al abrir, la tarjeta hace
-  zoom antes de navegar.
-- Botón circular coral [X] arriba a la derecha → Nivel 1; [🏠] abajo a la
-  izquierda → Nivel 1.
+### Nivel 2 — pantallas del módulo (`pages/ModuleGrid.jsx`)
+**El Nivel 2 muestra una miniatura por PANTALLA, agrupadas por lección**, como
+el índice visual de Express Publishing. No hay tarjetas de lección con
+"5 pantallas": si el módulo tiene 13 pantallas, hay 13 miniaturas, en el orden
+real del libro (portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …).
+
+- **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
+  3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
+  utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
+  `xl` y la regla de 4 columnas le ganaba a la de 5. Contenedor de 1480px
+  (1820px en `3xl`), scroll vertical normal, tarjetas de ~335px.
+- **Miniatura real** (`book/ScreenThumb.jsx`): renderiza ESA pantalla en 16:10
+  con `pointer-events: none` y un progreso inerte, para que ninguna actividad
+  se marque desde la miniatura. La escala se calcula con `ResizeObserver`
+  (`ancho de la tarjeta / 1600`), así que sirve igual a 2 que a 5 columnas.
+- **Etiqueta** en la esquina superior izquierda: cuadro coral con la lección en
+  grande ("1.1") y debajo, pequeño, el número de pantalla ("2/5"). La portada
+  lleva ★.
+- **Título** debajo de la miniatura, en Playfair navy. Sale de `screen.title`;
+  si falta, `screenTitle()` lo deduce de `section` + `exercise`.
+- **Badges** abajo a la derecha, calculados por `screenBadges()` sobre ESA
+  pantalla: 🔊 audio (`screen.audio`, diálogos con audio o actividad
+  `listening`) · 🎮 juego (`diceGame`, `roulette`) · 🎬 video · ✏️ ejercicio
+  escrito (`match`, `matchMarkers`, `fillBubbles`, `fillInSentence`,
+  `multipleChoice`) · 🎙️ speaking (`speaking`, `recordPrompt`).
+- **Check verde** arriba a la derecha si la pantalla está completada. Una
+  pantalla CON actividad se completa al resolverla; una sin actividad, con
+  verla (`visitedScreens` en `useProgress`).
+- **Separador por lección**: línea punteada beige con el label
+  "1.1 · LET'S SAY HI!" en coral mayúsculas a la izquierda, ocupando toda la
+  fila. La primera tarjeta de cada lección lleva **borde coral de 2px**.
+- **Progreso en la cabecera**: barra delgada coral + "8 de 13 pantallas
+  completadas" en Nunito 600.
+- Entrada con stagger de 40ms; hover scale 1.04; al abrir, la tarjeta hace zoom
+  y navega a `…/lesson/<id>/screen/<n>`.
+- **Al volver con [X]** la rejilla hace scroll hasta la tarjeta donde estaba el
+  estudiante (`progress.currentPage`) y le lanza un pulso dorado.
+- Los juegos tienen **dos entradas**: la tarjeta "🎮 Games · Module N" al final
+  de la rejilla y un botón flotante 🎮 junto al [🏠], abajo a la izquierda.
+- Botón circular coral [X] arriba a la derecha → Nivel 1.
 
 ### Nivel 3 — doble página (`pages/LessonReader.jsx`)
 El libro de siempre (react-pageflip + esquinas), con una barra mínima
@@ -214,7 +249,7 @@ src/
 ├── App.jsx                    ← HashRouter con los 3 niveles
 ├── components/
 │   ├── book/     BookViewer · BookPage · BookCover · PageContent ·
-│   │             CornerFlip · SpreadThumb
+│   │             CornerFlip · ScreenThumb
 │   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
 │   ├── content/  VocabularyBox · CulturalTip · Checklist
@@ -281,7 +316,8 @@ impares a la derecha para que las dobles páginas queden balanceadas.
 {
   "id": "1.1", "shortTitle": "Let's say hi!", "resources": ["audio","game"],
   "screens": [
-    { "id": "1.1-s1", "pageNumber": 6, "section": "Reading",
+    { "id": "1.1-s1", "title": "Reading · Dialogues A-C",
+      "pageNumber": 6, "section": "Reading",
       "layout": "dialogues-left-image-right",
       "audio": "/audio/english/module1/1-1-dialogues.mp3",
       "exercise": { "number": 1, "skill": "listen",
@@ -301,6 +337,9 @@ La portada es `{ "id": "cover", "type": "cover", "screens": [{ "layout": "cover"
 `image-top-activity-bottom` · `activity-full` · `dialogues-only` · `cover`.
 Los bloques de contenido (`blocks`) reutilizan `vocabulary`, `culturalTip`,
 `routine`, `checklist` y `text`.
+
+`title` es el rótulo corto que sale bajo la miniatura del Nivel 2. Si falta,
+`screenTitle()` lo deduce, pero conviene escribirlo a mano.
 
 **Regla de oro del formato:** una pantalla = lo que cabe sin scroll. Si algo se
 sale, se parte en otra pantalla, no se encoge el texto.
@@ -412,9 +451,15 @@ renders que tumba la app (se registraron 51 partidas en una sola).
 
 ## 💾 PROGRESO (useProgress)
 
-localStorage key `sharick-progress`. Id de actividad = `` `${page.id}-${section.id ?? section.activity}` ``
-(p. ej. `m1-p09-match`). Guarda el mejor puntaje. El store usa `useSyncExternalStore`, así que el
-ProgressBar del sidebar reacciona al instante.
+localStorage key `sharick-progress`. Id de actividad = `` `${screen.id}-${activity.id ?? activity.activity}` ``
+(p. ej. `1.1-s1-matchMarkers`). Guarda el mejor puntaje. El store usa
+`useSyncExternalStore`, así que las barras reaccionan al instante.
+
+Además de `completedActivities` guarda `visitedScreens` (las pantallas que el
+estudiante ya abrió, para el check verde del Nivel 2 en las que no llevan
+actividad) y `currentPage` (la última pantalla vista, para el scroll + pulso
+dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
+`LessonReader`.
 
 ---
 

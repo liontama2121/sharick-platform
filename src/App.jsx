@@ -15,7 +15,10 @@ import ModuleGames from './pages/ModuleGames'
  *   /book/:bookId/module/:moduleId/games    Juegos de ese módulo
  *   /book/:bookId/module/:moduleId          Nivel 2 · lecciones del módulo
  *   /book/:bookId/module/:moduleId/lesson/:lessonId
+ *   /book/:bookId/module/:moduleId/lesson/:lessonId/screen/:screenNo
  *                                           Nivel 3 · libro abierto
+ *                                           (la variante /screen/N abre
+ *                                            directamente esa pantalla)
  * Cada nivel trae su propia cabecera; no hay sidebar.
  */
 export default function App() {
@@ -30,6 +33,10 @@ export default function App() {
           <Route path="/book/:bookId/module/:moduleId/games" element={<ModuleGames />} />
           <Route
             path="/book/:bookId/module/:moduleId/lesson/:lessonId"
+            element={<LessonReader />}
+          />
+          <Route
+            path="/book/:bookId/module/:moduleId/lesson/:lessonId/screen/:screenNo"
             element={<LessonReader />}
           />
           <Route path="*" element={<Navigate to="/" replace />} />

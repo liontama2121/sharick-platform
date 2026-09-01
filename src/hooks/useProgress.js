@@ -40,7 +40,14 @@ function getSnapshot() {
 }
 
 function emptyBook() {
-  return { currentPage: null, completedActivities: [], scores: {}, games: {}, lastVisit: null }
+  return {
+    currentPage: null,
+    completedActivities: [],
+    visitedScreens: [],
+    scores: {},
+    games: {},
+    lastVisit: null,
+  }
 }
 
 function today() {
@@ -79,6 +86,22 @@ export function useProgress(bookId) {
 
   const setCurrentPage = useCallback(
     (pageId) => update(() => ({ currentPage: pageId })),
+    [update],
+  )
+
+  /**
+   * Marca una pantalla como vista. Las pantallas sin actividad se dan por
+   * completadas al verlas; las que tienen actividad esperan a completarla.
+   * Guarda además cuál fue la última, para que el Nivel 2 vuelva a ella.
+   */
+  const visitScreen = useCallback(
+    (screenId) =>
+      update((prev) => ({
+        currentPage: screenId,
+        visitedScreens: (prev.visitedScreens ?? []).includes(screenId)
+          ? prev.visitedScreens
+          : [...(prev.visitedScreens ?? []), screenId],
+      })),
     [update],
   )
 
@@ -146,6 +169,11 @@ export function useProgress(bookId) {
 
   const getScore = useCallback((activityId) => book.scores[activityId] ?? null, [book.scores])
 
+  const isScreenVisited = useCallback(
+    (screenId) => (book.visitedScreens ?? []).includes(screenId),
+    [book.visitedScreens],
+  )
+
   /** % de actividades completadas sobre el total de actividades del libro */
   const percent = useCallback(
     (totalActivities) => {
@@ -159,6 +187,8 @@ export function useProgress(bookId) {
     progress: book,
     completeActivity,
     setCurrentPage,
+    visitScreen,
+    isScreenVisited,
     resetBook,
     isCompleted,
     getScore,

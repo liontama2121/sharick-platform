@@ -31,6 +31,9 @@
   --color-col-yellow: #ffd100;
   --color-col-red: #ce1126;
 
+  /* Monitor grande (el Nivel 2 ensancha su contenedor) */
+  --breakpoint-3xl: 1800px;
+
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
 
@@ -93,6 +96,30 @@
   .box-beige {
     background: var(--color-box);
     border-radius: 12px;
+  }
+
+  /* Rejilla del Nivel 2: una miniatura por PANTALLA.
+     Va en CSS y no con utilidades responsive porque Tailwind ordena el
+     breakpoint 3xl ANTES que xl, y la regla de 4 columnas le ganaba a la
+     de 5 a partir de 1800px. */
+  .grid-pantallas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 768px) {
+    .grid-pantallas {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1280px) {
+    .grid-pantallas {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1800px) {
+    .grid-pantallas {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
   }
 
   /* Divisor de línea punteada entre secciones */

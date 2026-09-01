@@ -18,6 +18,7 @@
           "screens": [
             {
               "id": "cover-s1",
+              "title": "Portada del libro",
               "layout": "cover"
             }
           ]
@@ -33,6 +34,7 @@
           "screens": [
             {
               "id": "1.1-s1",
+              "title": "Reading · Dialogues A-C",
               "pageNumber": 6,
               "section": "Reading",
               "audio": "/audio/english/module1/1-1-dialogues.mp3",
@@ -158,6 +160,7 @@
             },
             {
               "id": "1.1-s2",
+              "title": "Greetings · Vocabulary",
               "pageNumber": 7,
               "section": "Vocabulary",
               "layout": "two-columns",
@@ -250,6 +253,7 @@
             },
             {
               "id": "1.1-s3",
+              "title": "Speaking · Introduce yourself",
               "pageNumber": 8,
               "section": "Speaking",
               "layout": "two-columns",
@@ -281,6 +285,7 @@
             },
             {
               "id": "1.1-s3b",
+              "title": "Speaking · Answer out loud",
               "pageNumber": 9,
               "section": "Speaking",
               "layout": "activity-full",
@@ -314,6 +319,7 @@
             },
             {
               "id": "1.1-s4",
+              "title": "Spin & Speak",
               "pageNumber": 10,
               "section": "Speaking",
               "layout": "activity-full",
@@ -371,6 +377,7 @@
           "screens": [
             {
               "id": "1.2-s1",
+              "title": "A day in Latin America",
               "pageNumber": 11,
               "section": "Vocabulary",
               "layout": "two-columns",
@@ -435,6 +442,7 @@
             },
             {
               "id": "1.2-s2",
+              "title": "Times of the day",
               "pageNumber": 12,
               "section": "Vocabulary",
               "layout": "two-columns",
@@ -506,6 +514,7 @@
             },
             {
               "id": "1.2-s3",
+              "title": "Exercise 3 · Clocks",
               "pageNumber": 13,
               "section": "Writing",
               "layout": "activity-full",
@@ -575,6 +584,7 @@
             },
             {
               "id": "1.2-s4",
+              "title": "Listening · Mariana's day",
               "pageNumber": 14,
               "section": "Listening",
               "layout": "activity-full",
@@ -652,6 +662,7 @@
             },
             {
               "id": "1.2-s5",
+              "title": "Complete the greeting",
               "pageNumber": 15,
               "section": "Writing",
               "layout": "activity-full",
@@ -693,6 +704,7 @@
             },
             {
               "id": "1.2-s6",
+              "title": "The Dice · How are you?",
               "pageNumber": 16,
               "section": "Speaking",
               "layout": "activity-full",
@@ -738,6 +750,7 @@
             },
             {
               "id": "1.2-s7",
+              "title": "Can-do check",
               "pageNumber": 17,
               "section": "Review",
               "layout": "two-columns",

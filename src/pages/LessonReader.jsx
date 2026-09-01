@@ -87,7 +87,7 @@ function IndexOverlay({ lessons, currentId, onPick, onClose }) {
 
 /** NIVEL 3 — la lección a pantalla completa, una pantalla a la vez. */
 export default function LessonReader() {
-  const { bookId, moduleId, lessonId } = useParams()
+  const { bookId, moduleId, lessonId, screenNo } = useParams()
   const navigate = useNavigate()
 
   const meta = getBookMeta(bookId)
@@ -99,7 +99,6 @@ export default function LessonReader() {
   const hasGames = getModuleGames(bookId, moduleId).length > 0
   const progress = useProgress(bookId)
 
-  const [screenIdx, setScreenIdx] = useState(0)
   const [resetKey, setResetKey] = useState(0)
   const [showIndex, setShowIndex] = useState(false)
   const [done, setDone] = useState(false)
@@ -111,12 +110,30 @@ export default function LessonReader() {
   const dialogueAudioRef = useRef(null)
 
   const lessonPos = lessons.findIndex((l) => l.id === lessonId)
+
+  /* La pantalla vive en la URL (.../lesson/1.1/screen/2). Así el Nivel 2
+     puede abrir cualquier miniatura, el refresco no pierde el sitio y al
+     salir con [X] la rejilla sabe dónde estaba el estudiante. */
+  const screenIdx = Math.min(
+    Math.max(0, (Number(screenNo) || 1) - 1),
+    Math.max(0, screens.length - 1),
+  )
   const screen = screens[screenIdx] ?? null
 
+  const base = `/book/${bookId}/module/${moduleId}/lesson`
+
   useEffect(() => {
-    setScreenIdx(0)
     setDone(false)
   }, [lessonId])
+
+  /* Deja constancia de la pantalla vista: alimenta el contador del Nivel 2
+     y el resaltado dorado al volver. */
+  const { visitScreen } = progress
+  useEffect(() => {
+    if (screen?.id) visitScreen(screen.id)
+    // visitScreen es estable (useCallback sobre bookId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen?.id])
 
   // Entrada de cada pantalla
   useEffect(() => {
@@ -130,14 +147,20 @@ export default function LessonReader() {
     (dir) => {
       const el = slideRef.current
       const apply = () => {
+        const url = `/book/${bookId}/module/${moduleId}/lesson`
         if (dir > 0) {
-          if (screenIdx + 1 < screens.length) setScreenIdx((i) => i + 1)
+          if (screenIdx + 1 < screens.length)
+            navigate(`${url}/${lessonId}/screen/${screenIdx + 2}`, { replace: true })
           else if (lessonPos + 1 < lessons.length)
-            navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos + 1].id}`)
+            navigate(`${url}/${lessons[lessonPos + 1].id}/screen/1`)
           else setDone(true)
-        } else if (screenIdx > 0) setScreenIdx((i) => i - 1)
-        else if (lessonPos > 0)
-          navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos - 1].id}`)
+        } else if (screenIdx > 0) {
+          navigate(`${url}/${lessonId}/screen/${screenIdx}`, { replace: true })
+        } else if (lessonPos > 0) {
+          // hacia atrás se entra por la ÚLTIMA pantalla de la lección anterior
+          const prev = lessons[lessonPos - 1]
+          navigate(`${url}/${prev.id}/screen/${getScreens(prev).length || 1}`)
+        }
       }
 
       if (!el || reduced()) return apply()
@@ -149,7 +172,7 @@ export default function LessonReader() {
       })
       setTimeout(apply, 240)
     },
-    [screenIdx, screens.length, lessonPos, lessons, bookId, moduleId, navigate],
+    [screenIdx, screens.length, lessonPos, lessons, lessonId, bookId, moduleId, navigate],
   )
 
   useEffect(() => {
@@ -259,12 +282,11 @@ export default function LessonReader() {
           onFullscreen={toggleFullscreen}
           isFullscreen={isFullscreen}
           onPrevLesson={() =>
-            lessonPos > 0 &&
-            navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos - 1].id}`)
+            lessonPos > 0 && navigate(`${base}/${lessons[lessonPos - 1].id}/screen/1`)
           }
           onNextLesson={() =>
             lessonPos + 1 < lessons.length
-              ? navigate(`/book/${bookId}/module/${moduleId}/lesson/${lessons[lessonPos + 1].id}`)
+              ? navigate(`${base}/${lessons[lessonPos + 1].id}/screen/1`)
               : setDone(true)
           }
           canPrevScreen={screenIdx > 0 || lessonPos > 0}
@@ -280,7 +302,7 @@ export default function LessonReader() {
             onClose={() => setShowIndex(false)}
             onPick={(id) => {
               setShowIndex(false)
-              navigate(`/book/${bookId}/module/${moduleId}/lesson/${id}`)
+              navigate(`${base}/${id}/screen/1`)
             }}
           />
         )}

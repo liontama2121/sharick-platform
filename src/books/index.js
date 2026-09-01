@@ -111,3 +111,77 @@ export function moduleActivityIds(mod) {
 export function bookActivityIds(bookId) {
   return getModules(bookId).flatMap(moduleActivityIds)
 }
+
+/* ── Pantallas del módulo (Nivel 2: una miniatura por pantalla) ──────────
+   El Nivel 2 ya no muestra una tarjeta por lección sino una por PANTALLA,
+   en el orden real del libro: portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …  */
+
+/** Título corto de una pantalla. Usa `screen.title`; si falta, lo deduce. */
+export function screenTitle(screen, lesson) {
+  if (screen?.title) return screen.title
+  if (screen?.layout === 'cover') return 'Portada del libro'
+  if (screen?.activity?.title) return screen.activity.title
+
+  const partes = []
+  if (screen?.section) partes.push(screen.section)
+  if (screen?.exercise?.number) partes.push(`Exercise ${screen.exercise.number}`)
+  if (!partes.length) partes.push(lesson?.shortTitle ?? lesson?.title ?? 'Pantalla')
+  return partes.join(' · ')
+}
+
+/* Qué badge le toca a cada actividad. */
+const ACTIVITY_BADGE = {
+  matchMarkers: 'written',
+  match: 'written',
+  fillBubbles: 'written',
+  fillInSentence: 'written',
+  multipleChoice: 'written',
+  listening: 'audio',
+  speaking: 'speaking',
+  recordPrompt: 'speaking',
+  diceGame: 'game',
+  roulette: 'game',
+}
+
+/** Badges de UNA pantalla: audio · game · video · written · speaking. */
+export function screenBadges(screen) {
+  const set = new Set()
+  if (screen?.audio !== undefined) set.add('audio')
+  if ((screen?.dialogues ?? []).some((d) => d.audio)) set.add('audio')
+  if (screen?.video) set.add('video')
+  const badge = ACTIVITY_BADGE[screen?.activity?.activity]
+  if (badge) set.add(badge)
+  return [...set]
+}
+
+/**
+ * Todas las pantallas del módulo aplanadas, con el contexto que necesita
+ * la tarjeta del Nivel 2.
+ */
+export function getModuleScreens(bookId, moduleId) {
+  const lessons = getLessons(bookId, moduleId)
+  const out = []
+
+  lessons.forEach((lesson, lessonPos) => {
+    const screens = getScreens(lesson)
+    screens.forEach((screen, i) => {
+      out.push({
+        key: screen.id ?? `${lesson.id}-${i}`,
+        screen,
+        lesson,
+        lessonPos,
+        /** 0-based dentro de la lección */
+        index: i,
+        /** 1-based: el "2" de "2/5" y el de la URL /screen/2 */
+        number: i + 1,
+        total: screens.length,
+        isFirstOfLesson: i === 0,
+        isCover: lesson.type === 'cover',
+        title: screenTitle(screen, lesson),
+        badges: screenBadges(screen),
+      })
+    })
+  })
+
+  return out
+}
