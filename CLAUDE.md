@@ -24,6 +24,7 @@ Contendrá múltiples libros digitales interactivos: **Inglés A1** (primero), l
 | Anime.js | v4 (`animejs`) | TODAS las animaciones |
 | React Router | v7 | Navegación SPA |
 | react-pageflip | v2 | Pasada de página del libro |
+| lucide-react | v1 | Iconos de línea del menú y las tarjetas |
 | localStorage | nativo | Progreso del estudiante (sin backend) |
 
 **NO usar:** Redux, styled-components, CSS modules, Framer Motion, jQuery, Bootstrap.
@@ -118,7 +119,9 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 |----------|-----------|-------|
 | Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
-| Sidebar items | hover | translateX 6px, 200ms |
+| Barras del menú (Nivel 1) | hover | translateX 6px, 260ms |
+| Tarjetas del Nivel 2 | entrada + hover | stagger 60ms · scale 1.04 |
+| Cambio de nivel | fade + scale | 0.985→1, 350ms `outQuad` |
 | Respuesta correcta | celebración | scale [1,1.15,1] + verde suave, 500ms |
 | Respuesta incorrecta | shake | translateX [-8,8,-5,5,0], 400ms |
 | ProgressBar | fill + número contando | 800ms `inOutQuad` |
@@ -130,26 +133,77 @@ Todo respeta `prefers-reduced-motion`.
 
 ---
 
+## 🧭 NAVEGACIÓN DE 3 NIVELES
+
+Estructura de libro digital de editorial (referencia: Express Publishing
+"Upload"). Se copia la ESTRUCTURA, no su diseño: el estilo editorial cream /
+navy / coral / salvia con Playfair Display se mantiene tal cual.
+**No hay sidebar**: cada nivel trae su propia cabecera.
+
+```
+/                                                 Home · selector de libros
+/book/:bookId                                     NIVEL 1 · menú del libro
+/book/:bookId/module/:moduleId                    NIVEL 2 · lecciones del módulo
+/book/:bookId/module/:moduleId/lesson/:lessonId   NIVEL 3 · libro abierto
+```
+
+### Nivel 1 — menú principal (`pages/BookMenu.jsx`)
+Pantalla completa, dos columnas de barras horizontales (`nav/MenuButton.jsx`,
+alto 90px, radio 12px, fondo `box`, hover translateX 6px):
+- **Izquierda, módulos:** cuadro coral con el número en Playfair blanco.
+  Después Self-Check y Cultural & Cross-Curricular Section.
+- **Derecha, recursos:** cuadro verde salvia con icono lucide —
+  Workbook · Reader · Video · Games · Quizzes · Word List.
+- Lo que no tiene contenido se ve atenuado y avisa "Próximamente" con un toast.
+- Botón circular coral [X] arriba a la derecha → Home.
+
+### Nivel 2 — lecciones del módulo (`pages/ModuleGrid.jsx`)
+Rejilla responsive (4 / 2 / 1 columnas) con una tarjeta por doble página:
+- **Miniatura real** (`book/SpreadThumb.jsx`): se renderiza el libro de verdad
+  a `scale(0.22)` con `pointer-events: none` y un progreso inerte, para que
+  ninguna actividad se marque desde la miniatura. La portada va sola y por eso
+  su tarjeta es más angosta.
+- Etiqueta "1.1", "1.2"… en cuadro coral, esquina superior izquierda.
+- Badges de recursos abajo a la derecha, leídos de `lesson.resources`:
+  🔊 audio · 🎮 game · 🎬 video.
+- Entrada con stagger de 60ms; hover scale 1.04; al abrir, la tarjeta hace
+  zoom antes de navegar.
+- Botón circular coral [X] arriba a la derecha → Nivel 1; [🏠] abajo a la
+  izquierda → Nivel 1.
+
+### Nivel 3 — doble página (`pages/LessonReader.jsx`)
+El libro de siempre (react-pageflip + esquinas), con una barra mínima
+(`layout/ReaderBar.jsx`): [🏠] → Nivel 1 · "Module 1 · 1.2" · [X] → Nivel 2.
+Al pasar página se actualizan la URL y la etiqueta. Al intentar avanzar más
+allá de la última hoja aparece el overlay "¡Módulo completado!".
+
+### Transiciones
+`hooks/useLevelIntro.js`: fade + scale 0.985→1 en 350ms al entrar a un nivel.
+
+---
+
 ## 📁 ESTRUCTURA
 
 ```
 src/
-├── App.jsx                    ← HashRouter + Shell (sidebar / header / main)
+├── App.jsx                    ← HashRouter con los 3 niveles
 ├── components/
-│   ├── book/     BookViewer · BookPage · BookCover · PageContent
+│   ├── book/     BookViewer · BookPage · BookCover · PageContent ·
+│   │             CornerFlip · SpreadThumb
+│   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
 │   ├── content/  VocabularyBox · CulturalTip · Checklist
 │   ├── activities/ ExerciseBlock · MatchActivity · MultipleChoice · FillBubbles ·
 │   │              FillInSentence · ListeningActivity · SpeakingPrompt ·
 │   │              RecordPrompt · DiceGame
 │   ├── media/    AudioPlayer · DialogueBlock · RoutineBlock
-│   ├── layout/   Sidebar · Header · MainContent
+│   ├── layout/   ReaderBar
 │   ├── cards/    BookCard
 │   └── ui/       Button · PillButton · ProgressBar · FeedbackToast ·
 │                 SectionLabel · AnalogClock · ImagePlaceholder (SmartImage)
-├── pages/        Home · TopicPage (lector del libro)
+├── pages/        Home · BookMenu · ModuleGrid · LessonReader
 ├── books/        index.js · registry.json · english-a1/modules.json
-├── hooks/        useProgress · usePageAnimation · useFeedback
+├── hooks/        useProgress · usePageAnimation · useFeedback · useLevelIntro
 ├── utils/        numberWords.js
 └── styles/       global.css
 ```
@@ -164,7 +218,7 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1 (12 páginas, 6 → 17)
+## 📖 CONTENIDO — MÓDULO 1 (6 lecciones · 12 páginas, 6 → 17)
 
 **⚠️ Contenido de Sharick. Títulos y mecánicas exactos.**
 
@@ -183,9 +237,30 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 | 16 | EXERCISE 3 (**dado de emociones**: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so) |
 | 17 | Can-do check + ilustración de cierre |
 
-Las páginas siguientes se agregan al array `pages` de `modules.json` con su `pageNumber`.
-Mantener las páginas **pares a la izquierda** e impares a la derecha para que las
-dobles páginas queden balanceadas.
+Cada **lección es UNA doble página**. Las siguientes se agregan al array
+`lessons` de `modules.json`. Mantener las páginas **pares a la izquierda** e
+impares a la derecha para que las dobles páginas queden balanceadas.
+
+| Lección | Páginas | Contenido |
+|---------|---------|-----------|
+| cover | — | Portada del libro (va sola) |
+| 1.1 | 6–7 | Let's say hi to Colombia! · vocabulario · Cultural Tip |
+| 1.2 | 8–9 | Dialogues A, B y C · Exercise 1 (match) |
+| 1.3 | 10–11 | Exercises 2, 3 y 4 (fill in, speaking, record) |
+| 1.4 | 12–13 | Hello parcero! · times of the day · Cultural Tip |
+| 1.5 | 14–15 | Exercise 1 (relojes) · Exercise 2 (listening) |
+| 1.6 | 16–17 | Exercise 3 (el dado) · Can-do check |
+
+### Esquema de lección
+```json
+{
+  "id": "1.1",
+  "title": "Let's say hi to Colombia!",
+  "resources": ["audio", "game", "video"],
+  "pages": [ { …hoja izquierda… }, { …hoja derecha… } ]
+}
+```
+La portada es `{ "id": "cover", "type": "cover", "pages": [] }`.
 
 ### Esquema de página
 ```json

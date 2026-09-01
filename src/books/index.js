@@ -21,45 +21,93 @@ export function getModules(bookId) {
   return getBookContent(bookId)?.modules ?? []
 }
 
-/** Todas las páginas del libro, en orden, con su módulo. */
-export function getAllPages(bookId) {
-  return getModules(bookId).flatMap((mod) =>
-    (mod.pages ?? []).map((page) => ({ page, module: mod })),
+export function getModule(bookId, moduleId) {
+  return getModules(bookId).find((m) => String(m.moduleId) === String(moduleId)) ?? null
+}
+
+/** Recursos del libro (columna derecha del menú principal). */
+export function getResources(bookId) {
+  return getBookContent(bookId)?.resources ?? []
+}
+
+/** Secciones extra de la columna izquierda (Self-Check, Cultural…). */
+export function getExtraSections(bookId) {
+  return getBookContent(bookId)?.extraSections ?? []
+}
+
+/* ── Lecciones ────────────────────────────────────────────────────────────
+   Una lección es UNA doble página: `pages` trae la hoja izquierda y la
+   derecha. La lección "cover" es la portada, que va sola.                */
+
+export function getLessons(bookId, moduleId) {
+  return getModule(bookId, moduleId)?.lessons ?? []
+}
+
+/** Lecciones con contenido real (excluye la portada). */
+export function getContentLessons(bookId, moduleId) {
+  return getLessons(bookId, moduleId).filter((l) => (l.pages ?? []).length > 0)
+}
+
+export function findLesson(bookId, moduleId, lessonId) {
+  return getLessons(bookId, moduleId).find((l) => l.id === lessonId) ?? null
+}
+
+/** Todas las páginas del módulo, en orden, con su módulo y su lección. */
+export function getModulePages(bookId, moduleId) {
+  const mod = getModule(bookId, moduleId)
+  if (!mod) return []
+  return (mod.lessons ?? []).flatMap((lesson) =>
+    (lesson.pages ?? []).map((page) => ({ page, module: mod, lesson })),
   )
 }
 
-/** Página + módulo + vecinos para la navegación anterior/siguiente. */
+/** Todas las páginas del libro (todos los módulos). */
+export function getAllPages(bookId) {
+  return getModules(bookId).flatMap((mod) =>
+    (mod.lessons ?? []).flatMap((lesson) =>
+      (lesson.pages ?? []).map((page) => ({ page, module: mod, lesson })),
+    ),
+  )
+}
+
+/** Página + módulo + lección, buscada por id de página. */
 export function findPage(bookId, pageId) {
   const all = getAllPages(bookId)
   const index = all.findIndex((p) => p.page.id === pageId)
   if (index === -1) return null
-  return {
-    ...all[index],
-    index,
-    total: all.length,
-    prev: all[index - 1]?.page ?? null,
-    next: all[index + 1]?.page ?? null,
-  }
+  return { ...all[index], index, total: all.length }
 }
 
-/** Id canónico de una actividad: "m1-p1-match". */
+/** Lección a la que pertenece una página. */
+export function lessonOfPage(bookId, moduleId, pageId) {
+  return (
+    getLessons(bookId, moduleId).find((l) =>
+      (l.pages ?? []).some((p) => p.id === pageId),
+    ) ?? null
+  )
+}
+
+/* ── Actividades y progreso ───────────────────────────────────────────── */
+
+/** Id canónico de una actividad: "m1-p09-match". */
 export function activityId(pageId, section) {
   return `${pageId}-${section.id ?? section.activity}`
 }
 
-/** Ids de todas las actividades de una página. */
 export function pageActivityIds(page) {
   return (page.sections ?? [])
     .filter((s) => s.type === 'activity')
     .map((s) => activityId(page.id, s))
 }
 
-/** Ids de todas las actividades de un módulo. */
-export function moduleActivityIds(mod) {
-  return (mod.pages ?? []).flatMap(pageActivityIds)
+export function lessonActivityIds(lesson) {
+  return (lesson.pages ?? []).flatMap(pageActivityIds)
 }
 
-/** Ids de todas las actividades del libro (denominador del progreso). */
+export function moduleActivityIds(mod) {
+  return (mod.lessons ?? []).flatMap(lessonActivityIds)
+}
+
 export function bookActivityIds(bookId) {
   return getModules(bookId).flatMap(moduleActivityIds)
 }

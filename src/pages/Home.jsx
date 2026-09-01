@@ -7,7 +7,7 @@ export default function Home() {
   const ref = usePageAnimation('home')
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="mx-auto w-full max-w-4xl px-5 py-8 sm:px-8 sm:py-10">
       <section data-anim className="mb-10 text-center">
         <p className="label-caps text-coral-ink">Profesora Sharick Prieto</p>
         <h1 className="mt-2">Libros interactivos de idiomas</h1>

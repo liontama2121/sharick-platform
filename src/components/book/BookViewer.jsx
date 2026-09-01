@@ -66,7 +66,15 @@ function CornerHint({ onDismiss, style }) {
  * se mueva: su índice interno no coincide con el que se le pasa en doble
  * página, y sincronizarlo en caliente terminaba colgando la pestaña.
  */
-export default function BookViewer({ meta, content, pages, currentPageId, onPageChange, progress }) {
+export default function BookViewer({
+  meta,
+  content,
+  pages,
+  currentPageId,
+  onPageChange,
+  onReachEnd,
+  progress,
+}) {
   const bookRef = useRef(null)
   const wrapRef = useRef(null)
 
@@ -232,16 +240,25 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
             ? 0
             : index - 2
 
-      if (next === index) return
+      // Ya no hay más hojas hacia adelante: fin del módulo.
+      if (next === index) {
+        if (dir > 0) onReachEnd?.()
+        return
+      }
       honored.current = next
       setSheet(next)
       if (dir > 0) fp.flipNext()
       else fp.flipPrev()
 
+      // next === 0 es la portada, que no tiene página de contenido.
+      if (next === 0) {
+        if (currentPageId !== null) onPageChange?.(null)
+        return
+      }
       const entry = pages[next - 1]
       if (entry && entry.page.id !== currentPageId) onPageChange?.(entry.page.id)
     },
-    [api, dismissHint, portrait, index, lastChild, lastStart, pages, currentPageId, onPageChange, setSheet],
+    [api, dismissHint, portrait, index, lastChild, lastStart, pages, currentPageId, onPageChange, onReachEnd, setSheet],
   )
 
   const flipNext = useCallback(() => step(1), [step])
@@ -265,7 +282,8 @@ export default function BookViewer({ meta, content, pages, currentPageId, onPage
 
   const current = pages[index - 1]
   const atStart = index === 0
-  const atEnd = portrait ? index >= lastChild : index >= lastStart && index !== 0
+  const noMoreSheets = portrait ? index >= lastChild : index >= lastStart && index !== 0
+  const atEnd = noMoreSheets && !onReachEnd
 
   const cornerStyle = (vertical, horizontal) => {
     if (!box) return { display: 'none' }
