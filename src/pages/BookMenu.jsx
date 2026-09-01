@@ -147,7 +147,9 @@ export default function BookMenu() {
                   tone="sage"
                   label={r.label}
                   available={!!r.available}
-                  onClick={() => soon(r.label)}
+                  onClick={() =>
+                    r.route ? navigate(`/book/${bookId}/${r.route}`) : soon(r.label)
+                  }
                 />
               )
             })}

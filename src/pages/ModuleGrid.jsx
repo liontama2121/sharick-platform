@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { animate, stagger } from 'animejs'
 import { Gamepad2, Home, Video, Volume2, X } from 'lucide-react'
 
-import { getBookContent, getBookMeta, getLessons, getModule } from '../books'
+import { getBookContent, getBookMeta, getGames, getLessons, getModule } from '../books'
 import { useLevelIntro } from '../hooks/useLevelIntro'
 import SpreadThumb from '../components/book/SpreadThumb'
 import RoundButton from '../components/nav/RoundButton'
@@ -103,11 +103,21 @@ export default function ModuleGrid() {
           const isCover = lesson.type === 'cover'
           const cardRef = { current: null }
           return (
-            <button
+            /* div y no button: la miniatura renderiza el libro de verdad, que
+               trae sus propios <button> dentro y anidarlos es HTML inválido. */
+            <div
               key={lesson.id}
               data-card
+              role="button"
+              tabIndex={0}
               ref={(el) => {
                 cardRef.current = el
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  openLesson(lesson, e.currentTarget)
+                }
               }}
               onClick={(e) => openLesson(lesson, e.currentTarget)}
               onMouseEnter={(e) =>
@@ -118,8 +128,8 @@ export default function ModuleGrid() {
                 !reduced() &&
                 animate(e.currentTarget, { scale: 1, duration: 260, ease: 'outQuad' })
               }
-              className="group relative flex flex-col items-center gap-2 rounded-2xl border
-                border-navy/10 bg-white p-3 text-left shadow-soft transition-shadow
+              className="group relative flex cursor-pointer flex-col items-center gap-2 rounded-2xl
+                border border-navy/10 bg-white p-3 text-left shadow-soft transition-shadow
                 hover:shadow-lift"
             >
               <span className="relative block">
@@ -165,15 +175,26 @@ export default function ModuleGrid() {
                   </span>
                 )}
               </span>
-            </button>
+            </div>
           )
         })}
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <RoundButton label="Ir al menú del libro" onClick={() => navigate(`/book/${bookId}`)}>
           <Home size={19} strokeWidth={2.4} />
         </RoundButton>
+
+        {getGames(bookId, moduleId).length > 0 && (
+          <button
+            onClick={() => navigate(`/book/${bookId}/games?module=${moduleId}`)}
+            className="rounded-full border border-navy/15 bg-white px-4 py-2 text-[0.88rem]
+              font-semibold text-navy shadow-soft transition-colors hover:border-coral-ink
+              hover:text-coral-ink"
+          >
+            🎮 Juegos de este módulo
+          </button>
+        )}
       </div>
     </div>
   )

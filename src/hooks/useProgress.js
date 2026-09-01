@@ -40,7 +40,7 @@ function getSnapshot() {
 }
 
 function emptyBook() {
-  return { currentPage: null, completedActivities: [], scores: {}, lastVisit: null }
+  return { currentPage: null, completedActivities: [], scores: {}, games: {}, lastVisit: null }
 }
 
 function today() {
@@ -82,6 +82,39 @@ export function useProgress(bookId) {
     [update],
   )
 
+  /**
+   * Resultado de una partida del hub de juegos.
+   * Se conserva el mejor puntaje y las mejores estrellas.
+   */
+  const recordGame = useCallback(
+    (gameId, { score = 0, stars = 1 } = {}) =>
+      update((prev) => {
+        const before = prev.games?.[gameId] ?? { plays: 0, bestScore: 0, stars: 0 }
+        return {
+          games: {
+            ...(prev.games ?? {}),
+            [gameId]: {
+              played: true,
+              plays: before.plays + 1,
+              bestScore: Math.max(before.bestScore, score),
+              stars: Math.max(before.stars, stars),
+            },
+          },
+        }
+      }),
+    [update],
+  )
+
+  const getGameResult = useCallback(
+    (gameId) => book.games?.[gameId] ?? null,
+    [book.games],
+  )
+
+  const playedGames = useCallback(
+    (ids = []) => ids.filter((id) => book.games?.[id]?.played).length,
+    [book.games],
+  )
+
   const resetBook = useCallback(() => {
     const current = getSnapshot()
     write({ ...current, [bookId]: emptyBook() })
@@ -103,7 +136,18 @@ export function useProgress(bookId) {
     [book.completedActivities.length],
   )
 
-  return { progress: book, completeActivity, setCurrentPage, resetBook, isCompleted, getScore, percent }
+  return {
+    progress: book,
+    completeActivity,
+    setCurrentPage,
+    resetBook,
+    isCompleted,
+    getScore,
+    percent,
+    recordGame,
+    getGameResult,
+    playedGames,
+  }
 }
 
 export default useProgress

@@ -1,0 +1,140 @@
+{
+  "games": [
+    {
+      "id": "dice-m1",
+      "type": "diceGame",
+      "module": 1,
+      "icon": "🎲",
+      "title": "The Emotions Dice",
+      "blurb": "Responde “How are you?” de seis formas distintas.",
+      "data": {
+        "label": "Game",
+        "title": "How are you REALLY doing?",
+        "instructions": "Lanza el dado y responde en voz alta con las frases que salgan.",
+        "ranges": {
+          "1-2": { "label": "I'm fine", "phrases": ["I'm great!", "I'm doing well!", "Everything's good!"] },
+          "3-4": { "label": "Not bad", "phrases": ["Not bad!", "Pretty good", "Can't complain"] },
+          "5-6": { "label": "So-so...", "phrases": ["So-so", "More or less", "I've been better"] }
+        }
+      }
+    },
+    {
+      "id": "roulette-m1",
+      "type": "roulette",
+      "module": 1,
+      "icon": "🎡",
+      "title": "Spin & Speak",
+      "blurb": "Consignas de speaking al azar: preséntate, saluda, despídete.",
+      "data": {
+        "label": "Game",
+        "title": "Spin & Speak!",
+        "instructions": "Gira la ruleta y responde en voz alta la consigna que salga.",
+        "segments": [
+          { "label": "Your name", "prompt": "Say: My name is ___." },
+          { "label": "Your city", "prompt": "Say: I'm from ___." },
+          { "label": "Formal hi", "prompt": "Greet someone formally." },
+          { "label": "Friendly hi", "prompt": "Greet a friend informally." },
+          { "label": "Goodbye", "prompt": "Say goodbye in two different ways." },
+          { "label": "How are you?", "prompt": "Answer “How are you?” honestly." }
+        ]
+      }
+    },
+    {
+      "id": "match-m1",
+      "type": "match",
+      "module": 1,
+      "icon": "🧩",
+      "title": "Match the Dialogue",
+      "blurb": "Empareja cada diálogo con las personas correctas.",
+      "data": {
+        "label": "Game",
+        "title": "Who says what?",
+        "instructions": "Empareja cada diálogo con las personas correctas.",
+        "pairs": [
+          {
+            "id": "A",
+            "left": "Dialogue A",
+            "rightLabel": "Camila (Bogotá) y Mateo (Buenos Aires) — reunión de trabajo",
+            "rightImage": "/images/english/module1/camila-mateo.png",
+            "emoji": "🤝"
+          },
+          {
+            "id": "B",
+            "left": "Dialogue B",
+            "rightLabel": "Valentina (Medellín) y Diego (Ciudad de México) — camino a la playa",
+            "rightImage": "/images/english/module1/valentina-diego.png",
+            "emoji": "🏖️"
+          },
+          {
+            "id": "C",
+            "left": "Dialogue C",
+            "rightLabel": "Santiago presenta a Lucía (Lima) a Valentina",
+            "rightImage": "/images/english/module1/santiago-lucia-valentina.png",
+            "emoji": "👋"
+          }
+        ]
+      }
+    },
+    {
+      "id": "memory-m1",
+      "type": "memory",
+      "module": 1,
+      "icon": "🃏",
+      "title": "Memory Cards",
+      "blurb": "Encuentra las parejas inglés ↔ español de los saludos.",
+      "data": {
+        "pairs": [
+          ["Good morning", "Buenos días"],
+          ["Good afternoon", "Buenas tardes"],
+          ["Good evening", "Buenas noches"],
+          ["Nice to meet you", "Mucho gusto"],
+          ["How are you?", "¿Cómo estás?"],
+          ["See you later", "Hasta luego"],
+          ["My name is…", "Me llamo…"],
+          ["I'm from…", "Soy de…"]
+        ]
+      }
+    },
+    {
+      "id": "quiz-m1",
+      "type": "quiz",
+      "module": 1,
+      "icon": "⚡",
+      "title": "Quick Quiz",
+      "blurb": "Diez preguntas contrarreloj sobre saludos y presentaciones.",
+      "data": {
+        "seconds": 15,
+        "questions": [
+          { "q": "It's 7:00 a.m. What do you say?", "options": ["Good morning", "Good evening", "Good night"], "correct": 0 },
+          { "q": "It's 1:00 p.m. What do you say?", "options": ["Good morning", "Good afternoon", "Good night"], "correct": 1 },
+          { "q": "You are going to sleep. What do you say?", "options": ["Good evening", "Good night", "Good afternoon"], "correct": 1 },
+          { "q": "Someone says “Nice to meet you”. You answer…", "options": ["Nice to meet you too!", "You're welcome", "See you later"], "correct": 0 },
+          { "q": "Which greeting is formal?", "options": ["Hey!", "Good morning, Ms. Restrepo.", "What's up?"], "correct": 1 },
+          { "q": "How do you ask someone's name?", "options": ["Where are you from?", "How are you?", "What's your name?"], "correct": 2 },
+          { "q": "Mateo is from Buenos Aires. He says…", "options": ["I'm from Argentina.", "I'm from Peru.", "I'm from Mexico."], "correct": 0 },
+          { "q": "Which one is a goodbye?", "options": ["See you later", "Nice to meet you", "Good morning"], "correct": 0 },
+          { "q": "“¿Cómo estás?” in English is…", "options": ["Where are you from?", "How are you?", "What's your name?"], "correct": 1 },
+          { "q": "In Colombia, a friend is a…", "options": ["causa", "parcero", "che"], "correct": 1 }
+        ]
+      }
+    },
+    {
+      "id": "scramble-m1",
+      "type": "scramble",
+      "module": 1,
+      "icon": "🔤",
+      "title": "Word Scramble",
+      "blurb": "Ordena las palabras y arma la frase correcta.",
+      "data": {
+        "items": [
+          { "answer": "Nice to meet you", "hint": "Cuando conoces a alguien" },
+          { "answer": "What is your name", "hint": "Para preguntar el nombre" },
+          { "answer": "I am from Colombia", "hint": "Para decir de dónde eres" },
+          { "answer": "Good morning teacher", "hint": "Saludo de la mañana" },
+          { "answer": "See you later amigo", "hint": "Una despedida" },
+          { "answer": "How are you today", "hint": "Para preguntar cómo está alguien" }
+        ]
+      }
+    }
+  ]
+}

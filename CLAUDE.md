@@ -149,6 +149,7 @@ navy / coral / salvia con Playfair Display se mantiene tal cual.
 ```
 /                                                 Home · selector de libros
 /book/:bookId                                     NIVEL 1 · menú del libro
+/book/:bookId/games[?module=N]                    Hub de juegos
 /book/:bookId/module/:moduleId                    NIVEL 2 · lecciones del módulo
 /book/:bookId/module/:moduleId/lesson/:lessonId   NIVEL 3 · libro abierto
 ```
@@ -300,6 +301,7 @@ y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
 | `listening` | ListeningActivity | Audio + preguntas de opción múltiple | todas correctas |
 | `multipleChoice` | MultipleChoice | Preguntas sueltas de opción múltiple | todas correctas |
 | `speaking` | SpeakingPrompt | Checklist de frases modelo + grabación | todas marcadas |
+| — | MemoryGame · QuickQuiz · WordScramble | solo en el hub de Games, ver más abajo | — |
 | `recordPrompt` | RecordPrompt | Preguntas numeradas para responder en voz alta | todas respondidas |
 
 ### Ruleta (`roulette`)
@@ -318,6 +320,51 @@ Dos detalles de implementación que hay que respetar:
   y pierde la rotación: la rueda acierta el segmento pero se queda quieta.
 - **El aterrizaje va por `setTimeout`, no por `onComplete`.** Ese callback no
   llegó a dispararse y la ruleta se quedaba en "Girando…" para siempre.
+
+---
+
+## 🎮 SECCIÓN GAMES (hub de juegos)
+
+Ruta `/book/:bookId/games`, con `?module=N` para filtrar. Se entra desde el
+botón **Games** del Nivel 1 y desde "🎮 Juegos de este módulo" en el Nivel 2.
+
+- `pages/GamesHub.jsx` — cabecera, pills de filtro por módulo y rejilla de
+  `games/GameCard.jsx` (3 / 1 columnas, hover scale 1.04, badge "Jugado ✓",
+  estrellas y mejor puntaje).
+- Al elegir un juego se abre `games/GameShell.jsx`, un overlay a pantalla
+  completa con [X] y cierre con Escape. **Los juegos del hub viven fuera del
+  flipbook**, así que no compiten con las esquinas de pasar página.
+- Al terminar, `games/GameResult.jsx`: "¡Bien hecho!", estrellas con pop-in
+  escalonado, confeti en la paleta y botones "Jugar otra vez" / "Volver a Games".
+
+### Juegos
+| `type` | Componente | Origen |
+|---|---|---|
+| `diceGame` · `roulette` · `match` | los del libro | se reutilizan tal cual; el JSON les pasa `label: "Game"` |
+| `memory` | `games/MemoryGame.jsx` | parejas inglés ↔ español, giro 3D, intentos y tiempo |
+| `quiz` | `games/QuickQuiz.jsx` | 10 preguntas con barra de tiempo por pregunta |
+| `scramble` | `games/WordScramble.jsx` | ordenar palabras (o letras si es una sola palabra) |
+
+### `books/<libro>/games.json`
+```json
+{ "games": [
+  { "id": "memory-m1", "type": "memory", "module": 1, "icon": "🃏",
+    "title": "Memory Cards", "blurb": "…",
+    "data": { "pairs": [["Good morning","Buenos días"]] } }
+] }
+```
+Agregar un juego = agregar un objeto al JSON. Si es un tipo nuevo, además
+registrarlo en `renderGame()` de `GamesHub.jsx`.
+
+### Progreso de juegos
+Va en `sharick-progress` bajo `games`: `{ played, plays, bestScore, stars }`
+por juego, quedándose siempre con el mejor resultado. El hook expone
+`recordGame`, `getGameResult` y `playedGames`.
+
+**Ojo con el fin de partida:** el aviso `onFinish` va detrás de un `useRef`,
+no de un estado. El store de progreso notifica de forma síncrona, así que un
+guard basado en estado se re-entra antes de commitear y provoca un bucle de
+renders que tumba la app (se registraron 51 partidas en una sola).
 
 ---
 

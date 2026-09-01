@@ -1,10 +1,17 @@
 import registry from './registry.json'
 import englishA1 from './english-a1/modules.json'
+import englishA1Games from './english-a1/games.json'
 
 /* Índice de contenidos. Al agregar un libro nuevo:
    1) añadirlo a registry.json  2) importar su modules.json aquí. */
 const CONTENT = {
   'english-a1': englishA1,
+}
+
+/* Juegos del hub, uno por libro. Agregar un juego = agregar un objeto
+   al games.json correspondiente. */
+const GAMES = {
+  'english-a1': englishA1Games,
 }
 
 export const books = registry.books
@@ -28,6 +35,23 @@ export function getModule(bookId, moduleId) {
 /** Recursos del libro (columna derecha del menú principal). */
 export function getResources(bookId) {
   return getBookContent(bookId)?.resources ?? []
+}
+
+/** Juegos del libro. `moduleId` opcional para filtrar por módulo. */
+export function getGames(bookId, moduleId) {
+  const list = GAMES[bookId]?.games ?? []
+  if (moduleId == null || moduleId === 'all') return list
+  return list.filter((g) => String(g.module) === String(moduleId))
+}
+
+export function findGame(bookId, gameId) {
+  return (GAMES[bookId]?.games ?? []).find((g) => g.id === gameId) ?? null
+}
+
+/** Módulos que tienen al menos un juego. */
+export function getGameModules(bookId) {
+  const ids = [...new Set((GAMES[bookId]?.games ?? []).map((g) => g.module))]
+  return ids.sort((a, b) => a - b)
 }
 
 /** Secciones extra de la columna izquierda (Self-Check, Cultural…). */

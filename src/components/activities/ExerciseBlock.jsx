@@ -6,7 +6,7 @@ import SectionLabel from '../ui/SectionLabel'
  */
 export default function ExerciseBlock({
   number,
-  label = 'Exercise',
+  label,
   title,
   instructions,
   completed = false,
@@ -18,7 +18,7 @@ export default function ExerciseBlock({
     <section className="pt-1">
       <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
         <SectionLabel tone="sage" leaf>
-          {label}
+          {label ?? 'Exercise'}
           {number != null ? ` ${number}` : ''}
         </SectionLabel>
         {completed && (

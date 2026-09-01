@@ -114,6 +114,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
   return (
     <>
       <ExerciseBlock
+        label={section.label}
         number={section.number}
         title={section.title}
         instructions={section.instructions}
