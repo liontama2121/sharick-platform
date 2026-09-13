@@ -132,6 +132,7 @@ export function screenTitle(screen, lesson) {
 /* Qué badge le toca a cada actividad. */
 const ACTIVITY_BADGE = {
   matchMarkers: 'written',
+  matchHeadings: 'written',
   match: 'written',
   fillBubbles: 'written',
   fillInSentence: 'written',
@@ -146,7 +147,7 @@ const ACTIVITY_BADGE = {
 /** Badges de UNA pantalla: audio · game · video · written · speaking. */
 export function screenBadges(screen) {
   const set = new Set()
-  if (screen?.audio !== undefined) set.add('audio')
+  if (screen?.audio !== undefined || screen?.audioTracks?.length) set.add('audio')
   if ((screen?.dialogues ?? []).some((d) => d.audio)) set.add('audio')
   if (screen?.video) set.add('video')
   const badge = ACTIVITY_BADGE[screen?.activity?.activity]

@@ -15,10 +15,13 @@ export const BUBBLE_COLORS = {
  * vertical y el texto empieza alineado, como en el libro impreso.
  */
 const DialogueBubble = forwardRef(function DialogueBubble(
-  { dialogue, playing = false, selected = false, onSelect, className = '' },
+  { dialogue, playing = false, selected = false, compact = false, onSelect, className = '' },
   ref,
 ) {
   const color = BUBBLE_COLORS[dialogue.letter] ?? BUBBLE_COLORS.A
+  /* `compact`: mismo cuerpo de 20px pero interlineado y padding más cortos,
+     para las pantallas que llevan los tres diálogos más una actividad. */
+  const lineCls = compact ? 'leading-[1.4]' : 'leading-[1.5]'
 
   return (
     <div className={`relative pl-9 ${className}`}>
@@ -34,8 +37,8 @@ const DialogueBubble = forwardRef(function DialogueBubble(
         ref={ref}
         type="button"
         onClick={onSelect}
-        className={`relative w-full rounded-[18px] px-6 py-4 text-left transition-shadow
-          ${selected ? 'ring-4 ring-gold' : ''}`}
+        className={`relative w-full rounded-[18px] px-6 text-left transition-shadow
+          ${compact ? 'py-3' : 'py-4'} ${selected ? 'ring-4 ring-gold' : ''}`}
         style={{
           background: color.bg,
           color: color.ink,
@@ -54,10 +57,10 @@ const DialogueBubble = forwardRef(function DialogueBubble(
         <span className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5">
           {(dialogue.lines ?? []).map((line, i) => (
             <span key={i} className="contents">
-              <span className="text-right font-body text-[20px] font-semibold leading-[1.5]">
+              <span className={`text-right font-body text-[20px] font-semibold ${lineCls}`}>
                 {line.speaker}:
               </span>
-              <span className="font-body text-[20px] leading-[1.5]">{line.text}</span>
+              <span className={`font-body text-[20px] ${lineCls}`}>{line.text}</span>
             </span>
           ))}
         </span>

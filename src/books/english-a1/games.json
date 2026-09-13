@@ -92,23 +92,23 @@
               {
                 "id": "A",
                 "left": "Dialogue A",
-                "rightLabel": "Camila (Bogotá) y Mateo (Buenos Aires) — reunión de trabajo",
+                "rightLabel": "Camila y Mateo se conocen",
                 "rightImage": "/images/english/module1/camila-mateo.png",
                 "emoji": "🤝"
               },
               {
                 "id": "B",
                 "left": "Dialogue B",
-                "rightLabel": "Valentina (Medellín) y Diego (Ciudad de México) — camino a la playa",
-                "rightImage": "/images/english/module1/valentina-diego.png",
-                "emoji": "🏖️"
+                "rightLabel": "Valentina le presenta su amiga Lucía a Diego",
+                "rightImage": "/images/english/module1/valentina-lucia-diego.png",
+                "emoji": "👋"
               },
               {
                 "id": "C",
                 "left": "Dialogue C",
-                "rightLabel": "Santiago presenta a Lucía (Lima) a Valentina",
-                "rightImage": "/images/english/module1/santiago-lucia-valentina.png",
-                "emoji": "👋"
+                "rightLabel": "Sofía y Andrés se despiden",
+                "rightImage": "/images/english/module1/sofia-andres.png",
+                "emoji": "🚪"
               }
             ]
           }
@@ -220,11 +220,11 @@
                 "correct": 2
               },
               {
-                "q": "Mateo is from Buenos Aires. He says…",
+                "q": "Mateo is from Caracas. He says…",
                 "options": [
-                  "I'm from Argentina.",
-                  "I'm from Peru.",
-                  "I'm from Mexico."
+                  "I'm from Venezuela.",
+                  "I'm from Bolivia.",
+                  "I'm from Panama."
                 ],
                 "correct": 0
               },
@@ -249,9 +249,9 @@
               {
                 "q": "In Colombia, a friend is a…",
                 "options": [
-                  "causa",
+                  "fren",
                   "parcero",
-                  "che"
+                  "pana"
                 ],
                 "correct": 1
               }

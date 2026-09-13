@@ -14,6 +14,8 @@ import Checklist from '../content/Checklist'
 import RoutineBlock from '../media/RoutineBlock'
 
 import MatchMarkers from '../activities/MatchMarkers'
+import MatchSlots from '../activities/MatchSlots'
+import MatchHeadings from '../activities/MatchHeadings'
 import MatchActivity from '../activities/MatchActivity'
 import FillBubbles from '../activities/FillBubbles'
 import FillInSentence from '../activities/FillInSentence'
@@ -104,10 +106,18 @@ export default function ScreenRenderer({
   const renderActivity = (className = '') => {
     if (!activity) return null
 
-    if (activity.activity === 'matchMarkers') {
+    /* Las que usan los diálogos de la pantalla reciben `screen` entero.
+       matchMarkers con `style: "slots"` es la versión de cajitas [1][ _ ]. */
+    const withDialogues = {
+      matchMarkers: activity.style === 'slots' ? MatchSlots : MatchMarkers,
+      matchHeadings: MatchHeadings,
+    }[activity.activity]
+
+    if (withDialogues) {
+      const WithDialogues = withDialogues
       return (
         <div className={className}>
-          <MatchMarkers
+          <WithDialogues
             screen={screen}
             activity={activity}
             resetKey={resetKey}
@@ -161,8 +171,12 @@ export default function ScreenRenderer({
           />
         )}
       </div>
-      {screen.audio !== undefined && (
-        <AudioPlayer src={screen.audio} label={screen.audioLabel ?? 'Audio'} />
+      {screen.audioTracks?.length ? (
+        <AudioPlayer tracks={screen.audioTracks} label={screen.audioLabel ?? 'Audio'} />
+      ) : (
+        screen.audio !== undefined && (
+          <AudioPlayer src={screen.audio} label={screen.audioLabel ?? 'Audio'} />
+        )
       )}
     </div>
   )
@@ -173,7 +187,7 @@ export default function ScreenRenderer({
     <div ref={rootRef} className="flex h-full flex-col gap-5 px-10 pb-[104px] pt-[104px]">
       {header}
 
-      {screen.layout === 'dialogues-left-image-right' && (
+      {screen.layout === 'dialogues-left-image-right' && activity && (
         <div className="min-h-0 flex-1">{renderActivity('h-full')}</div>
       )}
 
@@ -216,7 +230,8 @@ export default function ScreenRenderer({
       )}
 
       {/* Diálogos sueltos (sin actividad de emparejar) */}
-      {screen.layout === 'dialogues-only' && (
+      {(screen.layout === 'dialogues-only' ||
+        (screen.layout === 'dialogues-left-image-right' && !activity)) && (
         <div className="grid min-h-0 flex-1 grid-cols-2 gap-6">
           <div className="flex flex-col gap-4">
             {(screen.dialogues ?? []).map((d) => (

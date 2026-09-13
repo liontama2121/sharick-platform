@@ -5,12 +5,15 @@
 Plataforma educativa interactiva de idiomas para la profesora **Sharick Prieto**.
 Contendrá múltiples libros digitales interactivos: **Inglés A1** (primero), luego Portugués A1 y Español A1.
 
-**IMPORTANTE — enfoque LATINOAMERICANO.** Los temas gramaticales estándar de A1 se
-mantienen, pero los ejemplos, personajes, lugares, lecturas e ilustraciones son de
-**Latinoamérica**, con **Colombia como país base**: Cartagena, Bogotá y Medellín siguen
-siendo el escenario principal, y alrededor entran México, Argentina, Perú, Venezuela,
-Chile, Ecuador y Brasil. En `modules.json` el libro lleva `region: "Latin America"` y
-`baseCountry: "Colombia"`; el Módulo 1 conserva `country: "Colombia"`.
+**IMPORTANTE — el libro 1 es sobre CUATRO PAÍSES: Colombia, Venezuela, Bolivia y
+Panamá.** Los temas gramaticales estándar de A1 se mantienen, pero los ejemplos,
+personajes, lugares, lecturas e ilustraciones salen de esos cuatro países, con
+**Colombia como país base** (Cartagena, Bogotá, Medellín) y alrededor Caracas,
+La Paz y Ciudad de Panamá. Nada de México, Argentina, Perú, Chile, Ecuador ni
+Brasil. En `modules.json` el libro lleva `region: "Latin America"`,
+`baseCountry: "Colombia"` y `countries: ["Colombia","Venezuela","Bolivia","Panamá"]`;
+el Módulo 1 conserva `country: "Colombia"`. La portada dice "con Colombia,
+Venezuela, Bolivia y Panamá como escenario" (`registry.json`).
 
 ### Distribución (3 formatos, 1 código):
 1. **Web:** Cloudflare Pages (deploy automático con git push)
@@ -213,7 +216,7 @@ real del libro (portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …).
 - **Badges** abajo a la derecha, calculados por `screenBadges()` sobre ESA
   pantalla: 🔊 audio (`screen.audio`, diálogos con audio o actividad
   `listening`) · 🎮 juego (`diceGame`, `roulette`) · 🎬 video · ✏️ ejercicio
-  escrito (`match`, `matchMarkers`, `fillBubbles`, `fillInSentence`,
+  escrito (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`, `fillInSentence`,
   `multipleChoice`) · 🎙️ speaking (`speaking`, `recordPrompt`).
 - **Check verde** arriba a la derecha si la pantalla está completada. Una
   pantalla CON actividad se completa al resolverla; una sin actividad, con
@@ -253,7 +256,8 @@ src/
 │   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
 │   ├── content/  VocabularyBox · CulturalTip · Checklist
-│   ├── activities/ ExerciseBlock · MatchActivity · MultipleChoice · FillBubbles ·
+│   ├── activities/ ExerciseBlock · MatchActivity · MatchMarkers · MatchSlots ·
+│   │              MatchHeadings · MultipleChoice · FillBubbles ·
 │   │              FillInSentence · ListeningActivity · SpeakingPrompt ·
 │   │              RecordPrompt · DiceGame
 │   ├── media/    AudioPlayer · DialogueBlock · RoutineBlock
@@ -263,7 +267,7 @@ src/
 │                 SectionLabel · AnalogClock · ImagePlaceholder (SmartImage)
 ├── pages/        Home · BookMenu · ModuleGrid · LessonReader
 ├── books/        index.js · registry.json · english-a1/modules.json
-├── hooks/        useProgress · usePageAnimation · useFeedback · useLevelIntro
+├── hooks/        useProgress · usePageAnimation · useFeedback · useLevelIntro · useDragDrop
 ├── utils/        numberWords.js
 └── styles/       global.css
 ```
@@ -278,63 +282,77 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1 (6 lecciones · 12 páginas, 6 → 17)
+## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 12 pantallas, 6 → 17)
 
-**⚠️ Contenido de Sharick. Títulos y mecánicas exactos.**
+**⚠️ Contenido de Sharick. Títulos, diálogos y mecánicas exactos** (documento
+oficial de Sharick con referencias visuales de Express Publishing).
 
-| Pág | Contenido |
-|-----|-----------|
-| 6 | LESSON 1 · **"Let's say hi to Colombia!"** + VOCABULARY (greetings) |
-| 7 | Ilustración Cartagena + CULTURAL TIP (¿usted o parcero?) |
-| 8 | Reading · Dialogue A (formal) y B (informal) |
-| 9 | Dialogue C (presenta a un tercero) + EXERCISE 1 (match A/B/C) |
-| 10 | EXERCISE 2 (fill in sentence) + EXERCISE 3 (speaking: preséntate y despídete) |
-| 11 | Ilustración + EXERCISE 4 (record prompt) |
-| 12 | LESSON 2 · **"Hello parcero!"** + rutina del día (mañana/tarde/noche/dormir) |
-| 13 | Ilustración + VOCABULARY (times of the day) + CULTURAL TIP (las onces) |
-| 14 | EXERCISE 1 (fill bubbles con **reloj analógico clásico**) |
-| 15 | EXERCISE 2 (listening + preguntas) |
-| 16 | EXERCISE 3 (**dado de emociones**: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so) |
-| 17 | Can-do check + ilustración de cierre |
+### Lección 1.1 · **"Let's say Hi!"** (5 pantallas)
 
-Cada **lección es UNA doble página**. Las siguientes se agregan al array
-`lessons` de `modules.json`. Mantener las páginas **pares a la izquierda** e
-impares a la derecha para que las dobles páginas queden balanceadas.
+| Pantalla | Pág | Contenido |
+|---|---|---|
+| 1.1-s1 | 6 | Reading · Exercise 1 "Listen and read the dialogues (A-C)." Diálogos A/B/C + `audioTracks` (1-1-a/b/c.mp3) + ilustración `grupos-4-paises.png` |
+| 1.1-s2 | 7 | Exercise 2 "Match the dialogues (A-C) to the pictures (1-3)." `matchMarkers` con `style: "slots"` — cajitas [1][ _ ] sobre la ilustración, fichas A/B/C arrastrables. **Respuestas: 1→B, 2→C, 3→A** |
+| 1.1-s3 | 8 | Exercise 3 "Match the headings to the dialogues." `matchHeadings` — píldoras roja/dorada/azul a slots grises sobre cada diálogo |
+| 1.1-s4 | 9 | Speaking · Exercise 4 "Introduce yourself and say goodbye." (`speaking`) |
+| 1.1-s5 | 10 | Speaking · Exercise 5 Spin & Speak (`roulette`) |
 
-| Lección | Páginas | Contenido |
-|---------|---------|-----------|
-| cover | — | Portada del libro (va sola) |
-| 1.1 | 6–7 | Let's say hi to Colombia! · vocabulario · Cultural Tip |
-| 1.2 | 8–9 | Dialogues A, B y C · Exercise 1 (match) |
-| 1.3 | 10–11 | Exercises 2 a 5 (fill in, speaking, record, **ruleta**) |
-| 1.4 | 12–13 | Hello, amigo! · times of the day · Cultural Tips |
-| 1.5 | 14–15 | Exercise 1 (relojes) · Exercise 2 (listening) |
-| 1.6 | 16–17 | Exercise 3 (el dado) · Can-do check |
+**Diálogos de 1.1 (texto EXACTO, con tildes: Lucía, Sofía, Andrés):**
+- **A** (morado #8E7CC3): Camila/Mateo se conocen — "Hi! I'm Camila." · "Hey, Camila.
+  I'm Mateo." · "It's a pleasure to meet you, Mateo." · "Nice to meet you too."
+- **B** (coral #E05A47): Valentina presenta a Lucía a Diego — "Hello, Diego. What's up?"
+  · "Not much. And you?" · "I'm good. This is my friend Lucía. Lucía, this is Diego." ·
+  "Hi, Lucía. Great to meet you." · "Hi, Diego. Nice to meet you too."
+- **C** (azul #3F86B8): Sofía/Andrés se despiden — "Goodbye, Andrés." · "Bye, Sofía.
+  Take care!" · "See you soon!"
+
+La ilustración `grupos-4-paises.png` muestra tres grupos: **1** trío conociéndose
+(→ B), **2** despedida (→ C), **3** pareja conociéndose (→ A). Los `markers`
+del JSON (x/y en %) posicionan las cajitas.
+
+### Lección 1.2 · **"Hello, amigo!"** (7 pantallas)
+
+| Pantalla | Pág | Contenido |
+|---|---|---|
+| 1.2-s1 | 11 | Rutina del día (mañana/tarde/noche/dormir) |
+| 1.2-s2 | 12 | VOCABULARY (times of the day) + CULTURAL TIP "friend": parcero 🇨🇴 · pana 🇻🇪 · ñaño/colega 🇧🇴 · fren 🇵🇦 |
+| 1.2-s3 | 13 | EXERCISE 3 (fill bubbles con **reloj analógico clásico**) |
+| 1.2-s4 | 14 | EXERCISE 4 (listening + preguntas) |
+| 1.2-s5 | 15 | EXERCISE 5 (fill in sentence) |
+| 1.2-s6 | 16 | EXERCISE 6 (**dado de emociones**: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so) |
+| 1.2-s7 | 17 | Can-do check + CULTURAL TIP (las onces) |
+
+Las lecciones siguientes se agregan al array `lessons` de `modules.json`.
 
 ### Esquema de lección y pantalla
 ```json
 {
-  "id": "1.1", "shortTitle": "Let's say hi!", "resources": ["audio","game"],
+  "id": "1.1", "shortTitle": "Let's say Hi!", "resources": ["audio","game"],
   "screens": [
-    { "id": "1.1-s1", "title": "Reading · Dialogues A-C",
-      "pageNumber": 6, "section": "Reading",
+    { "id": "1.1-s2", "title": "Match · Dialogues to pictures",
+      "pageNumber": 7, "section": "Reading",
       "layout": "dialogues-left-image-right",
-      "audio": "/audio/english/module1/1-1-dialogues.mp3",
-      "exercise": { "number": 1, "skill": "listen",
-                    "instruction": "Listen and read the dialogues (A-C)." },
+      "audioTracks": [ { "label": "Dialogue A", "src": "/audio/english/module1/1-1-a.mp3" } ],
+      "exercise": { "number": 2, "skill": "read",
+                    "instruction": "Match the dialogues (A-C) to the pictures (1-3)." },
       "dialogues": [ { "letter": "A", "audio": "…",
                        "lines": [ { "speaker": "Camila", "text": "Hi! I'm Camila." } ] } ],
       "illustration": { "src": "…", "alt": "…",
-                        "markers": [ { "n": 1, "x": 20, "y": 62, "label": "Camila & Mateo" } ] },
-      "activity": { "activity": "matchMarkers",
-                    "pairs": [ { "dialogue": "A", "marker": 1 } ] } }
+                        "markers": [ { "n": 1, "x": 22, "y": 58, "label": "Trío conociéndose" } ] },
+      "activity": { "activity": "matchMarkers", "style": "slots",
+                    "pairs": [ { "marker": 1, "dialogue": "B" } ] } }
   ]
 }
 ```
+`audio` (una pista) o `audioTracks` (varias, con pills y encadenado automático)
+ponen el `AudioPlayer` en la cabecera de la pantalla.
 La portada es `{ "id": "cover", "type": "cover", "screens": [{ "layout": "cover" }] }`.
 
 **Layouts** (`layout`): `dialogues-left-image-right` · `two-columns` ·
 `image-top-activity-bottom` · `activity-full` · `dialogues-only` · `cover`.
+`dialogues-left-image-right` dibuja la actividad si la hay (`matchMarkers`,
+`matchHeadings`) y, si no, los diálogos a la izquierda y la ilustración a la
+derecha.
 Los bloques de contenido (`blocks`) reutilizan `vocabulary`, `culturalTip`,
 `routine`, `checklist` y `text`.
 
@@ -358,6 +376,8 @@ y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
 | `diceGame` | DiceGame | Dado de emociones: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so | salieron los 3 rangos |
 | `roulette` | RouletteWheel | Ruleta de consignas de speaking | salieron todos los segmentos |
 | `match` | MatchActivity | Emparejar diálogo ↔ personas | todos los pares |
+| `matchMarkers` | MatchMarkers · **MatchSlots** (`style: "slots"`) | Diálogos ↔ grupos de la ilustración. Con `slots`: cajitas [1][ _ ] junto a cada grupo y fichas A/B/C arrastrables desde una bandeja | todos los pares |
+| `matchHeadings` | MatchHeadings | Títulos (píldoras `red` / `yellow` / `blue`) ↔ diálogos, con un slot gris sobre cada caja | todos los títulos |
 | `fillBubbles` | FillBubbles | Saludo según el reloj analógico | todas las burbujas |
 | `fillInSentence` | FillInSentence | Frases con hueco, input con línea | todas las frases |
 | `listening` | ListeningActivity | Audio + preguntas de opción múltiple | todas correctas |
@@ -365,6 +385,23 @@ y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
 | `speaking` | SpeakingPrompt | Checklist de frases modelo + grabación | todas marcadas |
 | — | MemoryGame · QuickQuiz · WordScramble | solo en el hub de Games, ver más abajo | — |
 | `recordPrompt` | RecordPrompt | Preguntas numeradas para responder en voz alta | todas respondidas |
+
+### Drag & drop (`hooks/useDragDrop.js`)
+`MatchSlots` y `MatchHeadings` arrastran con **Pointer Events** (mouse, dedo y
+lápiz) y traducen las coordenadas a las del lienzo escalado dividiendo por la
+escala real del contenedor. El fantasma sigue al puntero; al soltar se busca
+`document.elementFromPoint` → `[data-drop]`. Un gesto que se mueve menos de
+6px cuenta como toque → **click-click** (toca la ficha, toca el slot). Los
+elementos arrastrables llevan `touch-none`. Acierto: `celebrate` + borde
+salvia; fallo: `shake`, toast y la ficha vuelve a la bandeja.
+
+```json
+{ "activity": "matchHeadings",
+  "headings": [
+    { "text": "Say Hi & introduce yourself", "color": "red",    "target": "A" },
+    { "text": "Say Hi & introduce a friend", "color": "yellow", "target": "B" },
+    { "text": "Say goodbye",                 "color": "blue",   "target": "C" } ] }
+```
 
 ### Ruleta (`roulette`)
 Rueda SVG de 240px (280px en desktop) con 6-8 segmentos de colores alternados
@@ -468,7 +505,9 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 - Estilo Gemini: *"Editorial illustration for a printed language textbook, National Geographic
   Learning style. Soft watercolor, warm cream background #F7F2E9, navy #1B3A5C, coral #E05A47,
   sage green #6B9080, golden yellow #E9B44C. Minimalist, elegant, rounded shapes,
-  Latin American culture focus: Colombia como base, más México, Argentina, Perú, Venezuela, Chile, Ecuador y Brasil."*
+  Latin American culture focus: Colombia como base, más Venezuela, Bolivia y Panamá."*
+- Escenas futuras: solo de esos cuatro países (Cartagena, Bogotá, Medellín,
+  Caracas, La Paz, Ciudad de Panamá).
 - Mientras no exista el archivo, `SmartImage` muestra un marco punteado con emoji y
   **la ruta exacta** que falta (`compact` para miniaturas: solo emoji).
 - Audio: si falta el mp3, `AudioPlayer` muestra "Audio próximamente" sin romper nada.
@@ -488,8 +527,9 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 
 1. **Contenido de Sharick es sagrado** — mecánicas exactas (dado 1-2/3-4/5-6,
    reloj analógico normal, match A/B/C) y títulos exactos, salvo cambio explícito
-   del cliente. Cambios ya aprobados: "Hello parcero!" → **"Hello, amigo!"** (lección 1.4),
-   al pasar el libro a enfoque latinoamericano.
+   del cliente. Cambios ya aprobados: "Hello parcero!" → **"Hello, amigo!"** (lección 1.2)
+   y "Let's say hi to Colombia!" → **"Let's say Hi!"** (lección 1.1, documento
+   oficial de Sharick, 2026-09-13).
 2. **Todo en JSON** — cero contenido hardcodeado en componentes.
 3. **Todo animado** — Anime.js en cada interacción.
 4. **Papel cálido, cero dark mode.** Tricolor solo en portada.

@@ -7,7 +7,15 @@ import SmartImage from '../ui/ImagePlaceholder'
  * igual aunque la imagen todavía no exista.
  */
 const IllustrationWithMarkers = forwardRef(function IllustrationWithMarkers(
-  { illustration, markerRefs, filled = {}, selectedMarker = null, onMarkerClick, className = '' },
+  {
+    illustration,
+    markerRefs,
+    filled = {},
+    selectedMarker = null,
+    onMarkerClick,
+    renderMarker,
+    className = '',
+  },
   ref,
 ) {
   const [hover, setHover] = useState(null)
@@ -24,7 +32,11 @@ const IllustrationWithMarkers = forwardRef(function IllustrationWithMarkers(
         />
       </div>
 
-      {markers.map((m) => {
+      {/* `renderMarker` sustituye el círculo numerado por otra pieza
+          (p. ej. las cajitas [1][ _ ] de la actividad de slots). */}
+      {renderMarker && markers.map((m) => renderMarker(m))}
+
+      {!renderMarker && markers.map((m) => {
         const letter = filled[m.n]
         const isSelected = selectedMarker === m.n
         return (

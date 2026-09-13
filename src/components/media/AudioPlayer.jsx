@@ -41,8 +41,21 @@ function RoundBtn({ onClick, label, tone, disabled, children }) {
  * botones play / pause / stop. Si el mp3 todavía no existe se queda
  * deshabilitado con el aviso "Audio pendiente", pero nunca rompe la página.
  */
-export default function AudioPlayer({ src, label, compact = false, onPlayingChange }) {
+export default function AudioPlayer({
+  src: singleSrc,
+  tracks,
+  label,
+  compact = false,
+  onPlayingChange,
+}) {
+  /* `tracks` = varias pistas (p. ej. Dialogue A / B / C): salen como pills
+     y al terminar una sigue sola con la siguiente. */
+  const [trackIdx, setTrackIdx] = useState(0)
+  const list = tracks?.length ? tracks : null
+  const src = list ? list[Math.min(trackIdx, list.length - 1)]?.src : singleSrc
+
   const audioRef = useRef(null)
+  const autoNextRef = useRef(false)
   const [playing, setPlaying] = useState(false)
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(!src)
@@ -56,6 +69,10 @@ export default function AudioPlayer({ src, label, compact = false, onPlayingChan
     setTime(0)
     setDuration(0)
   }, [src])
+
+  useEffect(() => {
+    setTrackIdx(0)
+  }, [tracks])
 
   useEffect(() => {
     onPlayingChange?.(playing)
@@ -121,7 +138,17 @@ export default function AudioPlayer({ src, label, compact = false, onPlayingChan
           src={src}
           preload="metadata"
           onError={() => setFailed(true)}
-          onCanPlay={() => setReady(true)}
+          onCanPlay={(e) => {
+            setReady(true)
+            // venía encadenada de la pista anterior: sigue sola
+            if (autoNextRef.current) {
+              autoNextRef.current = false
+              e.currentTarget
+                .play()
+                .then(() => setPlaying(true))
+                .catch(() => setPlaying(false))
+            }
+          }}
           onLoadedMetadata={(e) => {
             setDuration(e.currentTarget.duration)
             setReady(true)
@@ -130,8 +157,32 @@ export default function AudioPlayer({ src, label, compact = false, onPlayingChan
           onEnded={() => {
             setPlaying(false)
             setTime(0)
+            if (list && trackIdx + 1 < list.length) {
+              autoNextRef.current = true
+              setTrackIdx(trackIdx + 1)
+            }
           }}
         />
+      )}
+
+      {list && (
+        <div className="flex items-center gap-2">
+          {list.map((t, i) => (
+            <button
+              key={t.src ?? i}
+              type="button"
+              onClick={() => {
+                autoNextRef.current = false
+                setTrackIdx(i)
+              }}
+              aria-pressed={i === trackIdx}
+              className={`rounded-full px-3 py-1 font-body text-[13px] font-bold transition-colors
+                ${i === trackIdx ? 'bg-coral-ink text-white' : 'bg-white text-navy hover:bg-tip'}`}
+            >
+              {t.label ?? `Pista ${i + 1}`}
+            </button>
+          ))}
+        </div>
       )}
 
       <div className="flex items-center gap-3">
