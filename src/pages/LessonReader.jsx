@@ -10,6 +10,7 @@ import {
   getLessons,
   getModule,
   getModuleGames,
+  getModuleLessonCards,
   getScreens,
 } from '../books'
 import { useProgress } from '../hooks/useProgress'
@@ -20,6 +21,7 @@ import CloseButton from '../components/page/CloseButton'
 import BottomToolbar from '../components/page/BottomToolbar'
 import ScreenRenderer from '../components/page/ScreenRenderer'
 import Button from '../components/ui/Button'
+import LessonCard from '../components/book/LessonCard'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -49,35 +51,30 @@ function DoneOverlay({ moduleName, onBack, onGames }) {
   )
 }
 
-/** Índice de lecciones en modal, desde la toolbar. */
-function IndexOverlay({ lessons, currentId, onPick, onClose }) {
+/** Índice de lecciones en modal, desde la toolbar: el mismo grid compacto
+    del Nivel 2 (portada + una miniatura por lección). */
+function IndexOverlay({ cards, meta, content, currentId, hechasDe, onPick, onClose }) {
   return (
     <div className="absolute inset-0 z-40 flex items-center justify-center bg-navy/40 px-10">
-      <div className="max-h-[80%] w-full max-w-3xl overflow-y-auto rounded-2xl bg-paper p-7 scrollbar-slim">
-        <div className="mb-4 flex items-center justify-between">
+      <div className="max-h-[86%] w-full max-w-[1240px] overflow-y-auto rounded-2xl bg-paper p-8 scrollbar-slim">
+        <div className="mb-6 flex items-center justify-between">
           <h2>Índice de lecciones</h2>
           <Button size="sm" variant="ghost" onClick={onClose}>
             Cerrar
           </Button>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          {lessons.map((l) => (
-            <button
-              key={l.id}
-              onClick={() => onPick(l.id)}
-              className={`rounded-xl border px-4 py-3 text-left transition-colors
-                ${l.id === currentId
-                  ? 'border-coral-ink bg-tip'
-                  : 'border-navy/12 bg-white hover:border-coral-ink/60'}`}
-            >
-              <span className="label-caps text-coral-ink">
-                {l.type === 'cover' ? 'Portada' : l.id}
-              </span>
-              <span className="mt-0.5 block font-display text-[1.05rem] text-navy">
-                {l.shortTitle ?? l.title}
-              </span>
-              <span className="text-[0.75rem] text-ink-soft">{getScreens(l).length} pantallas</span>
-            </button>
+        <div className="grid grid-cols-4 gap-8 px-4 pb-6 pt-4">
+          {cards.map((item) => (
+            <LessonCard
+              key={item.key}
+              item={item}
+              meta={meta}
+              content={content}
+              done={hechasDe(item)}
+              compact
+              current={item.lesson.id === currentId}
+              onOpen={(it) => onPick(it.lesson.id)}
+            />
           ))}
         </div>
       </div>
@@ -98,6 +95,15 @@ export default function LessonReader() {
   const screens = getScreens(lesson)
   const hasGames = getModuleGames(bookId, moduleId).length > 0
   const progress = useProgress(bookId)
+  const cards = getModuleLessonCards(bookId, moduleId)
+
+  /* Pantallas hechas de una lección, para el anillo del índice ☰. */
+  const hechasDe = (item) =>
+    item.screens.filter((s) =>
+      s.activity
+        ? progress.isCompleted(activityId(s.id, s.activity))
+        : progress.isScreenVisited(s.id),
+    ).length
 
   const [resetKey, setResetKey] = useState(0)
   const [showIndex, setShowIndex] = useState(false)
@@ -297,7 +303,10 @@ export default function LessonReader() {
 
         {showIndex && (
           <IndexOverlay
-            lessons={lessons}
+            cards={cards}
+            meta={meta}
+            content={content}
+            hechasDe={hechasDe}
             currentId={lessonId}
             onClose={() => setShowIndex(false)}
             onPick={(id) => {

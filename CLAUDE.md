@@ -193,54 +193,56 @@ alto 90px, radio 12px, fondo `box`, hover translateX 6px):
 - Lo que no tiene contenido se ve atenuado y avisa "Próximamente" con un toast.
 - Botón circular coral [X] arriba a la derecha → Home.
 
-### Nivel 2 — pantallas del módulo (`pages/ModuleGrid.jsx`)
-**El Nivel 2 muestra una miniatura por PANTALLA, agrupadas por lección**, como
-el índice visual de Express Publishing. No hay tarjetas de lección con
-"5 pantallas": si el módulo tiene 13 pantallas, hay 13 miniaturas, en el orden
-real del libro (portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …).
+### Nivel 2 — lecciones del módulo (`pages/ModuleGrid.jsx`)
+**El Nivel 2 muestra UNA miniatura por LECCIÓN**, como el índice visual de
+Express Publishing: portada (★) y después [1.1] [1.2] [1.3]… Sin tarjetas por
+pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
+`books/index.js`; la tarjeta es `book/LessonCard.jsx` y la miniatura
+`book/LessonSpread.jsx`.
 
 - **Look Express Publishing**: la vista entera va dentro de un marco coral de
   3px con radio 20px (como las páginas). Arriba a la izquierda, un **banner
   rojo** (gradiente coral-ink → coral, esquina inferior derecha de 64px, patrón
   de cuadritos pixel a la izquierda) con "Module N" en Playfair 800 blanco;
-  debajo, nombre del módulo, descripción y barra de progreso. `CloseButton`
-  (64px, borde blanco) arriba a la derecha; 🏠 y 🎮 (`RoundButton size="lg"`)
-  superpuestos a la esquina inferior izquierda del marco.
-- **La miniatura ES la tarjeta** (`book/ScreenThumb.jsx` con
-  `frameClassName`): render 16:10 de ESA pantalla, borde 1px `#cfc3a9`, radio
-  8px y `shadow-lift`, `pointer-events: none` y progreso inerte. Sin card
-  blanca ni título debajo: el título va en `title` (tooltip) y `aria-label`.
-  La escala se calcula con `ResizeObserver` (`ancho de la tarjeta / 1600`).
+  debajo, nombre del módulo, descripción y barra de progreso (contada por
+  pantallas de todas las lecciones). `CloseButton` (64px, borde blanco) arriba
+  a la derecha; 🏠 y 🎮 (`RoundButton size="lg"`) superpuestos a la esquina
+  inferior izquierda del marco.
+- **Miniatura = doble página** (`LessonSpread`): la lección se ve como un
+  spread — página izquierda = pantalla 1, derecha = pantalla 2 — renderizadas
+  de verdad con `ScreenRenderer`, escaladas al ancho de media tarjeta
+  (`ResizeObserver`), `pointer-events: none` y progreso inerte
+  (`INERT_PROGRESS`). Línea de lomo + sombra al centro. Si la lección tiene una
+  sola pantalla, va como página única centrada. Proporción `SPREAD_RATIO`
+  = 2:1 (las pantallas son 16:10; un spread real sería 3.2:1, demasiado plano).
+  `lesson.thumbnailScreens: [0, 1]` elige qué dos pantallas forman el spread
+  (por defecto las dos primeras).
 - **Tag sobresaliente** (`data-tag`): cuadro coral de 64px medio afuera de la
-  esquina superior izquierda (`-left-5 -top-5`), sombra fuerte, lección en
-  Playfair 800 grande y "2/5" pequeño debajo; la portada lleva ★. Detrás
-  salen 6 cuadritos pixel coral/dorado (`TAG_PIXELS`). Si la pantalla está
-  completada, un ✓ salvia de 24px se pega a la esquina del tag.
+  esquina superior izquierda, sombra fuerte, número de lección en Playfair 800
+  y "5 pantallas" pequeño debajo; la portada lleva ★. Detrás salen 6 cuadritos
+  pixel coral/dorado (`TAG_PIXELS`). En la esquina del tag, el **progreso de
+  la lección**: anillo salvia parcial (3/5) o ✓ verde al 100 % (`ProgressRing`).
 - **Badges circulares** (máx. 2): círculos coral de 48px con borde blanco de
   3px e icono lucide blanco, medio afuera de la esquina inferior derecha, en
-  fila hacia la izquierda (`right: -24 + i*52`). Los calcula `screenBadges()`:
-  🔊 audio (`screen.audio` / `audioTracks`, diálogos con audio o `listening`)
-  · 🎮 (`diceGame`, `roulette`) · 🎬 video · ✏️ (`match`, `matchMarkers`,
-  `matchHeadings`, `fillBubbles`, `fillInSentence`, `multipleChoice`) · 🎙️
-  (`speaking`, `recordPrompt`).
+  fila hacia la izquierda. Se calculan con `lessonBadges()` = unión de
+  `screenBadges()` de TODAS las pantallas, en orden audio · written · game ·
+  speaking · video: 🔊 (`screen.audio` / `audioTracks`, diálogos con audio o
+  `listening`) · ✏️ (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`,
+  `fillInSentence`, `multipleChoice`) · 🎮 (`diceGame`, `roulette`) · 🎙️
+  (`speaking`, `recordPrompt`) · 🎬 video.
 - **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
   3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
   utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
-  `xl` y la regla de 4 columnas le ganaba a la de 5. Gap de 36px (`gap-9`) para
-  que tags y badges de tarjetas vecinas no se toquen; padding lateral de 40px
-  para lo que sobresale.
-- **La portada entra en la primera fila** con las pantallas de la primera
-  lección: el separador de esa lección se pinta ANTES de la portada.
-- **Separador por lección**: línea punteada beige clara con el label
-  "1.1 · LET'S SAY HI!" en coral mayúsculas a la izquierda, `col-span-full`,
-  con `mb-3` para dejar sitio a los cuadritos del tag.
-- Entrada con stagger de 40ms; hover scale 1.05 + el tag se inclina -3° (Anime.js);
-  al abrir, la tarjeta hace zoom y navega a `…/lesson/<id>/screen/<n>`.
-- **Al volver con [X]** la rejilla hace scroll hasta la tarjeta donde estaba el
-  estudiante (`progress.currentPage`) y le lanza un pulso dorado.
-- Los juegos tienen **dos entradas**: la tarjeta "🎮 Games · Module N" al final
-  de la rejilla y un botón flotante 🎮 junto al [🏠], abajo a la izquierda.
-- Botón circular coral [X] arriba a la derecha → Nivel 1.
+  `xl` y la regla de 4 columnas le ganaba a la de 5. Gap de 40px (`gap-10`)
+  para que tags y badges de tarjetas vecinas no se toquen.
+- Entrada con stagger de 40ms; hover scale 1.05 + el tag se inclina -3°
+  (Anime.js); al abrir, la tarjeta hace zoom y navega a
+  `…/lesson/<id>/screen/1`. Dentro se navega con ← → de la toolbar.
+- **Al volver con [X]** la rejilla hace scroll hasta la lección de
+  `progress.currentPage` (`findLessonOfScreen`) y le lanza un pulso dorado.
+- La tarjeta "🎮 Games · Module N" cierra la rejilla (tag salvia con mando).
+- El **índice ☰ del lector** (`IndexOverlay` en `LessonReader`) usa el mismo
+  grid con `LessonCard compact` y resalta la lección actual (`current`).
 
 ### Nivel 3 — doble página (`pages/LessonReader.jsx`)
 El libro de siempre (react-pageflip + esquinas), con una barra mínima
@@ -259,8 +261,7 @@ allá de la última hoja aparece el overlay "¡Módulo completado!".
 src/
 ├── App.jsx                    ← HashRouter con los 3 niveles
 ├── components/
-│   ├── book/     BookViewer · BookPage · BookCover · PageContent ·
-│   │             CornerFlip · ScreenThumb
+│   ├── book/     BookCover · ScreenThumb · LessonSpread · LessonCard
 │   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
 │   ├── content/  VocabularyBox · CulturalTip · Checklist

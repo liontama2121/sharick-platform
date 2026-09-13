@@ -155,6 +155,53 @@ export function screenBadges(screen) {
   return [...set]
 }
 
+/* Orden en que se muestran los badges cuando una lección trae varios. */
+const BADGE_ORDER = ['audio', 'written', 'game', 'speaking', 'video']
+
+/** Badges de una LECCIÓN: la unión de los de todas sus pantallas, ordenados. */
+export function lessonBadges(lesson) {
+  const set = new Set(getScreens(lesson).flatMap(screenBadges))
+  return BADGE_ORDER.filter((b) => set.has(b))
+}
+
+/**
+ * Pantallas que forman el spread de la miniatura de una lección:
+ * `lesson.thumbnailScreens` ([0,1] por defecto) como índices dentro de
+ * `screens`. Devuelve 1 o 2 pantallas, nunca más.
+ */
+export function lessonThumbScreens(lesson) {
+  const screens = getScreens(lesson)
+  const idx = Array.isArray(lesson?.thumbnailScreens) ? lesson.thumbnailScreens : [0, 1]
+  return idx
+    .slice(0, 2)
+    .map((i) => screens[i])
+    .filter(Boolean)
+}
+
+/* ── Lecciones del módulo (Nivel 2: una miniatura por LECCIÓN) ───────────
+   Como el índice visual de Express Publishing: portada + una tarjeta por
+   lección, cada una con un spread de dos pantallas.                      */
+
+export function getModuleLessonCards(bookId, moduleId) {
+  return getLessons(bookId, moduleId).map((lesson, pos) => ({
+    key: lesson.id,
+    lesson,
+    pos,
+    isCover: lesson.type === 'cover',
+    screens: getScreens(lesson),
+    thumbScreens: lessonThumbScreens(lesson),
+    badges: lessonBadges(lesson),
+    title: lesson.shortTitle ?? lesson.title ?? lesson.id,
+  }))
+}
+
+/** Lección a la que pertenece una pantalla (para el pulso al volver). */
+export function findLessonOfScreen(bookId, moduleId, screenId) {
+  return (
+    getLessons(bookId, moduleId).find((l) => getScreens(l).some((s) => s.id === screenId)) ?? null
+  )
+}
+
 /**
  * Todas las pantallas del módulo aplanadas, con el contexto que necesita
  * la tarjeta del Nivel 2.

@@ -6,7 +6,7 @@ import { activityId } from '../../books'
 
 /* Las miniaturas no se tocan: progreso inerte para que ninguna actividad
    se marque desde aquí. */
-const INERT_PROGRESS = {
+export const INERT_PROGRESS = {
   progress: { completedActivities: [], scores: {} },
   completeActivity: () => {},
   isCompleted: () => false,
