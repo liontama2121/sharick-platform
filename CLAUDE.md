@@ -177,6 +177,9 @@ navy / coral / salvia con Playfair Display se mantiene tal cual.
 /book/:bookId/module/:moduleId/lesson/:lessonId   NIVEL 3 · libro abierto
 /book/:bookId/module/:moduleId/lesson/:lessonId/screen/:screenNo
                                                   NIVEL 3 en una pantalla concreta
+/study/login · /study/teacher · /study/:bookId · /study/:bookId/arcade
+/study/:bookId/:topicId · /study/:bookId/:topicId/quiz
+                                                  STUDY ZONE (con sesión, ver abajo)
 ```
 
 La pantalla vive en la URL: el Nivel 2 abre cualquier miniatura directamente
@@ -274,9 +277,16 @@ src/
 │   ├── cards/    BookCard
 │   └── ui/       Button · PillButton · ProgressBar · FeedbackToast ·
 │                 SectionLabel · AnalogClock · ImagePlaceholder (SmartImage)
-├── pages/        Home · BookMenu · ModuleGrid · LessonReader
-├── books/        index.js · registry.json · english-a1/modules.json
-├── hooks/        useProgress · usePageAnimation · useFeedback · useLevelIntro · useDragDrop
+│   └── study/    StudyShell · RequireSession · StudyExercise ·
+│                 exercises/ FillInEx · MatchEx · ScrambleEx
+├── pages/        Home · BookMenu · ModuleGrid · LessonReader · GamesPicker · ModuleGames
+│   └── study/    StudyLogin · StudyMap · StudyTopic · StudyQuiz · StudyArcade · StudyTeacher
+├── books/        index.js · registry.json · english-a1/modules.json · english-a1/games.json
+├── study/        index.js · strings.js · english-a1/module1.json
+├── services/     authService.js (login · logout · getSession · subscribe · listUsers)
+├── data/         users.json (DEMO ONLY)
+├── hooks/        useProgress · usePageAnimation · useFeedback · useLevelIntro · useDragDrop ·
+│                 useSession · useStudyProgress
 ├── utils/        numberWords.js
 └── styles/       global.css
 ```
@@ -495,6 +505,90 @@ renders que tumba la app (se registraron 51 partidas en una sola).
 
 ---
 
+## 🎓 STUDY ZONE (práctica por temas con progresión bloqueada)
+
+Filosofía del libro JuanCode: **el LIBRO es la clase** (teoría, navegación
+libre, sin login) y **STUDY es la práctica por TEMAS con candados**: el tema
+N+1 se abre solo al APROBAR el quiz del tema N (nota mínima `passScore`, 80).
+**Toda la UI de Study va en INGLÉS** y sale de `study/strings.js` (`S`);
+el contenido, de `study/<libro>/moduleN.json`.
+
+### Entradas
+- **Home** (`pages/Home.jsx`): banner navy "Study Zone" debajo de las cards de
+  libros (florituras doradas, cuadritos pixel, features 📚 ✏️ 🏆 🎮) con el
+  botón dorado "Start Studying →" → `/study/login` sin sesión, `/study/english-a1`
+  con sesión.
+- **Nivel 1**: el botón **Workbook** lleva a `/study/english-a1`
+  (`resources[].route` admite rutas absolutas que empiezan por `/`).
+
+### Login por roles (`services/authService.js`)
+- `/study/login` (`pages/study/StudyLogin.jsx`): card centrada, Username +
+  Password, "Sign in", error con shake. Recuerda a dónde iba (`state.from`).
+- **⚠️ DEMO ONLY — sin backend.** Usuarios en `src/data/users.json`
+  (`{ username, password, role: teacher|student, name }`): `sharick/teacher2026`
+  (teacher), `demo/demo1234`, `ana/ana123`, `luis/luis123`, `maria/maria123`,
+  `carlos/carlos123`. Sesión en localStorage `sharick-session`
+  = `{ username, role, name }`.
+- **Plan de migración → Cloudflare D1 + Pages Functions**: `login()` → POST
+  /api/login (hash + cookie HttpOnly), `logout()` → POST /api/logout,
+  `getSession()` → GET /api/session, `listUsers()` → GET /api/users (teacher).
+  La INTERFAZ (`login / logout / getSession / subscribe / listUsers`) no
+  cambia: los componentes no se tocan, solo la implementación.
+- `hooks/useSession.js` expone la sesión reactiva; `components/study/
+  RequireSession.jsx` protege rutas (`role="teacher"` para el modo profe).
+
+### Progreso por usuario (`hooks/useStudyProgress.js`)
+localStorage `sharick-study-{username}` =
+`{ passed: {t1: 95}, attempts: {t1: 2}, manualUnlocks: ['t3'], arcadeBest, updatedAt }`.
+`recordQuiz(topicId, score, passScore)` guarda la mejor nota aprobada;
+`isUnlocked(topics, i)` = primero, o anterior aprobado, o `manualUnlocks`.
+`readStudy / writeStudy / toggleManualUnlock` sirven al modo profe para OTROS
+usuarios.
+
+### Contenido (`study/english-a1/module1.json`)
+Tema = `{ id, title, summary, learn[], exercises[], quiz: { passScore, questions[] } }`.
+- `learn[]`: `text` · `phrases` (`items: [{en, es, note}]`) · `dialogue`
+  (`letter`, `title`, `lines`, colores de `BUBBLE_COLORS`) · `tip`.
+- `exercises[]` (5-8, intentos ilimitados, feedback inmediato):
+  `multipleChoice` (`q, options, correct`, reutiliza `activities/MultipleChoice`) ·
+  `fillIn` (`sentence` con `___`, `answer`, `accept[]`, `hint`) ·
+  `match` (`pairs: [[en, es]]`) · `scramble` (`answer`, `hint`).
+  Se registran en `STUDY_EXERCISES` de `components/study/StudyExercise.jsx`.
+- `quiz.questions[]`: 8-10 de opción múltiple (`q, options, correct`).
+- Módulo 1: T1 Greetings · T2 Introducing yourself · T3 Introducing others ·
+  T4 Saying goodbye · T5 Times of the day · T6 How are you?. Módulos 2-4
+  registrados vacíos en `study/index.js` → "Coming soon".
+
+### Pantallas
+Todas van dentro de `components/study/StudyShell.jsx`: marco coral, banner
+navy con "Hi, {name}! 👋", toolbar 🏠 ☰ Log out y 🛡️ Teacher mode si
+`role === 'teacher'`.
+- **Mapa** `/study/:bookId` (`StudyMap`): selector de módulo (vacíos =
+  Coming soon), barra "n of 6 topics passed", botón 🎮 Arcade (se activa con
+  el primer quiz aprobado) y camino de temas: ✅ Passed (mejor nota) ·
+  🔓 Available · 🔒 Locked (tooltip "Pass the quiz of …"). Al aprobar todos:
+  banner "Module 1 mastered! 🏆" + "Go to Games".
+- **Tema** `/study/:bookId/:topicId?tab=learn|practice|quiz` (`StudyTopic`):
+  tabs Learn · Practice (contador n/total) · Final Quiz ("Start quiz" /
+  "Retake quiz" + "Next topic →"). Tema bloqueado por URL → vuelve al mapa.
+- **Quiz** `/study/:bookId/:topicId/quiz` (`StudyQuiz`): preguntas y opciones
+  barajadas en cada intento, una a la vez, SIN feedback hasta el final.
+  ≥ passScore: confeti + "Topic unlocked: …"; si era el último, "Module N
+  mastered!". < passScore: "Retake quiz" ilimitado. Revisión de respuestas
+  al final. `recordQuiz` va en un `useEffect` con guard en ref (el store
+  notifica en síncrono).
+- **Arcade** `/study/:bookId/arcade` (`StudyArcade`): 15 preguntas al azar
+  de los temas DESBLOQUEADOS (`topicQuestionPool`: quiz + multipleChoice de
+  práctica), 20 s por pregunta con barra dorada animada (Anime.js), puntaje y
+  récord por usuario (`arcadeBest`, "New record! 🏆").
+- **Modo profe** `/study/teacher` (`StudyTeacher`, solo `teacher`; reemplaza
+  el PIN): tabla estudiantes × temas con ✓ nota / 🔓 / 🔒 y checkbox "Unlock
+  manually" por tema (escribe `manualUnlocks` en `sharick-study-{username}`).
+  Con localStorage el profe solo ve el progreso de ESE navegador; con D1 será
+  progreso real multi-dispositivo.
+
+---
+
 ## 💾 PROGRESO (useProgress)
 
 localStorage key `sharick-progress`. Id de actividad = `` `${screen.id}-${activity.id ?? activity.activity}` ``
@@ -525,9 +619,12 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 
 ## 🚦 ESTADO
 
-- **HECHO:** setup, formato libro con pasada de página, sistema editorial completo,
-  todas las actividades, contenido del Módulo 1 (12 páginas).
-- **PENDIENTE:** imágenes (Gemini), audios (mp3), páginas siguientes y módulos 2-4,
+- **HECHO:** setup, formato de pantalla completa, sistema editorial completo,
+  todas las actividades, contenido del Módulo 1 (12 pantallas), juegos por
+  módulo, Nivel 2 con miniaturas de doble página, Study Zone con login demo,
+  6 temas del Módulo 1, quiz con candados, arcade y modo profe.
+- **PENDIENTE:** imágenes (Gemini), audios (mp3), módulos 2-4 (libro y Study),
+  migración del login/progreso de Study a Cloudflare D1 + Pages Functions,
   deploy en Cloudflare Pages y Electron.
 
 ---

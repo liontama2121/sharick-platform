@@ -909,7 +909,8 @@
       "id": "workbook",
       "label": "Workbook",
       "icon": "notebook",
-      "available": false
+      "available": true,
+      "route": "/study/english-a1"
     },
     {
       "id": "reader",

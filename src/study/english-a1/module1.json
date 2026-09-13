@@ -1,0 +1,855 @@
+{
+  "moduleId": 1,
+  "title": "Greetings and Introductions",
+  "topics": [
+    {
+      "id": "t1",
+      "title": "Greetings (formal & informal)",
+      "summary": "Hello, Hi, Hey and What's up? — and when to use each one.",
+      "learn": [
+        {
+          "type": "text",
+          "text": "In English, the greeting changes with the situation. With a teacher, a boss or someone you don't know, use a FORMAL greeting. With friends and family, use an INFORMAL one."
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "Hello!", "es": "¡Hola!", "note": "formal or neutral" },
+            { "en": "Good morning, Ms. Prieto.", "es": "Buenos días, señora Prieto.", "note": "formal" },
+            { "en": "Hi!", "es": "¡Hola!", "note": "informal, very common" },
+            { "en": "Hey!", "es": "¡Ey! / ¡Hola!", "note": "informal, friends only" },
+            { "en": "What's up?", "es": "¿Qué más? / ¿Qué hay?", "note": "informal question" },
+            { "en": "Not much.", "es": "Nada nuevo.", "note": "answer to What's up?" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "A",
+          "title": "Formal — at the bank in Bogotá",
+          "lines": [
+            { "speaker": "Camila", "text": "Good morning. Hello, Mr. Rojas." },
+            { "speaker": "Mr. Rojas", "text": "Good morning, Camila. How can I help you?" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "B",
+          "title": "Informal — at the beach in Cartagena",
+          "lines": [
+            { "speaker": "Diego", "text": "Hey, Valentina! What's up?" },
+            { "speaker": "Valentina", "text": "Hi, Diego. Not much. And you?" }
+          ]
+        },
+        {
+          "type": "tip",
+          "title": "Cultural tip",
+          "text": "In Colombia, Venezuela, Bolivia and Panama people often add a question to the greeting: ¿bien o qué?, ¿qué más?, ¿cómo va? In English, \"What's up?\" or \"How's it going?\" does the same job."
+        }
+      ],
+      "exercises": [
+        {
+          "type": "multipleChoice",
+          "q": "You meet your teacher in the morning. What do you say?",
+          "options": ["Hey, what's up?", "Good morning, teacher.", "Not much."],
+          "correct": 1
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Your friend says \"What's up?\". You answer…",
+          "options": ["Not much. And you?", "Good morning.", "It's a pleasure."],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Which greeting is INFORMAL?",
+          "options": ["Good afternoon, sir.", "Hello, Mrs. Díaz.", "Hey!"],
+          "correct": 2
+        },
+        {
+          "type": "fillIn",
+          "sentence": "___ morning, Mr. Rojas.",
+          "answer": "Good",
+          "hint": "formal"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "Hey, Lucía! What's ___?",
+          "answer": "up"
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["Hello!", "¡Hola! (formal)"],
+            ["What's up?", "¿Qué más?"],
+            ["Not much.", "Nada nuevo."],
+            ["Good morning.", "Buenos días."]
+          ]
+        },
+        {
+          "type": "scramble",
+          "answer": "Good morning Ms Prieto",
+          "hint": "A formal greeting to your teacher"
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "Which greeting is FORMAL?",
+            "options": ["Hey!", "What's up?", "Good morning."],
+            "correct": 2
+          },
+          {
+            "q": "\"What's up?\" in Spanish is…",
+            "options": ["¿Qué más?", "¿Cómo te llamas?", "¿De dónde eres?"],
+            "correct": 0
+          },
+          {
+            "q": "You see your best friend. You say…",
+            "options": ["Good afternoon, sir.", "Hey! What's up?", "Nice to meet you."],
+            "correct": 1
+          },
+          {
+            "q": "\"Not much\" is an answer to…",
+            "options": ["What's your name?", "What's up?", "Where are you from?"],
+            "correct": 1
+          },
+          {
+            "q": "Complete: \"___, Mrs. Díaz. How are you?\"",
+            "options": ["Hey", "Hello", "Not much"],
+            "correct": 1
+          },
+          {
+            "q": "\"Hi!\" is…",
+            "options": ["only for teachers", "informal and very common", "a goodbye"],
+            "correct": 1
+          },
+          {
+            "q": "At a job interview in Caracas you say…",
+            "options": ["Good morning. Nice to meet you.", "Hey, what's up?", "Bye!"],
+            "correct": 0
+          },
+          {
+            "q": "Which one is NOT a greeting?",
+            "options": ["Hello", "Hey", "Take care"],
+            "correct": 2
+          },
+          {
+            "q": "Your cousin says \"Hey!\". A natural answer is…",
+            "options": ["Hey! What's up?", "Good morning, sir.", "See you soon."],
+            "correct": 0
+          },
+          {
+            "q": "\"Good morning\" is used…",
+            "options": ["at night", "before noon", "only with friends"],
+            "correct": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "t2",
+      "title": "Introducing yourself",
+      "summary": "I'm… / My name is… / Nice to meet you — and how to answer.",
+      "learn": [
+        {
+          "type": "text",
+          "text": "To introduce yourself, say your name and, if you want, where you are from. Then the other person answers with \"Nice to meet you\" and you reply \"Nice to meet you too\"."
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "I'm Camila.", "es": "Soy Camila.", "note": "short and common" },
+            { "en": "My name is Mateo.", "es": "Me llamo Mateo.", "note": "a bit more formal" },
+            { "en": "I'm from La Paz.", "es": "Soy de La Paz.", "note": "your city or country" },
+            { "en": "Nice to meet you.", "es": "Mucho gusto.", "note": "" },
+            { "en": "It's a pleasure to meet you.", "es": "Es un placer conocerte.", "note": "formal" },
+            { "en": "Nice to meet you too.", "es": "Igualmente.", "note": "the answer" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "A",
+          "title": "Two students meet in Medellín",
+          "lines": [
+            { "speaker": "Camila", "text": "Hi! I'm Camila." },
+            { "speaker": "Mateo", "text": "Hey, Camila. I'm Mateo." },
+            { "speaker": "Camila", "text": "It's a pleasure to meet you, Mateo." },
+            { "speaker": "Mateo", "text": "Nice to meet you too." }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "B",
+          "title": "At a conference in Panama City",
+          "lines": [
+            { "speaker": "Andrés", "text": "Good morning. My name is Andrés Paredes. I'm from Bolivia." },
+            { "speaker": "Sofía", "text": "Nice to meet you, Andrés. I'm Sofía, from Panama." }
+          ]
+        },
+        {
+          "type": "tip",
+          "title": "Grammar note",
+          "text": "I'm = I am. My name is + name. Don't say \"I'm call Camila\" — say \"I'm Camila\" or \"My name is Camila\"."
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fillIn",
+          "sentence": "Hi! ___ Camila.",
+          "answer": "I'm",
+          "accept": ["I am"],
+          "hint": "I + am"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "My name ___ Mateo.",
+          "answer": "is"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "I'm ___ Caracas.",
+          "answer": "from"
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Someone says \"Nice to meet you\". You answer…",
+          "options": ["Nice to meet you too.", "Not much.", "Good night."],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Which sentence is correct?",
+          "options": ["I'm call Sofía.", "My name is Sofía.", "Me name Sofía."],
+          "correct": 1
+        },
+        {
+          "type": "scramble",
+          "answer": "Nice to meet you",
+          "hint": "When you meet someone"
+        },
+        {
+          "type": "scramble",
+          "answer": "My name is Andrés",
+          "hint": "Say your name"
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["I'm Lucía.", "Soy Lucía."],
+            ["I'm from Bolivia.", "Soy de Bolivia."],
+            ["Nice to meet you.", "Mucho gusto."],
+            ["Nice to meet you too.", "Igualmente."]
+          ]
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "Complete: \"Hi! ___ Valentina.\"",
+            "options": ["I'm", "I", "Am"],
+            "correct": 0
+          },
+          {
+            "q": "\"Mucho gusto\" in English is…",
+            "options": ["What's up?", "Nice to meet you.", "See you soon."],
+            "correct": 1
+          },
+          {
+            "q": "Complete: \"My name ___ Diego.\"",
+            "options": ["am", "are", "is"],
+            "correct": 2
+          },
+          {
+            "q": "How do you say where you are from?",
+            "options": ["I'm from Panama.", "I'm Panama.", "I from Panama."],
+            "correct": 0
+          },
+          {
+            "q": "The answer to \"Nice to meet you\" is…",
+            "options": ["Not much.", "Nice to meet you too.", "Hello."],
+            "correct": 1
+          },
+          {
+            "q": "Which one is FORMAL?",
+            "options": ["It's a pleasure to meet you.", "Hey, I'm Andrés.", "What's up?"],
+            "correct": 0
+          },
+          {
+            "q": "\"I'm\" means…",
+            "options": ["I have", "I am", "I go"],
+            "correct": 1
+          },
+          {
+            "q": "Which sentence is WRONG?",
+            "options": ["I'm Mateo.", "My name is Mateo.", "I'm call Mateo."],
+            "correct": 2
+          },
+          {
+            "q": "Complete: \"Nice to meet ___.\"",
+            "options": ["you", "your", "me"],
+            "correct": 0
+          },
+          {
+            "q": "\"Igualmente\" after an introduction is…",
+            "options": ["Nice to meet you too.", "Take care.", "Good evening."],
+            "correct": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "t3",
+      "title": "Introducing others",
+      "summary": "This is my friend… — presenting a friend to someone else.",
+      "learn": [
+        {
+          "type": "text",
+          "text": "When you introduce another person, use \"This is…\" + who they are. Then the two people greet each other."
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "This is my friend Lucía.", "es": "Ella es mi amiga Lucía.", "note": "" },
+            { "en": "Lucía, this is Diego.", "es": "Lucía, él es Diego.", "note": "name first" },
+            { "en": "This is my teacher, Ms. Prieto.", "es": "Ella es mi profesora, la señora Prieto.", "note": "formal" },
+            { "en": "Great to meet you.", "es": "Un gusto conocerte.", "note": "friendly" },
+            { "en": "Nice to meet you too.", "es": "Igualmente.", "note": "" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "B",
+          "title": "Valentina introduces Lucía",
+          "lines": [
+            { "speaker": "Valentina", "text": "Hello, Diego. What's up?" },
+            { "speaker": "Diego", "text": "Not much. And you?" },
+            { "speaker": "Valentina", "text": "I'm good. This is my friend Lucía. Lucía, this is Diego." },
+            { "speaker": "Diego", "text": "Hi, Lucía. Great to meet you." },
+            { "speaker": "Lucía", "text": "Hi, Diego. Nice to meet you too." }
+          ]
+        },
+        {
+          "type": "tip",
+          "title": "Cultural tip",
+          "text": "How do you say \"friend\"? parcero (Colombia) · pana (Venezuela) · ñaño or colega (Bolivia) · fren (Panama). In English: friend, buddy or mate."
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fillIn",
+          "sentence": "___ is my friend Lucía.",
+          "answer": "This"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "Lucía, this ___ Diego.",
+          "answer": "is"
+        },
+        {
+          "type": "multipleChoice",
+          "q": "You want to introduce your brother. You say…",
+          "options": ["This is my brother, Juan.", "I'm Juan.", "Juan is you."],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Diego says \"Great to meet you\". Lucía answers…",
+          "options": ["Nice to meet you too.", "This is my friend.", "Not much."],
+          "correct": 0
+        },
+        {
+          "type": "scramble",
+          "answer": "This is my friend Lucía",
+          "hint": "Introduce a friend"
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["This is my friend.", "Él es mi amigo."],
+            ["Great to meet you.", "Un gusto conocerte."],
+            ["This is my teacher.", "Ella es mi profesora."],
+            ["parcero", "friend (Colombia)"]
+          ]
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "Complete: \"___ is my friend Mateo.\"",
+            "options": ["He", "This", "My"],
+            "correct": 1
+          },
+          {
+            "q": "You introduce Ana to Luis. You say…",
+            "options": ["Ana, this is Luis.", "Ana is Luis.", "Luis, I'm Ana."],
+            "correct": 0
+          },
+          {
+            "q": "\"Great to meet you\" is…",
+            "options": ["a goodbye", "a friendly way to say nice to meet you", "a question"],
+            "correct": 1
+          },
+          {
+            "q": "\"Pana\" means friend in…",
+            "options": ["Venezuela", "Bolivia", "Panama"],
+            "correct": 0
+          },
+          {
+            "q": "\"Fren\" means friend in…",
+            "options": ["Colombia", "Panama", "Venezuela"],
+            "correct": 1
+          },
+          {
+            "q": "Complete: \"This is my ___, Ms. Prieto.\"",
+            "options": ["teacher", "morning", "goodbye"],
+            "correct": 0
+          },
+          {
+            "q": "After \"This is Diego\", Lucía says…",
+            "options": ["Hi, Diego. Nice to meet you.", "Bye, Diego.", "Diego is my name."],
+            "correct": 0
+          },
+          {
+            "q": "Which sentence introduces someone else?",
+            "options": ["I'm Sofía.", "This is Sofía.", "Sofía, what's up?"],
+            "correct": 1
+          },
+          {
+            "q": "\"Parcero\" means friend in…",
+            "options": ["Bolivia", "Panama", "Colombia"],
+            "correct": 2
+          },
+          {
+            "q": "\"Ñaño\" means friend in…",
+            "options": ["Bolivia", "Venezuela", "Colombia"],
+            "correct": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "t4",
+      "title": "Saying goodbye",
+      "summary": "Bye, Take care, See you soon — ways to end a conversation.",
+      "learn": [
+        {
+          "type": "text",
+          "text": "There are many ways to say goodbye. \"Goodbye\" is neutral; \"Bye\" is short and friendly; \"See you…\" tells WHEN you will meet again; \"Take care\" is a warm wish."
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "Goodbye.", "es": "Adiós.", "note": "neutral" },
+            { "en": "Bye!", "es": "¡Chao!", "note": "informal" },
+            { "en": "See you soon!", "es": "¡Hasta pronto!", "note": "" },
+            { "en": "See you later.", "es": "Hasta luego.", "note": "" },
+            { "en": "See you tomorrow.", "es": "Hasta mañana.", "note": "" },
+            { "en": "Take care!", "es": "¡Cuídate!", "note": "warm" },
+            { "en": "Have a nice day!", "es": "¡Que tengas un buen día!", "note": "polite" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "C",
+          "title": "Sofía and Andrés say goodbye",
+          "lines": [
+            { "speaker": "Sofía", "text": "Goodbye, Andrés." },
+            { "speaker": "Andrés", "text": "Bye, Sofía. Take care!" },
+            { "speaker": "Sofía", "text": "See you soon!" }
+          ]
+        },
+        {
+          "type": "tip",
+          "title": "Watch out",
+          "text": "\"Good night\" is a GOODBYE at night (or before sleeping), not a greeting. To greet someone at night, say \"Good evening\"."
+        }
+      ],
+      "exercises": [
+        {
+          "type": "multipleChoice",
+          "q": "Which one is a goodbye?",
+          "options": ["See you later.", "Nice to meet you.", "What's up?"],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Your friend says \"Take care!\". You answer…",
+          "options": ["You too! Bye!", "My name is Ana.", "Good morning."],
+          "correct": 0
+        },
+        {
+          "type": "fillIn",
+          "sentence": "See you ___! (mañana)",
+          "answer": "tomorrow"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "Bye, Sofía. Take ___!",
+          "answer": "care"
+        },
+        {
+          "type": "scramble",
+          "answer": "See you soon",
+          "hint": "Hasta pronto"
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["Take care!", "¡Cuídate!"],
+            ["See you later.", "Hasta luego."],
+            ["Bye!", "¡Chao!"],
+            ["Have a nice day!", "¡Que tengas un buen día!"]
+          ]
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "\"Hasta pronto\" in English is…",
+            "options": ["See you soon.", "Good night.", "Nice to meet you."],
+            "correct": 0
+          },
+          {
+            "q": "Which one is NOT a goodbye?",
+            "options": ["Bye!", "Take care!", "Hello!"],
+            "correct": 2
+          },
+          {
+            "q": "\"Take care\" means…",
+            "options": ["¡Cuídate!", "¡Hola!", "¿Qué más?"],
+            "correct": 0
+          },
+          {
+            "q": "You will see your friend tomorrow. You say…",
+            "options": ["See you tomorrow.", "See you never.", "Good morning."],
+            "correct": 0
+          },
+          {
+            "q": "\"Good night\" is…",
+            "options": ["a greeting at night", "a goodbye at night", "a question"],
+            "correct": 1
+          },
+          {
+            "q": "The short, informal goodbye is…",
+            "options": ["Bye!", "Good evening.", "Hello."],
+            "correct": 0
+          },
+          {
+            "q": "Complete: \"Have a nice ___!\"",
+            "options": ["day", "name", "friend"],
+            "correct": 0
+          },
+          {
+            "q": "Andrés says \"Bye, Sofía. Take care!\". Sofía answers…",
+            "options": ["See you soon!", "I'm Sofía.", "This is Andrés."],
+            "correct": 0
+          },
+          {
+            "q": "\"See you later\" in Spanish is…",
+            "options": ["Hasta luego.", "Mucho gusto.", "Buenos días."],
+            "correct": 0
+          },
+          {
+            "q": "To greet someone at 9 p.m. you say…",
+            "options": ["Good night.", "Good evening.", "Good morning."],
+            "correct": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "t5",
+      "title": "Times of the day",
+      "summary": "Good morning / afternoon / evening / night — and the clock.",
+      "learn": [
+        {
+          "type": "text",
+          "text": "The greeting depends on the time. Morning is until 12:00. Afternoon goes from 12:00 to about 6:00 p.m. Evening is from about 6:00 p.m. until bedtime. \"Good night\" is only for saying goodbye or going to sleep."
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "Good morning", "es": "Buenos días", "note": "until 12:00" },
+            { "en": "Good afternoon", "es": "Buenas tardes", "note": "12:00 – 6:00 p.m." },
+            { "en": "Good evening", "es": "Buenas noches (saludo)", "note": "after 6:00 p.m." },
+            { "en": "Good night", "es": "Buenas noches (despedida)", "note": "goodbye / bedtime" },
+            { "en": "noon", "es": "mediodía", "note": "12:00 p.m." },
+            { "en": "midnight", "es": "medianoche", "note": "12:00 a.m." }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "D",
+          "title": "A day in Cali",
+          "lines": [
+            { "speaker": "7:00 a.m.", "text": "Good morning, grandma!" },
+            { "speaker": "12:30 p.m.", "text": "Good afternoon, everyone. Lunch is ready." },
+            { "speaker": "7:00 p.m.", "text": "Good evening! I'm home." },
+            { "speaker": "9:30 p.m.", "text": "Good night, mom. See you tomorrow." }
+          ]
+        },
+        {
+          "type": "tip",
+          "title": "Cultural tip",
+          "text": "In Colombia, las onces (around 4:00 p.m., coffee with pandebono) are still \"Good afternoon\" time. \"Good evening\" starts when the sun goes down, around six."
+        }
+      ],
+      "exercises": [
+        {
+          "type": "multipleChoice",
+          "q": "It's 7:00 a.m. What do you say?",
+          "options": ["Good morning", "Good evening", "Good night"],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "It's 4:45 p.m. (las onces). What do you say?",
+          "options": ["Good afternoon", "Good night", "Good morning"],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "It's 8:00 p.m. and you arrive at a party. What do you say?",
+          "options": ["Good night", "Good evening", "Good morning"],
+          "correct": 1
+        },
+        {
+          "type": "fillIn",
+          "sentence": "Good ___, Camila! (7:30 a.m.)",
+          "answer": "morning"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "Good ___, mom. I'm going to sleep.",
+          "answer": "night"
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["Good morning", "Buenos días"],
+            ["Good afternoon", "Buenas tardes"],
+            ["Good evening", "Buenas noches (saludo)"],
+            ["Good night", "Buenas noches (despedida)"],
+            ["noon", "mediodía"]
+          ]
+        },
+        {
+          "type": "scramble",
+          "answer": "Good afternoon everyone",
+          "hint": "12:30 p.m. — lunch time"
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "It's 9:15 a.m. You say…",
+            "options": ["Good morning", "Good afternoon", "Good evening"],
+            "correct": 0
+          },
+          {
+            "q": "It's 1:00 p.m. You say…",
+            "options": ["Good morning", "Good afternoon", "Good night"],
+            "correct": 1
+          },
+          {
+            "q": "It's 7:30 p.m. and you meet a neighbor. You say…",
+            "options": ["Good night", "Good evening", "Good morning"],
+            "correct": 1
+          },
+          {
+            "q": "You are going to sleep. You say…",
+            "options": ["Good evening", "Good night", "Good afternoon"],
+            "correct": 1
+          },
+          {
+            "q": "\"Noon\" is…",
+            "options": ["12:00 p.m.", "12:00 a.m.", "6:00 p.m."],
+            "correct": 0
+          },
+          {
+            "q": "\"Good evening\" is used…",
+            "options": ["after about 6:00 p.m.", "before 12:00", "only at bedtime"],
+            "correct": 0
+          },
+          {
+            "q": "\"Buenas tardes\" in English is…",
+            "options": ["Good afternoon", "Good night", "Good morning"],
+            "correct": 0
+          },
+          {
+            "q": "It's 4:00 p.m., time for las onces. You say…",
+            "options": ["Good afternoon", "Good evening", "Good night"],
+            "correct": 0
+          },
+          {
+            "q": "\"Midnight\" is…",
+            "options": ["12:00 a.m.", "12:00 p.m.", "8:00 p.m."],
+            "correct": 0
+          },
+          {
+            "q": "Which one is a goodbye, NOT a greeting?",
+            "options": ["Good morning", "Good evening", "Good night"],
+            "correct": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "t6",
+      "title": "How are you?",
+      "summary": "I'm fine / Not bad / So-so — three ways to answer.",
+      "learn": [
+        {
+          "type": "text",
+          "text": "After the greeting, people usually ask \"How are you?\". You can answer in three ways depending on your mood: great, okay, or not so good. Then ask back: \"And you?\""
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "How are you?", "es": "¿Cómo estás?", "note": "the question" },
+            { "en": "I'm fine, thanks.", "es": "Estoy bien, gracias.", "note": "😊 great" },
+            { "en": "I'm great! / I'm doing well.", "es": "¡Estoy muy bien!", "note": "😊 great" },
+            { "en": "Not bad.", "es": "No está mal.", "note": "🙂 okay" },
+            { "en": "Pretty good. / Can't complain.", "es": "Bastante bien. / No me quejo.", "note": "🙂 okay" },
+            { "en": "So-so.", "es": "Más o menos.", "note": "😐 not great" },
+            { "en": "I've been better.", "es": "He estado mejor.", "note": "😐 not great" },
+            { "en": "And you?", "es": "¿Y tú?", "note": "ask back" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "E",
+          "title": "Three moods",
+          "lines": [
+            { "speaker": "Mateo", "text": "Hi, Camila! How are you?" },
+            { "speaker": "Camila", "text": "I'm great, thanks! And you?" },
+            { "speaker": "Mateo", "text": "Not bad. A little tired." },
+            { "speaker": "Lucía", "text": "Hello, Diego. How are you?" },
+            { "speaker": "Diego", "text": "So-so. I have a lot of homework. And you?" }
+          ]
+        },
+        {
+          "type": "tip",
+          "title": "Remember the dice",
+          "text": "1-2 → I'm fine · 3-4 → Not bad · 5-6 → So-so. Practice all three so you can answer honestly!"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "multipleChoice",
+          "q": "\"¿Cómo estás?\" in English is…",
+          "options": ["How are you?", "What's your name?", "Where are you from?"],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "You feel 😐. You answer…",
+          "options": ["So-so.", "I'm great!", "Good morning."],
+          "correct": 0
+        },
+        {
+          "type": "multipleChoice",
+          "q": "You feel 🙂 okay. You answer…",
+          "options": ["Not bad.", "I've been better.", "Take care."],
+          "correct": 0
+        },
+        {
+          "type": "fillIn",
+          "sentence": "___ are you today?",
+          "answer": "How"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "I'm fine, ___. And you?",
+          "answer": "thanks",
+          "accept": ["thank you"]
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["I'm fine.", "😊"],
+            ["Not bad.", "🙂"],
+            ["So-so.", "😐"],
+            ["And you?", "¿Y tú?"]
+          ]
+        },
+        {
+          "type": "scramble",
+          "answer": "How are you today",
+          "hint": "Ask how someone is"
+        },
+        {
+          "type": "scramble",
+          "answer": "Not bad and you",
+          "hint": "Answer 🙂 and ask back"
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "Which one is the question?",
+            "options": ["How are you?", "Not bad.", "So-so."],
+            "correct": 0
+          },
+          {
+            "q": "\"Más o menos\" in English is…",
+            "options": ["So-so.", "I'm great!", "Bye!"],
+            "correct": 0
+          },
+          {
+            "q": "A 😊 answer to \"How are you?\" is…",
+            "options": ["I'm doing well!", "I've been better.", "So-so."],
+            "correct": 0
+          },
+          {
+            "q": "\"Can't complain\" means you feel…",
+            "options": ["okay / pretty good", "terrible", "sleepy"],
+            "correct": 0
+          },
+          {
+            "q": "After answering, you ask back with…",
+            "options": ["And you?", "Nice to meet you.", "See you soon."],
+            "correct": 0
+          },
+          {
+            "q": "Complete: \"I'm ___, thanks.\"",
+            "options": ["fine", "morning", "friend"],
+            "correct": 0
+          },
+          {
+            "q": "\"I've been better\" is a…",
+            "options": ["😐 answer", "😊 answer", "greeting"],
+            "correct": 0
+          },
+          {
+            "q": "Which one is NOT an answer to \"How are you?\"",
+            "options": ["Not bad.", "My name is Ana.", "So-so."],
+            "correct": 1
+          },
+          {
+            "q": "On the emotions dice, 3-4 means…",
+            "options": ["Not bad", "I'm fine", "So-so"],
+            "correct": 0
+          },
+          {
+            "q": "\"Pretty good\" is close to…",
+            "options": ["Not bad.", "So-so.", "Goodbye."],
+            "correct": 0
+          }
+        ]
+      }
+    }
+  ]
+}

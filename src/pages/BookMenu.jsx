@@ -148,7 +148,9 @@ export default function BookMenu() {
                   label={r.label}
                   available={!!r.available}
                   onClick={() =>
-                    r.route ? navigate(`/book/${bookId}/${r.route}`) : soon(r.label)
+                    r.route
+                      ? navigate(r.route.startsWith('/') ? r.route : `/book/${bookId}/${r.route}`)
+                      : soon(r.label)
                   }
                 />
               )

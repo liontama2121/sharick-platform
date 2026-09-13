@@ -1,0 +1,11 @@
+{
+  "_comment": "DEMO ONLY — usuarios de prueba en texto plano. Migrar a Cloudflare D1 + Pages Functions (ver services/authService.js). No poner credenciales reales aquí.",
+  "users": [
+    { "username": "sharick", "password": "teacher2026", "role": "teacher", "name": "Sharick" },
+    { "username": "demo", "password": "demo1234", "role": "student", "name": "Demo" },
+    { "username": "ana", "password": "ana123", "role": "student", "name": "Ana" },
+    { "username": "luis", "password": "luis123", "role": "student", "name": "Luis" },
+    { "username": "maria", "password": "maria123", "role": "student", "name": "María" },
+    { "username": "carlos", "password": "carlos123", "role": "student", "name": "Carlos" }
+  ]
+}
