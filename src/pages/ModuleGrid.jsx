@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { animate, stagger } from 'animejs'
-import { Check, Gamepad2, Home, Mic, PenLine, Video, Volume2, X } from 'lucide-react'
+import { Check, Gamepad2, Home, Mic, PenLine, Video, Volume2 } from 'lucide-react'
 
 import {
   activityId,
@@ -15,6 +15,7 @@ import { useLevelIntro } from '../hooks/useLevelIntro'
 import { useProgress } from '../hooks/useProgress'
 import ScreenThumb from '../components/book/ScreenThumb'
 import RoundButton from '../components/nav/RoundButton'
+import CloseButton from '../components/page/CloseButton'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -28,9 +29,36 @@ const BADGES = {
   speaking: { Icon: Mic, label: 'Speaking' },
 }
 
+/* Cuadritos pixel que salen del tag de cada miniatura hacia arriba-izquierda. */
+const TAG_PIXELS = [
+  { x: 0, y: 0, s: 14, c: 'var(--color-coral)' },
+  { x: 18, y: 6, s: 10, c: 'var(--color-gold)' },
+  { x: 32, y: 0, s: 12, c: 'var(--color-coral)' },
+  { x: 6, y: 20, s: 10, c: 'var(--color-gold)' },
+  { x: 24, y: 22, s: 14, c: 'var(--color-coral)' },
+  { x: 44, y: 16, s: 10, c: 'var(--color-gold)' },
+]
+
+/* Patrón de cuadritos del banner, saliendo del lado izquierdo. */
+const BANNER_PIXELS = [
+  { x: 0, y: 0, s: 26 },
+  { x: 30, y: 8, s: 18 },
+  { x: 6, y: 34, s: 20 },
+  { x: 34, y: 38, s: 26 },
+  { x: 0, y: 64, s: 16 },
+  { x: 24, y: 72, s: 22 },
+  { x: 54, y: 24, s: 14 },
+  { x: 56, y: 60, s: 18 },
+  { x: 12, y: 96, s: 22 },
+  { x: 42, y: 102, s: 14 },
+]
+
 /**
  * NIVEL 2 — rejilla del módulo con UNA MINIATURA POR PANTALLA, agrupadas por
  * lección y en el orden real del libro (portada → 1.1-s1 → 1.1-s2 → 1.2-s1 …).
+ * Look Express Publishing: la miniatura ES la tarjeta, con un tag rojo que
+ * sobresale por la esquina superior izquierda y badges circulares que
+ * sobresalen por abajo.
  */
 export default function ModuleGrid() {
   const { bookId, moduleId } = useParams()
@@ -47,6 +75,11 @@ export default function ModuleGrid() {
   const gameStats = getModuleGameStats(moduleId, games.map((g) => g.id))
 
   const pantallas = useMemo(() => getModuleScreens(bookId, moduleId), [bookId, moduleId])
+
+  /* La portada entra en la fila de la primera lección: el separador de esa
+     lección se pinta ANTES de la portada y no antes de su primera pantalla. */
+  const primeraLeccion = pantallas.find((p) => !p.isCover)?.lesson ?? null
+  const hayPortada = pantallas.some((p) => p.isCover)
 
   /* Una pantalla CON actividad se completa al resolverla; una sin actividad,
      con verla. Así el contador del header no se queda corto para siempre. */
@@ -121,6 +154,7 @@ export default function ModuleGrid() {
   }
 
   const toGames = () => navigate(`/book/${bookId}/module/${moduleId}/games`)
+  const toBook = () => navigate(`/book/${bookId}`)
 
   /** La tarjeta hace zoom y abre el libro DIRECTAMENTE en esa pantalla. */
   const abrirPantalla = (item, cardEl) => {
@@ -131,26 +165,77 @@ export default function ModuleGrid() {
     setTimeout(go, 215)
   }
 
-  const hover = (e, scale) =>
-    !reduced() && animate(e.currentTarget, { scale, duration: 260, ease: 'outQuad' })
+  /* Hover: la tarjeta crece y el tag se inclina un poco, como una pegatina. */
+  const hover = (e, active) => {
+    if (reduced()) return
+    const card = e.currentTarget
+    animate(card, { scale: active ? 1.05 : 1, duration: 260, ease: 'outQuad' })
+    const tag = card.querySelector('[data-tag]')
+    if (tag) animate(tag, { rotate: active ? -3 : 0, duration: 260, ease: 'outQuad' })
+  }
 
   const pct = pantallas.length ? (hechas / pantallas.length) * 100 : 0
 
-  return (
-    <div
-      ref={ref}
-      className="mx-auto w-full max-w-[1480px] px-5 py-7 pb-24 sm:px-8 3xl:max-w-[1820px]"
-    >
-      <header className="mb-8 flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="label-caps text-coral-ink">Module {mod.moduleId}</p>
-          <h1 className="mt-1">{mod.moduleName}</h1>
-          {mod.description && (
-            <p className="mt-1.5 max-w-2xl text-[0.9rem] text-ink-soft">{mod.description}</p>
-          )}
+  const separadorDe = (lesson) => (
+    <div className="col-span-full mb-3 flex items-center gap-3">
+      <span className="label-caps whitespace-nowrap text-[0.66rem] text-coral-ink">
+        {lesson.id} · {lesson.shortTitle ?? lesson.title}
+      </span>
+      <span className="h-0 flex-1 border-t-2 border-dotted border-[#e3d9c4]" />
+    </div>
+  )
 
-          {/* Progreso del módulo, contado por pantallas */}
-          <div className="mt-3.5 max-w-sm">
+  return (
+    <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
+      {/* Marco general, como el de las páginas del libro */}
+      <div
+        className="relative mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[1480px]
+          rounded-[20px] border-[3px] border-coral-ink/70 bg-paper pb-24 3xl:max-w-[1820px]"
+      >
+        {/* Banner del módulo: rojo, "Module N" en Playfair, cuadritos a la izquierda */}
+        <div
+          className="relative -ml-[3px] -mt-[3px] inline-flex max-w-[calc(100%-120px)] items-center
+            gap-6 overflow-hidden rounded-br-[64px] rounded-tl-[20px] py-8 pl-8 pr-24 text-white
+            shadow-lift"
+          style={{
+            background:
+              'linear-gradient(100deg, var(--color-coral-ink) 0%, var(--color-coral) 100%)',
+          }}
+        >
+          <svg
+            width="72"
+            height="120"
+            viewBox="0 0 72 120"
+            aria-hidden="true"
+            className="absolute -left-1 top-1/2 -translate-y-1/2"
+          >
+            {BANNER_PIXELS.map((p, i) => (
+              <rect
+                key={i}
+                x={p.x}
+                y={p.y}
+                width={p.s}
+                height={p.s}
+                rx="3"
+                fill={i % 3 === 1 ? 'var(--color-gold)' : '#ffffff'}
+                opacity={i % 3 === 1 ? 0.85 : 0.22}
+              />
+            ))}
+          </svg>
+          <h1 className="relative ml-16 font-display text-[2.6rem] font-extrabold leading-none text-white sm:text-[3.4rem]">
+            Module {mod.moduleId}
+          </h1>
+        </div>
+
+        <CloseButton label="Volver al menú del libro" onClick={toBook} />
+
+        {/* Subtítulo + progreso, contado por pantallas */}
+        <div className="px-8 pt-6 sm:px-10">
+          <h2 className="font-display text-[1.45rem] text-navy">{mod.moduleName}</h2>
+          {mod.description && (
+            <p className="mt-1 max-w-2xl text-[0.9rem] text-ink-soft">{mod.description}</p>
+          )}
+          <div className="mt-3 max-w-sm">
             <div
               className="h-1.5 w-full overflow-hidden rounded-full bg-navy/10"
               role="progressbar"
@@ -170,166 +255,186 @@ export default function ModuleGrid() {
           </div>
         </div>
 
-        <RoundButton label="Volver al menú del libro" onClick={() => navigate(`/book/${bookId}`)}>
-          <X size={20} strokeWidth={2.5} />
-        </RoundButton>
-      </header>
+        {/* Rejilla. El padding deja sitio a los tags y badges que sobresalen. */}
+        <div ref={gridRef} className="grid-pantallas gap-9 px-10 pt-9 sm:px-12">
+          {pantallas.map((item) => {
+            const { screen, lesson, isCover, isFirstOfLesson } = item
+            const hecha = estaHecha(screen)
+            const badges = item.badges.slice(0, 2)
 
-      <div
-        ref={gridRef}
-        className="grid-pantallas gap-x-5 gap-y-6"
-      >
-        {pantallas.map((item) => {
-          const { screen, lesson, isCover, isFirstOfLesson } = item
-          const hecha = estaHecha(screen)
+            const separador = isCover
+              ? primeraLeccion
+              : isFirstOfLesson && !(hayPortada && lesson.id === primeraLeccion?.id)
+                ? lesson
+                : null
 
-          return (
-            <Fragment key={item.key}>
-              {/* Separador de lección (la portada va sola, sin separador) */}
-              {isFirstOfLesson && !isCover && (
-                <div className="col-span-full mt-3 flex items-center gap-3">
-                  <span className="label-caps whitespace-nowrap text-[0.7rem] text-coral-ink">
-                    {lesson.id} · {lesson.shortTitle ?? lesson.title}
-                  </span>
-                  <span className="h-0 flex-1 border-t-2 border-dotted border-[#d9cdb5]" />
-                </div>
-              )}
+            return (
+              <Fragment key={item.key}>
+                {separador && separadorDe(separador)}
 
-              {/* div y no button: la miniatura renderiza el libro de verdad, que
-                  trae sus propios <button> dentro y anidarlos es HTML inválido. */}
-              <div
-                data-card
-                data-screen-id={screen.id}
-                role="button"
-                tabIndex={0}
-                aria-label={`${
-                  isCover ? 'Portada' : `${lesson.id}, pantalla ${item.number} de ${item.total}`
-                } — ${item.title}`}
-                onClick={(e) => abrirPantalla(item, e.currentTarget)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    abrirPantalla(item, e.currentTarget)
-                  }
-                }}
-                onMouseEnter={(e) => hover(e, 1.04)}
-                onMouseLeave={(e) => hover(e, 1)}
-                className={`group relative flex cursor-pointer flex-col gap-2 rounded-2xl bg-white
-                  p-2.5 text-left shadow-soft transition-shadow hover:shadow-lift
-                  ${isFirstOfLesson ? 'border-2 border-coral-ink' : 'border border-navy/10'}`}
-              >
-                {/* Anillo del pulso dorado al volver del libro */}
-                <span
-                  data-pulse
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -inset-[3px] rounded-[18px] opacity-0
-                    ring-[3px] ring-gold"
-                />
-
-                <span className="relative block">
-                  <ScreenThumb screen={screen} meta={meta} content={content} />
-
-                  {/* Etiqueta: lección grande + pantalla n/total debajo */}
+                {/* div y no button: la miniatura renderiza el libro de verdad, que
+                    trae sus propios <button> dentro y anidarlos es HTML inválido. */}
+                <div
+                  data-card
+                  data-screen-id={screen.id}
+                  role="button"
+                  tabIndex={0}
+                  title={item.title}
+                  aria-label={`${
+                    isCover ? 'Portada' : `${lesson.id}, pantalla ${item.number} de ${item.total}`
+                  } — ${item.title}`}
+                  onClick={(e) => abrirPantalla(item, e.currentTarget)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      abrirPantalla(item, e.currentTarget)
+                    }
+                  }}
+                  onMouseEnter={(e) => hover(e, true)}
+                  onMouseLeave={(e) => hover(e, false)}
+                  className="group relative cursor-pointer"
+                >
+                  {/* Anillo del pulso dorado al volver del libro */}
                   <span
-                    className="absolute -left-1 -top-1 flex min-w-8 flex-col items-center
-                      justify-center rounded-md bg-coral-ink px-1.5 py-1 leading-none text-white"
+                    data-pulse
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -inset-[4px] rounded-[12px] opacity-0
+                      ring-[3px] ring-gold"
+                  />
+
+                  {/* La miniatura ES la tarjeta */}
+                  <ScreenThumb
+                    screen={screen}
+                    meta={meta}
+                    content={content}
+                    frameClassName="rounded-lg border border-[#cfc3a9] shadow-lift"
+                  />
+
+                  {/* Cuadritos pixel detrás del tag */}
+                  <svg
+                    width="56"
+                    height="38"
+                    viewBox="0 0 56 38"
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -left-7 -top-9"
                   >
-                    <span className="font-display text-[0.85rem] font-bold">
+                    {TAG_PIXELS.map((p, i) => (
+                      <rect key={i} x={p.x} y={p.y} width={p.s} height={p.s} rx="2" fill={p.c} opacity=".9" />
+                    ))}
+                  </svg>
+
+                  {/* Tag sobresaliente: lección grande + pantalla n/total */}
+                  <span
+                    data-tag
+                    className="absolute -left-5 -top-5 flex h-16 min-w-16 flex-col items-center
+                      justify-center rounded-[10px] bg-coral-ink px-2 leading-none text-white
+                      shadow-[0_10px_22px_rgba(27,58,92,.28)]"
+                  >
+                    <span className="font-display text-[1.45rem] font-extrabold">
                       {isCover ? '★' : lesson.id}
                     </span>
                     {!isCover && (
-                      <span className="mt-0.5 font-body text-[0.58rem] font-semibold opacity-90">
+                      <span className="mt-1 font-body text-[0.62rem] font-semibold opacity-90">
                         {item.number}/{item.total}
+                      </span>
+                    )}
+
+                    {/* Pantalla completada: check pequeño en la esquina del tag */}
+                    {hecha && (
+                      <span
+                        title="Pantalla completada"
+                        className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center
+                          rounded-full border-2 border-white bg-sage-ink text-white shadow-soft"
+                      >
+                        <Check size={12} strokeWidth={3.2} />
                       </span>
                     )}
                   </span>
 
-                  {/* Pantalla completada */}
-                  {hecha && (
-                    <span
-                      title="Pantalla completada"
-                      className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center
-                        rounded-full border-2 border-white bg-sage-ink text-white shadow-soft"
-                    >
-                      <Check size={13} strokeWidth={3} />
-                    </span>
-                  )}
+                  {/* Badges circulares sobresaliendo por abajo (máx. 2) */}
+                  {badges.map((b, i) => {
+                    const badge = BADGES[b]
+                    if (!badge) return null
+                    const { Icon, label } = badge
+                    return (
+                      <span
+                        key={b}
+                        title={label}
+                        aria-label={label}
+                        className="absolute -bottom-6 flex h-12 w-12 items-center justify-center
+                          rounded-full border-[3px] border-white bg-coral-ink text-white
+                          shadow-[0_8px_18px_rgba(27,58,92,.25)]"
+                        /* en fila hacia la izquierda, para no chocar con la tarjeta vecina */
+                        style={{ right: -24 + i * 52 }}
+                      >
+                        <Icon size={20} strokeWidth={2.4} />
+                      </span>
+                    )
+                  })}
+                </div>
+              </Fragment>
+            )
+          })}
 
-                  {/* Badges de lo que trae ESTA pantalla */}
-                  {item.badges.length > 0 && (
-                    <span className="absolute -bottom-1 -right-1 flex gap-1">
-                      {item.badges.map((b) => {
-                        const badge = BADGES[b]
-                        if (!badge) return null
-                        const { Icon, label } = badge
-                        return (
-                          <span
-                            key={b}
-                            title={label}
-                            className="flex h-6 w-6 items-center justify-center rounded-full
-                              border border-navy/10 bg-white text-sage-ink shadow-soft"
-                          >
-                            <Icon size={12} strokeWidth={2.2} />
-                          </span>
-                        )
-                      })}
-                    </span>
-                  )}
+          {/* Tarjeta especial: los juegos del módulo, la última de la rejilla */}
+          <div
+            data-card
+            role="button"
+            tabIndex={0}
+            title={`Games · Module ${mod.moduleId}`}
+            onClick={toGames}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                toGames()
+              }
+            }}
+            onMouseEnter={(e) => hover(e, true)}
+            onMouseLeave={(e) => hover(e, false)}
+            className="relative flex aspect-[16/10] cursor-pointer flex-col items-center
+              justify-center gap-1.5 rounded-lg border border-sage-ink/35 bg-tip p-4 text-center
+              shadow-lift"
+          >
+            <span
+              data-tag
+              className="absolute -left-5 -top-5 flex h-16 w-16 items-center justify-center
+                rounded-[10px] bg-sage-ink text-white shadow-[0_10px_22px_rgba(27,58,92,.28)]"
+            >
+              <Gamepad2 size={30} strokeWidth={2.2} />
+            </span>
+            <span className="font-display text-[1.05rem] leading-tight text-navy">
+              Games · Module {mod.moduleId}
+            </span>
+            {games.length > 0 ? (
+              <>
+                <span className="label-caps text-sage-ink">{games.length} juegos</span>
+                <span className="text-[0.74rem] text-ink-soft">
+                  {gameStats.played} de {gameStats.total} jugados · ⭐ {gameStats.stars}
                 </span>
-
-                <span className="block px-0.5 pb-0.5 font-display text-[0.86rem] leading-tight text-navy">
-                  {item.title}
-                </span>
-              </div>
-            </Fragment>
-          )
-        })}
-
-        {/* Tarjeta especial: los juegos del módulo, la última de la rejilla */}
-        <div
-          data-card
-          role="button"
-          tabIndex={0}
-          onClick={toGames}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault()
-              toGames()
-            }
-          }}
-          onMouseEnter={(e) => hover(e, 1.04)}
-          onMouseLeave={(e) => hover(e, 1)}
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl
-            border border-sage-ink/35 bg-tip p-5 text-center shadow-soft transition-shadow
-            hover:shadow-lift"
-        >
-          <span className="text-4xl" aria-hidden="true">
-            🎮
-          </span>
-          <span className="font-display text-[1rem] leading-tight text-navy">
-            Games · Module {mod.moduleId}
-          </span>
-          {games.length > 0 ? (
-            <>
-              <span className="label-caps text-sage-ink">{games.length} juegos</span>
-              <span className="text-[0.74rem] text-ink-soft">
-                {gameStats.played} de {gameStats.total} jugados · ⭐ {gameStats.stars}
-              </span>
-            </>
-          ) : (
-            <span className="label-caps text-coral-ink">Próximamente</span>
-          )}
+              </>
+            ) : (
+              <span className="label-caps text-coral-ink">Próximamente</span>
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Botonera flotante abajo a la izquierda: casa + juegos */}
-      <div className="fixed bottom-5 left-5 z-30 flex items-center gap-3">
-        <RoundButton label="Ir al menú del libro" onClick={() => navigate(`/book/${bookId}`)}>
-          <Home size={19} strokeWidth={2.4} />
-        </RoundButton>
-        <RoundButton label={`Juegos del módulo ${mod.moduleId}`} onClick={toGames}>
-          <Gamepad2 size={19} strokeWidth={2.4} />
-        </RoundButton>
+        {/* Botonera superpuesta a la esquina inferior izquierda del marco */}
+        <div className="absolute -bottom-6 left-7 z-30 flex items-center gap-3">
+          <RoundButton
+            label="Ir al menú del libro"
+            onClick={toBook}
+            size="lg"
+          >
+            <Home size={22} strokeWidth={2.4} />
+          </RoundButton>
+          <RoundButton
+            label={`Juegos del módulo ${mod.moduleId}`}
+            onClick={toGames}
+            size="lg"
+          >
+            <Gamepad2 size={22} strokeWidth={2.4} />
+          </RoundButton>
+        </div>
       </div>
     </div>
   )

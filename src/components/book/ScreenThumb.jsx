@@ -18,7 +18,13 @@ const INERT_PROGRESS = {
  * Se escala al ancho real de la tarjeta, así que sirve igual en la rejilla
  * de 2 columnas del móvil que en la de 5 de un monitor grande.
  */
-export default function ScreenThumb({ screen, meta, content, className = '' }) {
+export default function ScreenThumb({
+  screen,
+  meta,
+  content,
+  className = '',
+  frameClassName = 'rounded-xl border border-navy/10 shadow-soft',
+}) {
   const boxRef = useRef(null)
   const [scale, setScale] = useState(0)
 
@@ -43,8 +49,7 @@ export default function ScreenThumb({ screen, meta, content, className = '' }) {
   return (
     <div
       ref={boxRef}
-      className={`relative w-full overflow-hidden rounded-xl border border-navy/10
-        bg-paper shadow-soft ${className}`}
+      className={`relative w-full overflow-hidden bg-paper ${frameClassName} ${className}`}
       style={{ aspectRatio: `${STAGE_W} / ${STAGE_H}` }}
       aria-hidden="true"
     >

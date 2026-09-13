@@ -204,30 +204,43 @@ real del libro (portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …).
   utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
   `xl` y la regla de 4 columnas le ganaba a la de 5. Contenedor de 1480px
   (1820px en `3xl`), scroll vertical normal, tarjetas de ~335px.
-- **Miniatura real** (`book/ScreenThumb.jsx`): renderiza ESA pantalla en 16:10
-  con `pointer-events: none` y un progreso inerte, para que ninguna actividad
-  se marque desde la miniatura. La escala se calcula con `ResizeObserver`
-  (`ancho de la tarjeta / 1600`), así que sirve igual a 2 que a 5 columnas.
-- **Etiqueta** en la esquina superior izquierda: cuadro coral con la lección en
-  grande ("1.1") y debajo, pequeño, el número de pantalla ("2/5"). La portada
-  lleva ★.
-- **Título** debajo de la miniatura, en Playfair navy. Sale de `screen.title`;
-  si falta, `screenTitle()` lo deduce de `section` + `exercise`.
-- **Badges** abajo a la derecha, calculados por `screenBadges()` sobre ESA
-  pantalla: 🔊 audio (`screen.audio`, diálogos con audio o actividad
-  `listening`) · 🎮 juego (`diceGame`, `roulette`) · 🎬 video · ✏️ ejercicio
-  escrito (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`, `fillInSentence`,
-  `multipleChoice`) · 🎙️ speaking (`speaking`, `recordPrompt`).
-- **Check verde** arriba a la derecha si la pantalla está completada. Una
-  pantalla CON actividad se completa al resolverla; una sin actividad, con
-  verla (`visitedScreens` en `useProgress`).
-- **Separador por lección**: línea punteada beige con el label
-  "1.1 · LET'S SAY HI!" en coral mayúsculas a la izquierda, ocupando toda la
-  fila. La primera tarjeta de cada lección lleva **borde coral de 2px**.
-- **Progreso en la cabecera**: barra delgada coral + "8 de 13 pantallas
-  completadas" en Nunito 600.
-- Entrada con stagger de 40ms; hover scale 1.04; al abrir, la tarjeta hace zoom
-  y navega a `…/lesson/<id>/screen/<n>`.
+- **Look Express Publishing**: la vista entera va dentro de un marco coral de
+  3px con radio 20px (como las páginas). Arriba a la izquierda, un **banner
+  rojo** (gradiente coral-ink → coral, esquina inferior derecha de 64px, patrón
+  de cuadritos pixel a la izquierda) con "Module N" en Playfair 800 blanco;
+  debajo, nombre del módulo, descripción y barra de progreso. `CloseButton`
+  (64px, borde blanco) arriba a la derecha; 🏠 y 🎮 (`RoundButton size="lg"`)
+  superpuestos a la esquina inferior izquierda del marco.
+- **La miniatura ES la tarjeta** (`book/ScreenThumb.jsx` con
+  `frameClassName`): render 16:10 de ESA pantalla, borde 1px `#cfc3a9`, radio
+  8px y `shadow-lift`, `pointer-events: none` y progreso inerte. Sin card
+  blanca ni título debajo: el título va en `title` (tooltip) y `aria-label`.
+  La escala se calcula con `ResizeObserver` (`ancho de la tarjeta / 1600`).
+- **Tag sobresaliente** (`data-tag`): cuadro coral de 64px medio afuera de la
+  esquina superior izquierda (`-left-5 -top-5`), sombra fuerte, lección en
+  Playfair 800 grande y "2/5" pequeño debajo; la portada lleva ★. Detrás
+  salen 6 cuadritos pixel coral/dorado (`TAG_PIXELS`). Si la pantalla está
+  completada, un ✓ salvia de 24px se pega a la esquina del tag.
+- **Badges circulares** (máx. 2): círculos coral de 48px con borde blanco de
+  3px e icono lucide blanco, medio afuera de la esquina inferior derecha, en
+  fila hacia la izquierda (`right: -24 + i*52`). Los calcula `screenBadges()`:
+  🔊 audio (`screen.audio` / `audioTracks`, diálogos con audio o `listening`)
+  · 🎮 (`diceGame`, `roulette`) · 🎬 video · ✏️ (`match`, `matchMarkers`,
+  `matchHeadings`, `fillBubbles`, `fillInSentence`, `multipleChoice`) · 🎙️
+  (`speaking`, `recordPrompt`).
+- **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
+  3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
+  utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
+  `xl` y la regla de 4 columnas le ganaba a la de 5. Gap de 36px (`gap-9`) para
+  que tags y badges de tarjetas vecinas no se toquen; padding lateral de 40px
+  para lo que sobresale.
+- **La portada entra en la primera fila** con las pantallas de la primera
+  lección: el separador de esa lección se pinta ANTES de la portada.
+- **Separador por lección**: línea punteada beige clara con el label
+  "1.1 · LET'S SAY HI!" en coral mayúsculas a la izquierda, `col-span-full`,
+  con `mb-3` para dejar sitio a los cuadritos del tag.
+- Entrada con stagger de 40ms; hover scale 1.05 + el tag se inclina -3° (Anime.js);
+  al abrir, la tarjeta hace zoom y navega a `…/lesson/<id>/screen/<n>`.
 - **Al volver con [X]** la rejilla hace scroll hasta la tarjeta donde estaba el
   estudiante (`progress.currentPage`) y le lanza un pulso dorado.
 - Los juegos tienen **dos entradas**: la tarjeta "🎮 Games · Module N" al final

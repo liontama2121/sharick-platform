@@ -5,8 +5,14 @@ const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
+const SIZES = {
+  md: 'h-11 w-11 shadow-soft',
+  /* grande, con borde blanco: para superponerlo al marco de la vista */
+  lg: 'h-14 w-14 border-[3px] border-white shadow-lift',
+}
+
 /** Botón circular coral: cerrar [X] o volver al inicio [🏠]. */
-export default function RoundButton({ children, label, onClick, className = '' }) {
+export default function RoundButton({ children, label, onClick, size = 'md', className = '' }) {
   const ref = useRef(null)
 
   const scaleTo = (v) => {
@@ -24,8 +30,8 @@ export default function RoundButton({ children, label, onClick, className = '' }
       onMouseLeave={() => scaleTo(1)}
       onFocus={() => scaleTo(1.1)}
       onBlur={() => scaleTo(1)}
-      className={`flex h-11 w-11 items-center justify-center rounded-full bg-coral-ink
-        text-white shadow-soft ${className}`}
+      className={`flex items-center justify-center rounded-full bg-coral-ink text-white
+        ${SIZES[size] ?? SIZES.md} ${className}`}
     >
       {children}
     </button>
