@@ -199,11 +199,6 @@ el índice visual de Express Publishing. No hay tarjetas de lección con
 "5 pantallas": si el módulo tiene 13 pantallas, hay 13 miniaturas, en el orden
 real del libro (portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …).
 
-- **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
-  3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
-  utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
-  `xl` y la regla de 4 columnas le ganaba a la de 5. Contenedor de 1480px
-  (1820px en `3xl`), scroll vertical normal, tarjetas de ~335px.
 - **Look Express Publishing**: la vista entera va dentro de un marco coral de
   3px con radio 20px (como las páginas). Arriba a la izquierda, un **banner
   rojo** (gradiente coral-ink → coral, esquina inferior derecha de 64px, patrón
