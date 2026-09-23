@@ -12,6 +12,7 @@ import VocabularyBox from '../content/VocabularyBox'
 import CulturalTip from '../content/CulturalTip'
 import Checklist from '../content/Checklist'
 import RoutineBlock from '../media/RoutineBlock'
+import GreetingsList from '../content/GreetingsList'
 
 import MatchMarkers from '../activities/MatchMarkers'
 import MatchSlots from '../activities/MatchSlots'
@@ -26,6 +27,8 @@ import DiceGame from '../activities/DiceGame'
 import RouletteWheel from '../activities/RouletteWheel'
 import MultipleChoice from '../activities/MultipleChoice'
 import ExerciseBlock from '../activities/ExerciseBlock'
+import ListenAndCircle from '../activities/ListenAndCircle'
+import ExpressionCards from '../activities/ExpressionCards'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -41,6 +44,8 @@ const ACTIVITIES = {
   recordPrompt: RecordPrompt,
   diceGame: DiceGame,
   roulette: RouletteWheel,
+  listenCircle: ListenAndCircle,
+  expressions: ExpressionCards,
   multipleChoice: ({ section, completed, score, onComplete }) => (
     <ExerciseBlock
       number={section.number}
@@ -60,6 +65,7 @@ function Block({ block }) {
   if (block.type === 'culturalTip') return <CulturalTip section={{ ...block, float: false }} />
   if (block.type === 'checklist') return <Checklist section={block} />
   if (block.type === 'routine') return <RoutineBlock section={block} />
+  if (block.type === 'greetings') return <GreetingsList block={block} />
   if (block.type === 'text') {
     return <p className="font-body text-[19px] leading-relaxed text-ink">{block.text}</p>
   }
@@ -133,7 +139,7 @@ export default function ScreenRenderer({
     if (!Component) {
       return (
         <p className={`font-body text-[16px] text-coral-ink ${className}`}>
-          Actividad no soportada: <code>{activity.activity}</code>
+          Unsupported activity: <code>{activity.activity}</code>
         </p>
       )
     }

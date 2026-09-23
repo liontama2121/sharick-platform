@@ -71,14 +71,14 @@ export default function MatchSlots({
       celebrate(slot)
       if (Object.keys(next).length === pairs.length && !reportedRef.current) {
         reportedRef.current = true
-        setToast({ msg: '¡Excelente!', type: 'success' })
+        setToast({ msg: 'Excellent!', type: 'success' })
         onComplete?.(Math.max(40, 100 - Math.min(errors * 10, 60)))
       }
     } else {
       setErrors((e) => e + 1)
       setSelected(null)
       shake(slot)
-      setToast({ msg: 'Esa no es. Inténtalo de nuevo.', type: 'error' })
+      setToast({ msg: 'Not that one. Try again.', type: 'error' })
     }
   }
 
@@ -99,7 +99,7 @@ export default function MatchSlots({
   const clickSlot = (markerN) => {
     if (filled[markerN]) return
     if (!selected) {
-      setToast({ msg: 'Primero toca una letra (A, B o C).', type: 'info' })
+      setToast({ msg: 'First tap a letter (A, B or C).', type: 'info' })
       return
     }
     attempt(selected, markerN)
@@ -129,7 +129,7 @@ export default function MatchSlots({
           data-drop={m.n}
           onClick={() => clickSlot(m.n)}
           aria-label={
-            letter ? `Grupo ${m.n}: diálogo ${letter}` : `Grupo ${m.n}: suelta aquí una letra`
+            letter ? `Group ${m.n}: dialogue ${letter}` : `Group ${m.n}: drop a letter here`
           }
           className={`flex h-12 w-14 items-center justify-center rounded-r-[10px] border-2 bg-white
             shadow-soft transition-colors
@@ -162,7 +162,7 @@ export default function MatchSlots({
           ))}
 
           <div className="mt-auto flex items-center gap-4 rounded-[14px] bg-box px-5 py-3">
-            <span className="label-caps text-sage-ink">Arrastra</span>
+            <span className="label-caps text-sage-ink">Drag</span>
             <div className="flex gap-3">
               {dialogues.map((d) => {
                 const done = placed.has(d.letter)
@@ -173,7 +173,7 @@ export default function MatchSlots({
                     letter={d.letter}
                     role="button"
                     tabIndex={done ? -1 : 0}
-                    aria-label={`Letra ${d.letter}`}
+                    aria-label={`Letter ${d.letter}`}
                     aria-disabled={done}
                     onKeyDown={(e) => {
                       if (done) return
@@ -192,7 +192,7 @@ export default function MatchSlots({
               })}
             </div>
             <span className="ml-auto font-body text-[15px] text-ink-soft">
-              {Object.keys(filled).length} de {pairs.length}
+              {Object.keys(filled).length} of {pairs.length}
             </span>
           </div>
         </div>
@@ -207,14 +207,14 @@ export default function MatchSlots({
           <p className="font-body text-[15px] text-ink-soft">
             {selected ? (
               <>
-                Letra{' '}
+                Letter{' '}
                 <span className="font-semibold" style={{ color: BUBBLE_COLORS[selected]?.bg }}>
                   {selected}
                 </span>{' '}
-                elegida · toca la cajita del grupo.
+                selected · tap the group's box.
               </>
             ) : (
-              'Arrastra cada letra hasta su grupo, o toca la letra y luego la cajita.'
+              'Drag each letter to its group, or tap the letter and then the box.'
             )}
           </p>
         </div>

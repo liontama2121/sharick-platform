@@ -36,15 +36,15 @@ export default function MatchActivity({ section, completed, score, onComplete })
       celebrate(el)
       celebrate(nodes.current[`l-${pair.id}`])
       if (Object.keys(next).length === pairs.length) {
-        setToast({ msg: '¡Todos los pares correctos!', type: 'success' })
+        setToast({ msg: 'All pairs correct!', type: 'success' })
         onComplete?.(Math.max(40, 100 - Math.min(errors * 10, 60)))
       } else {
-        setToast({ msg: '¡Correcto!', type: 'success' })
+        setToast({ msg: 'Correct!', type: 'success' })
       }
     } else {
       setErrors((e) => e + 1)
       shake(el)
-      setToast({ msg: 'Casi. Inténtalo de nuevo.', type: 'error' })
+      setToast({ msg: 'Almost. Try again.', type: 'error' })
     }
   }
 
@@ -60,7 +60,7 @@ export default function MatchActivity({ section, completed, score, onComplete })
         footer={
           <span className="flex flex-wrap items-center justify-between gap-2">
             <span>
-              {Object.keys(matched).length} de {pairs.length} emparejados
+              {Object.keys(matched).length} of {pairs.length} matched
             </span>
             <Button
               variant="ghost"
@@ -71,14 +71,14 @@ export default function MatchActivity({ section, completed, score, onComplete })
                 setErrors(0)
               }}
             >
-              Reiniciar
+              Reset
             </Button>
           </span>
         }
       >
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <p className="label-caps text-ink-soft">1 · Elige un diálogo</p>
+            <p className="label-caps text-ink-soft">1 · Choose a dialogue</p>
             {pairs.map((p, i) => {
               const isMatched = matched[p.id] != null
               const isActive = selected === p.id
@@ -107,7 +107,7 @@ export default function MatchActivity({ section, completed, score, onComplete })
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="label-caps text-ink-soft">2 · Elige a quién corresponde</p>
+            <p className="label-caps text-ink-soft">2 · Choose who says it</p>
             {rights.map((p) => {
               const isMatched = matched[p.id] != null
               return (

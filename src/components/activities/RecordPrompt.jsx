@@ -53,7 +53,7 @@ export default function RecordPrompt({ section, completed, score, onComplete }) 
     setAnswered(next)
     celebrate(rows.current[i])
     if (Object.keys(next).length === items.length) {
-      setToast({ msg: '¡Respondiste todas en voz alta! 🎤', type: 'success' })
+      setToast({ msg: 'You answered them all out loud! 🎤', type: 'success' })
       onComplete?.(100)
     }
   }
@@ -75,7 +75,7 @@ export default function RecordPrompt({ section, completed, score, onComplete }) 
       recorderRef.current = rec
       setRecordingIdx(i)
     } catch {
-      setRecError('No pudimos usar el micrófono. Responde en voz alta y marca la pregunta.')
+      setRecError("We couldn't use the microphone. Answer out loud and tick the question.")
     }
   }
 
@@ -127,7 +127,7 @@ export default function RecordPrompt({ section, completed, score, onComplete }) 
                           disabled={recordingIdx != null && recordingIdx !== i}
                           onClick={() => (recordingIdx === i ? stopRec() : startRec(i))}
                         >
-                          {recordingIdx === i ? 'Detener' : 'Grabar'}
+                          {recordingIdx === i ? 'Stop' : 'Record'}
                         </PillButton>
                       )}
                       <PillButton icon="none" onClick={() => markDone(i)} disabled={done}>

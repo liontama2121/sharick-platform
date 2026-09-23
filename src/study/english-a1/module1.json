@@ -426,8 +426,8 @@
             "correct": 2
           },
           {
-            "q": "\"Ñaño\" means friend in…",
-            "options": ["Bolivia", "Venezuela", "Colombia"],
+            "q": "You hear: \"Kevin, this is my friend, Ana.\" Kevin answers…",
+            "options": ["Nice to meet you, Ana.", "Not bad, thanks.", "See you soon, Ana."],
             "correct": 0
           }
         ]
@@ -558,9 +558,9 @@
             "correct": 0
           },
           {
-            "q": "To greet someone at 9 p.m. you say…",
-            "options": ["Good night.", "Good evening.", "Good morning."],
-            "correct": 1
+            "q": "You hear: \"Goodbye, Carolina!\" You answer…",
+            "options": ["Bye, take care!", "I'm great, thanks.", "Good morning!"],
+            "correct": 0
           }
         ]
       }
@@ -692,8 +692,8 @@
             "correct": 0
           },
           {
-            "q": "\"Midnight\" is…",
-            "options": ["12:00 a.m.", "12:00 p.m.", "8:00 p.m."],
+            "q": "You hear: \"Good morning, Carolina!\" You answer…",
+            "options": ["Good morning, Julián!", "See you tomorrow.", "Good night, Julián!"],
             "correct": 0
           },
           {
@@ -741,8 +741,8 @@
         },
         {
           "type": "tip",
-          "title": "Remember the dice",
-          "text": "1-2 → I'm fine · 3-4 → Not bad · 5-6 → So-so. Practice all three so you can answer honestly!"
+          "title": "Remember the book",
+          "text": "In lesson 1.2 you practised: \"How's it going?\" → \"I'm pretty good, thanks.\" · \"How are you?\" → \"I'm good, thanks.\" / \"Great, thanks!\" / \"Not bad.\" / \"So-so.\""
         }
       ],
       "exercises": [
@@ -814,8 +814,8 @@
             "correct": 0
           },
           {
-            "q": "\"Can't complain\" means you feel…",
-            "options": ["okay / pretty good", "terrible", "sleepy"],
+            "q": "You hear: \"What's your name?\" You answer…",
+            "options": ["I'm Ana.", "I'm great, thanks.", "Not bad."],
             "correct": 0
           },
           {
@@ -839,8 +839,8 @@
             "correct": 1
           },
           {
-            "q": "On the emotions dice, 3-4 means…",
-            "options": ["Not bad", "I'm fine", "So-so"],
+            "q": "You hear: \"Hi, Julián! How's it going?\" You answer…",
+            "options": ["I'm pretty good, thanks.", "See you later.", "Nice to meet you."],
             "correct": 0
           },
           {

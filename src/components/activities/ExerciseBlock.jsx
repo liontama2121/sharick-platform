@@ -23,7 +23,7 @@ export default function ExerciseBlock({
         </SectionLabel>
         {completed && (
           <span className="label-caps text-sage-ink">
-            ✓ Hecho{score != null ? ` · ${score}%` : ''}
+            ✓ Done{score != null ? ` · ${score}%` : ''}
           </span>
         )}
       </div>

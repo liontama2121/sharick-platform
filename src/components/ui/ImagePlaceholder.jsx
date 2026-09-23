@@ -38,7 +38,7 @@ export default function SmartImage({
   return (
     <div
       role="img"
-      aria-label={alt || 'Ilustración pendiente de generar'}
+      aria-label={alt || 'Illustration coming soon'}
       className={`relative flex h-full w-full flex-col items-center justify-center gap-1.5
         overflow-hidden border border-dashed border-sage/60 bg-box text-center
         ${compact ? 'p-1' : 'p-4'} ${rounded} ${className}`}

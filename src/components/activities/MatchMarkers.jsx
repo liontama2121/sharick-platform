@@ -81,7 +81,7 @@ export default function MatchMarkers({
 
   const clickMarker = (marker) => {
     if (!selected) {
-      setToast({ msg: 'Primero elige un diálogo (A, B o C).', type: 'info' })
+      setToast({ msg: 'First choose a dialogue (A, B or C).', type: 'info' })
       return
     }
     if (Object.values(matched).includes(marker.n)) return
@@ -95,7 +95,7 @@ export default function MatchMarkers({
 
       if (Object.keys(next).length === pairs.length && !reportedRef.current) {
         reportedRef.current = true
-        setToast({ msg: '¡Excelente!', type: 'success' })
+        setToast({ msg: 'Excellent!', type: 'success' })
         onComplete?.(Math.max(40, 100 - Math.min(errors * 10, 60)))
       }
     } else {
@@ -171,7 +171,7 @@ export default function MatchMarkers({
           />
 
           <p className="font-body text-[15px] text-ink-soft">
-            {Object.keys(matched).length} de {pairs.length} emparejados
+            {Object.keys(matched).length} of {pairs.length} matched
             {selected && (
               <span className="ml-2 font-semibold" style={{ color: BUBBLE_COLORS[selected]?.bg }}>
                 · {selected} seleccionado

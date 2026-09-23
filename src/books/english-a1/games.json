@@ -6,36 +6,33 @@
           "id": "dice-m1",
           "type": "diceGame",
           "icon": "🎲",
-          "title": "The Emotions Dice",
-          "blurb": "Responde “How are you?” de seis formas distintas.",
+          "title": "Roll and speak!",
+          "blurb": "Lanza el dado y di la expresión: saludar, despedirte o presentarte.",
           "data": {
             "label": "Game",
-            "title": "How are you REALLY doing?",
-            "instructions": "Lanza el dado y responde en voz alta con las frases que salgan.",
+            "title": "Roll and speak!",
+            "instructions": "Roll the dice. Then, look at the number and say the expression.",
             "ranges": {
               "1-2": {
-                "label": "I'm fine",
-                "phrases": [
-                  "I'm great!",
-                  "I'm doing well!",
-                  "Everything's good!"
-                ]
+                "label": "Say hi!"
               },
               "3-4": {
-                "label": "Not bad",
-                "phrases": [
-                  "Not bad!",
-                  "Pretty good",
-                  "Can't complain"
-                ]
+                "label": "Say goodbye!"
               },
               "5-6": {
-                "label": "So-so...",
-                "phrases": [
-                  "So-so",
-                  "More or less",
-                  "I've been better"
-                ]
+                "label": "Introduce yourself!"
+              }
+            },
+            "sideImages": {
+              "left": {
+                "src": "/images/english/module1/greeting-person.png",
+                "alt": "A person saying hi",
+                "emoji": "👋"
+              },
+              "right": {
+                "src": "/images/english/module1/goodbye-person.png",
+                "alt": "A person saying goodbye",
+                "emoji": "🚶"
               }
             }
           }
@@ -49,15 +46,15 @@
           "data": {
             "label": "Game",
             "title": "Spin & Speak!",
-            "instructions": "Gira la ruleta y responde en voz alta la consigna que salga.",
+            "instructions": "Spin the wheel and answer the prompt out loud.",
             "segments": [
               {
                 "label": "Your name",
                 "prompt": "Say: My name is ___."
               },
               {
-                "label": "Your city",
-                "prompt": "Say: I'm from ___."
+                "label": "Your country",
+                "prompt": "Say: I'm from ___. (Colombia, Venezuela, Bolivia or Panama)"
               },
               {
                 "label": "Formal hi",
@@ -73,7 +70,7 @@
               },
               {
                 "label": "How are you?",
-                "prompt": "Answer “How are you?” honestly."
+                "prompt": "Answer “How are you?”"
               }
             ]
           }

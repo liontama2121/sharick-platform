@@ -179,7 +179,7 @@ export default function AudioPlayer({
               className={`rounded-full px-3 py-1 font-body text-[13px] font-bold transition-colors
                 ${i === trackIdx ? 'bg-coral-ink text-white' : 'bg-white text-navy hover:bg-tip'}`}
             >
-              {t.label ?? `Pista ${i + 1}`}
+              {t.label ?? `Track ${i + 1}`}
             </button>
           ))}
         </div>
@@ -194,7 +194,7 @@ export default function AudioPlayer({
           value={pct}
           disabled={disabled}
           onChange={(e) => seek(Number(e.target.value))}
-          aria-label={`Avanzar ${label ?? 'audio'}`}
+          aria-label={`Seek ${label ?? 'audio'}`}
           className="audio-range h-1.5 w-[220px] cursor-pointer appearance-none rounded-full
             disabled:cursor-not-allowed"
           style={{
@@ -207,13 +207,13 @@ export default function AudioPlayer({
       </div>
 
       <div className="flex items-center gap-2.5">
-        <RoundBtn label="Reproducir" tone="bg-coral-ink" disabled={disabled} onClick={toggle}>
+        <RoundBtn label="Play" tone="bg-coral-ink" disabled={disabled} onClick={toggle}>
           <Play size={20} strokeWidth={2.4} fill="currentColor" />
         </RoundBtn>
-        <RoundBtn label="Pausar" tone="bg-navy" disabled={disabled || !playing} onClick={toggle}>
+        <RoundBtn label="Pause" tone="bg-navy" disabled={disabled || !playing} onClick={toggle}>
           <Pause size={20} strokeWidth={2.4} fill="currentColor" />
         </RoundBtn>
-        <RoundBtn label="Detener" tone="bg-ink-soft" disabled={disabled} onClick={stop}>
+        <RoundBtn label="Stop" tone="bg-ink-soft" disabled={disabled} onClick={stop}>
           <Square size={17} strokeWidth={2.6} fill="currentColor" />
         </RoundBtn>
 
@@ -222,7 +222,7 @@ export default function AudioPlayer({
         )}
         {failed && (
           <span className="ml-1 font-body text-[12px] italic text-ink-soft" title={src ?? ''}>
-            Audio pendiente
+            Audio coming soon
           </span>
         )}
       </div>

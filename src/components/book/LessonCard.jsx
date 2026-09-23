@@ -163,8 +163,8 @@ export default function LessonCard({
         {!isCover && <ProgressRing done={done} total={total} />}
       </span>
 
-      {/* Badges circulares mitad afuera, en fila hacia la izquierda (máx. 2) */}
-      {badges.slice(0, 2).map((b, i) => {
+      {/* Badges circulares mitad afuera, en fila hacia la izquierda (máx. 3) */}
+      {badges.slice(0, 3).map((b, i) => {
         const badge = BADGES[b]
         if (!badge) return null
         const { Icon, label } = badge

@@ -27,6 +27,23 @@ function polar(angleDeg, radius) {
   return [C + radius * Math.cos(a), C + radius * Math.sin(a)]
 }
 
+/* Parte la etiqueta en dos líneas por el espacio más cercano al centro,
+   para que quepa en la cuña con letra grande. */
+function splitLabel(label) {
+  const words = String(label).split(' ')
+  if (words.length < 2) return [label]
+  let best = 1
+  let bestDiff = Infinity
+  for (let i = 1; i < words.length; i++) {
+    const diff = Math.abs(words.slice(0, i).join(' ').length - words.slice(i).join(' ').length)
+    if (diff < bestDiff) {
+      bestDiff = diff
+      best = i
+    }
+  }
+  return [words.slice(0, best).join(' '), words.slice(best).join(' ')]
+}
+
 function slicePath(startDeg, endDeg) {
   const [x1, y1] = polar(startDeg, R)
   const [x2, y2] = polar(endDeg, R)
@@ -80,7 +97,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
         if (prev.includes(pick)) return prev
         const next = [...prev, pick]
         if (next.length === segments.length) {
-          setToast({ msg: '¡Practicaste todas las consignas!', type: 'success' })
+          setToast({ msg: 'You practised all the prompts!', type: 'success' })
           onComplete?.(100)
         }
         return next
@@ -123,7 +140,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
         footer={
           <span className="flex flex-wrap items-center justify-between gap-2">
             <span>
-              Practicados: {seen.length} de {segments.length}
+              Practised: {seen.length} of {segments.length}
             </span>
             <span className="flex flex-wrap gap-1">
               {segments.map((_, i) => (
@@ -136,26 +153,27 @@ export default function RouletteWheel({ section, completed, score, onComplete })
           </span>
         }
       >
-        {/* onClick propio: pasar página es solo cosa de las esquinas del libro */}
+        {/* onClick propio: pasar página es solo cosa de las esquinas del libro.
+            Rueda grande (460px) que domina la pantalla; consigna a la derecha. */}
         <div
-          className="box-beige flex flex-col items-center gap-4 p-4"
+          className="box-beige flex flex-wrap items-center justify-center gap-x-12 gap-y-4 p-5"
           onClick={(e) => e.stopPropagation()}
         >
           <div ref={pulseRef} className="relative">
             {/* Puntero fijo */}
             <svg
-              width="26"
-              height="20"
+              width="40"
+              height="30"
               viewBox="0 0 26 20"
               aria-hidden="true"
-              className="absolute left-1/2 top-[-9px] z-10 -translate-x-1/2 drop-shadow"
+              className="absolute left-1/2 top-[-14px] z-10 -translate-x-1/2 drop-shadow"
             >
               <path d="M13 20 2 2h22L13 20Z" fill="var(--color-coral-ink)" />
             </svg>
 
-            <div ref={wheelRef} className="w-[240px] md:w-[280px]" style={{ willChange: 'transform' }}>
+            <div ref={wheelRef} className="w-[460px] max-w-full" style={{ willChange: 'transform' }}>
               <svg viewBox="0 0 300 300" className="h-full w-full" role="img"
-                aria-label={`Ruleta con ${segments.length} consignas`}>
+                aria-label={`Wheel with ${segments.length} prompts`}>
                 <circle cx={C} cy={C} r={R + 9} fill="var(--color-box)" />
                 <circle
                   cx={C}
@@ -172,6 +190,12 @@ export default function RouletteWheel({ section, completed, score, onComplete })
                   const end = start + step
                   const fill = FILLS[i % FILLS.length]
                   const mid = start + step / 2
+                  const lines = splitLabel(seg.label)
+                  const ty = C - R * (lines.length > 1 ? 0.7 : 0.62)
+                  /* Las cuñas de la mitad de abajo giran 180° su texto para
+                     no leerse de cabeza. */
+                  const flip = mid > 90 && mid < 270
+                  const pivot = ty + (lines.length - 1) * 9
                   return (
                     <g key={i}>
                       <path d={slicePath(start, end)} fill={fill.bg} />
@@ -183,25 +207,29 @@ export default function RouletteWheel({ section, completed, score, onComplete })
                       />
                       <text
                         x={C}
-                        y={C - R * 0.58}
-                        transform={`rotate(${mid} ${C} ${C})`}
+                        y={ty}
+                        transform={`rotate(${mid} ${C} ${C})${flip ? ` rotate(180 ${C} ${pivot})` : ''}`}
                         textAnchor="middle"
-                        fontSize="13"
+                        fontSize="16"
                         fontFamily="Nunito Sans, sans-serif"
-                        fontWeight="700"
+                        fontWeight="800"
                         fill={fill.ink}
                       >
-                        {seg.label}
+                        {lines.map((line, li) => (
+                          <tspan key={li} x={C} dy={li === 0 ? 0 : 18}>
+                            {line}
+                          </tspan>
+                        ))}
                       </text>
                     </g>
                   )
                 })}
 
-                <circle cx={C} cy={C} r="26" fill="var(--color-paper)" />
+                <circle cx={C} cy={C} r="22" fill="var(--color-paper)" />
                 <circle
                   cx={C}
                   cy={C}
-                  r="26"
+                  r="22"
                   fill="none"
                   stroke="var(--color-navy)"
                   strokeOpacity=".2"
@@ -211,25 +239,27 @@ export default function RouletteWheel({ section, completed, score, onComplete })
             </div>
           </div>
 
-          <Button onClick={spin} disabled={spinning} size="sm">
-            {spinning ? 'Girando…' : '🎡 ¡Girar!'}
-          </Button>
+          <div className="flex w-[420px] max-w-full flex-col items-center gap-5">
+            <Button onClick={spin} disabled={spinning} size="lg">
+              {spinning ? 'Spinning…' : '🎡 Spin!'}
+            </Button>
 
-          <div ref={cardRef} className="min-h-[74px] w-full">
-            {!active && !spinning && (
-              <p className="text-center text-[0.88rem] text-ink-soft">
-                Gira la ruleta y responde en voz alta la consigna que salga.
-              </p>
-            )}
-            {active && (
-              <div
-                data-bubble
-                className="rounded-xl border border-navy/12 bg-white px-4 py-3 text-center"
-              >
-                <p className="label-caps text-sage-ink">{active.label}</p>
-                <p className="mt-1 font-display text-[1.05rem] text-navy">{active.prompt}</p>
-              </div>
-            )}
+            <div ref={cardRef} className="min-h-[150px] w-full">
+              {!active && !spinning && (
+                <p className="text-center font-body text-[19px] text-ink-soft">
+                  Spin the wheel and answer the prompt out loud.
+                </p>
+              )}
+              {active && (
+                <div
+                  data-bubble
+                  className="rounded-2xl border border-navy/12 bg-white px-6 py-5 text-center"
+                >
+                  <p className="label-caps text-sage-ink">{active.label}</p>
+                  <p className="mt-2 font-display text-[30px] leading-snug text-navy">{active.prompt}</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </ExerciseBlock>

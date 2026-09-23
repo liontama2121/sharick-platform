@@ -30,7 +30,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
     setChecked((prev) => ({ ...prev, [i]: !prev[i] }))
     if (next[i]) celebrate(nodes.current[i])
     if (phrases.every((_, k) => next[k])) {
-      setToast({ msg: '¡Practicaste todas las frases!', type: 'success' })
+      setToast({ msg: 'You practised all the phrases!', type: 'success' })
       onComplete?.(100)
     }
   }
@@ -50,7 +50,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
       recorderRef.current = rec
       setRecording(true)
     } catch {
-      setRecError('No pudimos usar el micrófono. Puedes practicar en voz alta sin grabar.')
+      setRecError("We couldn't use the microphone. You can still practise out loud.")
     }
   }
 
@@ -75,7 +75,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
       >
         <div className="flex flex-col gap-4">
           <div>
-            <p className="mb-2 text-[0.8rem] italic text-ink-soft">Marca cada frase al decirla en voz alta.</p>
+            <p className="mb-2 text-[0.8rem] italic text-ink-soft">Tick each phrase when you say it out loud.</p>
             <ul ref={listRef} className="flex flex-col gap-1.5">
               {phrases.map((p, i) => (
                 <li key={i} data-bubble>
@@ -109,7 +109,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
             {canRecord && (
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 <PillButton icon="record" active={recording} onClick={recording ? stopRec : startRec}>
-                  {recording ? 'Detener grabación' : 'Grabar mi voz (opcional)'}
+                  {recording ? 'Stop recording' : 'Record my voice (optional)'}
                 </PillButton>
                 {clipUrl && <audio controls src={clipUrl} className="h-8 max-w-[190px]" />}
               </div>
@@ -121,7 +121,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
             <div className="min-h-[150px] overflow-hidden rounded-[20px]">
               <SmartImage
                 src={section.backgroundImage}
-                alt={section.imageAlt ?? 'Paisaje colombiano'}
+                alt={section.imageAlt ?? 'Landscape'}
                 emoji="🏞️"
               />
             </div>

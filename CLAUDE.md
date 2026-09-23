@@ -225,12 +225,12 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   y "5 pantallas" pequeño debajo; la portada lleva ★. Detrás salen 6 cuadritos
   pixel coral/dorado (`TAG_PIXELS`). En la esquina del tag, el **progreso de
   la lección**: anillo salvia parcial (3/5) o ✓ verde al 100 % (`ProgressRing`).
-- **Badges circulares** (máx. 2): círculos coral de 48px con borde blanco de
+- **Badges circulares** (máx. 3): círculos coral de 48px con borde blanco de
   3px e icono lucide blanco, medio afuera de la esquina inferior derecha, en
   fila hacia la izquierda. Se calculan con `lessonBadges()` = unión de
   `screenBadges()` de TODAS las pantallas, en orden audio · written · game ·
-  speaking · video: 🔊 (`screen.audio` / `audioTracks`, diálogos con audio o
-  `listening`) · ✏️ (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`,
+  speaking · video: 🔊 (`screen.audio` / `audioTracks`, diálogos o bloques con audio,
+  `listening`, `listenCircle`) · ✏️ (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`,
   `fillInSentence`, `multipleChoice`) · 🎮 (`diceGame`, `roulette`) · 🎙️
   (`speaking`, `recordPrompt`) · 🎬 video.
 - **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
@@ -267,12 +267,12 @@ src/
 │   ├── book/     BookCover · ScreenThumb · LessonSpread · LessonCard
 │   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
-│   ├── content/  VocabularyBox · CulturalTip · Checklist
+│   ├── content/  VocabularyBox · CulturalTip · Checklist · GreetingsList
 │   ├── activities/ ExerciseBlock · MatchActivity · MatchMarkers · MatchSlots ·
 │   │              MatchHeadings · MultipleChoice · FillBubbles ·
 │   │              FillInSentence · ListeningActivity · SpeakingPrompt ·
 │   │              RecordPrompt · DiceGame
-│   ├── media/    AudioPlayer · DialogueBlock · RoutineBlock
+│   ├── media/    AudioPlayer · AudioButton (🎧 por frase) · DialogueBlock · RoutineBlock
 │   ├── layout/   ReaderBar
 │   ├── cards/    BookCard
 │   └── ui/       Button · PillButton · ProgressBar · FeedbackToast ·
@@ -301,7 +301,7 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 12 pantallas, 6 → 17)
+## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 12 pantallas, págs. 6 → 16)
 
 **⚠️ Contenido de Sharick. Títulos, diálogos y mecánicas exactos** (documento
 oficial de Sharick con referencias visuales de Express Publishing).
@@ -329,17 +329,21 @@ La ilustración `grupos-4-paises.png` muestra tres grupos: **1** trío conocién
 (→ B), **2** despedida (→ C), **3** pareja conociéndose (→ A). Los `markers`
 del JSON (x/y en %) posicionan las cajitas.
 
-### Lección 1.2 · **"Hello, amigo!"** (7 pantallas)
+### Lección 1.2 · **"Greeting people"** (6 pantallas)
 
 | Pantalla | Pág | Contenido |
 |---|---|---|
-| 1.2-s1 | 11 | Rutina del día (mañana/tarde/noche/dormir) |
-| 1.2-s2 | 12 | VOCABULARY (times of the day) + CULTURAL TIP "friend": parcero 🇨🇴 · pana 🇻🇪 · ñaño/colega 🇧🇴 · fren 🇵🇦 |
-| 1.2-s3 | 13 | EXERCISE 3 (fill bubbles con **reloj analógico clásico**) |
-| 1.2-s4 | 14 | EXERCISE 4 (listening + preguntas) |
-| 1.2-s5 | 15 | EXERCISE 5 (fill in sentence) |
-| 1.2-s6 | 16 | EXERCISE 6 (**dado de emociones**: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so) |
-| 1.2-s7 | 17 | Can-do check + CULTURAL TIP (las onces) |
+| 1.2-s1 | 11 | Vocabulary · Exercise 1 "Read, listen and repeat." Bloque `greetings`: Good morning / afternoon / evening / night, cada uno con 🎧 (`greet-*.mp3`); Good night con nota (+) "We use this when we go to sleep." · ilustración `greetings-day.png` |
+| 1.2-s2 | 12 | Exercise 2 "Look at the clock. Say the greeting." `fillBubbles` con `clock: "digital"` (LCD, `ui/DigitalClock`): **8:00 am · 1:30 pm · 9:45 pm · 10:11 pm** → morning / afternoon / evening / night · viñetas `clock-scene-1..4.png` |
+| 1.2-s3 | 13 | Listening · Exercise 3 "Listen and circle the correct answer." `listenCircle`: 5 ítems a/b con 🎧 (`listen-1..5.mp3`), la correcta siempre la **a** |
+| 1.2-s4 | 14 | Speaking · Exercise 4 "Look at the expressions. Choose and say to your classmate." `expressions`: 3 bloques (Greet people + Respond · Introduce yourself + Respond · Say goodbye), cada expresión con 🎧 (`expr-*.mp3`) |
+| 1.2-s5 | 15 | Exercise 5 **Roll and speak!** `diceGame` en modo categoría: 1-2 Say hi! · 3-4 Say goodbye! · 5-6 Introduce yourself! — **sin frases de ejemplo** (Sharick: son respuestas del estudiante). Dado al centro, `greeting-person.png` / `goodbye-person.png` a los lados |
+| 1.2-s6 | 16 | Can-do check (greet at any time of day · respond to greetings · introduce myself · say goodbye) + CULTURAL TIP "onces" en inglés |
+
+**Listening 1.2-s3 (texto EXACTO):** 1 "Hi, Julián! How's it going?" → I'm pretty good,
+thanks. · 2 "Goodbye, Carolina!" → Bye, take care! · 3 "Kevin, this is my friend, Ana."
+→ Nice to meet you, Ana. · 4 "Good morning, Carolina!" → Good morning, Julián! ·
+5 "What's your name?" → I'm Ana. Estos ítems también van en los quizzes de Study (T2-T6).
 
 Las lecciones siguientes se agregan al array `lessons` de `modules.json`.
 
@@ -392,12 +396,14 @@ y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
 
 | `activity` | Componente | Qué hace | Se completa cuando |
 |---|---|---|---|
-| `diceGame` | DiceGame | Dado de emociones: 1-2 I'm fine · 3-4 Not bad · 5-6 So-so | salieron los 3 rangos |
+| `diceGame` | DiceGame | Dado. Si los `ranges` no traen `phrases` es **modo categoría** (Roll and speak!: pestaña grande con la consigna, `sideImages` a los lados) | salieron los 3 rangos |
 | `roulette` | RouletteWheel | Ruleta de consignas de speaking | salieron todos los segmentos |
 | `match` | MatchActivity | Emparejar diálogo ↔ personas | todos los pares |
 | `matchMarkers` | MatchMarkers · **MatchSlots** (`style: "slots"`) | Diálogos ↔ grupos de la ilustración. Con `slots`: cajitas [1][ _ ] junto a cada grupo y fichas A/B/C arrastrables desde una bandeja | todos los pares |
 | `matchHeadings` | MatchHeadings | Títulos (píldoras `red` / `yellow` / `blue`) ↔ diálogos, con un slot gris sobre cada caja | todos los títulos |
-| `fillBubbles` | FillBubbles | Saludo según el reloj analógico | todas las burbujas |
+| `fillBubbles` | FillBubbles | Saludo según el reloj (analógico, o `clock: "digital"` + `columns` = rejilla con relojes LCD) | todas las burbujas |
+| `listenCircle` | ListenAndCircle | Ítems con 🎧 y opciones a/b; la elegida se rodea con un círculo a mano | todas correctas |
+| `expressions` | ExpressionCards | Bloques de expresiones con 🎧; tocar la frase = dicha | una de cada bloque |
 | `fillInSentence` | FillInSentence | Frases con hueco, input con línea | todas las frases |
 | `listening` | ListeningActivity | Audio + preguntas de opción múltiple | todas correctas |
 | `multipleChoice` | MultipleChoice | Preguntas sueltas de opción múltiple | todas correctas |
@@ -423,8 +429,9 @@ salvia; fallo: `shake`, toast y la ficha vuelve a la bandeja.
 ```
 
 ### Ruleta (`roulette`)
-Rueda SVG de 240px (280px en desktop) con 6-8 segmentos de colores alternados
-navy / coral / salvia / dorado, puntero coral arriba y botón pill "¡Girar!".
+Rueda SVG de **460px** (domina la pantalla) con 6-8 segmentos de colores alternados
+navy / coral / salvia / dorado, etiquetas grandes en dos líneas (las de la mitad de
+abajo giradas para no leerse de cabeza), puntero coral arriba y botón "🎡 Spin!".
 
 ```json
 { "type": "activity", "activity": "roulette", "title": "Spin & Speak!",
@@ -633,13 +640,16 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 
 1. **Contenido de Sharick es sagrado** — mecánicas exactas (dado 1-2/3-4/5-6,
    reloj analógico normal, match A/B/C) y títulos exactos, salvo cambio explícito
-   del cliente. Cambios ya aprobados: "Hello parcero!" → **"Hello, amigo!"** (lección 1.2)
+   del cliente. Cambios ya aprobados: lección 1.2 → **"Greeting people"** (documento
+   oficial, 2026-09-23; antes "Hello, amigo!"), ruleta "Your city" → "Your country"
    y "Let's say hi to Colombia!" → **"Let's say Hi!"** (lección 1.1, documento
    oficial de Sharick, 2026-09-13).
 2. **Todo en JSON** — cero contenido hardcodeado en componentes.
 3. **Todo animado** — Anime.js en cada interacción.
 4. **Papel cálido, cero dark mode.** Tricolor solo en portada.
 5. **Mobile responsive** — react-pageflip pasa a una sola hoja en vertical.
-6. **Español en la UI de instrucciones, inglés en el contenido de aprendizaje.**
+6. **El contenido del libro va 100 % en inglés** (instrucciones, labels, hints,
+   placeholders, toasts y botones dentro de la página). El español solo queda en
+   la UI general de navegación (tooltips de la toolbar, Nivel 1/2, Games).
 7. Redactar diálogos/ejercicios PROPIOS — nunca copiar texto de otros libros.
 8. Commits frecuentes y descriptivos en español.

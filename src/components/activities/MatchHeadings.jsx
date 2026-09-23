@@ -77,14 +77,14 @@ export default function MatchHeadings({
       celebrate(slot)
       if (Object.keys(next).length === headings.length && !reportedRef.current) {
         reportedRef.current = true
-        setToast({ msg: '¡Excelente!', type: 'success' })
+        setToast({ msg: 'Excellent!', type: 'success' })
         onComplete?.(Math.max(40, 100 - Math.min(errors * 10, 60)))
       }
     } else {
       setErrors((e) => e + 1)
       setSelected(null)
       shake(slot)
-      setToast({ msg: 'Ese título no va ahí. Inténtalo de nuevo.', type: 'error' })
+      setToast({ msg: "That heading doesn't go there. Try again.", type: 'error' })
     }
   }
 
@@ -104,7 +104,7 @@ export default function MatchHeadings({
   const clickSlot = (letter) => {
     if (filled[letter] != null) return
     if (selected == null) {
-      setToast({ msg: 'Primero toca un título.', type: 'info' })
+      setToast({ msg: 'First tap a heading.', type: 'info' })
       return
     }
     attempt(selected, letter)
@@ -126,7 +126,7 @@ export default function MatchHeadings({
                   heading={h}
                   role="button"
                   tabIndex={done ? -1 : 0}
-                  aria-label={`Título: ${h.text}`}
+                  aria-label={`Heading: ${h.text}`}
                   aria-disabled={done}
                   onKeyDown={(e) => {
                     if (done) return
@@ -145,10 +145,10 @@ export default function MatchHeadings({
             })}
             <span className="font-body text-[14px] text-ink-soft">
               {selected != null
-                ? 'Ahora toca el espacio gris sobre el diálogo.'
-                : 'Arrastra cada título hasta su diálogo, o toca el título y luego el espacio gris.'}
+                ? 'Now tap the grey space above the dialogue.'
+                : 'Drag each heading to its dialogue, or tap the heading and then the grey space.'}
               {' · '}
-              {Object.keys(filled).length} de {headings.length}
+              {Object.keys(filled).length} of {headings.length}
             </span>
           </div>
 
@@ -178,8 +178,8 @@ export default function MatchHeadings({
                     onClick={() => clickSlot(d.letter)}
                     aria-label={
                       heading
-                        ? `Diálogo ${d.letter}: ${heading.text}`
-                        : `Diálogo ${d.letter}: suelta aquí un título`
+                        ? `Dialogue ${d.letter}: ${heading.text}`
+                        : `Dialogue ${d.letter}: drop a heading here`
                     }
                     className={`flex h-12 min-w-[320px] items-center justify-center rounded-full
                       border-2 transition-colors

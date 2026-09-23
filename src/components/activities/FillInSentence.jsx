@@ -32,13 +32,13 @@ export default function FillInSentence({ section, completed, score, onComplete }
       setSolved(next)
       celebrate(el)
       if (Object.keys(next).length === items.length) {
-        setToast({ msg: '¡Completaste todas las frases!', type: 'success' })
+        setToast({ msg: 'You completed all the sentences!', type: 'success' })
         onComplete?.(Math.max(40, 100 - Math.min(errors * 10, 60)))
       }
     } else {
       setErrors((e) => e + 1)
       shake(el)
-      setToast({ msg: 'Revisa la respuesta e inténtalo otra vez.', type: 'error' })
+      setToast({ msg: 'Check your answer and try again.', type: 'error' })
     }
   }
 

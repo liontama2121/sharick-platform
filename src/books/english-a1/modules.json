@@ -128,7 +128,7 @@
               ],
               "illustration": {
                 "src": "/images/english/module1/grupos-4-paises.png",
-                "alt": "3 grupos: trío conociéndose (1), despedida (2), pareja conociéndose (3)",
+                "alt": "Three groups: friends meeting (1), saying goodbye (2), a pair meeting (3)",
                 "emoji": "🤝"
               }
             },
@@ -213,26 +213,26 @@
               ],
               "illustration": {
                 "src": "/images/english/module1/grupos-4-paises.png",
-                "alt": "3 grupos: trío conociéndose (1), despedida (2), pareja conociéndose (3)",
+                "alt": "Three groups: friends meeting (1), saying goodbye (2), a pair meeting (3)",
                 "emoji": "🤝",
                 "markers": [
                   {
                     "n": 1,
                     "x": 22,
                     "y": 58,
-                    "label": "Trío conociéndose"
+                    "label": "Three friends meeting"
                   },
                   {
                     "n": 2,
                     "x": 55,
                     "y": 40,
-                    "label": "Despedida"
+                    "label": "Saying goodbye"
                   },
                   {
                     "n": 3,
                     "x": 80,
                     "y": 62,
-                    "label": "Pareja conociéndose"
+                    "label": "Two people meeting"
                   }
                 ]
               },
@@ -337,7 +337,7 @@
               ],
               "illustration": {
                 "src": "/images/english/module1/grupos-4-paises.png",
-                "alt": "3 grupos: trío conociéndose (1), despedida (2), pareja conociéndose (3)",
+                "alt": "Three groups: friends meeting (1), saying goodbye (2), a pair meeting (3)",
                 "emoji": "🤝"
               },
               "activity": {
@@ -376,7 +376,7 @@
               "blocks": [],
               "illustration": {
                 "src": "/images/english/module1/cuatro-paises.png",
-                "alt": "Cartagena, Caracas, La Paz y Ciudad de Panamá",
+                "alt": "Cartagena, Caracas, La Paz and Panama City",
                 "emoji": "🏞️"
               },
               "activity": {
@@ -385,7 +385,7 @@
                 "id": "speaking",
                 "number": 4,
                 "title": "Introduce yourself",
-                "instructions": "Preséntate en voz alta y luego despídete.",
+                "instructions": "Introduce yourself out loud and then say goodbye.",
                 "modelPhrases": [
                   "Hello! My name is ...",
                   "I'm from ...",
@@ -412,15 +412,15 @@
                 "id": "roulette",
                 "number": 5,
                 "title": "Spin & Speak!",
-                "instructions": "Gira la ruleta y responde en voz alta la consigna que salga.",
+                "instructions": "Spin the wheel and answer the prompt out loud.",
                 "segments": [
                   {
                     "label": "Your name",
                     "prompt": "Say: My name is ___."
                   },
                   {
-                    "label": "Your city",
-                    "prompt": "Say: I'm from ___."
+                    "label": "Your country",
+                    "prompt": "Say: I'm from ___. (Colombia, Venezuela, Bolivia or Panama)"
                   },
                   {
                     "label": "Formal hi",
@@ -436,7 +436,7 @@
                   },
                   {
                     "label": "How are you?",
-                    "prompt": "Answer “How are you?” honestly."
+                    "prompt": "Answer “How are you?”"
                   }
                 ]
               }
@@ -445,168 +445,84 @@
         },
         {
           "id": "1.2",
-          "shortTitle": "Hello, amigo!",
-          "title": "Hello, amigo!",
+          "shortTitle": "Greeting people",
+          "title": "Greeting people",
           "resources": [
             "audio",
+            "written",
             "game"
           ],
           "screens": [
             {
               "id": "1.2-s1",
-              "title": "A day in Latin America",
+              "title": "Vocabulary · Greetings of the day",
               "pageNumber": 11,
               "section": "Vocabulary",
               "layout": "two-columns",
-              "audio": "/audio/english/module1/1-2-times.mp3",
-              "audioLabel": "Times of the day",
               "exercise": {
                 "number": 1,
-                "skill": "read",
-                "instruction": "Read the daily routine and the greeting for each moment."
+                "skill": "listen",
+                "instruction": "Read, listen and repeat."
               },
               "blocks": [
                 {
-                  "type": "routine",
-                  "id": "routine",
-                  "label": "Through the day",
-                  "title": "A day in Latin America",
+                  "type": "greetings",
+                  "id": "greetings-day",
+                  "label": "Vocabulary",
+                  "title": "Greetings of the day",
                   "items": [
                     {
-                      "time": "morning",
-                      "label": "Mañana · 7:00 a.m.",
+                      "time": "Morning",
                       "greeting": "Good morning",
-                      "note": "Desayuno: café con arepa o tamal.",
-                      "clockTime": "07:00",
                       "emoji": "🌅",
-                      "image": "/images/english/module1/morning.png"
+                      "audio": "/audio/english/module1/greet-morning.mp3"
                     },
                     {
-                      "time": "afternoon",
-                      "label": "Tarde · 12:30 p.m.",
+                      "time": "Afternoon",
                       "greeting": "Good afternoon",
-                      "note": "Almuerzo familiar: sopa, arroz y guiso.",
-                      "clockTime": "12:30",
                       "emoji": "☀️",
-                      "image": "/images/english/module1/afternoon.png"
+                      "audio": "/audio/english/module1/greet-afternoon.mp3"
                     },
                     {
-                      "time": "evening",
-                      "label": "Noche · 7:00 p.m.",
+                      "time": "Evening",
                       "greeting": "Good evening",
-                      "note": "Llegando a casa después del trabajo.",
-                      "clockTime": "19:00",
                       "emoji": "🌆",
-                      "image": "/images/english/module1/evening.png"
+                      "audio": "/audio/english/module1/greet-evening.mp3"
                     },
                     {
-                      "time": "night",
-                      "label": "Al dormir · 9:30 p.m.",
+                      "time": "Bedtime",
                       "greeting": "Good night",
-                      "note": "Se despide de la familia y se va a dormir.",
-                      "clockTime": "21:30",
                       "emoji": "🌙",
-                      "image": "/images/english/module1/night.png"
+                      "audio": "/audio/english/module1/greet-night.mp3",
+                      "note": "We use this when we go to sleep."
                     }
                   ]
                 }
               ],
               "illustration": {
-                "src": "/images/english/module1/parcero-hero.png",
-                "alt": "Un día latinoamericano: del desayuno a la noche",
-                "emoji": "🫓"
+                "src": "/images/english/module1/greetings-day.png",
+                "alt": "A day from morning to night",
+                "emoji": "🌤️"
               }
             },
             {
               "id": "1.2-s2",
-              "title": "Times of the day",
+              "title": "Clocks · Say the greeting",
               "pageNumber": 12,
-              "section": "Vocabulary",
-              "layout": "two-columns",
-              "exercise": {
-                "number": 2,
-                "skill": "read",
-                "instruction": "Learn the parts of the day and how friends greet each other."
-              },
-              "blocks": [
-                {
-                  "type": "vocabulary",
-                  "id": "vocab-times",
-                  "label": "Vocabulary",
-                  "title": "Times of the day",
-                  "columns": 2,
-                  "items": [
-                    {
-                      "word": "Morning",
-                      "translation": "Mañana",
-                      "icon": "🌅"
-                    },
-                    {
-                      "word": "Noon",
-                      "translation": "Mediodía",
-                      "icon": "🕛"
-                    },
-                    {
-                      "word": "Afternoon",
-                      "translation": "Tarde",
-                      "icon": "☀️"
-                    },
-                    {
-                      "word": "Evening",
-                      "translation": "Noche (temprano)",
-                      "icon": "🌆"
-                    },
-                    {
-                      "word": "Night",
-                      "translation": "Noche",
-                      "icon": "🌙"
-                    },
-                    {
-                      "word": "Bedtime",
-                      "translation": "Hora de dormir",
-                      "icon": "🛏️"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "label": "Listen",
-                      "icon": "listen"
-                    }
-                  ]
-                },
-                {
-                  "type": "culturalTip",
-                  "id": "tip-amigo",
-                  "label": "Cultural Tip",
-                  "title": "How do you say “friend” in Latin America?",
-                  "float": false,
-                  "text": "parcero (🇨🇴 Colombia) · pana (🇻🇪 Venezuela) · ñaño o colega (🇧🇴 Bolivia) · fren (🇵🇦 Panamá). En inglés basta con friend, buddy o mate, pero cada país tiene la suya."
-                }
-              ],
-              "illustration": {
-                "src": "/images/english/module1/onces-pandebono.png",
-                "alt": "Las onces: café con pandebono",
-                "emoji": "☕"
-              }
-            },
-            {
-              "id": "1.2-s3",
-              "title": "Exercise 3 · Clocks",
-              "pageNumber": 13,
-              "section": "Writing",
+              "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 3,
-                "skill": "write",
-                "instruction": "Look at the clock and complete each speech bubble."
+                "number": 2,
+                "skill": "speak",
+                "instruction": "Look at the clock. Say the greeting."
               },
               "activity": {
                 "type": "activity",
                 "activity": "fillBubbles",
                 "id": "fillBubbles",
-                "number": 3,
-                "title": "What time is it? What do you say?",
-                "instructions": "Mira el reloj y completa la burbuja con el saludo correcto.",
+                "number": 2,
+                "clock": "digital",
+                "columns": 4,
                 "options": [
                   "Good morning",
                   "Good afternoon",
@@ -615,224 +531,271 @@
                 ],
                 "items": [
                   {
-                    "clockTime": "07:00",
-                    "sceneLabel": "Desayuno: arepa y tinto en la cocina.",
-                    "scene": "/images/english/module1/breakfast-arepa.png",
-                    "emoji": "🫓",
+                    "clockTime": "08:00",
+                    "scene": "/images/english/module1/clock-scene-1.png",
+                    "sceneLabel": "People greeting each other in the morning",
+                    "emoji": "🌅",
                     "answer": "Good morning"
                   },
                   {
-                    "clockTime": "09:15",
-                    "sceneLabel": "Comprando frutas en la plaza de mercado.",
-                    "scene": "/images/english/module1/market-paloquemao.png",
-                    "emoji": "🥭",
-                    "answer": "Good morning"
-                  },
-                  {
-                    "clockTime": "12:30",
-                    "sceneLabel": "Almuerzo con los compañeros de trabajo.",
-                    "scene": "/images/english/module1/lunch-sancocho.png",
-                    "emoji": "🍲",
+                    "clockTime": "13:30",
+                    "scene": "/images/english/module1/clock-scene-2.png",
+                    "sceneLabel": "People greeting each other in the afternoon",
+                    "emoji": "☀️",
                     "answer": "Good afternoon"
                   },
                   {
-                    "clockTime": "16:45",
-                    "sceneLabel": "Las onces: café con pandebono.",
-                    "scene": "/images/english/module1/onces-pandebono.png",
-                    "emoji": "☕",
-                    "answer": "Good afternoon"
-                  },
-                  {
-                    "clockTime": "19:00",
-                    "sceneLabel": "Llegando a casa y saludando a la familia.",
-                    "scene": "/images/english/module1/arriving-home.png",
-                    "emoji": "🏠",
+                    "clockTime": "21:45",
+                    "scene": "/images/english/module1/clock-scene-3.png",
+                    "sceneLabel": "People greeting each other in the evening",
+                    "emoji": "🌆",
                     "answer": "Good evening"
                   },
                   {
-                    "clockTime": "21:30",
-                    "sceneLabel": "Apagando la luz para dormir.",
-                    "scene": "/images/english/module1/bedtime.png",
-                    "emoji": "🛏️",
+                    "clockTime": "22:11",
+                    "scene": "/images/english/module1/clock-scene-4.png",
+                    "sceneLabel": "Someone going to sleep",
+                    "emoji": "🌙",
                     "answer": "Good night"
                   }
                 ]
               }
             },
             {
-              "id": "1.2-s4",
-              "title": "Listening · Mariana's day",
-              "pageNumber": 14,
+              "id": "1.2-s3",
+              "title": "Listening · Circle the answer",
+              "pageNumber": 13,
               "section": "Listening",
               "layout": "activity-full",
               "exercise": {
-                "number": 4,
+                "number": 3,
                 "skill": "listen",
-                "instruction": "Listen to Mariana and answer the questions."
+                "instruction": "Listen and circle the correct answer."
               },
               "activity": {
                 "type": "activity",
-                "activity": "listening",
-                "id": "listening",
-                "number": 4,
-                "title": "Mariana's day",
-                "instructions": "Escucha el audio y responde las preguntas.",
-                "audio": "/audio/english/module1/listening-1.mp3",
-                "audioLabel": "Listen",
-                "transcript": [
+                "activity": "listenCircle",
+                "id": "listenCircle",
+                "number": 3,
+                "items": [
                   {
-                    "speaker": "Mariana",
-                    "text": "Good afternoon! My name is Mariana. I'm from Bogotá, but I live in Cali now."
+                    "audio": "/audio/english/module1/listen-1.mp3",
+                    "audioText": "Hi, Julián! How's it going?",
+                    "options": [
+                      "I'm pretty good, thanks.",
+                      "See you later."
+                    ],
+                    "correct": 0
                   },
                   {
-                    "speaker": "Mariana",
-                    "text": "I work in a coffee shop near the park. I start at two in the afternoon."
+                    "audio": "/audio/english/module1/listen-2.mp3",
+                    "audioText": "Goodbye, Carolina!",
+                    "options": [
+                      "Bye, take care!",
+                      "I'm great, thanks."
+                    ],
+                    "correct": 0
                   },
                   {
-                    "speaker": "Mariana",
-                    "text": "When people arrive, I say \"Good afternoon\". At eight in the evening, I say \"Good evening\"."
+                    "audio": "/audio/english/module1/listen-3.mp3",
+                    "audioText": "Kevin, this is my friend, Ana.",
+                    "options": [
+                      "Nice to meet you, Ana.",
+                      "Not bad, thanks."
+                    ],
+                    "correct": 0
                   },
                   {
-                    "speaker": "Mariana",
-                    "text": "And when I go home at ten, my grandmother always says \"Good night, mija\"."
+                    "audio": "/audio/english/module1/listen-4.mp3",
+                    "audioText": "Good morning, Carolina!",
+                    "options": [
+                      "Good morning, Julián!",
+                      "See you tomorrow."
+                    ],
+                    "correct": 0
+                  },
+                  {
+                    "audio": "/audio/english/module1/listen-5.mp3",
+                    "audioText": "What's your name?",
+                    "options": [
+                      "I'm Ana.",
+                      "I'm great, thanks."
+                    ],
+                    "correct": 0
                   }
-                ],
-                "questions": [
+                ]
+              }
+            },
+            {
+              "id": "1.2-s4",
+              "title": "Speaking · Expressions",
+              "pageNumber": 14,
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 4,
+                "skill": "speak",
+                "instruction": "Look at the expressions. Choose and say to your classmate."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "expressions",
+                "id": "expressions",
+                "number": 4,
+                "blocks": [
                   {
-                    "q": "Where is Mariana from?",
-                    "options": [
-                      "Bogotá",
-                      "Cali",
-                      "Cartagena"
-                    ],
-                    "correct": 0
+                    "groups": [
+                      {
+                        "label": "Greet people",
+                        "items": [
+                          {
+                            "text": "Hi! How are you?",
+                            "audio": "/audio/english/module1/expr-how-are-you.mp3"
+                          },
+                          {
+                            "text": "How's it going?",
+                            "audio": "/audio/english/module1/expr-hows-it-going.mp3"
+                          },
+                          {
+                            "text": "How's everything?",
+                            "audio": "/audio/english/module1/expr-hows-everything.mp3"
+                          }
+                        ]
+                      },
+                      {
+                        "label": "Respond",
+                        "items": [
+                          {
+                            "text": "I'm good, thanks.",
+                            "audio": "/audio/english/module1/expr-im-good.mp3"
+                          },
+                          {
+                            "text": "I'm fine, thanks.",
+                            "audio": "/audio/english/module1/expr-im-fine.mp3"
+                          },
+                          {
+                            "text": "Great, thanks!",
+                            "audio": "/audio/english/module1/expr-great-thanks.mp3"
+                          },
+                          {
+                            "text": "Not bad.",
+                            "audio": "/audio/english/module1/expr-not-bad.mp3"
+                          },
+                          {
+                            "text": "So-so.",
+                            "audio": "/audio/english/module1/expr-so-so.mp3"
+                          }
+                        ]
+                      }
+                    ]
                   },
                   {
-                    "q": "What time does she start work?",
-                    "options": [
-                      "At ten in the morning",
-                      "At two in the afternoon",
-                      "At eight in the evening"
-                    ],
-                    "correct": 1
+                    "groups": [
+                      {
+                        "label": "Introduce yourself",
+                        "items": [
+                          {
+                            "text": "Hey! I'm ... .",
+                            "audio": "/audio/english/module1/expr-hey-im.mp3"
+                          },
+                          {
+                            "text": "Hello! I'm ... .",
+                            "audio": "/audio/english/module1/expr-hello-im.mp3"
+                          }
+                        ]
+                      },
+                      {
+                        "label": "Respond",
+                        "items": [
+                          {
+                            "text": "Nice to meet you.",
+                            "audio": "/audio/english/module1/expr-nice-to-meet-you.mp3"
+                          },
+                          {
+                            "text": "It's a pleasure to meet you.",
+                            "audio": "/audio/english/module1/expr-pleasure.mp3"
+                          }
+                        ]
+                      }
+                    ]
                   },
                   {
-                    "q": "What does she say at eight in the evening?",
-                    "options": [
-                      "Good morning",
-                      "Good afternoon",
-                      "Good evening"
-                    ],
-                    "correct": 2
-                  },
-                  {
-                    "q": "What does her grandmother say at home?",
-                    "options": [
-                      "Good night",
-                      "See you later",
-                      "Nice to meet you"
-                    ],
-                    "correct": 0
+                    "groups": [
+                      {
+                        "label": "Say goodbye",
+                        "items": [
+                          {
+                            "text": "Bye!",
+                            "audio": "/audio/english/module1/expr-bye.mp3"
+                          },
+                          {
+                            "text": "See you later!",
+                            "audio": "/audio/english/module1/expr-see-you-later.mp3"
+                          },
+                          {
+                            "text": "Take care!",
+                            "audio": "/audio/english/module1/expr-take-care.mp3"
+                          },
+                          {
+                            "text": "See you soon!",
+                            "audio": "/audio/english/module1/expr-see-you-soon.mp3"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
             },
             {
               "id": "1.2-s5",
-              "title": "Complete the greeting",
+              "title": "Roll and speak!",
               "pageNumber": 15,
-              "section": "Writing",
-              "layout": "activity-full",
-              "exercise": {
-                "number": 5,
-                "skill": "write",
-                "instruction": "Complete the greetings with the missing word."
-              },
-              "activity": {
-                "type": "activity",
-                "activity": "fillInSentence",
-                "id": "fillSentence",
-                "number": 5,
-                "title": "Complete the greeting",
-                "instructions": "Escribe la palabra que falta en cada frase.",
-                "items": [
-                  {
-                    "sentence": "___ morning, Camila!",
-                    "answer": "Good"
-                  },
-                  {
-                    "sentence": "My name ___ Santiago.",
-                    "answer": "is"
-                  },
-                  {
-                    "sentence": "Nice to ___ you!",
-                    "answer": "meet"
-                  },
-                  {
-                    "sentence": "I'm ___ Medellín.",
-                    "answer": "from"
-                  },
-                  {
-                    "sentence": "___ are you today?",
-                    "answer": "How"
-                  }
-                ]
-              }
-            },
-            {
-              "id": "1.2-s6",
-              "title": "The Dice · How are you?",
-              "pageNumber": 16,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 6,
+                "number": 5,
                 "skill": "speak",
-                "instruction": "Roll the dice and answer “How are you?” in a different way."
+                "instruction": "Roll the dice. Then, look at the number and say the expression."
               },
               "activity": {
                 "type": "activity",
                 "activity": "diceGame",
-                "id": "diceGame",
-                "number": 6,
-                "title": "How are you REALLY doing?",
-                "instructions": "Lanza el dado y responde \"How are you?\" de una forma diferente cada vez.",
+                "id": "rollAndSpeak",
+                "number": 5,
+                "title": "Roll and speak!",
                 "ranges": {
                   "1-2": {
-                    "label": "I'm fine",
-                    "phrases": [
-                      "I'm great!",
-                      "I'm doing well!",
-                      "Everything's good!"
-                    ]
+                    "label": "Say hi!"
                   },
                   "3-4": {
-                    "label": "Not bad",
-                    "phrases": [
-                      "Not bad!",
-                      "Pretty good",
-                      "Can't complain"
-                    ]
+                    "label": "Say goodbye!"
                   },
                   "5-6": {
-                    "label": "So-so...",
-                    "phrases": [
-                      "So-so",
-                      "More or less",
-                      "I've been better"
-                    ]
+                    "label": "Introduce yourself!"
+                  }
+                },
+                "sideImages": {
+                  "left": {
+                    "src": "/images/english/module1/greeting-person.png",
+                    "alt": "A person saying hi",
+                    "emoji": "👋"
+                  },
+                  "right": {
+                    "src": "/images/english/module1/goodbye-person.png",
+                    "alt": "A person saying goodbye",
+                    "emoji": "🚶"
                   }
                 }
               }
             },
             {
-              "id": "1.2-s7",
+              "id": "1.2-s6",
               "title": "Can-do check",
-              "pageNumber": 17,
+              "pageNumber": 16,
               "section": "Review",
               "layout": "two-columns",
               "exercise": {
-                "number": 7,
                 "skill": "read",
                 "instruction": "Check what you can do now."
               },
@@ -843,25 +806,24 @@
                   "label": "Can-do check",
                   "title": "Now I can…",
                   "items": [
-                    "I can greet people in English at any time of the day.",
-                    "I can introduce myself and say where I'm from.",
-                    "I can introduce a friend to someone else.",
-                    "I can answer “How are you?” in three different ways.",
-                    "I can say goodbye politely."
+                    "I can greet people at any time of the day.",
+                    "I can respond to greetings.",
+                    "I can introduce myself.",
+                    "I can say goodbye."
                   ]
                 },
                 {
                   "type": "culturalTip",
                   "id": "tip-onces",
                   "label": "Cultural Tip",
-                  "title": "Las onces",
+                  "title": "Colombian “onces”",
                   "float": false,
-                  "text": "A media tarde en Colombia llegan las onces: café con pandebono, almojábana o buñuelo. Si te invitan a onces, todavía saludas con Good afternoon; Good evening empieza cuando cae el sol, más o menos a las seis."
+                  "text": "In the middle of the afternoon, many Colombians have “onces”: coffee with pandebono, almojábana or buñuelo. At “onces” you still say Good afternoon. Good evening starts when the sun goes down, around six o'clock."
                 }
               ],
               "illustration": {
                 "src": "/images/english/module1/goodbye-colombia.png",
-                "alt": "Amigos despidiéndose en un pueblo latinoamericano",
+                "alt": "Friends saying goodbye in a Latin American town",
                 "emoji": "👋"
               }
             }
