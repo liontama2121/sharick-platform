@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import ExerciseBlock from './ExerciseBlock'
 import AudioButton from '../media/AudioButton'
+import AudioPlayer from '../media/AudioPlayer'
+import SmartImage from '../ui/ImagePlaceholder'
 import FeedbackToast from '../ui/FeedbackToast'
 import { shake, popIn } from '../../hooks/useFeedback'
 
@@ -97,59 +99,78 @@ export default function ListenAndCircle({ section, completed, score, onComplete 
         instructions={section.instructions}
         completed={completed}
         score={score}
-        footer={
-          <span className="flex items-center justify-between gap-2 text-[16px]">
-            <span>
-              {solved} of {items.length} correct
-            </span>
-            <span className="flex gap-1">
-              {items.map((_, i) => (
-                <span
-                  key={i}
-                  className={`h-2 w-7 rounded-full ${answers[i]?.ok ? 'bg-sage-ink' : 'bg-navy/12'}`}
-                />
-              ))}
-            </span>
-          </span>
-        }
       >
-        <ol ref={listRef} className="flex flex-col gap-3">
-          {items.map((item, qi) => (
-            <li
-              key={qi}
-              data-bubble
-              className="grid grid-cols-[48px_56px_1fr_1fr] items-center gap-5 rounded-2xl
-                border border-navy/10 bg-white px-5 py-3"
-            >
-              <span className="font-display text-[40px] leading-none text-coral-ink">{qi + 1}</span>
-              <AudioButton src={item.audio} label={`Listen to item ${qi + 1}`} size={52} />
-              {(item.options ?? []).map((opt, oi) => {
-                const state = answers[qi]
-                const chosen = state?.picked === oi
-                return (
-                  <button
-                    key={oi}
-                    ref={(el) => {
-                      nodes.current[`${qi}-${oi}`] = el
-                    }}
-                    type="button"
-                    disabled={!!state?.ok}
-                    onClick={() => pick(qi, oi)}
-                    className={`relative flex items-center gap-3 rounded-full border-2 px-5 py-2.5
-                      text-left font-body text-[21px] font-semibold text-navy transition-colors
-                      ${chosen && state.ok ? 'border-sage-ink/40 bg-tip' : 'border-navy/12 bg-paper'}
-                      ${!state?.ok ? 'hover:border-coral-ink/50' : ''}
-                      ${state?.ok && !chosen ? 'opacity-45' : ''}`}
-                  >
-                    <span className="font-display text-[22px] text-coral-ink">{LETTERS[oi]})</span>
-                    {opt}
-                    {chosen && <HandCircle key={`${qi}-${oi}-${state.ok}`} ok={state.ok} />}
-                  </button>
-                )
-              })}
-            </li>
-          ))}
-        </ol>
+        <div className="grid grid-cols-[1fr_440px] gap-10">
+          {/* Lista numerada: audio del ítem + opciones a / b en líneas separadas */}
+          <ol ref={listRef} className="flex flex-col gap-2.5">
+            {items.map((item, qi) => (
+              <li
+                key={qi}
+                data-bubble
+                className="grid grid-cols-[40px_52px_1fr] items-center gap-4 rounded-2xl border
+                  border-navy/10 bg-white px-5 py-2"
+              >
+                <span className="font-display text-[36px] leading-none text-coral-ink">{qi + 1}</span>
+                <AudioButton src={item.audio} label={`Listen to item ${qi + 1}`} size={46} />
+                <div className="flex flex-col items-start gap-1">
+                  {(item.options ?? []).map((opt, oi) => {
+                    const state = answers[qi]
+                    const chosen = state?.picked === oi
+                    return (
+                      <button
+                        key={oi}
+                        ref={(el) => {
+                          nodes.current[`${qi}-${oi}`] = el
+                        }}
+                        type="button"
+                        disabled={!!state?.ok}
+                        onClick={() => pick(qi, oi)}
+                        className={`relative flex items-center gap-3 rounded-full px-4 py-1 text-left
+                          font-body text-[21px] font-semibold text-navy transition-colors
+                          ${!state?.ok ? 'hover:bg-box' : ''}
+                          ${state?.ok && !chosen ? 'opacity-40' : ''}`}
+                      >
+                        <span className="font-display text-[22px] text-coral-ink">{LETTERS[oi]}</span>
+                        {opt}
+                        {chosen && <HandCircle key={`${qi}-${oi}-${state.ok}`} ok={state.ok} />}
+                      </button>
+                    )
+                  })}
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          {/* Reproductor general + progreso */}
+          <div className="flex flex-col gap-5">
+            {section.audio !== undefined && (
+              <AudioPlayer src={section.audio} label={section.audioLabel ?? 'Listening'} />
+            )}
+            <div className="rounded-2xl bg-box px-5 py-4 font-body text-[18px] text-ink-soft">
+              <p className="mb-2">
+                {solved} of {items.length} correct
+              </p>
+              <span className="flex gap-1.5">
+                {items.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-2.5 flex-1 rounded-full ${answers[i]?.ok ? 'bg-sage-ink' : 'bg-navy/12'}`}
+                  />
+                ))}
+              </span>
+            </div>
+            {section.illustration && (
+              <div className="min-h-0 flex-1">
+                <SmartImage
+                  src={section.illustration.src}
+                  alt={section.illustration.alt ?? ''}
+                  emoji={section.illustration.emoji ?? '🎧'}
+                  showPath={false}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </ExerciseBlock>
 
       <FeedbackToast message={toast?.msg} type={toast?.type} onHide={() => setToast(null)} />

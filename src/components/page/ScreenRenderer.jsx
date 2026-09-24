@@ -12,7 +12,7 @@ import VocabularyBox from '../content/VocabularyBox'
 import CulturalTip from '../content/CulturalTip'
 import Checklist from '../content/Checklist'
 import RoutineBlock from '../media/RoutineBlock'
-import GreetingsList from '../content/GreetingsList'
+import DayArc from '../content/DayArc'
 
 import MatchMarkers from '../activities/MatchMarkers'
 import MatchSlots from '../activities/MatchSlots'
@@ -28,7 +28,7 @@ import RouletteWheel from '../activities/RouletteWheel'
 import MultipleChoice from '../activities/MultipleChoice'
 import ExerciseBlock from '../activities/ExerciseBlock'
 import ListenAndCircle from '../activities/ListenAndCircle'
-import ExpressionCards from '../activities/ExpressionCards'
+import SpeechScene from '../activities/SpeechScene'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -45,7 +45,7 @@ const ACTIVITIES = {
   diceGame: DiceGame,
   roulette: RouletteWheel,
   listenCircle: ListenAndCircle,
-  expressions: ExpressionCards,
+  speechScene: SpeechScene,
   multipleChoice: ({ section, completed, score, onComplete }) => (
     <ExerciseBlock
       number={section.number}
@@ -65,7 +65,7 @@ function Block({ block }) {
   if (block.type === 'culturalTip') return <CulturalTip section={{ ...block, float: false }} />
   if (block.type === 'checklist') return <Checklist section={block} />
   if (block.type === 'routine') return <RoutineBlock section={block} />
-  if (block.type === 'greetings') return <GreetingsList block={block} />
+  if (block.type === 'dayArc') return <DayArc block={block} />
   if (block.type === 'text') {
     return <p className="font-body text-[19px] leading-relaxed text-ink">{block.text}</p>
   }

@@ -267,7 +267,7 @@ src/
 │   ├── book/     BookCover · ScreenThumb · LessonSpread · LessonCard
 │   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
-│   ├── content/  VocabularyBox · CulturalTip · Checklist · GreetingsList
+│   ├── content/  VocabularyBox · CulturalTip · Checklist · DayArc
 │   ├── activities/ ExerciseBlock · MatchActivity · MatchMarkers · MatchSlots ·
 │   │              MatchHeadings · MultipleChoice · FillBubbles ·
 │   │              FillInSentence · ListeningActivity · SpeakingPrompt ·
@@ -301,7 +301,7 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 12 pantallas, págs. 6 → 16)
+## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 14 pantallas, págs. 6 → 18)
 
 **⚠️ Contenido de Sharick. Títulos, diálogos y mecánicas exactos** (documento
 oficial de Sharick con referencias visuales de Express Publishing).
@@ -329,16 +329,22 @@ La ilustración `grupos-4-paises.png` muestra tres grupos: **1** trío conocién
 (→ B), **2** despedida (→ C), **3** pareja conociéndose (→ A). Los `markers`
 del JSON (x/y en %) posicionan las cajitas.
 
-### Lección 1.2 · **"Greeting people"** (6 pantallas)
+### Lección 1.2 · **"Greeting people"** (8 pantallas)
+
+Maquetadas según las referencias visuales que envió Sharick.
 
 | Pantalla | Pág | Contenido |
 |---|---|---|
-| 1.2-s1 | 11 | Vocabulary · Exercise 1 "Read, listen and repeat." Bloque `greetings`: Good morning / afternoon / evening / night, cada uno con 🎧 (`greet-*.mp3`); Good night con nota (+) "We use this when we go to sleep." · ilustración `greetings-day.png` |
-| 1.2-s2 | 12 | Exercise 2 "Look at the clock. Say the greeting." `fillBubbles` con `clock: "digital"` (LCD, `ui/DigitalClock`): **8:00 am · 1:30 pm · 9:45 pm · 10:11 pm** → morning / afternoon / evening / night · viñetas `clock-scene-1..4.png` |
-| 1.2-s3 | 13 | Listening · Exercise 3 "Listen and circle the correct answer." `listenCircle`: 5 ítems a/b con 🎧 (`listen-1..5.mp3`), la correcta siempre la **a** |
-| 1.2-s4 | 14 | Speaking · Exercise 4 "Look at the expressions. Choose and say to your classmate." `expressions`: 3 bloques (Greet people + Respond · Introduce yourself + Respond · Say goodbye), cada expresión con 🎧 (`expr-*.mp3`) |
-| 1.2-s5 | 15 | Exercise 5 **Roll and speak!** `diceGame` en modo categoría: 1-2 Say hi! · 3-4 Say goodbye! · 5-6 Introduce yourself! — **sin frases de ejemplo** (Sharick: son respuestas del estudiante). Dado al centro, `greeting-person.png` / `goodbye-person.png` a los lados |
-| 1.2-s6 | 16 | Can-do check (greet at any time of day · respond to greetings · introduce myself · say goodbye) + CULTURAL TIP "onces" en inglés |
+| 1.2-s1 | 11 | Vocabulary · Exercise 1 "Read, listen and repeat." Bloque `dayArc` (**`content/DayArc.jsx`**): paisaje SVG dibujado en código, cielo de día → noche de izquierda a derecha, montañas, sol saliendo / en lo alto / cayendo y luna con estrellas. Cada franja: arco con flecha + saludo sobre la curva (`textPath`) + rango (8AM - 12PM · 12PM - 6PM · 6PM - 12AM) + 🎧 (`greet-*.mp3`). Good night! lleva el badge (+) "We use this when we go to sleep." Entrada: los arcos se dibujan y los textos aparecen con stagger |
+| 1.2-s2 | 12 | Exercise 2 "Look at the clock. Say the greeting." `fillBubbles` con `clock: "digital"` → **`activities/ClockBubbles.jsx`**: 4 viñetas = reloj LCD (**8:00 AM · 1:30 PM · 9:45 PM · 10:11 PM** → morning / afternoon / evening / night) + personaje (`clock-scene-1..4.png`) + bocadillo numerado 1-4 + chips. `helper` = mini `DayArc compact` abajo a la izquierda |
+| 1.2-s3 | 13 | Listening · Exercise 3 "Listen and circle the correct answer." `listenCircle`: lista 1-5 a la izquierda (🎧 por ítem `listen-1..5.mp3`, a / b en líneas separadas, círculo a mano animado con Anime.js); `AudioPlayer` general (`listen-all.mp3`) + progreso + `listening-friends.png` a la derecha. La correcta siempre es la **a** |
+| 1.2-s4 | 14 | Speaking · Exercise 4 "Look at the expressions. Choose and say to your classmate." `speechScene` rosado: `speaking-greet.png` + bocadillos **Greet people** (Hi! How are you? · How's everything? · How's it going?) / **Respond** (Great. · I'm fine, (thanks). · I'm OK. · Not bad. · So-so.) |
+| 1.2-s5 | 15 | Exercise 4 · `speechScene` azul: `speaking-introduce.png` + **Introduce yourself** (Hi! I'm ... . · Hello! I'm ... .) / **Respond** (Nice to meet you. · It's a pleasure to meet you.) |
+| 1.2-s6 | 16 | Exercise 4 · `speechScene` amarillo: `speaking-goodbye.png` + UN bocadillo **Say goodbye** a 2 columnas (Goodbye. · Bye. · See you. \| See you later. · See you tomorrow. · Take care.) |
+| 1.2-s7 | 17 | Exercise 5 **Roll and speak!** `diceGame` en modo categoría: dado grande al centro, `greeting-person.png` a la izquierda y `goodbye-person.png` a la derecha; al caer, pestaña con 1-2 Say hi! · 3-4 Say goodbye! · 5-6 Introduce yourself! — **sin frases de ejemplo** |
+| 1.2-s8 | 18 | Can-do check (greet at any time of day · respond to greetings · introduce myself · say goodbye) + CULTURAL TIP "onces" en inglés |
+
+Cada frase de speaking lleva su 🎧 (`expr-*.mp3`, pedido explícito de Sharick).
 
 **Listening 1.2-s3 (texto EXACTO):** 1 "Hi, Julián! How's it going?" → I'm pretty good,
 thanks. · 2 "Goodbye, Carolina!" → Bye, take care! · 3 "Kevin, this is my friend, Ana."
@@ -401,9 +407,9 @@ y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
 | `match` | MatchActivity | Emparejar diálogo ↔ personas | todos los pares |
 | `matchMarkers` | MatchMarkers · **MatchSlots** (`style: "slots"`) | Diálogos ↔ grupos de la ilustración. Con `slots`: cajitas [1][ _ ] junto a cada grupo y fichas A/B/C arrastrables desde una bandeja | todos los pares |
 | `matchHeadings` | MatchHeadings | Títulos (píldoras `red` / `yellow` / `blue`) ↔ diálogos, con un slot gris sobre cada caja | todos los títulos |
-| `fillBubbles` | FillBubbles | Saludo según el reloj (analógico, o `clock: "digital"` + `columns` = rejilla con relojes LCD) | todas las burbujas |
-| `listenCircle` | ListenAndCircle | Ítems con 🎧 y opciones a/b; la elegida se rodea con un círculo a mano | todas correctas |
-| `expressions` | ExpressionCards | Bloques de expresiones con 🎧; tocar la frase = dicha | una de cada bloque |
+| `fillBubbles` | FillBubbles · **ClockBubbles** (`clock: "digital"`) | Saludo según el reloj. Analógico en lista, o viñetas con reloj LCD + bocadillo numerado + mini arco del día (`helper`) | todas las burbujas |
+| `listenCircle` | ListenAndCircle | Lista numerada con 🎧 por ítem y a / b en líneas separadas; la elegida se rodea con un círculo a mano (trazo SVG animado). `audio` = AudioPlayer general a la derecha | todas correctas |
+| `speechScene` | SpeechScene | Escena: ilustración sobre semicírculo de color (`tone`: pink / blue / yellow) y 1-2 bocadillos de habla (`bubbles`, `columns` para 2 columnas), cada frase con 🎧; tocar la frase = dicha | una frase de cada bocadillo |
 | `fillInSentence` | FillInSentence | Frases con hueco, input con línea | todas las frases |
 | `listening` | ListeningActivity | Audio + preguntas de opción múltiple | todas correctas |
 | `multipleChoice` | MultipleChoice | Preguntas sueltas de opción múltiple | todas correctas |
@@ -627,7 +633,7 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 ## 🚦 ESTADO
 
 - **HECHO:** setup, formato de pantalla completa, sistema editorial completo,
-  todas las actividades, contenido del Módulo 1 (12 pantallas), juegos por
+  todas las actividades, contenido del Módulo 1 (14 pantallas), juegos por
   módulo, Nivel 2 con miniaturas de doble página, Study Zone con login demo,
   6 temas del Módulo 1, quiz con candados, arcade y modo profe.
 - **PENDIENTE:** imágenes (Gemini), audios (mp3), módulos 2-4 (libro y Study),

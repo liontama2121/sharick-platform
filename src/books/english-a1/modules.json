@@ -455,10 +455,10 @@
           "screens": [
             {
               "id": "1.2-s1",
-              "title": "Vocabulary · Greetings of the day",
+              "title": "Vocabulary · The arc of the day",
               "pageNumber": 11,
               "section": "Vocabulary",
-              "layout": "two-columns",
+              "layout": "activity-full",
               "exercise": {
                 "number": 1,
                 "skill": "listen",
@@ -466,44 +466,32 @@
               },
               "blocks": [
                 {
-                  "type": "greetings",
-                  "id": "greetings-day",
-                  "label": "Vocabulary",
-                  "title": "Greetings of the day",
-                  "items": [
+                  "type": "dayArc",
+                  "id": "day-arc",
+                  "zones": [
                     {
-                      "time": "Morning",
-                      "greeting": "Good morning",
-                      "emoji": "🌅",
+                      "greeting": "Good morning!",
+                      "range": "8AM - 12PM",
                       "audio": "/audio/english/module1/greet-morning.mp3"
                     },
                     {
-                      "time": "Afternoon",
-                      "greeting": "Good afternoon",
-                      "emoji": "☀️",
+                      "greeting": "Good afternoon!",
+                      "range": "12PM - 6PM",
                       "audio": "/audio/english/module1/greet-afternoon.mp3"
                     },
                     {
-                      "time": "Evening",
-                      "greeting": "Good evening",
-                      "emoji": "🌆",
+                      "greeting": "Good evening!",
+                      "range": "6PM - 12AM",
                       "audio": "/audio/english/module1/greet-evening.mp3"
                     },
                     {
-                      "time": "Bedtime",
-                      "greeting": "Good night",
-                      "emoji": "🌙",
+                      "greeting": "Good night!",
                       "audio": "/audio/english/module1/greet-night.mp3",
                       "note": "We use this when we go to sleep."
                     }
                   ]
                 }
-              ],
-              "illustration": {
-                "src": "/images/english/module1/greetings-day.png",
-                "alt": "A day from morning to night",
-                "emoji": "🌤️"
-              }
+              ]
             },
             {
               "id": "1.2-s2",
@@ -522,7 +510,6 @@
                 "id": "fillBubbles",
                 "number": 2,
                 "clock": "digital",
-                "columns": 4,
                 "options": [
                   "Good morning",
                   "Good afternoon",
@@ -533,32 +520,52 @@
                   {
                     "clockTime": "08:00",
                     "scene": "/images/english/module1/clock-scene-1.png",
-                    "sceneLabel": "People greeting each other in the morning",
+                    "sceneLabel": "A person saying hi in the morning",
                     "emoji": "🌅",
                     "answer": "Good morning"
                   },
                   {
                     "clockTime": "13:30",
                     "scene": "/images/english/module1/clock-scene-2.png",
-                    "sceneLabel": "People greeting each other in the afternoon",
+                    "sceneLabel": "A person saying hi in the afternoon",
                     "emoji": "☀️",
                     "answer": "Good afternoon"
                   },
                   {
                     "clockTime": "21:45",
                     "scene": "/images/english/module1/clock-scene-3.png",
-                    "sceneLabel": "People greeting each other in the evening",
+                    "sceneLabel": "A person saying hi in the evening",
                     "emoji": "🌆",
                     "answer": "Good evening"
                   },
                   {
                     "clockTime": "22:11",
                     "scene": "/images/english/module1/clock-scene-4.png",
-                    "sceneLabel": "Someone going to sleep",
+                    "sceneLabel": "A person going to sleep",
                     "emoji": "🌙",
                     "answer": "Good night"
                   }
-                ]
+                ],
+                "helper": {
+                  "id": "day-arc-mini",
+                  "zones": [
+                    {
+                      "greeting": "Good morning!",
+                      "range": "8AM - 12PM"
+                    },
+                    {
+                      "greeting": "Good afternoon!",
+                      "range": "12PM - 6PM"
+                    },
+                    {
+                      "greeting": "Good evening!",
+                      "range": "6PM - 12AM"
+                    },
+                    {
+                      "greeting": "Good night!"
+                    }
+                  ]
+                }
               }
             },
             {
@@ -623,12 +630,19 @@
                     ],
                     "correct": 0
                   }
-                ]
+                ],
+                "audio": "/audio/english/module1/listen-all.mp3",
+                "audioLabel": "Listening 1-5",
+                "illustration": {
+                  "src": "/images/english/module1/listening-friends.png",
+                  "alt": "Friends greeting each other",
+                  "emoji": "🎧"
+                }
               }
             },
             {
               "id": "1.2-s4",
-              "title": "Speaking · Expressions",
+              "title": "Speaking · Greet people",
               "pageNumber": 14,
               "section": "Speaking",
               "layout": "activity-full",
@@ -639,118 +653,176 @@
               },
               "activity": {
                 "type": "activity",
-                "activity": "expressions",
-                "id": "expressions",
-                "number": 4,
-                "blocks": [
+                "activity": "speechScene",
+                "id": "scene-greet",
+                "tone": "pink",
+                "image": {
+                  "src": "/images/english/module1/speaking-greet.png",
+                  "alt": "Two friends giving a high five",
+                  "emoji": "🙌"
+                },
+                "bubbles": [
                   {
-                    "groups": [
+                    "label": "Greet people",
+                    "items": [
                       {
-                        "label": "Greet people",
-                        "items": [
-                          {
-                            "text": "Hi! How are you?",
-                            "audio": "/audio/english/module1/expr-how-are-you.mp3"
-                          },
-                          {
-                            "text": "How's it going?",
-                            "audio": "/audio/english/module1/expr-hows-it-going.mp3"
-                          },
-                          {
-                            "text": "How's everything?",
-                            "audio": "/audio/english/module1/expr-hows-everything.mp3"
-                          }
-                        ]
+                        "text": "Hi! How are you?",
+                        "audio": "/audio/english/module1/expr-hi-how-are-you.mp3"
                       },
                       {
-                        "label": "Respond",
-                        "items": [
-                          {
-                            "text": "I'm good, thanks.",
-                            "audio": "/audio/english/module1/expr-im-good.mp3"
-                          },
-                          {
-                            "text": "I'm fine, thanks.",
-                            "audio": "/audio/english/module1/expr-im-fine.mp3"
-                          },
-                          {
-                            "text": "Great, thanks!",
-                            "audio": "/audio/english/module1/expr-great-thanks.mp3"
-                          },
-                          {
-                            "text": "Not bad.",
-                            "audio": "/audio/english/module1/expr-not-bad.mp3"
-                          },
-                          {
-                            "text": "So-so.",
-                            "audio": "/audio/english/module1/expr-so-so.mp3"
-                          }
-                        ]
+                        "text": "How's everything?",
+                        "audio": "/audio/english/module1/expr-hows-everything.mp3"
+                      },
+                      {
+                        "text": "How's it going?",
+                        "audio": "/audio/english/module1/expr-hows-it-going.mp3"
                       }
                     ]
                   },
                   {
-                    "groups": [
+                    "label": "Respond",
+                    "items": [
                       {
-                        "label": "Introduce yourself",
-                        "items": [
-                          {
-                            "text": "Hey! I'm ... .",
-                            "audio": "/audio/english/module1/expr-hey-im.mp3"
-                          },
-                          {
-                            "text": "Hello! I'm ... .",
-                            "audio": "/audio/english/module1/expr-hello-im.mp3"
-                          }
-                        ]
+                        "text": "Great.",
+                        "audio": "/audio/english/module1/expr-great.mp3"
                       },
                       {
-                        "label": "Respond",
-                        "items": [
-                          {
-                            "text": "Nice to meet you.",
-                            "audio": "/audio/english/module1/expr-nice-to-meet-you.mp3"
-                          },
-                          {
-                            "text": "It's a pleasure to meet you.",
-                            "audio": "/audio/english/module1/expr-pleasure.mp3"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "groups": [
+                        "text": "I'm fine, (thanks).",
+                        "audio": "/audio/english/module1/expr-im-fine.mp3"
+                      },
                       {
-                        "label": "Say goodbye",
-                        "items": [
-                          {
-                            "text": "Bye!",
-                            "audio": "/audio/english/module1/expr-bye.mp3"
-                          },
-                          {
-                            "text": "See you later!",
-                            "audio": "/audio/english/module1/expr-see-you-later.mp3"
-                          },
-                          {
-                            "text": "Take care!",
-                            "audio": "/audio/english/module1/expr-take-care.mp3"
-                          },
-                          {
-                            "text": "See you soon!",
-                            "audio": "/audio/english/module1/expr-see-you-soon.mp3"
-                          }
-                        ]
+                        "text": "I'm OK.",
+                        "audio": "/audio/english/module1/expr-im-ok.mp3"
+                      },
+                      {
+                        "text": "Not bad.",
+                        "audio": "/audio/english/module1/expr-not-bad.mp3"
+                      },
+                      {
+                        "text": "So-so.",
+                        "audio": "/audio/english/module1/expr-so-so.mp3"
                       }
                     ]
                   }
-                ]
+                ],
+                "number": 4
               }
             },
             {
               "id": "1.2-s5",
-              "title": "Roll and speak!",
+              "title": "Speaking · Introduce yourself",
               "pageNumber": 15,
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 4,
+                "skill": "speak",
+                "instruction": "Look at the expressions. Choose and say to your classmate."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "speechScene",
+                "id": "scene-introduce",
+                "tone": "blue",
+                "image": {
+                  "src": "/images/english/module1/speaking-introduce.png",
+                  "alt": "Two people meeting each other",
+                  "emoji": "🤝"
+                },
+                "bubbles": [
+                  {
+                    "label": "Introduce yourself",
+                    "items": [
+                      {
+                        "text": "Hi! I'm ... .",
+                        "audio": "/audio/english/module1/expr-hi-im.mp3"
+                      },
+                      {
+                        "text": "Hello! I'm ... .",
+                        "audio": "/audio/english/module1/expr-hello-im.mp3"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Respond",
+                    "items": [
+                      {
+                        "text": "Nice to meet you.",
+                        "audio": "/audio/english/module1/expr-nice-to-meet-you.mp3"
+                      },
+                      {
+                        "text": "It's a pleasure to meet you.",
+                        "audio": "/audio/english/module1/expr-pleasure.mp3"
+                      }
+                    ]
+                  }
+                ],
+                "number": 4
+              }
+            },
+            {
+              "id": "1.2-s6",
+              "title": "Speaking · Say goodbye",
+              "pageNumber": 16,
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 4,
+                "skill": "speak",
+                "instruction": "Look at the expressions. Choose and say to your classmate."
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "speechScene",
+                "id": "scene-goodbye",
+                "tone": "yellow",
+                "image": {
+                  "src": "/images/english/module1/speaking-goodbye.png",
+                  "alt": "A person saying goodbye",
+                  "emoji": "👋"
+                },
+                "bubbles": [
+                  {
+                    "label": "Say goodbye",
+                    "columns": [
+                      [
+                        {
+                          "text": "Goodbye.",
+                          "audio": "/audio/english/module1/expr-goodbye.mp3"
+                        },
+                        {
+                          "text": "Bye.",
+                          "audio": "/audio/english/module1/expr-bye.mp3"
+                        },
+                        {
+                          "text": "See you.",
+                          "audio": "/audio/english/module1/expr-see-you.mp3"
+                        }
+                      ],
+                      [
+                        {
+                          "text": "See you later.",
+                          "audio": "/audio/english/module1/expr-see-you-later.mp3"
+                        },
+                        {
+                          "text": "See you tomorrow.",
+                          "audio": "/audio/english/module1/expr-see-you-tomorrow.mp3"
+                        },
+                        {
+                          "text": "Take care.",
+                          "audio": "/audio/english/module1/expr-take-care.mp3"
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "number": 4
+              }
+            },
+            {
+              "id": "1.2-s7",
+              "title": "Roll and speak!",
+              "pageNumber": 17,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
@@ -790,9 +862,9 @@
               }
             },
             {
-              "id": "1.2-s6",
+              "id": "1.2-s8",
               "title": "Can-do check",
-              "pageNumber": 16,
+              "pageNumber": 18,
               "section": "Review",
               "layout": "two-columns",
               "exercise": {

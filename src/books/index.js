@@ -139,7 +139,7 @@ const ACTIVITY_BADGE = {
   multipleChoice: 'written',
   listening: 'audio',
   listenCircle: 'audio',
-  expressions: 'speaking',
+  speechScene: 'speaking',
   speaking: 'speaking',
   recordPrompt: 'speaking',
   diceGame: 'game',
@@ -151,8 +151,9 @@ export function screenBadges(screen) {
   const set = new Set()
   if (screen?.audio !== undefined || screen?.audioTracks?.length) set.add('audio')
   if ((screen?.dialogues ?? []).some((d) => d.audio)) set.add('audio')
-  // Bloques con audio por frase (p. ej. los saludos con audífono de la 1.2)
-  if ((screen?.blocks ?? []).some((b) => (b.items ?? []).some((it) => it?.audio))) set.add('audio')
+  // Bloques con audio por frase (p. ej. el arco del día de la 1.2)
+  if ((screen?.blocks ?? []).some((b) => [...(b.items ?? []), ...(b.zones ?? [])].some((it) => it?.audio)))
+    set.add('audio')
   if (screen?.video) set.add('video')
   const badge = ACTIVITY_BADGE[screen?.activity?.activity]
   if (badge) set.add(badge)

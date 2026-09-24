@@ -132,14 +132,14 @@ export default function DiceGame({ section, completed, score, onComplete }) {
           completed={completed}
           score={score}
         >
-          <div className="grid grid-cols-[1fr_440px_1fr] items-stretch gap-8">
+          <div className="grid grid-cols-[1fr_480px_1fr] items-stretch gap-8">
             <div className="h-[470px]">
               <SmartImage src={side.left?.src} alt={side.left?.alt ?? ''} emoji={side.left?.emoji ?? '👋'} showPath={false} />
             </div>
 
-            <div className="flex flex-col items-center gap-5 pt-2">
+            <div className="flex flex-col items-center gap-4">
               <div ref={diceRef}>
-                <Dice value={value} size={170} />
+                <Dice value={value} size={220} />
               </div>
               <Button onClick={roll} disabled={rolling} size="lg">
                 {rolling ? 'Rolling…' : '🎲 Roll the dice!'}
@@ -167,17 +167,17 @@ export default function DiceGame({ section, completed, score, onComplete }) {
               </div>
 
               {/* Número → consigna, y cuáles ya salieron */}
-              <ul className="flex w-full flex-col gap-2">
+              <ul className="flex justify-center gap-2">
                 {rangeKeys.map((k, i) => (
                   <li
                     key={k}
-                    className={`flex items-center justify-between rounded-full border px-4 py-1.5
-                      font-body text-[18px] font-semibold
+                    className={`flex items-center gap-2 whitespace-nowrap rounded-full border py-1 pl-1 pr-3
+                      font-body text-[15px] font-semibold
                       ${seen.includes(k) ? 'border-sage-ink/50 bg-tip text-sage-ink' : 'border-navy/12 bg-white text-navy'}`}
                   >
-                    <span className="flex items-center gap-3">
+                    <span className="flex items-center gap-2">
                       <span
-                        className={`rounded-full px-2.5 py-0.5 text-[15px] font-bold text-white
+                        className={`rounded-full px-2 py-0.5 text-[14px] font-bold text-white
                           ${TAB_TONES[i % TAB_TONES.length]}`}
                       >
                         {k}
