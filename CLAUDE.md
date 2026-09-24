@@ -232,7 +232,7 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   speaking · video: 🔊 (`screen.audio` / `audioTracks`, diálogos o bloques con audio,
   `listening`, `listenCircle`) · ✏️ (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`,
   `fillInSentence`, `multipleChoice`) · 🎮 (`diceGame`, `roulette`) · 🎙️
-  (`speaking`, `recordPrompt`) · 🎬 video.
+  (`speaking`, `recordPrompt`, `speechScene`) · 🎬 video.
 - **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
   3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
   utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
