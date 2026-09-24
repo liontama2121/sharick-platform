@@ -61,8 +61,9 @@ export default function AudioButton({ src, label = 'Listen', size = 44, tone = '
       a.currentTime = 0
       await a.play()
       setPlaying(true)
-    } catch {
-      setFailed(true)
+    } catch (err) {
+      // Bloqueo de autoplay o pausa a mitad de carga: el archivo sí existe
+      if (err?.name !== 'NotAllowedError' && err?.name !== 'AbortError') setFailed(true)
     }
   }
 
