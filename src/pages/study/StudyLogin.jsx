@@ -51,7 +51,7 @@ export default function StudyLogin() {
       <div
         ref={cardRef}
         className="relative w-full max-w-md overflow-hidden rounded-[20px] border-[3px] border-coral-ink/70
-          bg-paper px-8 pb-8 pt-10 shadow-page"
+          paper px-8 pb-8 pt-10 shadow-page"
       >
         <TropicalFlower variant="leaves" size={120} className="absolute -right-6 -top-4 opacity-30" />
         <TropicalFlower variant="heliconia" size={110} flip className="absolute -left-6 bottom-2 opacity-25" />

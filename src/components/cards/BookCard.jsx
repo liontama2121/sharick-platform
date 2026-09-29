@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { hoverFloat } from '../../hooks/useFeedback'
 import Swirl from '../decor/Swirl'
+import Textile from '../decor/Textile'
 import TropicalFlower from '../decor/TropicalFlower'
 
 /** Card de libro en el Home. La portada conserva el tricolor de Colombia. */
@@ -15,11 +16,11 @@ export default function BookCard({ book }) {
       onMouseEnter={() => available && hoverFloat(ref.current, true)}
       onMouseLeave={() => available && hoverFloat(ref.current, false)}
       className={`flex h-full flex-col overflow-hidden rounded-2xl border border-navy/10
-        bg-white shadow-soft ${available ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}
+        paper shadow-soft ${available ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}
     >
       <div
         className={`relative flex h-32 items-center justify-center overflow-hidden
-          ${available ? 'bg-navy' : 'bg-ink-soft/40'}`}
+          ${available ? 'grain bg-navy' : 'bg-ink-soft/40'}`}
       >
         {available && (
           <>
@@ -32,6 +33,7 @@ export default function BookCard({ book }) {
               size={96}
               className="absolute -left-2 bottom-0 opacity-45"
             />
+            <Textile variant="mola" height={12} className="absolute inset-x-0 bottom-0 h-3 w-full" />
           </>
         )}
         <span className="font-display text-2xl text-white">{book.level ?? 'A1'}</span>

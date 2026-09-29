@@ -2,7 +2,7 @@
 export default function PageFrame({ pageNumber, children }) {
   return (
     <div className="relative h-full w-full p-3">
-      <div className="relative h-full w-full rounded-[20px] border-[3px] border-coral-ink/70 bg-paper">
+      <div className="relative h-full w-full rounded-[20px] border-[3px] border-coral-ink/70 paper">
         {children}
 
         {pageNumber != null && (

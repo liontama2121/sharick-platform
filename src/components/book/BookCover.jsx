@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import Swirl from '../decor/Swirl'
+import Textile from '../decor/Textile'
 import TropicalFlower from '../decor/TropicalFlower'
 
 /**
@@ -9,7 +10,7 @@ import TropicalFlower from '../decor/TropicalFlower'
 const BookCover = forwardRef(function BookCover({ meta, content }, ref) {
   return (
     <div ref={ref} className="h-full w-full" data-density="hard">
-      <div className="relative flex h-full flex-col items-center justify-center overflow-hidden bg-navy px-8 text-center">
+      <div className="grain relative flex h-full flex-col items-center justify-center overflow-hidden bg-navy px-12 text-center">
         <div
           aria-hidden="true"
           className="absolute inset-x-0 top-0 h-2.5 bg-gradient-to-r from-[#003DA5] via-[#FFD100] to-[#CE1126]"
@@ -18,6 +19,10 @@ const BookCover = forwardRef(function BookCover({ meta, content }, ref) {
           aria-hidden="true"
           className="absolute inset-x-0 bottom-0 h-2.5 bg-gradient-to-r from-[#CE1126] via-[#FFD100] to-[#003DA5]"
         />
+        {/* Lomo tejido: banda wayuu a lo largo del borde izquierdo */}
+        <div aria-hidden="true" className="absolute bottom-2.5 left-0 top-2.5 w-[18px]">
+          <Textile variant="wayuu" scale={0.75} className="h-full w-full" />
+        </div>
         <TropicalFlower
           variant="heliconia"
           size={150}

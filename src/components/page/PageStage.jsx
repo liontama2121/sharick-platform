@@ -25,7 +25,7 @@ export default function PageStage({ children }) {
   }, [])
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center overflow-hidden bg-paper">
+    <div className="fixed inset-0 flex items-center justify-center overflow-hidden manta">
       <div
         style={{
           width: STAGE_W,

@@ -1,25 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 
-import { books } from '../books'
+import { books, countries } from '../books'
 import BookCard from '../components/cards/BookCard'
+import Stitches from '../components/decor/Stitches'
 import Swirl from '../components/decor/Swirl'
+import Textile from '../components/decor/Textile'
 import TropicalFlower from '../components/decor/TropicalFlower'
 import Button from '../components/ui/Button'
 import { usePageAnimation } from '../hooks/usePageAnimation'
 import { useSession } from '../hooks/useSession'
 import { S } from '../study/strings'
-
-/* Cuadritos pixel del banner de la Study Zone. */
-const PIXELS = [
-  { x: 0, y: 0, s: 18 },
-  { x: 22, y: 6, s: 12 },
-  { x: 4, y: 24, s: 12 },
-  { x: 24, y: 26, s: 18 },
-  { x: 46, y: 14, s: 10 },
-  { x: 0, y: 46, s: 10 },
-  { x: 18, y: 52, s: 14 },
-  { x: 44, y: 44, s: 12 },
-]
 
 export default function Home() {
   const ref = usePageAnimation('home')
@@ -30,16 +20,36 @@ export default function Home() {
   return (
     <div ref={ref} className="mx-auto w-full max-w-4xl px-5 py-8 sm:px-8 sm:py-10">
       <section data-anim className="mb-10 text-center">
-        <p className="label-caps text-coral-ink">Profesora Sharick Prieto</p>
-        <h1 className="mt-2">Libros interactivos de idiomas</h1>
+        <h1 className="text-balance">Libros interactivos de idiomas</h1>
         <div className="mt-2 flex justify-center">
           <Swirl width={128} />
         </div>
         <p className="mx-auto mt-3 max-w-xl text-[0.95rem] leading-relaxed text-ink-soft">
           Elige tu libro y empieza a aprender. Cada lección mezcla lectura, audio,
-          juegos y práctica oral con la cultura colombiana como protagonista.
+          juegos y práctica oral, con América Latina como escenario.
+        </p>
+        <p className="mt-2 font-display text-[0.98rem] italic text-coral-ink">
+          por la profesora Sharick Prieto
         </p>
       </section>
+
+      {/* Muestrario: un textil por cada país del libro */}
+      {countries.length > 0 && (
+        <section data-anim aria-label="Países del libro" className="mb-12">
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-4">
+            {countries.map((c) => (
+              <li key={c.name}>
+                <div className="overflow-hidden rounded-xl shadow-soft ring-1 ring-navy/10">
+                  <Textile variant={c.textile} scale={1.5} className="h-20 w-full" />
+                </div>
+                <h2 className="mt-3 font-display text-[1.15rem] leading-tight text-navy">{c.name}</h2>
+                <p className="mt-0.5 text-[0.8rem] leading-snug text-ink-soft">{c.places}</p>
+                <p className="mt-1 text-[0.76rem] italic text-sage-ink">{c.craft}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section data-anim>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,22 +62,10 @@ export default function Home() {
       {/* Study Zone: práctica por temas con progresión bloqueada */}
       <section
         data-anim
-        className="relative mt-10 overflow-hidden rounded-2xl bg-navy px-7 py-8 text-white shadow-lift sm:px-10"
+        className="grain relative mt-10 overflow-hidden rounded-2xl bg-navy px-7 pb-10 pt-8 text-white shadow-lift sm:px-10"
       >
-        <svg width="60" height="70" viewBox="0 0 60 70" aria-hidden="true" className="absolute left-3 top-4">
-          {PIXELS.map((p, i) => (
-            <rect
-              key={i}
-              x={p.x}
-              y={p.y}
-              width={p.s}
-              height={p.s}
-              rx="3"
-              fill={i % 3 === 1 ? 'var(--color-gold)' : '#ffffff'}
-              opacity={i % 3 === 1 ? 0.85 : 0.16}
-            />
-          ))}
-        </svg>
+        <Textile variant="aguayo" height={12} className="absolute inset-x-0 bottom-0 h-3 w-full" />
+        <Stitches tone="light" cell={7} className="absolute left-4 top-5" />
         <Swirl width={150} className="absolute right-8 top-5 opacity-50" />
         <TropicalFlower variant="leaves" size={150} flip className="absolute -bottom-8 -right-6 opacity-30" />
 
@@ -95,7 +93,7 @@ export default function Home() {
 
       <section
         data-anim
-        className="mt-10 rounded-2xl bg-tip px-6 py-5 text-center"
+        className="grain mt-10 rounded-2xl bg-tip px-6 py-5 text-center"
       >
         <p className="font-display text-[1.05rem] text-navy">
           Tu progreso se guarda solo en este dispositivo

@@ -15,6 +15,7 @@ const GAMES = {
 }
 
 export const books = registry.books
+export const countries = registry.countries ?? []
 
 export function getBookMeta(bookId) {
   return books.find((b) => b.id === bookId) ?? null

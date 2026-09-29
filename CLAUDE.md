@@ -112,9 +112,9 @@ Anatomía (todo en `src/components/page/`):
 |---|---|
 | `PageStage` | lienzo 1600x1000 escalado al viewport |
 | `PageFrame` | marco coral de 3px, radio 20px, número de página en círculo |
-| `LessonTag` | [1.1] coral + [título corto] navy, con cuadritos pixel art |
+| `LessonTag` | [1.1] coral + [título corto] navy, con puntadas de tejido |
 | `CloseButton` | círculo coral de 64px con borde blanco → Nivel 2 |
-| `SectionHeading` | "Reading" / "Listening"… en Playfair coral con subrayado dorado |
+| `SectionHeading` | "Reading" / "Listening"… en Playfair coral con cinta tejida wayuu |
 | `ExerciseInstruction` | número grande coral + icono de habilidad + instrucción |
 | `DialogueBubble` | caja de color con la letra fuera; nombres en columna propia |
 | `IllustrationWithMarkers` | ilustración + marcadores numerados por % |
@@ -132,6 +132,28 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 `Swirl` (floritura ~ dorada) · `Leaf` (hojita de los labels) ·
 `TropicalFlower` (variantes `bird` / `heliconia` / `leaves`) ·
 `WaterWave` (onda inferior) · `SunBurst` (solecito del Cultural Tip)
+
+### Identidad latinoamericana: papel y tejido
+El libro es de inglés, pero su **estilo es latino**. Dos capas materiales:
+- **Texturas** (`global.css`, `:root`): `--tex-grain` (grano + fibra de papel
+  artesanal, SVG feTurbulence) y `--tex-manta` (trama de tela). Utilidades:
+  `.paper` (hoja con grano), `.grain` (grano sobre el color que ya tenga el
+  elemento: `bg-navy`, `bg-box`…), `.manta` (fondo de "mesa" del lienzo).
+  El `body` lleva manta.
+- **Textiles** (`decor/Textile.jsx`): un motivo por país, inspiración
+  geométrica — `vueltiao` (Colombia), `wayuu` (Venezuela · La Guajira),
+  `aguayo` (Bolivia), `mola` (Panamá). `<Textile variant height|scale className>`
+  rellena su caja; con `height` ajusta una vuelta del motivo a esa altura (bandas).
+  Hilos extra DECORATIVOS: `--color-bugambilia #C2376A` y `--color-turquesa #23857F`
+  (nunca texto).
+- **Puntadas** (`decor/Stitches.jsx`): rombo escalonado kanaa hecho de
+  cuadritos, tonos `warm` / `light` / `textile`. **Sustituye a todos los
+  "cuadritos pixel"** (tags del Nivel 2, LessonTag, banners de módulo y Study).
+- Dónde va el tejido: muestrario de países en Home (datos en
+  `registry.json → countries`), dobladillo wayuu del banner del módulo,
+  aguayo en Study Zone / StudyShell, mola en la tarjeta del libro, lomo wayuu
+  en la portada y cinta wayuu bajo `SectionHeading`. Dentro de las páginas
+  del libro solo cinta y puntadas: la hoja sigue siendo tranquila.
 
 ---
 

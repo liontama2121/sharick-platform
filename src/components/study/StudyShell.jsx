@@ -6,19 +6,9 @@ import { logout } from '../../services/authService'
 import { useSession } from '../../hooks/useSession'
 import { useLevelIntro } from '../../hooks/useLevelIntro'
 import RoundButton from '../nav/RoundButton'
+import Stitches from '../decor/Stitches'
 import Swirl from '../decor/Swirl'
-
-/* Cuadritos pixel del banner navy. */
-const PIXELS = [
-  { x: 0, y: 0, s: 22 },
-  { x: 26, y: 8, s: 14 },
-  { x: 6, y: 30, s: 16 },
-  { x: 30, y: 34, s: 22 },
-  { x: 0, y: 58, s: 12 },
-  { x: 22, y: 64, s: 18 },
-  { x: 48, y: 22, s: 12 },
-  { x: 50, y: 54, s: 14 },
-]
+import Textile from '../decor/Textile'
 
 /**
  * Marco de la Study Zone: borde coral como las páginas, banner navy con
@@ -39,28 +29,16 @@ export default function StudyShell({ bookId = 'english-a1', title, subtitle, chi
     <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
       <div
         className="relative mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[1280px] rounded-[20px]
-          border-[3px] border-coral-ink/70 bg-paper pb-20"
+          border-[3px] border-coral-ink/70 paper pb-20 shadow-page"
       >
         {/* Banner navy */}
         <div
           className="relative -ml-[3px] -mt-[3px] flex flex-wrap items-end justify-between gap-4
-            overflow-hidden rounded-br-[64px] rounded-tl-[20px] bg-navy py-7 pl-8 pr-8 text-white
+            overflow-hidden rounded-br-[64px] rounded-tl-[20px] bg-navy grain py-7 pl-8 pr-8 text-white
             shadow-lift sm:pr-36"
         >
-          <svg width="64" height="86" viewBox="0 0 64 86" aria-hidden="true" className="absolute -left-1 top-1/2 -translate-y-1/2">
-            {PIXELS.map((p, i) => (
-              <rect
-                key={i}
-                x={p.x}
-                y={p.y}
-                width={p.s}
-                height={p.s}
-                rx="3"
-                fill={i % 3 === 1 ? 'var(--color-gold)' : '#ffffff'}
-                opacity={i % 3 === 1 ? 0.85 : 0.18}
-              />
-            ))}
-          </svg>
+          <Stitches tone="light" cell={7} className="absolute left-1 top-1/2 -translate-y-1/2" />
+          <Textile variant="aguayo" height={10} className="absolute inset-x-0 bottom-0 h-2.5 w-full" />
           <Swirl width={140} className="absolute right-6 top-3 opacity-40" />
 
           <div className="relative ml-14 min-w-0">

@@ -1,6 +1,7 @@
 import { animate } from 'animejs'
 import { Check, Gamepad2, Mic, PenLine, Video, Volume2 } from 'lucide-react'
 
+import Stitches from '../decor/Stitches'
 import LessonSpread from './LessonSpread'
 
 const reduced = () =>
@@ -14,16 +15,6 @@ const BADGES = {
   written: { Icon: PenLine, label: 'Ejercicio escrito' },
   speaking: { Icon: Mic, label: 'Speaking' },
 }
-
-/* Cuadritos pixel que salen del tag hacia arriba-izquierda. */
-const TAG_PIXELS = [
-  { x: 0, y: 0, s: 14, c: 'var(--color-coral)' },
-  { x: 18, y: 6, s: 10, c: 'var(--color-gold)' },
-  { x: 32, y: 0, s: 12, c: 'var(--color-coral)' },
-  { x: 6, y: 20, s: 10, c: 'var(--color-gold)' },
-  { x: 24, y: 22, s: 14, c: 'var(--color-coral)' },
-  { x: 44, y: 16, s: 10, c: 'var(--color-gold)' },
-]
 
 /** Anillo de progreso de 24px pegado a la esquina del tag; al 100 % es un ✓. */
 function ProgressRing({ done, total }) {
@@ -131,20 +122,8 @@ export default function LessonCard({
           ${current ? 'border-coral-ink ring-2 ring-coral-ink/40' : 'border-[#cfc3a9]'}`}
       />
 
-      {/* Cuadritos pixel detrás del tag */}
-      {!compact && (
-        <svg
-          width="56"
-          height="38"
-          viewBox="0 0 56 38"
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-7 -top-9"
-        >
-          {TAG_PIXELS.map((p, i) => (
-            <rect key={i} x={p.x} y={p.y} width={p.s} height={p.s} rx="2" fill={p.c} opacity=".9" />
-          ))}
-        </svg>
-      )}
+      {/* Puntadas de tejido detrás del tag */}
+      {!compact && <Stitches cell={5} className="absolute -left-8 -top-10" />}
 
       {/* Tag sobresaliente: número de lección grande (★ en la portada) */}
       <span

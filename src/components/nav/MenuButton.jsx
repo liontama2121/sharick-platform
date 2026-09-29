@@ -40,14 +40,14 @@ export default function MenuButton({
       onFocus={() => hover(true)}
       onBlur={() => hover(false)}
       aria-disabled={!available}
-      className={`flex w-full items-center gap-4 overflow-hidden rounded-xl bg-box
+      className={`flex w-full items-center gap-4 overflow-hidden rounded-xl bg-box grain
         text-left transition-shadow
         ${available ? 'shadow-soft hover:shadow-lift' : 'opacity-55 shadow-none'}`}
       style={{ minHeight: 90 }}
     >
       <span
         className={`flex h-[90px] w-[74px] shrink-0 items-center justify-center
-          font-display text-2xl font-bold text-white ${badgeTone}`}
+          font-display text-2xl font-bold text-white grain ${badgeTone}`}
       >
         {badge}
       </span>

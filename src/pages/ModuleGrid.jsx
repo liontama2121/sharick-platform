@@ -16,25 +16,13 @@ import { useLevelIntro } from '../hooks/useLevelIntro'
 import { useProgress } from '../hooks/useProgress'
 import LessonCard from '../components/book/LessonCard'
 import RoundButton from '../components/nav/RoundButton'
+import Stitches from '../components/decor/Stitches'
+import Textile from '../components/decor/Textile'
 import CloseButton from '../components/page/CloseButton'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-
-/* Patrón de cuadritos del banner, saliendo del lado izquierdo. */
-const BANNER_PIXELS = [
-  { x: 0, y: 0, s: 26 },
-  { x: 30, y: 8, s: 18 },
-  { x: 6, y: 34, s: 20 },
-  { x: 34, y: 38, s: 26 },
-  { x: 0, y: 64, s: 16 },
-  { x: 24, y: 72, s: 22 },
-  { x: 54, y: 24, s: 14 },
-  { x: 56, y: 60, s: 18 },
-  { x: 12, y: 96, s: 22 },
-  { x: 42, y: 102, s: 14 },
-]
 
 /**
  * NIVEL 2 — rejilla del módulo con UNA MINIATURA POR LECCIÓN: portada (★) y
@@ -162,7 +150,7 @@ export default function ModuleGrid() {
       {/* Marco general, como el de las páginas del libro */}
       <div
         className="relative mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[1480px]
-          rounded-[20px] border-[3px] border-coral-ink/70 bg-paper pb-24 3xl:max-w-[1820px]"
+          rounded-[20px] border-[3px] border-coral-ink/70 paper pb-24 shadow-page 3xl:max-w-[1820px]"
       >
         {/* Banner del módulo: rojo, "Module N" en Playfair, cuadritos a la izquierda */}
         <div
@@ -171,29 +159,11 @@ export default function ModuleGrid() {
             shadow-lift"
           style={{
             background:
-              'linear-gradient(100deg, var(--color-coral-ink) 0%, var(--color-coral) 100%)',
+              'var(--tex-grain), linear-gradient(100deg, var(--color-coral-ink) 0%, var(--color-coral) 100%)',
           }}
         >
-          <svg
-            width="72"
-            height="120"
-            viewBox="0 0 72 120"
-            aria-hidden="true"
-            className="absolute -left-1 top-1/2 -translate-y-1/2"
-          >
-            {BANNER_PIXELS.map((p, i) => (
-              <rect
-                key={i}
-                x={p.x}
-                y={p.y}
-                width={p.s}
-                height={p.s}
-                rx="3"
-                fill={i % 3 === 1 ? 'var(--color-gold)' : '#ffffff'}
-                opacity={i % 3 === 1 ? 0.85 : 0.22}
-              />
-            ))}
-          </svg>
+          <Stitches tone="light" cell={9} className="absolute left-1 top-1/2 -translate-y-1/2" />
+          <Textile variant="wayuu" height={10} className="absolute inset-x-0 bottom-0 h-2.5 w-full opacity-90" />
           <h1 className="relative ml-16 font-display text-[2.6rem] font-extrabold leading-none text-white sm:text-[3.4rem]">
             Module {mod.moduleId}
           </h1>

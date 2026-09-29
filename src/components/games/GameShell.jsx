@@ -24,7 +24,7 @@ export default function GameShell({ icon, title, subtitle, onClose, children }) 
   }, [onClose])
 
   return (
-    <div ref={ref} className="fixed inset-0 z-50 overflow-y-auto bg-paper scrollbar-slim">
+    <div ref={ref} className="fixed inset-0 z-50 overflow-y-auto paper scrollbar-slim">
       <div className="mx-auto w-full max-w-[900px] px-5 py-6 sm:px-8">
         <header className="mb-6 flex items-start justify-between gap-4">
           <div className="flex items-start gap-3">

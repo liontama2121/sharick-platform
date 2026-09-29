@@ -26,6 +26,11 @@
   --color-sage-ink: #4f6f60;     /* labels EXERCISE/VOCABULARY */
   --color-tip: #e4ede8;          /* fondo de la caja Cultural Tip */
 
+  /* Hilos de los textiles latinoamericanos (mola, aguayo, tejido wayuu).
+     DECORATIVOS: solo rellenos de patrones y puntadas, jamás texto. */
+  --color-bugambilia: #c2376a;
+  --color-turquesa: #23857f;
+
   /* Tricolor Colombia — SOLO portada y branding */
   --color-col-blue: #003da5;
   --color-col-yellow: #ffd100;
@@ -42,13 +47,37 @@
   --shadow-lift: 0 10px 26px rgba(27, 58, 92, 0.16);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   TEXTURAS — papel artesanal y tela de manta
+   Grano: ruido fractal (feTurbulence) teñido de sepia, muy bajo.
+   Fibra: ruido estirado en vertical, como las hebras del papel de fique.
+   Manta: trama cruzada de 1px sobre el fondo general de la app.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --tex-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .24 0 0 0 0 .18 0 0 0 0 .11 0 0 0 .16 0'/%3E%3C/filter%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .42' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .18 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  --tex-manta:
+    repeating-linear-gradient(0deg, rgba(107, 84, 52, 0.028) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(107, 84, 52, 0.022) 0 1px, transparent 1px 4px);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold) 45%, transparent);
+    color: var(--color-navy);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--color-coral-ink);
+  }
+
   body {
-    background-color: #efe7d8;
+    background-color: #ece2cf;
+    background-image: var(--tex-grain), var(--tex-manta);
     color: var(--color-ink);
     font-family: var(--font-body);
     font-weight: 400;
@@ -144,17 +173,23 @@
   .paper {
     background-color: var(--color-paper);
     background-image:
-      radial-gradient(circle at 12% 8%, rgba(233, 180, 76, 0.06), transparent 42%),
-      radial-gradient(circle at 88% 92%, rgba(107, 144, 128, 0.07), transparent 45%);
+      var(--tex-grain),
+      radial-gradient(circle at 12% 8%, rgba(233, 180, 76, 0.07), transparent 42%),
+      radial-gradient(circle at 88% 92%, rgba(107, 144, 128, 0.08), transparent 45%);
   }
 
-  /* Portada: aquí sí vive el tricolor */
-  .text-tricolor {
-    background: linear-gradient(135deg, #003da5 0%, #ffd100 50%, #ce1126 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Grano de papel encima del color de fondo que ya tenga el elemento
+     (bg-box, bg-navy, bg-coral-ink…). Solo usa background-image. */
+  .grain {
+    background-image: var(--tex-grain);
   }
+
+  /* Tela de manta: fondos de "mesa" detrás de hojas y marcos */
+  .manta {
+    background-color: #ece2cf;
+    background-image: var(--tex-grain), var(--tex-manta);
+  }
+
 
   .scrollbar-slim::-webkit-scrollbar {
     width: 7px;

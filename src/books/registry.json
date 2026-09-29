@@ -28,5 +28,31 @@
       "available": false,
       "gradient": "from-[#CE1126] to-[#FFD100]"
     }
+  ],
+  "countries": [
+    {
+      "name": "Colombia",
+      "places": "Cartagena · Bogotá · Medellín",
+      "textile": "vueltiao",
+      "craft": "Sombrero vueltiao"
+    },
+    {
+      "name": "Venezuela",
+      "places": "Caracas",
+      "textile": "wayuu",
+      "craft": "Tejido wayuu"
+    },
+    {
+      "name": "Bolivia",
+      "places": "La Paz",
+      "textile": "aguayo",
+      "craft": "Aguayo andino"
+    },
+    {
+      "name": "Panamá",
+      "places": "Ciudad de Panamá",
+      "textile": "mola",
+      "craft": "Mola guna"
+    }
   ]
 }
