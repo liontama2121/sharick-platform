@@ -171,7 +171,7 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
 | Barras del menú (Nivel 1) | hover | translateX 6px, 260ms |
 | Tarjetas del Nivel 2 | entrada + hover | stagger 40ms · scale 1.04 |
-| Vuelta al Nivel 2 | scroll + pulso dorado | anillo gold, 260ms entra / 950ms sale |
+| Vuelta al Nivel 2 | scroll + pulso amarillo | anillo amarillo, 260ms entra / 950ms sale |
 | Cambio de nivel | fade + scale | 0.985→1, 350ms `outQuad` |
 | Respuesta correcta | celebración | scale [1,1.15,1] + verde suave, 500ms |
 | Respuesta incorrecta | shake | translateX [-8,8,-5,5,0], 400ms |
@@ -215,7 +215,7 @@ Pantalla completa, dos columnas de barras horizontales (`nav/MenuButton.jsx`,
 alto 90px, radio 12px, fondo `box`, hover translateX 6px):
 - **Izquierda, módulos:** placa roja con el número rotulado.
   Después Self-Check y Cultural & Cross-Curricular Section.
-- **Derecha, recursos:** cuadro verde salvia con icono lucide —
+- **Derecha, recursos:** placa verde (`verde-ink`) con icono lucide —
   Workbook · Reader · Video · Games · Quizzes · Word List.
 - Lo que no tiene contenido se ve atenuado y avisa "Próximamente" con un toast.
 - Cabecera = frente de la chiva: rótulo amarillo con el nombre del libro sobre
@@ -250,7 +250,7 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 - **Tag sobresaliente** (`data-tag`): placa roja de 64px con borde amarillo,
   medio afuera de la esquina superior izquierda, número de lección rotulado y
   "5 pantallas" pequeño debajo; la portada lleva ★. En la esquina del tag, el **progreso de
-  la lección**: anillo salvia parcial (3/5) o ✓ verde al 100 % (`ProgressRing`).
+  la lección**: anillo verde parcial (3/5) o ✓ verde al 100 % (`ProgressRing`).
 - **Badges circulares** (máx. 3): círculos azules de 48px con borde amarillo de
   3px e icono lucide blanco, medio afuera de la esquina inferior derecha, en
   fila hacia la izquierda. Se calculan con `lessonBadges()` = unión de
@@ -268,8 +268,8 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   (Anime.js); al abrir, la tarjeta hace zoom y navega a
   `…/lesson/<id>/screen/1`. Dentro se navega con ← → de la toolbar.
 - **Al volver con [X]** la rejilla hace scroll hasta la lección de
-  `progress.currentPage` (`findLessonOfScreen`) y le lanza un pulso dorado.
-- La tarjeta "🎮 Games · Module N" cierra la rejilla (tag salvia con mando).
+  `progress.currentPage` (`findLessonOfScreen`) y le lanza un pulso amarillo.
+- La tarjeta "🎮 Games · Module N" cierra la rejilla (tag verde con mando, sobre la banda de ventanas).
 - El **índice ☰ del lector** (`IndexOverlay` en `LessonReader`) usa el mismo
   grid con `LessonCard compact` y resalta la lección actual (`current`).
 
@@ -450,7 +450,7 @@ escala real del contenedor. El fantasma sigue al puntero; al soltar se busca
 `document.elementFromPoint` → `[data-drop]`. Un gesto que se mueve menos de
 6px cuenta como toque → **click-click** (toca la ficha, toca el slot). Los
 elementos arrastrables llevan `touch-none`. Acierto: `celebrate` + borde
-salvia; fallo: `shake`, toast y la ficha vuelve a la bandeja.
+verde; fallo: `shake`, toast y la ficha vuelve a la bandeja.
 
 ```json
 { "activity": "matchHeadings",
@@ -492,7 +492,7 @@ pantalla con solo sus juegos, hechos con su propio vocabulario y sus diálogos.
 
 ### Cuatro entradas
 1. **Nivel 2** — tarjeta especial al final de la rejilla, "🎮 Games · Module N",
-   en verde salvia suave, con "3 de 6 jugados · ⭐ 7".
+   en verde claro (`tip`) con marco de madera, con "3 de 6 jugados · ⭐ 7".
 2. **Nivel 3** — icono 🎮 en la barra superior, solo si el módulo tiene juegos.
 3. **Nivel 1** — el botón Games abre `pages/GamesPicker.jsx`, con una barra por
    módulo (los que no tienen juegos salen como "Próximamente").
@@ -637,7 +637,7 @@ localStorage key `sharick-progress`. Id de actividad = `` `${screen.id}-${activi
 Además de `completedActivities` guarda `visitedScreens` (las pantallas que el
 estudiante ya abrió, para el check verde del Nivel 2 en las que no llevan
 actividad) y `currentPage` (la última pantalla vista, para el scroll + pulso
-dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
+amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 `LessonReader`.
 
 ---

@@ -37,8 +37,7 @@ function DoneOverlay({ moduleName, onBack, onGames }) {
   return (
     <div className="absolute inset-0 z-40 flex items-center justify-center bg-azul/35 px-6">
       <div className="w-full max-w-md rounded-2xl bg-paper p-7 text-center shadow-lift">
-        <p className="label-caps text-verde-ink">Fin del módulo</p>
-        <h2 className="mt-1.5">¡Módulo completado!</h2>
+        <h2>¡Módulo completado!</h2>
         <p className="mt-2 text-[0.92rem] text-ink-soft">Llegaste al final de {moduleName}.</p>
         <div className="mt-5 flex flex-wrap justify-center gap-2.5">
           <Button onClick={onGames}>🎮 Jugar los juegos del módulo</Button>

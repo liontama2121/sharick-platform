@@ -7,7 +7,7 @@ const reduced = () =>
 
 const SIZES = {
   md: 'h-11 w-11 shadow-soft',
-  /* grande, con borde blanco: para superponerlo al marco de la vista */
+  /* grande, con borde amarillo: para superponerlo al marco de la vista */
   lg: 'h-14 w-14 border-4 border-amarillo shadow-lift',
 }
 

@@ -1,0 +1,694 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T15:54:56.982Z",
+  "title": "Design System: ¡Hola English! A1 · La Chiva",
+  "extensions": {
+    "colorMeta": {
+      "rojo": {
+        "role": "primary",
+        "displayName": "Rojo Carrocería",
+        "canonical": "#d7263d",
+        "oklch": "oklch(57.1% 0.209 21.1)",
+        "tonalRamp": [
+          "#260000",
+          "#500005",
+          "#7e0017",
+          "#af0b2a",
+          "#dc3e4a",
+          "#f87778",
+          "#ffa9a7",
+          "#ffd7d4"
+        ]
+      },
+      "rojo-ink": {
+        "role": "primary",
+        "displayName": "Rojo Rótulo",
+        "canonical": "#b01e31",
+        "oklch": "oklch(49.2% 0.179 21.0)",
+        "tonalRamp": [
+          "#230000",
+          "#4b000b",
+          "#77111e",
+          "#a52733",
+          "#d14d53",
+          "#ee7f7f",
+          "#ffafad",
+          "#ffdad8"
+        ]
+      },
+      "amarillo": {
+        "role": "secondary",
+        "displayName": "Amarillo Filete",
+        "canonical": "#f5b700",
+        "oklch": "oklch(81.4% 0.167 83.9)",
+        "tonalRamp": [
+          "#190600",
+          "#3a1c00",
+          "#5e3600",
+          "#855200",
+          "#ab7500",
+          "#ca9d37",
+          "#e9c57d",
+          "#ffebb6"
+        ]
+      },
+      "verde": {
+        "role": "tertiary",
+        "displayName": "Verde Chiva",
+        "canonical": "#1b998b",
+        "oklch": "oklch(61.6% 0.104 183.2)",
+        "tonalRamp": [
+          "#00110d",
+          "#002d27",
+          "#004d44",
+          "#006e63",
+          "#269386",
+          "#67b5a9",
+          "#9dd8ce",
+          "#cef9f1"
+        ]
+      },
+      "verde-ink": {
+        "role": "tertiary",
+        "displayName": "Verde Rótulo",
+        "canonical": "#0f6e63",
+        "oklch": "oklch(48.5% 0.083 182.6)",
+        "tonalRamp": [
+          "#00100c",
+          "#002c26",
+          "#0a4a42",
+          "#1f6b61",
+          "#448f84",
+          "#77b2a8",
+          "#a8d6cd",
+          "#d5f7f0"
+        ]
+      },
+      "tip": {
+        "role": "tertiary",
+        "displayName": "Verde Agua Claro",
+        "canonical": "#e3f4f1",
+        "oklch": "oklch(95.4% 0.018 184.3)",
+        "tonalRamp": [
+          "#080c0b",
+          "#1e2625",
+          "#384240",
+          "#54615f",
+          "#768481",
+          "#9ba8a5",
+          "#c3cdcb",
+          "#e9f0ef"
+        ]
+      },
+      "azul": {
+        "role": "neutral",
+        "displayName": "Azul Noche",
+        "canonical": "#1f3354",
+        "oklch": "oklch(32.2% 0.065 260.0)",
+        "tonalRamp": [
+          "#050b17",
+          "#192437",
+          "#314059",
+          "#4a5e7f",
+          "#6b81a5",
+          "#93a6c4",
+          "#bccce4",
+          "#e4efff"
+        ]
+      },
+      "chasis": {
+        "role": "neutral",
+        "displayName": "Chasis",
+        "canonical": "#16243b",
+        "oklch": "oklch(26.0% 0.048 259.9)",
+        "tonalRamp": [
+          "#060b14",
+          "#1c2432",
+          "#354053",
+          "#4f5e76",
+          "#71819b",
+          "#98a5bc",
+          "#c0cbde",
+          "#e6effd"
+        ]
+      },
+      "madera": {
+        "role": "neutral",
+        "displayName": "Madera",
+        "canonical": "#8a5a2b",
+        "oklch": "oklch(51.1% 0.089 62.8)",
+        "tonalRamp": [
+          "#160700",
+          "#361e05",
+          "#583716",
+          "#7d532a",
+          "#a3754a",
+          "#c49c79",
+          "#e4c4a8",
+          "#ffe9d4"
+        ]
+      },
+      "morado": {
+        "role": "tertiary",
+        "displayName": "Morado Pintura",
+        "canonical": "#6d3b8e",
+        "oklch": "oklch(45.3% 0.137 309.8)",
+        "tonalRamp": [
+          "#13031e",
+          "#301641",
+          "#502d68",
+          "#734791",
+          "#9769b9",
+          "#b992d6",
+          "#dbbcf3",
+          "#fbe4ff"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#1e2530",
+        "oklch": "oklch(26.3% 0.023 259.3)",
+        "tonalRamp": [
+          "#090b0f",
+          "#20242b",
+          "#3a4049",
+          "#575e6a",
+          "#79818d",
+          "#9ea5b0",
+          "#c5cbd4",
+          "#eaeff5"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Tinta Suave",
+        "canonical": "#4f5b6b",
+        "oklch": "oklch(46.7% 0.030 255.7)",
+        "tonalRamp": [
+          "#080b11",
+          "#1e252d",
+          "#38404c",
+          "#545f6d",
+          "#758191",
+          "#9ba6b3",
+          "#c3cbd6",
+          "#e9eff8"
+        ]
+      },
+      "carroceria": {
+        "role": "neutral",
+        "displayName": "Carrocería Blanca",
+        "canonical": "#f3f5f8",
+        "oklch": "oklch(96.9% 0.005 258.3)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#232425",
+          "#3f4041",
+          "#5c5e60",
+          "#7f8083",
+          "#a3a5a7",
+          "#c9cacc",
+          "#eeeef0"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Interior de Ventana",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "paper-edge": {
+        "role": "neutral",
+        "displayName": "Borde de Hoja",
+        "canonical": "#e4e8ee",
+        "oklch": "oklch(93.0% 0.009 258.3)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222427",
+          "#3d4043",
+          "#5b5e62",
+          "#7d8085",
+          "#a2a5a9",
+          "#c8cbce",
+          "#edeef1"
+        ]
+      },
+      "box": {
+        "role": "neutral",
+        "displayName": "Caja Celeste",
+        "canonical": "#eef2f7",
+        "oklch": "oklch(96.0% 0.008 253.9)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222426",
+          "#3e4043",
+          "#5b5e62",
+          "#7d8085",
+          "#a2a5a8",
+          "#c8cbce",
+          "#edeff1"
+        ]
+      },
+      "dialogo-a": {
+        "role": "tertiary",
+        "displayName": "Diálogo A · Azul",
+        "canonical": "#2a5ca8",
+        "oklch": "oklch(48.2% 0.134 258.7)",
+        "tonalRamp": [
+          "#000923",
+          "#082249",
+          "#1c3e73",
+          "#305ca0",
+          "#5080ca",
+          "#7da6e4",
+          "#abccff",
+          "#d7f0ff"
+        ]
+      },
+      "dialogo-b": {
+        "role": "tertiary",
+        "displayName": "Diálogo B · Rojo",
+        "canonical": "#c8283c",
+        "oklch": "oklch(54.5% 0.194 20.6)",
+        "tonalRamp": [
+          "#250000",
+          "#4e0009",
+          "#7a051c",
+          "#aa1c30",
+          "#d64650",
+          "#f37b7c",
+          "#ffacab",
+          "#ffd8d6"
+        ]
+      },
+      "dialogo-c": {
+        "role": "tertiary",
+        "displayName": "Diálogo C · Verde",
+        "canonical": "#0f7a6e",
+        "oklch": "oklch(52.2% 0.090 182.7)",
+        "tonalRamp": [
+          "#00100d",
+          "#002c26",
+          "#004b43",
+          "#116c62",
+          "#3c9185",
+          "#72b3a8",
+          "#a5d6cd",
+          "#d3f8f1"
+        ]
+      },
+      "dialogo-d": {
+        "role": "tertiary",
+        "displayName": "Diálogo D · Morado",
+        "canonical": "#6d3b8e",
+        "oklch": "oklch(45.3% 0.137 309.8)",
+        "tonalRamp": [
+          "#13031e",
+          "#301641",
+          "#502d68",
+          "#734791",
+          "#9769b9",
+          "#b992d6",
+          "#dbbcf3",
+          "#fbe4ff"
+        ]
+      },
+      "dialogo-e": {
+        "role": "tertiary",
+        "displayName": "Diálogo E · Amarillo",
+        "canonical": "#f5b700",
+        "oklch": "oklch(81.4% 0.167 83.9)",
+        "tonalRamp": [
+          "#190600",
+          "#3a1c00",
+          "#5e3600",
+          "#855200",
+          "#ab7500",
+          "#ca9d37",
+          "#e9c57d",
+          "#ffebb6"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Rótulo principal",
+        "purpose": "h1 global y rótulos del frente del bus (nombre del libro, placa Module N, portada). Siempre con .rotulo en las placas."
+      },
+      "headline": {
+        "displayName": "Titular",
+        "purpose": "h2 de secciones fuera del lector: Módulos, Recursos, La ruta del libro."
+      },
+      "title": {
+        "displayName": "Título",
+        "purpose": "h3, nombres de país y nombres en las barras del menú."
+      },
+      "rotulo-seccion": {
+        "displayName": "Rótulo de sección",
+        "purpose": "Reading / Listening dentro del lienzo 1600x1000, rojo-ink con sombra amarilla y guarda de dientes."
+      },
+      "body": {
+        "displayName": "Cuerpo",
+        "purpose": "Texto de navegación y Study Zone; 600 para nombres y énfasis."
+      },
+      "body-lienzo": {
+        "displayName": "Cuerpo del lienzo",
+        "purpose": "Líneas de diálogo y contenido de las pantallas del libro (20px sobre el lienzo escalado)."
+      },
+      "label": {
+        "displayName": "Label de estado",
+        "purpose": "Contadores y estados en línea en mayúsculas; nunca como antetítulo."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-page",
+        "value": "0 22px 50px rgba(20, 30, 50, 0.28)",
+        "purpose": "Paneles grandes de carrocería: frente del Home y del Nivel 1, costado del Nivel 2."
+      },
+      {
+        "name": "shadow-lift",
+        "value": "0 10px 24px rgba(20, 30, 50, 0.22)",
+        "purpose": "Ventanas, placas rotuladas, botones redondos grandes, miniaturas, hover de barras del menú."
+      },
+      {
+        "name": "shadow-soft",
+        "value": "0 2px 8px rgba(20, 30, 50, 0.1)",
+        "purpose": "Botones, barras del menú en reposo, placa del número de página."
+      },
+      {
+        "name": "shadow-tag",
+        "value": "0 10px 22px rgba(20, 30, 50, 0.28)",
+        "purpose": "Tag que sobresale de la tarjeta de lección."
+      },
+      {
+        "name": "shadow-badge",
+        "value": "0 8px 18px rgba(20, 30, 50, 0.25)",
+        "purpose": "Badges circulares medio afuera de la tarjeta de lección."
+      },
+      {
+        "name": "filete-ventana",
+        "value": "inset 0 0 0 2px var(--color-amarillo), 0 10px 24px rgba(20, 30, 50, 0.22)",
+        "purpose": ".ventana: filete amarillo interior + Lift."
+      },
+      {
+        "name": "rotulo-text-shadow",
+        "value": "0.07em 0.07em 0 var(--rotulo-sombra, var(--color-amarillo))",
+        "purpose": "Sombra plana de color del rotulado (text-shadow); es pintura, no elevación."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid var(--color-azul); outline-offset: 2px",
+        "purpose": "Foco visible global."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hover-button",
+        "value": "scale 1.04 · 200ms outQuad (Anime.js)",
+        "purpose": "Hover y foco de Button."
+      },
+      {
+        "name": "hover-round",
+        "value": "scale 1.1 · 200ms outQuad (180ms en la barra inferior)",
+        "purpose": "RoundButton, CloseButton, botones del parachoques."
+      },
+      {
+        "name": "hover-menu",
+        "value": "translateX 6px · 260ms outQuad",
+        "purpose": "Barras del menú del Nivel 1."
+      },
+      {
+        "name": "hover-lesson-card",
+        "value": "scale 1.05 + tag rotate -3° · 260ms outQuad",
+        "purpose": "Tarjetas del Nivel 2."
+      },
+      {
+        "name": "pulse-return",
+        "value": "anillo amarillo · 260ms entra / 950ms sale",
+        "purpose": "Lección actual al volver del lector al Nivel 2."
+      },
+      {
+        "name": "level-intro",
+        "value": "fade + scale 0.985→1 · 350ms outQuad",
+        "purpose": "Entrada a cada nivel."
+      },
+      {
+        "name": "page-enter",
+        "value": "opacity + translateY [20,0] · 600ms outQuad · stagger 80ms sobre [data-anim]",
+        "purpose": "Entrada de página."
+      },
+      {
+        "name": "screen-change",
+        "value": "sale translateX -60, entra [60,0] + fade · 400ms outQuad",
+        "purpose": "Cambio de pantalla en el lector."
+      },
+      {
+        "name": "sign-hang",
+        "value": "rotate [-6,2,-0.8,0] + translateY [-34,0] · 1150ms outQuart · origin top",
+        "purpose": "Rótulo amarillo del Home entra colgado."
+      },
+      {
+        "name": "guarda-paint",
+        "value": "clipPath inset 100%→0 · 1000ms outQuart",
+        "purpose": "Guardas del Home se pintan como pincelada."
+      },
+      {
+        "name": "route-road",
+        "value": "scaleX [0,1] · 1100ms outExpo",
+        "purpose": "Carretera de la ruta de los cuatro países."
+      },
+      {
+        "name": "route-drive",
+        "value": "translateX por tramo · 720ms inOutSine, ruedas girando, rebote translateY [0,-4,0] 320ms",
+        "purpose": "La chiva recorre las paradas."
+      },
+      {
+        "name": "route-sign",
+        "value": "rotateY [90,0] · 520ms outBack(1.4)",
+        "purpose": "Letrero de cada parada."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: duraciones a 0.01ms; animaciones Anime.js omitidas",
+        "purpose": "Todo el sistema."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "grid-2",
+        "value": "560px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "3xl",
+        "value": "1800px"
+      },
+      {
+        "name": "lienzo",
+        "value": "1600x1000 fijo, escalado con transform: scale()"
+      }
+    ],
+    "materials": [
+      {
+        "name": "grain",
+        "value": "background-image: var(--tex-grain)",
+        "purpose": "Grano finísimo sobre cualquier plano de color de carrocería."
+      },
+      {
+        "name": "chasis",
+        "value": "background: #16243b + var(--tex-grain)",
+        "purpose": "Letterbox del lector."
+      },
+      {
+        "name": "madera",
+        "value": "background: var(--color-madera) + grain + vetas repeating-linear-gradient",
+        "purpose": "Tablones y marcos."
+      },
+      {
+        "name": "filete-motivos",
+        "value": "rombos · dientes · ajedrez · franjas (decor/Filete.jsx)",
+        "purpose": "Guardas pintadas entre bandas de color."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Pastilla rojo-ink con texto blanco; acción principal dentro del libro.",
+      "html": "<button class=\"ds-btn-primary\">Jugar los juegos del módulo</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--color-rojo-ink, #b01e31); color: #fff; font-family: Lexend, ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 0.95rem; padding: 10px 20px; border: 0; border-radius: 9999px; box-shadow: 0 2px 8px rgba(20,30,50,.1); cursor: pointer; transition: transform .2s ease-out, filter .2s; } .ds-btn-primary:hover { transform: scale(1.04); filter: brightness(1.1); } .ds-btn-primary:focus-visible { outline: 3px solid var(--color-azul, #1f3354); outline-offset: 2px; transform: scale(1.04); } .ds-btn-primary:disabled { opacity: .45; cursor: not-allowed; transform: none; }"
+    },
+    {
+      "name": "Botón amarillo",
+      "kind": "button",
+      "refersTo": "button-amarillo",
+      "description": "Pastilla amarilla con texto azul; CTA de la Study Zone sobre banda verde.",
+      "html": "<button class=\"ds-btn-amarillo\">Start Studying →</button>",
+      "css": ".ds-btn-amarillo { display: inline-flex; align-items: center; gap: 8px; background: var(--color-amarillo, #f5b700); color: var(--color-azul, #1f3354); font-family: Lexend, ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 1rem; padding: 14px 28px; border: 0; border-radius: 9999px; box-shadow: 0 2px 8px rgba(20,30,50,.1); cursor: pointer; transition: transform .2s ease-out, filter .2s; } .ds-btn-amarillo:hover { transform: scale(1.04); filter: brightness(1.05); } .ds-btn-amarillo:focus-visible { outline: 3px solid var(--color-azul, #1f3354); outline-offset: 2px; }"
+    },
+    {
+      "name": "Botón ghost",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Pastilla blanca con borde azul tenue; acción secundaria.",
+      "html": "<button class=\"ds-btn-ghost\">Volver a las lecciones</button>",
+      "css": ".ds-btn-ghost { background: #fff; color: var(--color-azul, #1f3354); font-family: Lexend, ui-sans-serif, system-ui, sans-serif; font-weight: 600; font-size: 0.95rem; padding: 10px 20px; border: 1px solid rgba(31,51,84,.15); border-radius: 9999px; box-shadow: 0 2px 8px rgba(20,30,50,.1); cursor: pointer; transition: transform .2s ease-out, color .2s, border-color .2s; } .ds-btn-ghost:hover { transform: scale(1.04); color: var(--color-rojo-ink, #b01e31); border-color: rgba(176,30,49,.6); } .ds-btn-ghost:focus-visible { outline: 3px solid var(--color-azul, #1f3354); outline-offset: 2px; }"
+    },
+    {
+      "name": "Botón cerrar",
+      "kind": "button",
+      "refersTo": "close-button",
+      "description": "Círculo rojo-ink de 64px con borde amarillo; cierra la lección hacia el Nivel 2.",
+      "html": "<button class=\"ds-close\" aria-label=\"Cerrar la lección\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></button>",
+      "css": ".ds-close { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 9999px; border: 4px solid var(--color-amarillo, #f5b700); background: var(--color-rojo-ink, #b01e31); color: #fff; box-shadow: 0 10px 24px rgba(20,30,50,.22); cursor: pointer; transition: transform .2s ease-out; } .ds-close:hover, .ds-close:focus-visible { transform: scale(1.1); } .ds-close:focus-visible { outline: 3px solid var(--color-azul, #1f3354); outline-offset: 2px; }"
+    },
+    {
+      "name": "Parachoques (barra inferior)",
+      "kind": "nav",
+      "refersTo": "bottom-toolbar",
+      "description": "Banda azul de 88px con guarda de rombos y botones amarillos circulares; toda la navegación de la lección.",
+      "html": "<nav class=\"ds-toolbar\"><span class=\"ds-toolbar-guarda\"></span><button class=\"ds-tool\" aria-label=\"Menú del libro\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\"/><path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/></svg></button><div class=\"ds-tool-group\"><button class=\"ds-tool\" disabled aria-label=\"Página anterior\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m15 18-6-6 6-6\"/></svg></button><button class=\"ds-tool\" aria-label=\"Página siguiente\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 18 6-6-6-6\"/></svg></button></div></nav>",
+      "css": ".ds-toolbar { position: relative; display: flex; align-items: center; justify-content: space-between; height: 88px; padding: 0 24px; background: var(--color-azul, #1f3354); border-radius: 0 0 16px 16px; } .ds-toolbar-guarda { position: absolute; left: 0; right: 0; top: 0; height: 10px; background: repeating-linear-gradient(90deg, var(--color-rojo, #d7263d) 0 6px, var(--color-amarillo, #f5b700) 6px 12px, var(--color-rojo, #d7263d) 12px 18px, var(--color-verde, #1b998b) 18px 24px); } .ds-tool-group { display: flex; gap: 12px; } .ds-tool { display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border: 0; border-radius: 9999px; background: var(--color-amarillo, #f5b700); color: var(--color-azul, #1f3354); box-shadow: 0 2px 8px rgba(20,30,50,.1); cursor: pointer; transition: transform .18s ease-out; } .ds-tool:hover, .ds-tool:focus-visible { transform: scale(1.1); } .ds-tool:focus-visible { outline: 3px solid #fff; outline-offset: 2px; } .ds-tool:disabled { background: rgba(255,255,255,.15); color: rgba(255,255,255,.45); cursor: not-allowed; transform: none; }"
+    },
+    {
+      "name": "Barra del menú (Nivel 1)",
+      "kind": "nav",
+      "refersTo": "menu-button",
+      "description": "Barra blanca de 90px con placa numerada rojo-ink rotulada; un módulo o recurso del libro.",
+      "html": "<button class=\"ds-menu\"><span class=\"ds-menu-placa\">1</span><span class=\"ds-menu-text\"><span class=\"ds-menu-label\">Hello, friends!</span><span class=\"ds-menu-hint\">2 lecciones · 3/12 actividades</span></span></button>",
+      "css": ".ds-menu { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 90px; padding: 0; overflow: hidden; text-align: left; background: #fff; border: 3px solid var(--color-azul, #1f3354); border-radius: 16px; box-shadow: 0 2px 8px rgba(20,30,50,.1); cursor: pointer; transition: transform .26s ease-out, box-shadow .2s; } .ds-menu:hover, .ds-menu:focus-visible { transform: translateX(6px); box-shadow: 0 10px 24px rgba(20,30,50,.22); } .ds-menu:focus-visible { outline: 3px solid var(--color-azul, #1f3354); outline-offset: 2px; } .ds-menu-placa { display: flex; align-items: center; justify-content: center; width: 74px; height: 90px; flex-shrink: 0; background: var(--color-rojo-ink, #b01e31); color: #fff; font-family: 'Alfa Slab One', Rockwell, Georgia, serif; font-size: 1.8rem; text-shadow: 0.07em 0.07em 0 var(--color-azul, #1f3354); } .ds-menu-text { padding: 12px 16px 12px 0; } .ds-menu-label { display: block; font-family: 'Alfa Slab One', Rockwell, Georgia, serif; font-size: 1.1rem; line-height: 1.2; color: var(--color-azul, #1f3354); } .ds-menu-hint { display: block; margin-top: 2px; font-family: Lexend, sans-serif; font-size: 0.78rem; color: var(--color-ink-soft, #4f5b6b); }"
+    },
+    {
+      "name": "Placa del nombre (frente de la chiva)",
+      "kind": "custom",
+      "refersTo": "rotulo-placa",
+      "description": "Frente del bus: techo azul, guarda de rombos, carrocería rojo-ink con la placa amarilla rotulada, guarda de dientes y parachoques.",
+      "html": "<header class=\"ds-frente\"><div class=\"ds-techo\"></div><div class=\"ds-rombos\"></div><div class=\"ds-frente-body\"><div class=\"ds-placa\"><h1 class=\"ds-rotulo\">¡Hola English! A1</h1></div></div><div class=\"ds-dientes\"></div><div class=\"ds-parachoques\"></div></header>",
+      "css": ".ds-frente { overflow: hidden; border: 6px solid var(--color-azul, #1f3354); border-radius: 28px; background: var(--color-rojo-ink, #b01e31); text-align: center; box-shadow: 0 22px 50px rgba(20,30,50,.28); } .ds-techo { height: 16px; background: var(--color-azul, #1f3354); } .ds-parachoques { height: 20px; background: var(--color-azul, #1f3354); } .ds-rombos { height: 12px; background: repeating-linear-gradient(90deg, var(--color-rojo, #d7263d) 0 6px, var(--color-amarillo, #f5b700) 6px 12px, var(--color-rojo, #d7263d) 12px 18px, var(--color-verde, #1b998b) 18px 24px); } .ds-dientes { height: 12px; background: linear-gradient(135deg, var(--color-amarillo, #f5b700) 25%, transparent 25%) 0 0/16px 12px, linear-gradient(225deg, var(--color-amarillo, #f5b700) 25%, transparent 25%) 0 0/16px 12px, var(--color-rojo-ink, #b01e31); } .ds-frente-body { padding: 32px 24px 36px; } .ds-placa { display: inline-block; padding: 16px 36px; background: var(--color-amarillo, #f5b700); border: 4px solid var(--color-azul, #1f3354); border-radius: 16px; box-shadow: 0 10px 24px rgba(20,30,50,.22); } .ds-rotulo { margin: 0; font-family: 'Alfa Slab One', Rockwell, Georgia, serif; font-weight: 400; font-synthesis-weight: none; font-size: 3rem; line-height: 1.05; color: var(--color-azul, #1f3354); text-shadow: 0.07em 0.07em 0 #fff; }"
+    },
+    {
+      "name": "Ventana",
+      "kind": "card",
+      "refersTo": "ventana",
+      "description": "Interior blanco con marco de madera de 6px y filete amarillo interior; cada página y lección.",
+      "html": "<div class=\"ds-ventana\"><h2 class=\"ds-seccion\">Reading</h2><p class=\"ds-ventana-body\">Listen and read the dialogues (A-C).</p></div>",
+      "css": ".ds-ventana { background: #fff; border: 6px solid var(--color-madera, #8a5a2b); border-radius: 16px; box-shadow: inset 0 0 0 2px var(--color-amarillo, #f5b700), 0 10px 24px rgba(20,30,50,.22); padding: 28px 32px; } .ds-seccion { margin: 0; font-family: 'Alfa Slab One', Rockwell, Georgia, serif; font-weight: 400; font-size: 40px; line-height: 1; color: var(--color-rojo-ink, #b01e31); text-shadow: 0.07em 0.07em 0 var(--color-amarillo, #f5b700); } .ds-ventana-body { margin: 16px 0 0; font-family: Lexend, sans-serif; font-size: 20px; line-height: 1.5; color: var(--color-ink, #1e2530); }"
+    },
+    {
+      "name": "Tag de lección",
+      "kind": "chip",
+      "refersTo": "lesson-tag-id",
+      "description": "Placa partida con borde amarillo: id de lección en rojo-ink + título corto en azul, ambos rotulados.",
+      "html": "<div class=\"ds-lessontag\"><span class=\"ds-lt-id\">1.1</span><span class=\"ds-lt-title\">Let's say Hi!</span></div>",
+      "css": ".ds-lessontag { display: inline-flex; overflow: hidden; border: 3px solid var(--color-amarillo, #f5b700); border-radius: 12px; box-shadow: 0 10px 24px rgba(20,30,50,.22); font-family: 'Alfa Slab One', Rockwell, Georgia, serif; font-weight: 400; line-height: 1; color: #fff; } .ds-lt-id { padding: 8px 16px; font-size: 34px; background: var(--color-rojo-ink, #b01e31); text-shadow: 0.07em 0.07em 0 var(--color-azul, #1f3354); } .ds-lt-title { padding: 8px 20px; font-size: 30px; background: var(--color-azul, #1f3354); text-shadow: 0.07em 0.07em 0 var(--color-rojo, #d7263d); }"
+    },
+    {
+      "name": "Panel de diálogo",
+      "kind": "custom",
+      "refersTo": "dialogue-a",
+      "description": "Panel pintado del color de su letra, con filete interior, punta y letra rotulada fuera.",
+      "html": "<div class=\"ds-dlg\"><span class=\"ds-dlg-letter\">A</span><button class=\"ds-dlg-panel\"><span class=\"ds-dlg-filete\"></span><span class=\"ds-dlg-grid\"><span class=\"ds-dlg-who\">Camila:</span><span>Hi! I'm Camila.</span><span class=\"ds-dlg-who\">Mateo:</span><span>Hey, Camila. I'm Mateo.</span></span></button></div>",
+      "css": ".ds-dlg { position: relative; padding-left: 36px; } .ds-dlg-letter { position: absolute; left: 0; top: 0; font-family: 'Alfa Slab One', Rockwell, Georgia, serif; font-size: 38px; line-height: 1; color: #2a5ca8; text-shadow: 0.07em 0.07em 0 var(--color-amarillo, #f5b700); } .ds-dlg-panel { position: relative; width: 100%; padding: 16px 24px; text-align: left; border: 0; border-radius: 18px; background: #2a5ca8; color: #fff; font-family: Lexend, sans-serif; font-size: 20px; line-height: 1.5; box-shadow: 0 4px 14px rgba(20,30,50,.16); cursor: pointer; transition: box-shadow .2s; } .ds-dlg-panel:hover { box-shadow: 0 0 0 6px color-mix(in srgb, #2a5ca8 30%, transparent); } .ds-dlg-panel:focus-visible { outline: 4px solid var(--color-amarillo, #f5b700); outline-offset: 2px; } .ds-dlg-filete { position: absolute; inset: 6px; border: 2px solid rgba(255,255,255,.4); border-radius: 13px; pointer-events: none; } .ds-dlg-grid { position: relative; display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 6px; } .ds-dlg-who { text-align: right; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Chiva",
+    "overview": "El libro es un bus pintado latinoamericano, la chiva de Colombia con el mismo oficio de rotulado de los diablos rojos de Panamá y los micros de La Paz, que recorre Colombia, Venezuela, Bolivia y Panamá. La carrocería de colores lleva la navegación (techo azul, faldón rojo, parachoques azul, placas rotuladas) y cada página o lección es una ventana con marco de madera e interior blanco limpio, donde ocurre el estudio. El estudiante reconoce la chiva, entiende que se sube a un viaje por cuatro países y ve cada lección como una ventana.\n\nEl color es pintura plana: bandas saturadas de rojo, amarillo, verde y azul noche, separadas por filetes finos de color contrario y por guardas pintadas a mano (rombos, dientes, ajedrez, franjas) que se dibujan en SVG como patrón repetido. Encima de cada plano grande va un grano finísimo (`.grain`) para que la pintura no se vea digital. La densidad es la de un libro escolar: pantallas fijas de 1600x1000 sin scroll y, fuera del lector, bloques anchos y generosos con objetivos táctiles grandes.\n\nRechazos confirmados por el build: la hoja crema editorial con acuarela (el mundo anterior; su paleta coral/sage/gold/navy ya no existe) y la app gamificada de caricatura. El interior de la ventana es blanco, nunca crema.",
+    "keyCharacteristics": [
+      "Carrocería = navegación; ventana = contenido. El color fuerte vive en el marco, el interior es blanco y tranquilo.",
+      "Pintura plana con grano, filetes de color contrario y guardas pintadas en lugar de degradados.",
+      "Rotulado en slab gruesa con sombra plana de color, como los nombres pintados de las chivas.",
+      "Bordes gruesos de color (3-6px) y radios amplios en lugar de sombras duras.",
+      "Todo movimiento con Anime.js, con la chiva como personaje en la llegada del Home."
+    ],
+    "rules": [
+      {
+        "name": "La Regla de la Tinta Legible",
+        "body": "`rojo`, `verde` y `amarillo` puros son rellenos, iconos y filetes, nunca texto pequeño. El texto de color usa `rojo-ink` o `verde-ink`; sobre amarillo, siempre `azul`.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Marco Pintado",
+        "body": "El color saturado pertenece a la carrocería y al marco. Dentro de la ventana manda el blanco (`paper`) con cajas en `box` o `tip`; el color fuerte entra solo en paneles de diálogo, placas y botones.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Tricolor Guardado",
+        "body": "`col-blue`, `col-yellow` y `col-red` siguen en `@theme` como dato de registro, pero ninguna superficie los usa; la portada es la chiva, no la bandera.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Peso Único",
+        "body": "Alfa Slab One tiene un solo peso (400) y `font-synthesis-weight: none` está activo en `h1-h4` y `.font-display`. Nunca `font-bold` sobre la display.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Rótulo",
+        "body": "El rotulado importante (nombre del libro, placa de módulo, tag de lección, títulos de sección, letras de diálogo) usa `.rotulo`: slab con sombra plana desplazada 0.07em. El color de la sombra sale de `--rotulo-sombra`: amarillo por defecto; blanco sobre la placa amarilla; azul sobre rojo o verde; rojo sobre azul.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla Sin Kicker",
+        "body": "El título habla solo. El label en mayúsculas acompaña a un valor o a un estado dentro de una fila; nunca se apila como antetítulo encima de un `h1`/`h2`.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Borde Antes que la Sombra",
+        "body": "Un panel se separa del fondo con un borde de color de 3-6px (azul, madera o amarillo); la sombra solo lo acompaña.",
+        "section": "elevation"
+      },
+      {
+        "name": "La Regla de la Pintura con Grano",
+        "body": "Todo plano grande de color de carrocería (`bg-azul`, `bg-rojo-ink`, `bg-verde`, `bg-verde-ink`) lleva `.grain` encima.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do pintar la navegación como carrocería: techo `azul`, guarda de rombos, cuerpo `rojo-ink`, guarda de dientes, parachoques `azul`, todo con `.grain`.",
+      "Do enmarcar el contenido en ventanas: interior `paper`, marco `madera` de 5-6px, filete amarillo interior.",
+      "Do usar `.rotulo` con `--rotulo-sombra` de color contrario para nombres, placas, tags y títulos de sección.",
+      "Do separar bandas de color con un filete o una guarda de `Filete.jsx`, nunca con un degradado.",
+      "Do escribir texto de color en `rojo-ink`, `verde-ink` o `azul`; sobre amarillo, siempre `azul`.",
+      "Do animar cada interacción con Anime.js (`ease`, no `easing`) y respetar `prefers-reduced-motion`.",
+      "Do usar iconos lucide de línea en botones, placas y badges."
+    ],
+    "donts": [
+      "Don't volver al papel crema, la acuarela ni los tokens coral / sage / gold / navy: ese mundo fue reemplazado.",
+      "Don't usar `rojo`, `verde` o `amarillo` puros como color de texto pequeño.",
+      "Don't aplicar negrita a Alfa Slab One ni volver a cargar Playfair Display, Nunito Sans, Fredoka o Sora.",
+      "Don't poner un label en mayúsculas encima de un título como antetítulo.",
+      "Don't usar el tricolor de Colombia en superficies; la identidad es la chiva, no la bandera.",
+      "Don't separar paneles solo con sombras negras o desplazadas en duro; el borde de color va primero.",
+      "Don't meter scroll dentro del lienzo 1600x1000: si no cabe, otra pantalla."
+    ]
+  }
+}

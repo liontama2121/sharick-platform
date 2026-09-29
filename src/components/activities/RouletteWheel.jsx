@@ -212,7 +212,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
                         transform={`rotate(${mid} ${C} ${C})${flip ? ` rotate(180 ${C} ${pivot})` : ''}`}
                         textAnchor="middle"
                         fontSize="16"
-                        fontFamily="Nunito Sans, sans-serif"
+                        fontFamily="Lexend, sans-serif"
                         fontWeight="800"
                         fill={fill.ink}
                       >

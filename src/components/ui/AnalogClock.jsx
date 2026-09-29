@@ -54,7 +54,7 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
               textAnchor="middle"
               fontSize="13"
               fontWeight="700"
-              fontFamily="Nunito Sans, sans-serif"
+              fontFamily="Lexend, sans-serif"
               fill="var(--color-azul)"
             >
               {n}

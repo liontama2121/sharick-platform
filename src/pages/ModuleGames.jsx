@@ -133,8 +133,7 @@ export default function ModuleGames() {
     <div ref={ref} className="mx-auto w-full max-w-[1080px] px-5 py-7 sm:px-8">
       <header className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <p className="label-caps text-verde-ink">Games</p>
-          <h1 className="mt-1">
+          <h1>
             Module {mod.moduleId} · {mod.moduleName}
           </h1>
           <p className="mt-1.5 text-[0.92rem] text-ink-soft">

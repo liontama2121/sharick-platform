@@ -32,8 +32,7 @@ export default function GameShell({ icon, title, subtitle, onClose, children }) 
               {icon}
             </span>
             <div>
-              <p className="label-caps text-verde-ink">Game</p>
-              <h1 className="mt-0.5">{title}</h1>
+              <h1>{title}</h1>
               {subtitle && <p className="mt-1 text-[0.9rem] text-ink-soft">{subtitle}</p>}
             </div>
           </div>
