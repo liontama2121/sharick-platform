@@ -19,11 +19,11 @@ export default function VocabularyBox({ section, onListen }) {
   return (
     <section className="box-beige px-5 py-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <SectionLabel tone="sage" leaf>
+        <SectionLabel tone="verde" leaf>
           {section.label ?? 'Vocabulary'}
         </SectionLabel>
         {section.title && (
-          <span className="font-display text-base text-navy">{section.title}</span>
+          <span className="font-display text-base text-azul">{section.title}</span>
         )}
       </div>
 
@@ -37,12 +37,12 @@ export default function VocabularyBox({ section, onListen }) {
             <span
               aria-hidden="true"
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full
-                border border-sage/55 bg-white text-[13px]"
+                border border-verde/55 bg-white text-[13px]"
             >
               {it.icon ?? '•'}
             </span>
             <span className="min-w-0">
-              <span className="block text-[0.88rem] font-semibold leading-tight text-navy">{it.word}</span>
+              <span className="block text-[0.88rem] font-semibold leading-tight text-azul">{it.word}</span>
               {it.translation && (
                 <span className="block text-[0.7rem] leading-tight text-ink-soft">{it.translation}</span>
               )}

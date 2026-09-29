@@ -3,7 +3,7 @@ import { popIn } from '../../hooks/useFeedback'
 import AudioPlayer from './AudioPlayer'
 import SectionLabel from '../ui/SectionLabel'
 
-const AVATAR_TONES = ['bg-navy text-white', 'bg-coral-ink text-white', 'bg-sage-ink text-white']
+const AVATAR_TONES = ['bg-azul text-white', 'bg-rojo-ink text-white', 'bg-verde-ink text-white']
 
 function initials(name = '') {
   return name.trim().charAt(0).toUpperCase() || '?'
@@ -24,7 +24,7 @@ export default function DialogueBlock({ dialogue }) {
     <article className="box-beige px-4 py-3.5">
       <header className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
         <span className="flex items-baseline gap-2">
-          <SectionLabel tone="coral">{dialogue.label}</SectionLabel>
+          <SectionLabel tone="rojo">{dialogue.label}</SectionLabel>
           {dialogue.context && (
             <span className="text-[0.74rem] italic text-ink-soft">{dialogue.context}</span>
           )}
@@ -46,7 +46,7 @@ export default function DialogueBlock({ dialogue }) {
                 {initials(line.speaker)}
               </span>
               <p className="text-[0.92rem] leading-relaxed">
-                <span className="font-semibold text-navy">{line.speaker}: </span>
+                <span className="font-semibold text-azul">{line.speaker}: </span>
                 {line.text}
               </p>
             </div>

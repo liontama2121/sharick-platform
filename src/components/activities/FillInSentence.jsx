@@ -64,10 +64,10 @@ export default function FillInSentence({ section, completed, score, onComplete }
                 }}
                 className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1 rounded-lg px-1 py-0.5 text-[0.95rem]"
               >
-                <span className="font-display text-[1.05rem] text-coral-ink">{i + 1}.</span>
+                <span className="font-display text-[1.05rem] text-rojo-ink">{i + 1}.</span>
                 <span>{before}</span>
                 {done ? (
-                  <span className="border-b-2 border-sage-ink px-1 font-semibold text-sage-ink">
+                  <span className="border-b-2 border-verde-ink px-1 font-semibold text-verde-ink">
                     {item.answer}
                   </span>
                 ) : (
@@ -79,7 +79,7 @@ export default function FillInSentence({ section, completed, score, onComplete }
                     onBlur={() => (values[i] ?? '').trim() && check(i)}
                     aria-label={`Respuesta ${i + 1}: ${item.sentence.replace('___', '…')}`}
                     placeholder={item.hint ?? ''}
-                    className="rule-fill w-28 px-1 text-center font-semibold text-navy
+                    className="rule-fill w-28 px-1 text-center font-semibold text-azul
                       placeholder:font-normal placeholder:text-ink-soft/60"
                   />
                 )}

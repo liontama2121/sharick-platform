@@ -6,12 +6,10 @@ import { logout } from '../../services/authService'
 import { useSession } from '../../hooks/useSession'
 import { useLevelIntro } from '../../hooks/useLevelIntro'
 import RoundButton from '../nav/RoundButton'
-import Stitches from '../decor/Stitches'
-import Swirl from '../decor/Swirl'
-import Textile from '../decor/Textile'
+import Filete from '../decor/Filete'
 
 /**
- * Marco de la Study Zone: borde coral como las páginas, banner navy con
+ * Marco de la Study Zone: borde rojo como las páginas, banner azul con
  * florituras doradas, saludo del usuario y toolbar reducida (🏠 ☰ Log out).
  * `title` es lo que va grande en el banner; `subtitle` debajo.
  */
@@ -28,38 +26,34 @@ export default function StudyShell({ bookId = 'english-a1', title, subtitle, chi
   return (
     <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
       <div
-        className="relative mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[1280px] rounded-[20px]
-          border-[3px] border-coral-ink/70 paper pb-20 shadow-page"
+        className="relative mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[1280px] overflow-hidden
+          rounded-[26px] border-[6px] border-azul bg-carroceria pb-20 shadow-page"
       >
-        {/* Banner navy */}
-        <div
-          className="relative -ml-[3px] -mt-[3px] flex flex-wrap items-end justify-between gap-4
-            overflow-hidden rounded-br-[64px] rounded-tl-[20px] bg-navy grain py-7 pl-8 pr-8 text-white
-            shadow-lift sm:pr-36"
-        >
-          <Stitches tone="light" cell={7} className="absolute left-1 top-1/2 -translate-y-1/2" />
-          <Textile variant="aguayo" height={10} className="absolute inset-x-0 bottom-0 h-2.5 w-full" />
-          <Swirl width={140} className="absolute right-6 top-3 opacity-40" />
+        {/* Carrocería verde de la Study Zone con guarda de ajedrez */}
+        <div className="grain relative bg-verde-ink text-white">
+          <div aria-hidden="true" className="h-3 bg-azul" />
+          <Filete variant="ajedrez" colors={['azul', 'amarillo']} height={12} className="h-3 w-full" />
+          <div className="flex flex-wrap items-end justify-between gap-4 px-8 pb-7 pt-6 sm:pr-72">
+            <div className="min-w-0">
+              <p className="font-display text-[1rem] text-amarillo">{S.mapTitle}</p>
+              <h1 className="rotulo mt-1 text-[2rem] leading-none text-white sm:text-[2.6rem]" style={{ '--rotulo-sombra': 'var(--color-azul)' }}>
+                {title}
+              </h1>
+              {subtitle && <p className="mt-2 text-[0.95rem] text-white">{subtitle}</p>}
+            </div>
 
-          <div className="relative ml-14 min-w-0">
-            <p className="label-caps text-gold">{S.mapTitle}</p>
-            <h1 className="mt-1 font-display text-[2rem] font-extrabold leading-none text-white sm:text-[2.6rem]">
-              {title}
-            </h1>
-            {subtitle && <p className="mt-2 text-[0.92rem] text-white/80">{subtitle}</p>}
+            {session && (
+              <p className="font-display text-[1.15rem] text-amarillo">
+                {S.greeting(session.name ?? session.username)}
+              </p>
+            )}
           </div>
-
-          {session && (
-            <p className="relative font-display text-[1.15rem] text-gold">
-              {S.greeting(session.name ?? session.username)}
-            </p>
-          )}
         </div>
 
         {/* Toolbar reducida, superpuesta arriba a la derecha */}
-        <div className="absolute right-5 top-5 z-30 flex items-center gap-2.5">
+        <div className="absolute right-5 top-9 z-30 flex items-center gap-2.5">
           {session?.role === 'teacher' && (
-            <RoundButton label={S.teacherMode} onClick={() => navigate('/study/teacher')} className="bg-sage-ink">
+            <RoundButton label={S.teacherMode} onClick={() => navigate('/study/teacher')} className="bg-verde-ink">
               <ShieldCheck size={19} strokeWidth={2.4} />
             </RoundButton>
           )}
@@ -72,7 +66,7 @@ export default function StudyShell({ bookId = 'english-a1', title, subtitle, chi
           {session && (
             <button
               onClick={salir}
-              className="flex h-11 items-center gap-1.5 rounded-full border-[3px] border-white bg-coral-ink
+              className="flex h-11 items-center gap-1.5 rounded-full border-[3px] border-amarillo bg-rojo-ink
                 px-4 font-body text-[0.85rem] font-bold text-white shadow-lift"
             >
               <LogOut size={16} strokeWidth={2.6} />

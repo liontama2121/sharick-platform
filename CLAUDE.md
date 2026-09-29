@@ -56,44 +56,56 @@ Venezuela, Bolivia y Panamá como escenario" (`registry.json`).
 
 ---
 
-## 🎨 SISTEMA DE DISEÑO — LIBRO EDITORIAL IMPRESO
+## 🎨 SISTEMA DE DISEÑO — LA CHIVA
 
-Referencia: libro educativo impreso profesional estilo **National Geographic Learning / Cambridge**.
-Minimalista, cálido, acuarela. Doble página con pasada real.
-El **tricolor de Colombia vive SOLO en la portada y el branding**, nunca en páginas interiores.
+Cambio total aprobado por el usuario el 2026-09-29 (dirección elegida en la
+ronda de impeccable). **El libro es un bus pintado latinoamericano** (chiva de
+Colombia, con el mismo oficio de rotulado de los diablos rojos de Panamá y los
+micros de La Paz) que recorre los cuatro países: la carrocería de colores lleva
+la navegación y **las páginas son ventanas** de interior blanco. Contrato de
+dirección: `.impeccable/surfaces/src-app-jsx.md`. Producto: `PRODUCT.md`.
+Nada de papel crema ni acuarela: eso era el mundo anterior.
 
 ### Paleta (tokens `@theme` en global.css)
 
 ```css
-/* Papel */
---color-paper:     #F7F2E9;  /* fondo de la hoja */
---color-box:       #F0E9DB;  /* cajas de contenido (beige) */
-/* Tinta */
---color-navy:      #1B3A5C;  /* títulos serif */
---color-ink:       #33302B;  /* cuerpo */
---color-ink-soft:  #6B655C;  /* secundario */
-/* Acentos DECORATIVOS — nunca como texto pequeño */
---color-coral:     #E05A47;
---color-sage:      #6B9080;
---color-gold:      #E9B44C;
-/* Variantes legibles de esos acentos, para texto y fondos con texto */
---color-coral-ink: #B23A28;  /* labels UNIT/LESSON, números, botones */
---color-sage-ink:  #4F6F60;  /* labels EXERCISE/VOCABULARY */
---color-tip:       #E4EDE8;  /* fondo Cultural Tip */
-/* Tricolor — SOLO portada */
---color-col-blue: #003DA5; --color-col-yellow: #FFD100; --color-col-red: #CE1126;
+--color-carroceria: #F3F5F8;  /* fondo general: carrocería pintada de blanco frío */
+--color-paper:      #FFFFFF;  /* interior de ventana (la hoja) */
+--color-box:        #EEF2F7;  /* cajas de contenido: azul muy claro */
+--color-azul:       #1F3354;  /* rótulos y títulos · techo y parachoques */
+--color-ink:        #1E2530;  /* cuerpo */
+--color-ink-soft:   #4F5B6B;  /* secundario */
+/* Pintura (rellenos planos) */
+--color-rojo:     #D7263D;  --color-verde: #1B998B;  --color-amarillo: #F5B700;
+--color-madera:   #8A5A2B;  /* marcos de ventana */  --color-morado: #6D3B8E;
+/* Legibles para texto y fondos con texto blanco */
+--color-rojo-ink: #B01E31;  --color-verde-ink: #0F6E63;  --color-tip: #E3F4F1;
 ```
 
-**Contraste (verificado sobre `paper` #F7F2E9):** navy 10.4:1 · ink 11.9:1 · coral-ink 5.3:1 ·
-sage-ink 5.0:1 · blanco sobre coral-ink 6.0:1. Coral, sage y gold "puros" están por debajo de
-4.5:1 — úsalos solo para rellenos, iconos y florituras, **jamás para texto**.
+Contraste sobre blanco: azul 13:1 · ink 15:1 · ink-soft 6.9:1 · rojo-ink 6.9:1 ·
+verde-ink 6.1:1. `rojo`, `verde` y `amarillo` puros son rellenos; sobre
+amarillo el texto va siempre en azul. Los nombres de token antiguos
+(coral/sage/gold/navy) ya no existen.
 
 ### Tipografía
-- **Títulos:** `Playfair Display` (700/800) → utilidad `font-display`, siempre en navy
-- **Cuerpo:** `Nunito Sans` (400/600/700) → `font-body` (por defecto en `body`)
-- **Labels:** utilidad `.label-caps` — sans bold, MAYÚSCULAS, `letter-spacing .16em`, 0.78rem
-  (UNIT 1 · LESSON 2 · VOCABULARY · EXERCISE 3 · CULTURAL TIP)
-- **Fredoka y Sora están eliminadas del proyecto.**
+- **Rótulos y títulos:** `Alfa Slab One` (un solo peso, 400) → `font-display`.
+  `font-synthesis-weight: none`: nunca negrita sintética.
+- **Cuerpo:** `Lexend` (400/500/600/700) → `font-body`, pensada para lectores
+  que empiezan.
+- **`.rotulo`**: slab con sombra plana de color, como pintan los nombres de las
+  chivas. El color de la sombra sale de `--rotulo-sombra` (amarillo por defecto;
+  blanco sobre amarillo, azul sobre rojo).
+- **Sin kickers**: nada de etiquetas pequeñas en mayúsculas encima de un título
+  ("EXERCISE 4", "CAN-DO CHECK", "… edition"). El título habla solo; el número
+  del ejercicio ya lo pone `ExerciseInstruction`.
+- Playfair Display, Nunito Sans, Fredoka y Sora están eliminadas.
+
+### Materiales y utilidades (`global.css`)
+`.ventana` (marco de madera 6px + filete amarillo por dentro) · `.paper`
+(interior blanco) · `.grain` (grano finísimo de pintura sobre cualquier
+`bg-*`) · `.chasis` (azul noche del letterbox del lector) · `.madera` ·
+`.rotulo`. Formas: paneles 16-28px de radio, botones redondos o pastilla,
+bordes gruesos de color (3-6px) en lugar de sombras duras.
 
 ### Formato de página — pantalla completa tipo Express Publishing
 Referencia: libro interactivo **Express Publishing "Upload"**. Se replica la
@@ -101,7 +113,7 @@ estructura; el color y la tipografía son los nuestros.
 
 - **Nada de doble página ni de pasada de hoja.** Cada pantalla es un lienzo fijo
   de **1600x1000** escalado al viewport con `transform: scale()`
-  (`page/PageStage.jsx`), con letterbox cream. **Nunca hay scroll**: si el
+  (`page/PageStage.jsx`), con letterbox azul noche (`.chasis`). **Nunca hay scroll**: si el
   contenido no cabe, se parte en otra pantalla.
 - Una lección tiene varias pantallas (`screens` en el JSON). Se pasa de una a
   otra desde la barra inferior, con transición de Anime.js (sale translateX -60
@@ -111,51 +123,39 @@ Anatomía (todo en `src/components/page/`):
 | Componente | Qué es |
 |---|---|
 | `PageStage` | lienzo 1600x1000 escalado al viewport |
-| `PageFrame` | marco coral de 3px, radio 20px, número de página en círculo |
-| `LessonTag` | [1.1] coral + [título corto] navy, con puntadas de tejido |
-| `CloseButton` | círculo coral de 64px con borde blanco → Nivel 2 |
-| `SectionHeading` | "Reading" / "Listening"… en Playfair coral con cinta tejida wayuu |
-| `ExerciseInstruction` | número grande coral + icono de habilidad + instrucción |
-| `DialogueBubble` | caja de color con la letra fuera; nombres en columna propia |
+| `PageFrame` | ventana: marco de madera + filete amarillo, radio 22px, número en placa amarilla |
+| `LessonTag` | placa rotulada: [1.1] rojo + [título corto] azul, borde amarillo |
+| `CloseButton` | círculo rojo de 64px con borde amarillo → Nivel 2 |
+| `SectionHeading` | "Reading" / "Listening"… rotulado rojo con sombra amarilla + guarda de dientes |
+| `ExerciseInstruction` | número rotulado rojo + icono de habilidad + instrucción |
+| `DialogueBubble` | panel pintado con filete interior; letra rotulada fuera (la punta va debajo); nombres en columna propia |
 | `IllustrationWithMarkers` | ilustración + marcadores numerados por % |
-| `BottomToolbar` | 88px: home, reiniciar, ←/→ pantalla, índice, juegos, fullscreen, ◀/▶ lección |
+| `BottomToolbar` | parachoques azul de 88px con guarda de rombos y botones amarillos: home, reiniciar, ←/→, índice, juegos, fullscreen, ◀/▶ lección |
 | `ScreenRenderer` | elige el layout y coloca todo |
 
-Colores fijos de los diálogos por letra: A `#8E7CC3` · B `#E05A47` ·
-C `#3F86B8` · D `#6B9080` · E `#E9B44C` (E lleva texto navy, el resto blanco).
+Colores fijos de los diálogos por letra (pintura de la chiva): A `#2A5CA8` ·
+B `#C8283C` · C `#0F7A6E` · D `#6D3B8E` · E `#F5B700` (E lleva texto azul, el
+resto blanco; todos ≥ 4.5:1).
 
 `media/AudioPlayer.jsx` es un reproductor real estilo casete: barra
 arrastrable, play / pause / stop y atajo de barra espaciadora. Si el mp3 no
 existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 
 ### Decoración SVG reutilizable (`src/components/decor/`)
-`Swirl` (floritura ~ dorada) · `Leaf` (hojita de los labels) ·
-`TropicalFlower` (variantes `bird` / `heliconia` / `leaves`) ·
-`WaterWave` (onda inferior) · `SunBurst` (solecito del Cultural Tip)
-
-### Identidad latinoamericana: papel y tejido
-El libro es de inglés, pero su **estilo es latino**. Dos capas materiales:
-- **Texturas** (`global.css`, `:root`): `--tex-grain` (grano + fibra de papel
-  artesanal, SVG feTurbulence) y `--tex-manta` (trama de tela). Utilidades:
-  `.paper` (hoja con grano), `.grain` (grano sobre el color que ya tenga el
-  elemento: `bg-navy`, `bg-box`…), `.manta` (fondo de "mesa" del lienzo).
-  El `body` lleva manta.
-- **Textiles** (`decor/Textile.jsx`): un motivo por país, inspiración
-  geométrica — `vueltiao` (Colombia), `wayuu` (Venezuela · La Guajira),
-  `aguayo` (Bolivia), `mola` (Panamá). `<Textile variant height|scale className>`
-  rellena su caja; con `height` ajusta una vuelta del motivo a esa altura (bandas).
-  Hilos extra DECORATIVOS: `--color-bugambilia #C2376A` y `--color-turquesa #23857F`
-  (nunca texto).
-- **Puntadas** (`decor/Stitches.jsx`): rombo escalonado kanaa hecho de
-  cuadritos, tonos `warm` / `light` / `textile`. **Sustituye a todos los
-  "cuadritos pixel"** (tags del Nivel 2, LessonTag, banners de módulo y Study).
-- Dónde va el tejido: muestrario de países en Home (datos en
-  `registry.json → countries`), dobladillo wayuu del banner del módulo,
-  aguayo en Study Zone / StudyShell, mola en la tarjeta del libro, lomo wayuu
-  en la portada y cinta wayuu bajo `SectionHeading`. Dentro de las páginas
-  del libro solo cinta y puntadas: la hoja sigue siendo tranquila.
-
----
+- `Filete`: guardas pintadas de la carrocería, `rombos` · `dientes` ·
+  `ajedrez` · `franjas`. `<Filete variant colors={['rojo','amarillo','verde']}
+  height className>` rellena su caja; `colors` acepta nombres de token.
+- `Guarda`: guarda corta de rombos bajo títulos (sustituye a la floritura).
+- `Leaf`: rombo pintado verde/amarillo de los labels · `SunBurst`: sol del
+  Cultural Tip.
+- Dónde vive cada pieza: techo azul + rombos arriba, faldón rojo + dientes
+  abajo (Nivel 1, Nivel 2, Home, portada), placas rotuladas amarillas o rojas
+  para nombres, ventanas con marco de madera para lecciones y libros, banda
+  verde de ventanas en el Nivel 2, ajedrez verde en la Study Zone. La ruta de
+  los 4 países (paradas numeradas sobre carretera azul con raya amarilla) sale
+  de `registry.json → countries` en Home y portada.
+- `content/DayArc.jsx` pinta el día como cuatro paneles planos (amarillo claro,
+  celeste, naranja, azul noche) separados por filetes blancos.
 
 ## ✨ ANIMACIONES (Anime.js v4)
 
@@ -186,8 +186,8 @@ Todo respeta `prefers-reduced-motion`.
 ## 🧭 NAVEGACIÓN DE 3 NIVELES
 
 Estructura de libro digital de editorial (referencia: Express Publishing
-"Upload"). Se copia la ESTRUCTURA, no su diseño: el estilo editorial cream /
-navy / coral / salvia con Playfair Display se mantiene tal cual.
+"Upload"). Se copia la ESTRUCTURA, no su diseño: el mundo visual
+es La Chiva (ver Sistema de diseño).
 **No hay sidebar**: cada nivel trae su propia cabecera.
 
 ```
@@ -211,12 +211,14 @@ la rejilla sabe dónde estaba el estudiante.
 ### Nivel 1 — menú principal (`pages/BookMenu.jsx`)
 Pantalla completa, dos columnas de barras horizontales (`nav/MenuButton.jsx`,
 alto 90px, radio 12px, fondo `box`, hover translateX 6px):
-- **Izquierda, módulos:** cuadro coral con el número en Playfair blanco.
+- **Izquierda, módulos:** placa roja con el número rotulado.
   Después Self-Check y Cultural & Cross-Curricular Section.
 - **Derecha, recursos:** cuadro verde salvia con icono lucide —
   Workbook · Reader · Video · Games · Quizzes · Word List.
 - Lo que no tiene contenido se ve atenuado y avisa "Próximamente" con un toast.
-- Botón circular coral [X] arriba a la derecha → Home.
+- Cabecera = frente de la chiva: rótulo amarillo con el nombre del libro sobre
+  carrocería roja, guarda de dientes y parachoques azul; botón [X] rojo con
+  borde amarillo → Home.
 
 ### Nivel 2 — lecciones del módulo (`pages/ModuleGrid.jsx`)
 **El Nivel 2 muestra UNA miniatura por LECCIÓN**, como el índice visual de
@@ -225,14 +227,15 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 `books/index.js`; la tarjeta es `book/LessonCard.jsx` y la miniatura
 `book/LessonSpread.jsx`.
 
-- **Look Express Publishing**: la vista entera va dentro de un marco coral de
-  3px con radio 20px (como las páginas). Arriba a la izquierda, un **banner
-  rojo** (gradiente coral-ink → coral, esquina inferior derecha de 64px, patrón
-  de cuadritos pixel a la izquierda) con "Module N" en Playfair 800 blanco;
+- **Costado de la chiva**: la vista entera es una carrocería blanca con borde
+  azul de 6px, techo azul + guarda de rombos arriba y faldón rojo + guarda de
+  dientes abajo. Arriba a la izquierda, la **placa roja** con borde amarillo y
+  "Module N" rotulado en blanco con sombra amarilla;
   debajo, nombre del módulo, descripción y barra de progreso (contada por
-  pantallas de todas las lecciones). `CloseButton` (64px, borde blanco) arriba
-  a la derecha; 🏠 y 🎮 (`RoundButton size="lg"`) superpuestos a la esquina
-  inferior izquierda del marco.
+  pantallas de todas las lecciones, barra verde). `CloseButton` arriba a la
+  derecha; 🏠 y 🎮 (`RoundButton size="lg"`, borde amarillo) sobre el faldón.
+  Las lecciones van sobre una **banda verde de ventanas** entre filetes
+  amarillos; cada miniatura es una ventana con marco de madera de 5px.
 - **Miniatura = doble página** (`LessonSpread`): la lección se ve como un
   spread — página izquierda = pantalla 1, derecha = pantalla 2 — renderizadas
   de verdad con `ScreenRenderer`, escaladas al ancho de media tarjeta
@@ -242,12 +245,11 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   = 2:1 (las pantallas son 16:10; un spread real sería 3.2:1, demasiado plano).
   `lesson.thumbnailScreens: [0, 1]` elige qué dos pantallas forman el spread
   (por defecto las dos primeras).
-- **Tag sobresaliente** (`data-tag`): cuadro coral de 64px medio afuera de la
-  esquina superior izquierda, sombra fuerte, número de lección en Playfair 800
-  y "5 pantallas" pequeño debajo; la portada lleva ★. Detrás salen 6 cuadritos
-  pixel coral/dorado (`TAG_PIXELS`). En la esquina del tag, el **progreso de
+- **Tag sobresaliente** (`data-tag`): placa roja de 64px con borde amarillo,
+  medio afuera de la esquina superior izquierda, número de lección rotulado y
+  "5 pantallas" pequeño debajo; la portada lleva ★. En la esquina del tag, el **progreso de
   la lección**: anillo salvia parcial (3/5) o ✓ verde al 100 % (`ProgressRing`).
-- **Badges circulares** (máx. 3): círculos coral de 48px con borde blanco de
+- **Badges circulares** (máx. 3): círculos azules de 48px con borde amarillo de
   3px e icono lucide blanco, medio afuera de la esquina inferior derecha, en
   fila hacia la izquierda. Se calculan con `lessonBadges()` = unión de
   `screenBadges()` de TODAS las pantallas, en orden audio · written · game ·
@@ -255,7 +257,7 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   `listening`, `listenCircle`) · ✏️ (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`,
   `fillInSentence`, `multipleChoice`) · 🎮 (`diceGame`, `roulette`) · 🎙️
   (`speaking`, `recordPrompt`, `speechScene`) · 🎬 video.
-- **Rejilla** `.grid-pantallas` (definida en `global.css`): 2 columnas en móvil,
+- **Rejilla** `.grid-pantallas` (definida en `global.css`): 1 columna bajo 560px, 2 desde 560px,
   3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
   utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
   `xl` y la regla de 4 columnas le ganaba a la de 5. Gap de 40px (`gap-10`)
@@ -288,7 +290,7 @@ src/
 ├── components/
 │   ├── book/     BookCover · ScreenThumb · LessonSpread · LessonCard
 │   ├── nav/      MenuButton · RoundButton
-│   ├── decor/    Swirl · Leaf · TropicalFlower · WaterWave · SunBurst
+│   ├── decor/    Filete · Guarda · Leaf · SunBurst
 │   ├── content/  VocabularyBox · CulturalTip · Checklist · DayArc
 │   ├── activities/ ExerciseBlock · MatchActivity · MatchMarkers · MatchSlots ·
 │   │              MatchHeadings · MultipleChoice · FillBubbles ·
@@ -339,9 +341,9 @@ oficial de Sharick con referencias visuales de Express Publishing).
 | 1.1-s5 | 10 | Speaking · Exercise 5 Spin & Speak (`roulette`) |
 
 **Diálogos de 1.1 (texto EXACTO, con tildes: Lucía, Sofía, Andrés):**
-- **A** (morado #8E7CC3): Camila/Mateo se conocen — "Hi! I'm Camila." · "Hey, Camila.
+- **A** (azul #2A5CA8): Camila/Mateo se conocen — "Hi! I'm Camila." · "Hey, Camila.
   I'm Mateo." · "It's a pleasure to meet you, Mateo." · "Nice to meet you too."
-- **B** (coral #E05A47): Valentina presenta a Lucía a Diego — "Hello, Diego. What's up?"
+- **B** (rojo #C8283C): Valentina presenta a Lucía a Diego — "Hello, Diego. What's up?"
   · "Not much. And you?" · "I'm good. This is my friend Lucía. Lucía, this is Diego." ·
   "Hi, Lucía. Great to meet you." · "Hi, Diego. Nice to meet you too."
 - **C** (azul #3F86B8): Sofía/Andrés se despiden — "Goodbye, Andrés." · "Bye, Sofía.
@@ -458,8 +460,8 @@ salvia; fallo: `shake`, toast y la ficha vuelve a la bandeja.
 
 ### Ruleta (`roulette`)
 Rueda SVG de **460px** (domina la pantalla) con 6-8 segmentos de colores alternados
-navy / coral / salvia / dorado, etiquetas grandes en dos líneas (las de la mitad de
-abajo giradas para no leerse de cabeza), puntero coral arriba y botón "🎡 Spin!".
+azul / rojo / verde / amarillo, etiquetas grandes en dos líneas (las de la mitad de
+abajo giradas para no leerse de cabeza), puntero rojo arriba y botón "Spin!" con icono.
 
 ```json
 { "type": "activity", "activity": "roulette", "title": "Spin & Speak!",
@@ -549,9 +551,9 @@ N+1 se abre solo al APROBAR el quiz del tema N (nota mínima `passScore`, 80).
 el contenido, de `study/<libro>/moduleN.json`.
 
 ### Entradas
-- **Home** (`pages/Home.jsx`): banner navy "Study Zone" debajo de las cards de
-  libros (florituras doradas, cuadritos pixel, features 📚 ✏️ 🏆 🎮) con el
-  botón dorado "Start Studying →" → `/study/login` sin sesión, `/study/english-a1`
+- **Home** (`pages/Home.jsx`): panel verde "Study Zone" con guarda de ajedrez
+  debajo de las cards de libros (features con iconos lucide) con el
+  botón amarillo "Start Studying →" → `/study/login` sin sesión, `/study/english-a1`
   con sesión.
 - **Nivel 1**: el botón **Workbook** lleva a `/study/english-a1`
   (`resources[].route` admite rutas absolutas que empiezan por `/`).
@@ -595,8 +597,8 @@ Tema = `{ id, title, summary, learn[], exercises[], quiz: { passScore, questions
   registrados vacíos en `study/index.js` → "Coming soon".
 
 ### Pantallas
-Todas van dentro de `components/study/StudyShell.jsx`: marco coral, banner
-navy con "Hi, {name}! 👋", toolbar 🏠 ☰ Log out y 🛡️ Teacher mode si
+Todas van dentro de `components/study/StudyShell.jsx`: carrocería con borde
+azul, cabecera verde con guarda de ajedrez y "Hi, {name}! 👋", toolbar 🏠 ☰ Log out y 🛡️ Teacher mode si
 `role === 'teacher'`.
 - **Mapa** `/study/:bookId` (`StudyMap`): selector de módulo (vacíos =
   Coming soon), barra "n of 6 topics passed", botón 🎮 Arcade (se activa con
@@ -640,10 +642,11 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 
 ## 🖼️ IMÁGENES Y AUDIO
 
-- Estilo Gemini: *"Editorial illustration for a printed language textbook, National Geographic
-  Learning style. Soft watercolor, warm cream background #F7F2E9, navy #1B3A5C, coral #E05A47,
-  sage green #6B9080, golden yellow #E9B44C. Minimalist, elegant, rounded shapes,
-  Latin American culture focus: Colombia como base, más Venezuela, Bolivia y Panamá."*
+- Estilo Gemini (mundo La Chiva): *"Flat painted illustration for a language
+  textbook, inspired by the hand-painted buses of Latin America (Colombian chiva
+  art): bold flat colors red #D7263D, yellow #F5B700, teal #1B998B, navy #1F3354,
+  wood brown #8A5A2B, clean white background, confident outlines, friendly
+  people of mixed ages. Colombia como base, más Venezuela, Bolivia y Panamá."*
 - Escenas futuras: solo de esos cuatro países (Cartagena, Bogotá, Medellín,
   Caracas, La Paz, Ciudad de Panamá).
 - Mientras no exista el archivo, `SmartImage` muestra un marco punteado con emoji y
@@ -674,7 +677,7 @@ dorado al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
    oficial de Sharick, 2026-09-13).
 2. **Todo en JSON** — cero contenido hardcodeado en componentes.
 3. **Todo animado** — Anime.js en cada interacción.
-4. **Papel cálido, cero dark mode.** Tricolor solo en portada.
+4. **Carrocería pintada, cero dark mode.** Mundo visual: La Chiva.
 5. **Mobile responsive** — react-pageflip pasa a una sola hoja en vertical.
 6. **El contenido del libro va 100 % en inglés** (instrucciones, labels, hints,
    placeholders, toasts y botones dentro de la página). El español solo queda en

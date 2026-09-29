@@ -28,14 +28,14 @@ function LearnBlock({ block }) {
   if (block.type === 'phrases') {
     return (
       <div className="rounded-2xl bg-box p-5">
-        <p className="label-caps text-sage-ink">{block.title ?? S.keyPhrases}</p>
+        <p className="label-caps text-verde-ink">{block.title ?? S.keyPhrases}</p>
         <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
           {block.items.map((it, i) => (
-            <li key={i} className="flex flex-col border-b border-dotted border-[#d9cdb5] pb-1.5">
-              <span className="font-display text-[1.05rem] text-navy">{it.en}</span>
+            <li key={i} className="flex flex-col border-b border-dotted border-[#c9d1dc] pb-1.5">
+              <span className="font-display text-[1.05rem] text-azul">{it.en}</span>
               <span className="text-[0.85rem] text-ink-soft">
                 {it.es}
-                {it.note && <span className="ml-1.5 italic text-sage-ink">· {it.note}</span>}
+                {it.note && <span className="ml-1.5 italic text-verde-ink">· {it.note}</span>}
               </span>
             </li>
           ))}
@@ -70,7 +70,7 @@ function LearnBlock({ block }) {
     return (
       <div className="relative overflow-hidden rounded-2xl bg-tip p-5 pr-16">
         <SunBurst size={64} className="absolute -right-2 -top-2 opacity-60" />
-        <p className="label-caps text-sage-ink">{block.title ?? 'Tip'}</p>
+        <p className="label-caps text-verde-ink">{block.title ?? 'Tip'}</p>
         <p className="mt-1.5 text-[0.95rem] leading-relaxed text-ink">{block.text}</p>
       </div>
     )
@@ -106,17 +106,17 @@ export default function StudyTopic() {
   return (
     <StudyShell bookId={bookId} title={topic.title} subtitle={topic.summary} intro={`topic-${topic.id}`}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <button onClick={() => navigate(`/study/${bookId}`)} className="text-[0.88rem] font-semibold text-navy hover:text-coral-ink">
+        <button onClick={() => navigate(`/study/${bookId}`)} className="text-[0.88rem] font-semibold text-azul hover:text-rojo-ink">
           {S.backToMap}
         </button>
-        <p className="label-caps text-coral-ink">
+        <p className="label-caps text-rojo-ink">
           {S.module(mod.moduleId)} · Topic {index + 1} of {topics.length}
-          {passed && <span className="ml-2 text-sage-ink">✓ {S.topicPassed(study.passed[topic.id])}</span>}
+          {passed && <span className="ml-2 text-verde-ink">✓ {S.topicPassed(study.passed[topic.id])}</span>}
         </p>
       </div>
 
       {/* Tabs */}
-      <div role="tablist" className="mt-5 flex gap-2 border-b-2 border-dotted border-[#d9cdb5]">
+      <div role="tablist" className="mt-5 flex gap-2 border-b-2 border-dotted border-[#c9d1dc]">
         {TABS.map(({ id, label, Icon }) => (
           <button
             key={id}
@@ -124,7 +124,7 @@ export default function StudyTopic() {
             aria-selected={tab === id}
             onClick={() => setTab(id)}
             className={`-mb-[2px] flex items-center gap-2 rounded-t-xl border-b-[3px] px-4 py-2.5 font-body text-[0.92rem] font-bold transition-colors
-              ${tab === id ? 'border-coral-ink text-coral-ink' : 'border-transparent text-ink-soft hover:text-navy'}`}
+              ${tab === id ? 'border-rojo-ink text-rojo-ink' : 'border-transparent text-ink-soft hover:text-azul'}`}
           >
             <Icon size={17} strokeWidth={2.4} />
             {label}
@@ -165,7 +165,7 @@ export default function StudyTopic() {
             ))}
           </ol>
           <div className="mt-6">
-            <Button variant="navy" onClick={() => setTab('quiz')}>
+            <Button variant="azul" onClick={() => setTab('quiz')}>
               {S.tabQuiz} →
             </Button>
           </div>
@@ -173,22 +173,22 @@ export default function StudyTopic() {
       )}
 
       {tab === 'quiz' && (
-        <div className="mt-6 max-w-2xl rounded-2xl border border-navy/10 bg-white p-7 text-center shadow-soft">
-          <Trophy size={40} strokeWidth={2} className="mx-auto text-gold" />
+        <div className="mt-6 max-w-2xl rounded-2xl border border-azul/10 bg-white p-7 text-center shadow-soft">
+          <Trophy size={40} strokeWidth={2} className="mx-auto text-amarillo" />
           <h2 className="mt-3">{S.tabQuiz}</h2>
           <p className="mt-2 text-[0.95rem] text-ink-soft">
             {S.quizIntro(topic.quiz?.questions?.length ?? 0, topic.quiz?.passScore ?? 80)}
           </p>
           <p className="mt-1 text-[0.85rem] italic text-ink-soft">{S.quizNoFeedback}</p>
           {passed && (
-            <p className="mt-3 font-semibold text-sage-ink">✓ {S.topicPassed(study.passed[topic.id])}</p>
+            <p className="mt-3 font-semibold text-verde-ink">✓ {S.topicPassed(study.passed[topic.id])}</p>
           )}
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             <Button size="lg" onClick={() => navigate(`/study/${bookId}/${topic.id}/quiz`)}>
               {passed ? S.retakeQuiz : S.startQuiz}
             </Button>
             {passed && next && (
-              <Button size="lg" variant="sage" onClick={() => navigate(`/study/${bookId}/${next.id}`)}>
+              <Button size="lg" variant="verde" onClick={() => navigate(`/study/${bookId}/${next.id}`)}>
                 {S.nextTopic}
               </Button>
             )}

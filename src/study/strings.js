@@ -10,10 +10,10 @@ export const S = {
   homeSubtitle: 'Study each topic, pass the quiz, and unlock the next one.',
   homeCta: 'Start Studying →',
   homeFeatures: [
-    { icon: '📚', label: 'Topics' },
-    { icon: '✏️', label: 'Exercises' },
-    { icon: '🏆', label: 'Quizzes' },
-    { icon: '🎮', label: 'Arcade' },
+    { icon: 'topics', label: 'Topics' },
+    { icon: 'exercises', label: 'Exercises' },
+    { icon: 'quizzes', label: 'Quizzes' },
+    { icon: 'arcade', label: 'Arcade' },
   ],
 
   // Login

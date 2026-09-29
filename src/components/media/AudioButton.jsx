@@ -14,7 +14,7 @@ let current = null
  * ítems de listening). Si el mp3 aún no existe queda atenuado con
  * "Audio coming soon" y nunca rompe la página.
  */
-export default function AudioButton({ src, label = 'Listen', size = 44, tone = 'coral', className = '' }) {
+export default function AudioButton({ src, label = 'Listen', size = 44, tone = 'rojo', className = '' }) {
   const ref = useRef(null)
   const audioRef = useRef(null)
   const [playing, setPlaying] = useState(false)
@@ -68,9 +68,9 @@ export default function AudioButton({ src, label = 'Listen', size = 44, tone = '
   }
 
   const tones = {
-    coral: 'bg-coral-ink text-white',
-    sage: 'bg-sage-ink text-white',
-    navy: 'bg-navy text-white',
+    rojo: 'bg-rojo-ink text-white',
+    verde: 'bg-verde-ink text-white',
+    azul: 'bg-azul text-white',
   }
 
   return (
@@ -81,8 +81,8 @@ export default function AudioButton({ src, label = 'Listen', size = 44, tone = '
       aria-label={failed ? `${label} (audio coming soon)` : label}
       title={failed ? `Audio coming soon · ${src ?? ''}` : label}
       className={`flex shrink-0 items-center justify-center rounded-full shadow-soft transition-opacity
-        ${tones[tone] ?? tones.coral} ${failed ? 'opacity-45' : ''}
-        ${playing ? 'ring-4 ring-gold/70' : ''} ${className}`}
+        ${tones[tone] ?? tones.rojo} ${failed ? 'opacity-45' : ''}
+        ${playing ? 'ring-4 ring-amarillo/70' : ''} ${className}`}
       style={{ width: size, height: size }}
     >
       {playing ? (

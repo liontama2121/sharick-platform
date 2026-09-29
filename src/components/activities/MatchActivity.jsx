@@ -93,12 +93,12 @@ export default function MatchActivity({ section, completed, score, onComplete })
                   className={`flex items-center gap-2 rounded-xl border px-3.5 py-2.5 text-left
                     text-[0.92rem] font-semibold transition-colors
                     ${isMatched
-                      ? 'border-sage-ink/45 bg-tip text-sage-ink'
+                      ? 'border-verde-ink/45 bg-tip text-verde-ink'
                       : isActive
-                        ? 'border-coral-ink bg-white text-coral-ink'
-                        : 'border-navy/12 bg-white text-navy hover:border-coral-ink/55'}`}
+                        ? 'border-rojo-ink bg-white text-rojo-ink'
+                        : 'border-azul/12 bg-white text-azul hover:border-rojo-ink/55'}`}
                 >
-                  <span className="font-display text-[1.05rem] text-coral-ink">{i + 1}.</span>
+                  <span className="font-display text-[1.05rem] text-rojo-ink">{i + 1}.</span>
                   {p.left}
                   {isMatched && <span className="ml-auto">✓</span>}
                 </button>
@@ -121,10 +121,10 @@ export default function MatchActivity({ section, completed, score, onComplete })
                   className={`flex items-center gap-2.5 rounded-xl border bg-white p-2 text-left
                     transition-colors
                     ${isMatched
-                      ? 'border-sage-ink/45 bg-tip'
+                      ? 'border-verde-ink/45 bg-tip'
                       : selected
-                        ? 'border-navy/12 hover:border-coral-ink/55'
-                        : 'border-navy/8 opacity-60'}`}
+                        ? 'border-azul/12 hover:border-rojo-ink/55'
+                        : 'border-azul/8 opacity-60'}`}
                 >
                   <span className="h-12 w-12 shrink-0 overflow-hidden rounded-lg">
                     <SmartImage

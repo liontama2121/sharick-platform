@@ -1,47 +1,62 @@
 import { forwardRef } from 'react'
-import Swirl from '../decor/Swirl'
-import Textile from '../decor/Textile'
-import TropicalFlower from '../decor/TropicalFlower'
+import { countries } from '../../books'
+import Filete from '../decor/Filete'
+
+/* Placa numerada de cada parada: el amarillo lleva número azul. */
+const STOP_INK = { amarillo: 'var(--color-azul)' }
 
 /**
- * Portada del libro — el ÚNICO lugar (junto al branding) donde vive
- * el tricolor de Colombia.
+ * Portada del libro: el frente de la chiva. Techo azul con guarda,
+ * carrocería roja, rótulo amarillo con el nombre, la ruta por los cuatro
+ * países y parachoques azul. Se dibuja siempre en el lienzo de 1600x1000.
  */
-const BookCover = forwardRef(function BookCover({ meta, content }, ref) {
+const BookCover = forwardRef(function BookCover({ meta }, ref) {
   return (
     <div ref={ref} className="h-full w-full" data-density="hard">
-      <div className="grain relative flex h-full flex-col items-center justify-center overflow-hidden bg-navy px-12 text-center">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-2.5 bg-gradient-to-r from-[#003DA5] via-[#FFD100] to-[#CE1126]"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-2.5 bg-gradient-to-r from-[#CE1126] via-[#FFD100] to-[#003DA5]"
-        />
-        {/* Lomo tejido: banda wayuu a lo largo del borde izquierdo */}
-        <div aria-hidden="true" className="absolute bottom-2.5 left-0 top-2.5 w-[18px]">
-          <Textile variant="wayuu" scale={0.75} className="h-full w-full" />
-        </div>
-        <TropicalFlower
-          variant="heliconia"
-          size={150}
-          className="absolute -left-3 bottom-8 opacity-45"
-        />
-        <TropicalFlower
-          variant="leaves"
-          size={150}
-          flip
-          className="absolute -right-3 top-10 opacity-40"
-        />
+      <div className="grain relative flex h-full flex-col overflow-hidden bg-rojo-ink text-center">
+        <div aria-hidden="true" className="h-8 shrink-0 bg-azul" />
+        <Filete variant="rombos" height={20} className="h-5 w-full shrink-0" />
 
-        <p className="label-caps text-[#FFD100]">{content?.region ?? content?.country ?? 'Latin America'} edition</p>
-        <h1 className="mt-3 font-display text-white">{meta?.name ?? 'Libro'}</h1>
-        <Swirl width={120} className="mt-3" />
-        <p className="mt-4 max-w-[22ch] text-[0.92rem] text-white/80">
-          {meta?.description ?? ''}
-        </p>
-        <p className="mt-8 label-caps text-white/70">Prof. Sharick Prieto</p>
+        <div className="flex flex-1 flex-col items-center justify-center px-16 pb-24">
+          <div className="rounded-[28px] border-[6px] border-azul bg-amarillo px-14 py-8 shadow-lift">
+            <h1 className="rotulo text-[104px] leading-none text-azul" style={{ '--rotulo-sombra': '#ffffff' }}>
+              {meta?.name ?? 'Libro'}
+            </h1>
+          </div>
+
+          {countries.length > 0 && (
+            <ol className="mt-14 flex items-start gap-3">
+              {countries.map((c, i) => (
+                <li key={c.name} className="flex items-start gap-3">
+                  {i > 0 && (
+                    <span
+                      aria-hidden="true"
+                      className="mt-[23px] h-2.5 w-20 rounded-full bg-azul"
+                      style={{
+                        backgroundImage:
+                          'repeating-linear-gradient(90deg, var(--color-amarillo) 0 12px, transparent 12px 22px)',
+                        backgroundSize: '100% 2px',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                      }}
+                    />
+                  )}
+                  <span className="flex flex-col items-center">
+                    <span
+                      className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white font-display text-[24px] text-white shadow-lift"
+                      style={{ background: `var(--color-${c.color})`, color: STOP_INK[c.color] }}
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="mt-2 font-display text-[24px] text-white">{c.name}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          <p className="mt-12 font-display text-[28px] text-amarillo">Prof. Sharick Prieto</p>
+        </div>
       </div>
     </div>
   )

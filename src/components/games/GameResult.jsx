@@ -7,10 +7,10 @@ const reduced = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 const CONFETTI_COLORS = [
-  'var(--color-coral)',
-  'var(--color-gold)',
-  'var(--color-sage)',
-  'var(--color-navy)',
+  'var(--color-rojo)',
+  'var(--color-amarillo)',
+  'var(--color-verde)',
+  'var(--color-azul)',
 ]
 
 function Star({ filled }) {
@@ -18,8 +18,8 @@ function Star({ filled }) {
     <svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true" data-star>
       <path
         d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.6Z"
-        fill={filled ? 'var(--color-gold)' : 'transparent'}
-        stroke={filled ? 'var(--color-gold)' : 'var(--color-navy)'}
+        fill={filled ? 'var(--color-amarillo)' : 'transparent'}
+        stroke={filled ? 'var(--color-amarillo)' : 'var(--color-azul)'}
         strokeOpacity={filled ? 1 : 0.25}
         strokeWidth="1.6"
         strokeLinejoin="round"
@@ -64,7 +64,7 @@ export default function GameResult({ title = '¡Bien hecho!', detail, stars = 1,
   }, [])
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-navy/35 px-6">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-azul/35 px-6">
       <div
         ref={cardRef}
         role="dialog"

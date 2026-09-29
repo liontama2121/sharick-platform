@@ -48,9 +48,9 @@ export default function MatchEx({ exercise, onDone }) {
                 disabled={isDone}
                 onClick={() => setSelected(selected === i ? null : i)}
                 className={`rounded-xl border px-3 py-2 text-left text-[0.95rem] transition-colors
-                  ${isDone ? 'border-sage-ink/50 bg-tip text-sage-ink' : ''}
-                  ${selected === i ? 'border-gold bg-gold/15 ring-2 ring-gold' : ''}
-                  ${!isDone && selected !== i ? 'border-navy/12 bg-white hover:border-coral-ink/55' : ''}`}
+                  ${isDone ? 'border-verde-ink/50 bg-tip text-verde-ink' : ''}
+                  ${selected === i ? 'border-amarillo bg-amarillo/15 ring-2 ring-amarillo' : ''}
+                  ${!isDone && selected !== i ? 'border-azul/12 bg-white hover:border-rojo-ink/55' : ''}`}
               >
                 {p[0]}
               </button>
@@ -70,9 +70,9 @@ export default function MatchEx({ exercise, onDone }) {
                 disabled={isDone}
                 onClick={() => pickRight(r.id)}
                 className={`rounded-xl border px-3 py-2 text-left text-[0.95rem] transition-colors
-                  ${isDone ? 'border-sage-ink/50 bg-tip text-sage-ink' : ''}
-                  ${wrong === r.id ? 'border-coral-ink' : ''}
-                  ${!isDone && wrong !== r.id ? 'border-navy/12 bg-white hover:border-coral-ink/55' : ''}`}
+                  ${isDone ? 'border-verde-ink/50 bg-tip text-verde-ink' : ''}
+                  ${wrong === r.id ? 'border-rojo-ink' : ''}
+                  ${!isDone && wrong !== r.id ? 'border-azul/12 bg-white hover:border-rojo-ink/55' : ''}`}
               >
                 {r.text}
               </button>
@@ -80,7 +80,7 @@ export default function MatchEx({ exercise, onDone }) {
           })}
         </div>
       </div>
-      {done && <p className="mt-3 text-[0.9rem] font-semibold text-sage-ink">{S.allMatched}</p>}
+      {done && <p className="mt-3 text-[0.9rem] font-semibold text-verde-ink">{S.allMatched}</p>}
     </div>
   )
 }

@@ -16,6 +16,9 @@ const ARC_TOP = 88 // punto de control (el arco sube hasta ~144)
 const HALF = 158 // medio ancho del arco
 const BTN_Y = 292 // fila de botones 🎧 (overlay HTML)
 
+/* Paneles del cielo: mañana, tarde, noche que cae, noche. */
+const SKY = ['#FCE7A6', '#CFE3F5', '#F4A259', '#1F3354']
+
 /* Estrella de cinco puntas pequeña para el cielo nocturno. */
 function Star({ x, y, r = 5 }) {
   const pts = Array.from({ length: 10 }, (_, i) => {
@@ -23,7 +26,7 @@ function Star({ x, y, r = 5 }) {
     const rr = i % 2 ? r * 0.45 : r
     return `${x + rr * Math.cos(a)},${y + rr * Math.sin(a)}`
   }).join(' ')
-  return <polygon points={pts} fill="#FFF3C4" />
+  return <polygon points={pts} fill="#FCE7A6" />
 }
 
 /** Sol con rayos. */
@@ -80,7 +83,7 @@ function NoteBadge({ note, style }) {
         aria-expanded={open}
         aria-label={open ? 'Hide usage note' : 'Show usage note'}
         className="flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-white
-          bg-gold text-navy shadow-soft"
+          bg-amarillo text-azul shadow-soft"
       >
         <span ref={iconRef} className="flex" style={{ transform: open ? 'rotate(45deg)' : undefined }}>
           <Plus size={24} strokeWidth={2.8} />
@@ -90,7 +93,7 @@ function NoteBadge({ note, style }) {
         <p
           ref={noteRef}
           className="absolute right-0 top-[54px] w-[250px] rounded-2xl bg-white px-4 py-3 text-left
-            font-body text-[18px] font-semibold leading-snug text-navy shadow-lift"
+            font-body text-[18px] font-semibold leading-snug text-azul shadow-lift"
         >
           {note}
         </p>
@@ -146,28 +149,10 @@ export default function DayArc({ block, compact = false, className = '' }) {
         aria-label={`The day: ${zones.map((z) => z.greeting).join(', ')}`}
       >
         <defs>
-          <linearGradient id={`sky-${uid}`} x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor="#FCE1C2" />
-            <stop offset=".18" stopColor="#FBEEDA" />
-            <stop offset=".3" stopColor="#DCEEF5" />
-            <stop offset=".5" stopColor="#CDE5F0" />
-            <stop offset=".6" stopColor="#F9D6AC" />
-            <stop offset=".68" stopColor="#F4A66E" />
-            <stop offset=".74" stopColor="#EE8E5D" />
-            <stop offset=".78" stopColor="#3A4F72" />
-            <stop offset=".85" stopColor="#1B3A5C" />
-            <stop offset="1" stopColor="#152E4A" />
-          </linearGradient>
-          <linearGradient id={`hill-${uid}`} x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor="#6B9080" />
-            <stop offset=".62" stopColor="#5E8474" />
-            <stop offset=".78" stopColor="#2F4A5E" />
-            <stop offset="1" stopColor="#1E344B" />
-          </linearGradient>
           <clipPath id={`clip-${uid}`}>
             <rect width={W} height={H} rx="28" />
           </clipPath>
-          {['navy', 'gold'].map((c) => (
+          {['azul', 'amarillo'].map((c) => (
             <marker
               key={c}
               id={`arrow-${c}-${uid}`}
@@ -178,13 +163,20 @@ export default function DayArc({ block, compact = false, className = '' }) {
               markerHeight="5"
               orient="auto-start-reverse"
             >
-              <path d="M0 0 10 5 0 10z" fill={c === 'gold' ? '#E9B44C' : '#1B3A5C'} />
+              <path d="M0 0 10 5 0 10z" fill={c === 'amarillo' ? '#F5B700' : '#1f3354'} />
             </marker>
           ))}
         </defs>
 
         <g clipPath={`url(#clip-${uid})`}>
-          <rect width={W} height={H} fill={`url(#sky-${uid})`} />
+          {/* Cielo pintado como paneles planos de la chiva, uno por franja,
+              separados por filetes blancos */}
+          {SKY.map((c, i) => (
+            <rect key={c} x={i * ZONE} width={ZONE} height={H} fill={c} />
+          ))}
+          {[1, 2, 3].map((i) => (
+            <rect key={i} x={i * ZONE - 2} width="4" height={H} fill="#FFFFFF" opacity=".85" />
+          ))}
 
           {/* Estrellas y luna de la franja nocturna */}
           {[
@@ -193,31 +185,30 @@ export default function DayArc({ block, compact = false, className = '' }) {
           ].map(([x, y, r], i) => (
             <Star key={i} x={x} y={y} r={r} />
           ))}
-          <circle cx={3.5 * ZONE} cy="360" r="42" fill="#F6E7B8" />
-          <circle cx={3.5 * ZONE + 20} cy="347" r="38" fill="#1E3656" />
+          <circle cx={3.5 * ZONE} cy="360" r="42" fill="#FCE7A6" />
+          <circle cx={3.5 * ZONE + 20} cy="347" r="38" fill="#1F3354" />
 
           {/* Soles: saliendo, en lo alto, cayendo */}
-          <Sun x={0.5 * ZONE} y={440} r={54} fill="#E9B44C" />
-          <Sun x={1.5 * ZONE} y={385} r={48} fill="#F2C14E" />
-          <Sun x={2.5 * ZONE} y={432} r={46} fill="#E26B45" rays={false} />
+          <Sun x={0.5 * ZONE} y={440} r={54} fill="#F5B700" />
+          <Sun x={1.5 * ZONE} y={385} r={48} fill="#F5B700" />
+          <Sun x={2.5 * ZONE} y={432} r={46} fill="#D7263D" rays={false} />
 
           {/* Montañas: fondo y frente */}
           <path
             d={`M0 460 L90 405 L190 450 L300 390 L420 445 L540 400 L650 450 L760 395 L880 452
                L990 405 L1110 450 L1230 400 L1330 445 L${W} 420 L${W} ${H} L0 ${H}Z`}
-            fill={`url(#hill-${uid})`}
-            opacity=".55"
+            fill="#3FB3A5"
           />
           <path
             d={`M0 490 Q120 440 250 480 T520 478 T800 482 T1080 476 T${W} 470 L${W} ${H} L0 ${H}Z`}
-            fill={`url(#hill-${uid})`}
+            fill="#0F6E63"
           />
 
           {/* Arcos con flecha + saludo que sigue la curva */}
           {zones.map((z, i) => {
             const cx = (i + 0.5) * ZONE
             const d = `M${cx - HALF} ${ARC_Y} Q${cx} ${ARC_TOP} ${cx + HALF} ${ARC_Y}`
-            const ink = night(i) ? '#FFFFFF' : '#1B3A5C'
+            const ink = night(i) ? '#FFFFFF' : '#1f3354'
             return (
               <g key={i}>
                 <path id={`arc-${uid}-${i}`} d={d} fill="none" />
@@ -225,16 +216,15 @@ export default function DayArc({ block, compact = false, className = '' }) {
                   data-arc
                   d={d}
                   fill="none"
-                  stroke={night(i) ? '#E9B44C' : '#1B3A5C'}
+                  stroke={night(i) ? '#F5B700' : '#1f3354'}
                   strokeWidth="4"
                   strokeLinecap="round"
-                  markerEnd={`url(#arrow-${night(i) ? 'gold' : 'navy'}-${uid})`}
+                  markerEnd={`url(#arrow-${night(i) ? 'amarillo' : 'azul'}-${uid})`}
                 />
                 <text
                   data-greet
-                  fontFamily="Playfair Display, serif"
-                  fontWeight="800"
-                  fontSize={compact ? 40 : 34}
+                  style={{ fontFamily: 'var(--font-display)' }}
+                  fontSize={compact ? 34 : 31}
                   fill={ink}
                   dy="-12"
                 >
@@ -248,11 +238,11 @@ export default function DayArc({ block, compact = false, className = '' }) {
                     x={cx}
                     y={ARC_Y + 50}
                     textAnchor="middle"
-                    fontFamily="Nunito Sans, sans-serif"
-                    fontWeight="800"
+                    style={{ fontFamily: 'var(--font-body)' }}
+                    fontWeight="700"
                     fontSize={compact ? 34 : 24}
                     letterSpacing="2"
-                    fill={night(i) ? '#E9B44C' : '#B23A28'}
+                    fill={night(i) ? '#F5B700' : i === 2 ? '#1f3354' : '#B01E31'}
                   >
                     {z.range}
                   </text>

@@ -31,7 +31,7 @@ function Confetti() {
       delay: stagger(40),
     })
   }, [])
-  const colors = ['#E05A47', '#6B9080', '#E9B44C', '#1B3A5C']
+  const colors = ['#D7263D', '#1B998B', '#F5B700', '#1f3354']
   return (
     <div ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 flex justify-center gap-2">
       {Array.from({ length: 18 }).map((_, i) => (
@@ -118,15 +118,15 @@ export default function StudyQuiz() {
       {!finished && question && (
         <div className="mx-auto max-w-2xl">
           <div className="flex items-center justify-between">
-            <p className="label-caps text-coral-ink">{S.question(index + 1, questions.length)}</p>
+            <p className="label-caps text-rojo-ink">{S.question(index + 1, questions.length)}</p>
             <p className="text-[0.8rem] text-ink-soft">{S.quizNoFeedback}</p>
           </div>
-          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-navy/10">
-            <div className="h-full rounded-full bg-coral-ink transition-[width] duration-500" style={{ width: `${(index / questions.length) * 100}%` }} />
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-azul/10">
+            <div className="h-full rounded-full bg-rojo-ink transition-[width] duration-500" style={{ width: `${(index / questions.length) * 100}%` }} />
           </div>
 
-          <div ref={cardRef} className="mt-6 rounded-2xl border border-navy/10 bg-white p-7 shadow-soft">
-            <p className="font-display text-[1.35rem] text-navy">{question.q}</p>
+          <div ref={cardRef} className="mt-6 rounded-2xl border border-azul/10 bg-white p-7 shadow-soft">
+            <p className="font-display text-[1.35rem] text-azul">{question.q}</p>
             <div className="mt-5 flex flex-col gap-2.5">
               {question.options.map((opt, oi) => (
                 <button
@@ -135,9 +135,9 @@ export default function StudyQuiz() {
                   onClick={() => setPicked(oi)}
                   aria-pressed={picked === oi}
                   className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-[1rem] transition-colors
-                    ${picked === oi ? 'border-coral-ink bg-coral-ink/8 ring-2 ring-coral-ink/40' : 'border-navy/12 bg-white hover:border-coral-ink/55'}`}
+                    ${picked === oi ? 'border-rojo-ink bg-rojo-ink/8 ring-2 ring-rojo-ink/40' : 'border-azul/12 bg-white hover:border-rojo-ink/55'}`}
                 >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-navy/15 font-display text-[0.85rem] text-coral-ink">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-azul/15 font-display text-[0.85rem] text-rojo-ink">
                     {LETTERS[oi]}
                   </span>
                   {opt.text}
@@ -156,20 +156,20 @@ export default function StudyQuiz() {
       {finished && (
         <div className="relative mx-auto max-w-2xl">
           {passed && <Confetti />}
-          <div className="rounded-2xl border border-navy/10 bg-white p-7 text-center shadow-lift">
-            <p className="label-caps text-sage-ink">{S.quizResult}</p>
-            <p className={`mt-2 font-display text-[3.2rem] font-extrabold leading-none ${passed ? 'text-sage-ink' : 'text-coral-ink'}`}>
+          <div className="rounded-2xl border border-azul/10 bg-white p-7 text-center shadow-lift">
+            <p className="label-caps text-verde-ink">{S.quizResult}</p>
+            <p className={`mt-2 font-display text-[3.2rem] font-extrabold leading-none ${passed ? 'text-verde-ink' : 'text-rojo-ink'}`}>
               {score}%
             </p>
             <p className="mt-1 text-[0.9rem] text-ink-soft">{S.score(right, questions.length)}</p>
             <h2 className="mt-4">{passed ? S.quizPassed : S.quizFailed}</h2>
             {passed && next && (
-              <p className="mt-2 inline-block rounded-full bg-gold/25 px-4 py-1.5 font-semibold text-navy">
+              <p className="mt-2 inline-block rounded-full bg-amarillo/25 px-4 py-1.5 font-semibold text-azul">
                 🔓 {S.topicUnlocked(next.title)}
               </p>
             )}
             {passed && !next && (
-              <p className="mt-2 inline-block rounded-full bg-gold/25 px-4 py-1.5 font-semibold text-navy">
+              <p className="mt-2 inline-block rounded-full bg-amarillo/25 px-4 py-1.5 font-semibold text-azul">
                 {S.moduleMastered(mod.moduleId)}
               </p>
             )}
@@ -178,7 +178,7 @@ export default function StudyQuiz() {
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               {!passed && <Button size="lg" onClick={retry}>{S.retakeQuiz}</Button>}
               {passed && next && (
-                <Button size="lg" variant="sage" onClick={() => navigate(`/study/${bookId}/${next.id}`)}>
+                <Button size="lg" variant="verde" onClick={() => navigate(`/study/${bookId}/${next.id}`)}>
                   {S.nextTopic}
                 </Button>
               )}
@@ -195,7 +195,7 @@ export default function StudyQuiz() {
 
           {/* Revisión de respuestas, ya con feedback */}
           <div className="mt-6 rounded-2xl bg-box p-5">
-            <p className="label-caps text-sage-ink">{S.yourAnswers}</p>
+            <p className="label-caps text-verde-ink">{S.yourAnswers}</p>
             <ol className="mt-3 flex flex-col gap-2.5">
               {questions.map((q, i) => {
                 const a = q.options[answers[i]]
@@ -203,14 +203,14 @@ export default function StudyQuiz() {
                 const correctText = q.options.find((o) => o.ok)?.text
                 return (
                   <li key={i} className="flex items-start gap-3 text-[0.9rem]">
-                    <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white ${ok ? 'bg-sage-ink' : 'bg-coral-ink'}`}>
+                    <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white ${ok ? 'bg-verde-ink' : 'bg-rojo-ink'}`}>
                       {ok ? <Check size={12} strokeWidth={3} /> : <X size={12} strokeWidth={3} />}
                     </span>
                     <span>
-                      <span className="font-semibold text-navy">{q.q}</span>
+                      <span className="font-semibold text-azul">{q.q}</span>
                       <br />
-                      <span className={ok ? 'text-sage-ink' : 'text-coral-ink line-through'}>{a?.text}</span>
-                      {!ok && <span className="ml-2 text-sage-ink">→ {correctText}</span>}
+                      <span className={ok ? 'text-verde-ink' : 'text-rojo-ink line-through'}>{a?.text}</span>
+                      {!ok && <span className="ml-2 text-verde-ink">→ {correctText}</span>}
                     </span>
                   </li>
                 )

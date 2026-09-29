@@ -133,7 +133,7 @@ export default function ModuleGames() {
     <div ref={ref} className="mx-auto w-full max-w-[1080px] px-5 py-7 sm:px-8">
       <header className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <p className="label-caps text-sage-ink">Games</p>
+          <p className="label-caps text-verde-ink">Games</p>
           <h1 className="mt-1">
             Module {mod.moduleId} · {mod.moduleName}
           </h1>
@@ -151,8 +151,8 @@ export default function ModuleGames() {
       </header>
 
       {games.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-sage/60 bg-box p-8 text-center">
-          <p className="font-display text-[1.05rem] text-navy">
+        <div className="rounded-2xl border border-dashed border-verde/60 bg-box p-8 text-center">
+          <p className="font-display text-[1.05rem] text-azul">
             Este módulo todavía no tiene juegos.
           </p>
           <p className="mt-1 text-[0.88rem] text-ink-soft">Próximamente.</p>

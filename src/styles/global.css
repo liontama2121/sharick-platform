@@ -1,37 +1,37 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SISTEMA EDITORIAL — libro impreso estilo National Geographic Learning
-   Paleta suave de acuarela. Los colores tricolor de Colombia viven solo
-   en la PORTADA del libro (ver tokens col-*), nunca en páginas interiores.
+   LA CHIVA — el libro es un bus pintado latinoamericano que recorre
+   Colombia, Venezuela, Bolivia y Panamá. La carrocería de colores lleva la
+   navegación; las ventanas (páginas) enmarcan el estudio en blanco limpio.
+   Colores planos de pintura, filetes finos de color contrario, guardas
+   pintadas (ver decor/Filete.jsx) y rotulado en slab con sombra de color.
    ═══════════════════════════════════════════════════════════════════════ */
 @theme {
-  /* Papel */
-  --color-paper: #f7f2e9;        /* fondo de página (cream cálido) */
-  --color-paper-edge: #ece3d4;   /* borde/sombra interior de la hoja */
-  --color-box: #f0e9db;          /* cajas de contenido (beige) */
+  /* Carrocería e interior de ventana */
+  --color-paper: #ffffff;        /* interior de ventana: la hoja de estudio */
+  --color-paper-edge: #e4e8ee;
+  --color-carroceria: #f3f5f8;   /* fondo general: carrocería pintada de blanco frío */
+  --color-box: #eef2f7;          /* cajas de contenido: azul muy claro */
 
   /* Tinta */
-  --color-navy: #1b3a5c;         /* títulos serif */
-  --color-ink: #33302b;          /* cuerpo de texto */
-  --color-ink-soft: #6b655c;     /* texto secundario */
+  --color-azul: #1f3354;         /* rótulos y títulos (13:1 sobre blanco) */
+  --color-ink: #1e2530;          /* cuerpo de texto */
+  --color-ink-soft: #4f5b6b;     /* texto secundario (6.9:1) */
 
-  /* Acentos decorativos (NO usar como texto pequeño: bajo contraste) */
-  --color-coral: #e05a47;
-  --color-sage: #6b9080;
-  --color-gold: #e9b44c;
+  /* Pintura de la chiva: rellenos planos */
+  --color-rojo: #d7263d;
+  --color-verde: #1b998b;
+  --color-amarillo: #f5b700;
+  --color-madera: #8a5a2b;       /* marcos de ventana, escalera */
+  --color-morado: #6d3b8e;
 
-  /* Variantes legibles de los acentos, para texto y fondos con texto */
-  --color-coral-ink: #b23a28;    /* labels UNIT/LESSON, números */
-  --color-sage-ink: #4f6f60;     /* labels EXERCISE/VOCABULARY */
-  --color-tip: #e4ede8;          /* fondo de la caja Cultural Tip */
+  /* Variantes legibles para texto y fondos con texto blanco */
+  --color-rojo-ink: #b01e31;     /* 6.9:1 sobre blanco · blanco encima 6.9:1 */
+  --color-verde-ink: #0f6e63;    /* 6.1:1 sobre blanco */
+  --color-tip: #e3f4f1;          /* fondo de la caja Cultural Tip */
 
-  /* Hilos de los textiles latinoamericanos (mola, aguayo, tejido wayuu).
-     DECORATIVOS: solo rellenos de patrones y puntadas, jamás texto. */
-  --color-bugambilia: #c2376a;
-  --color-turquesa: #23857f;
-
-  /* Tricolor Colombia — SOLO portada y branding */
+  /* Tricolor Colombia (dato de registro; la portada ya no depende de él) */
   --color-col-blue: #003da5;
   --color-col-yellow: #ffd100;
   --color-col-red: #ce1126;
@@ -39,25 +39,25 @@
   /* Monitor grande (el Nivel 2 ensancha su contenedor) */
   --breakpoint-3xl: 1800px;
 
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Rotulado de carrocería + lectura para estudiantes */
+  --font-display: "Alfa Slab One", "Rockwell", Georgia, serif;
+  --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-page: 0 18px 45px rgba(27, 58, 92, 0.18);
-  --shadow-soft: 0 2px 10px rgba(27, 58, 92, 0.07);
-  --shadow-lift: 0 10px 26px rgba(27, 58, 92, 0.16);
+  --shadow-page: 0 22px 50px rgba(20, 30, 50, 0.28);
+  --shadow-soft: 0 2px 8px rgba(20, 30, 50, 0.1);
+  --shadow-lift: 0 10px 24px rgba(20, 30, 50, 0.22);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   TEXTURAS — papel artesanal y tela de manta
-   Grano: ruido fractal (feTurbulence) teñido de sepia, muy bajo.
-   Fibra: ruido estirado en vertical, como las hebras del papel de fique.
-   Manta: trama cruzada de 1px sobre el fondo general de la app.
-   ═══════════════════════════════════════════════════════════════════════ */
+/* Pintura: grano finísimo para que los planos de color no se vean digitales */
 :root {
-  --tex-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .24 0 0 0 0 .18 0 0 0 0 .11 0 0 0 .16 0'/%3E%3C/filter%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .42' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .18 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
-  --tex-manta:
-    repeating-linear-gradient(0deg, rgba(107, 84, 52, 0.028) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(90deg, rgba(107, 84, 52, 0.022) 0 1px, transparent 1px 4px);
+  --tex-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .1 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --tex-madera: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0 2px,
+    transparent 2px 9px,
+    rgba(0, 0, 0, 0.06) 9px 10px,
+    transparent 10px 17px
+  );
 }
 
 @layer base {
@@ -66,18 +66,17 @@
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-gold) 45%, transparent);
-    color: var(--color-navy);
+    background: color-mix(in srgb, var(--color-amarillo) 45%, transparent);
+    color: var(--color-azul);
   }
 
   input,
   textarea {
-    caret-color: var(--color-coral-ink);
+    caret-color: var(--color-rojo-ink);
   }
 
   body {
-    background-color: #ece2cf;
-    background-image: var(--tex-grain), var(--tex-manta);
+    background-color: var(--color-carroceria);
     color: var(--color-ink);
     font-family: var(--font-body);
     font-weight: 400;
@@ -89,13 +88,21 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    color: var(--color-navy);
-    font-weight: 700;
-    line-height: 1.12;
+    color: var(--color-azul);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.005em;
+  }
+  /* Alfa Slab One solo tiene un peso: nunca negrita sintética */
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-synthesis-weight: none;
   }
   h1 {
     font-size: clamp(1.9rem, 3.6vw, 2.6rem);
-    font-weight: 800;
   }
   h2 {
     font-size: clamp(1.4rem, 2.4vw, 1.8rem);
@@ -105,7 +112,7 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-navy);
+    outline: 3px solid var(--color-azul);
     outline-offset: 2px;
     border-radius: 6px;
   }
@@ -133,7 +140,12 @@
      de 5 a partir de 1800px. */
   .grid-pantallas {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 560px) {
+    .grid-pantallas {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   @media (min-width: 768px) {
     .grid-pantallas {
@@ -154,48 +166,67 @@
   /* Divisor de línea punteada entre secciones */
   .divider-dotted {
     height: 0;
-    border-top: 2px dotted color-mix(in srgb, var(--color-navy) 22%, transparent);
+    border-top: 2px dotted color-mix(in srgb, var(--color-azul) 22%, transparent);
   }
 
   /* Línea para completar (input underline, sin caja) */
   .rule-fill {
     border: 0;
-    border-bottom: 2px solid color-mix(in srgb, var(--color-navy) 35%, transparent);
+    border-bottom: 2px solid color-mix(in srgb, var(--color-azul) 35%, transparent);
     background: transparent;
     border-radius: 0;
   }
   .rule-fill:focus {
     outline: none;
-    border-bottom-color: var(--color-coral-ink);
+    border-bottom-color: var(--color-rojo-ink);
   }
 
-  /* Hoja de papel del libro */
+  /* Interior de ventana: hoja de estudio blanca y limpia */
   .paper {
     background-color: var(--color-paper);
-    background-image:
-      var(--tex-grain),
-      radial-gradient(circle at 12% 8%, rgba(233, 180, 76, 0.07), transparent 42%),
-      radial-gradient(circle at 88% 92%, rgba(107, 144, 128, 0.08), transparent 45%);
   }
 
-  /* Grano de papel encima del color de fondo que ya tenga el elemento
-     (bg-box, bg-navy, bg-coral-ink…). Solo usa background-image. */
+  /* Grano de pintura encima del color que ya tenga el elemento
+     (bg-azul, bg-rojo-ink, bg-box…). Solo usa background-image. */
   .grain {
     background-image: var(--tex-grain);
   }
 
-  /* Tela de manta: fondos de "mesa" detrás de hojas y marcos */
-  .manta {
-    background-color: #ece2cf;
-    background-image: var(--tex-grain), var(--tex-manta);
+  /* Chasis: azul noche detrás del lienzo del lector (letterbox) */
+  .chasis {
+    background-color: #16243b;
+    background-image: var(--tex-grain);
   }
 
+  /* Tablones de madera: escalera y marcos de la chiva */
+  .madera {
+    background-color: var(--color-madera);
+    background-image: var(--tex-grain), var(--tex-madera);
+  }
+
+  /* Rotulado de carrocería: slab con sombra plana de color, como pintan
+     los nombres de las chivas. --rotulo-sombra cambia el color de la sombra. */
+  .rotulo {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-shadow: 0.07em 0.07em 0 var(--rotulo-sombra, var(--color-amarillo));
+  }
+
+  /* Ventana de la chiva: marco de madera con filete amarillo por dentro */
+  .ventana {
+    background-color: var(--color-paper);
+    border: 6px solid var(--color-madera);
+    border-radius: 16px;
+    box-shadow:
+      inset 0 0 0 2px var(--color-amarillo),
+      var(--shadow-lift);
+  }
 
   .scrollbar-slim::-webkit-scrollbar {
     width: 7px;
   }
   .scrollbar-slim::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--color-navy) 18%, transparent);
+    background: color-mix(in srgb, var(--color-azul) 18%, transparent);
     border-radius: 999px;
   }
   .scrollbar-slim::-webkit-scrollbar-track {
@@ -209,16 +240,16 @@
   width: 16px;
   height: 16px;
   border-radius: 999px;
-  background: var(--color-coral-ink);
+  background: var(--color-rojo-ink);
   border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(27, 58, 92, 0.3);
+  box-shadow: 0 1px 4px rgba(20, 30, 50, 0.3);
   cursor: pointer;
 }
 .audio-range::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 999px;
-  background: var(--color-coral-ink);
+  background: var(--color-rojo-ink);
   border: 2px solid #fff;
   cursor: pointer;
 }

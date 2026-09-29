@@ -2,11 +2,11 @@ import { useRef } from 'react'
 import { animate } from 'animejs'
 
 const VARIANTS = {
-  primary: 'bg-coral-ink text-white hover:brightness-110',
-  navy: 'bg-navy text-white hover:brightness-115',
-  sage: 'bg-sage-ink text-white hover:brightness-110',
-  gold: 'bg-gold text-navy hover:brightness-105',
-  ghost: 'bg-white text-navy border border-navy/15 hover:border-coral-ink/60 hover:text-coral-ink',
+  primary: 'bg-rojo-ink text-white hover:brightness-110',
+  azul: 'bg-azul text-white hover:brightness-115',
+  verde: 'bg-verde-ink text-white hover:brightness-110',
+  amarillo: 'bg-amarillo text-azul hover:brightness-105',
+  ghost: 'bg-white text-azul border border-azul/15 hover:border-rojo-ink/60 hover:text-rojo-ink',
 }
 
 const SIZES = {

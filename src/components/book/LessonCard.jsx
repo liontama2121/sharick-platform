@@ -1,7 +1,6 @@
 import { animate } from 'animejs'
 import { Check, Gamepad2, Mic, PenLine, Video, Volume2 } from 'lucide-react'
 
-import Stitches from '../decor/Stitches'
 import LessonSpread from './LessonSpread'
 
 const reduced = () =>
@@ -28,7 +27,7 @@ function ProgressRing({ done, total }) {
     <span
       title={full ? 'Lección completada' : `${done} de ${total} pantallas completadas`}
       className={`absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full
-        border-2 border-white shadow-soft ${full ? 'bg-sage-ink text-white' : 'bg-white'}`}
+        border-2 border-white shadow-soft ${full ? 'bg-verde-ink text-white' : 'bg-white'}`}
     >
       {full ? (
         <Check size={12} strokeWidth={3.2} />
@@ -40,7 +39,7 @@ function ProgressRing({ done, total }) {
             cy="12"
             r={R}
             fill="none"
-            stroke="var(--color-sage-ink)"
+            stroke="var(--color-verde-ink)"
             strokeWidth="4"
             strokeLinecap="round"
             strokeDasharray={`${C * pct} ${C}`}
@@ -111,27 +110,24 @@ export default function LessonCard({
       <span
         data-pulse
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-[4px] rounded-[12px] opacity-0 ring-[3px] ring-gold"
+        className="pointer-events-none absolute -inset-[4px] rounded-[12px] opacity-0 ring-[3px] ring-amarillo"
       />
 
       <LessonSpread
         screens={thumbScreens}
         meta={meta}
         content={content}
-        frameClassName={`rounded-lg border shadow-lift
-          ${current ? 'border-coral-ink ring-2 ring-coral-ink/40' : 'border-[#cfc3a9]'}`}
+        frameClassName={`rounded-[14px] border-[5px] shadow-lift
+          ${current ? 'border-rojo-ink ring-4 ring-amarillo' : 'border-madera'}`}
       />
-
-      {/* Puntadas de tejido detrás del tag */}
-      {!compact && <Stitches cell={5} className="absolute -left-8 -top-10" />}
 
       {/* Tag sobresaliente: número de lección grande (★ en la portada) */}
       <span
         data-tag
-        className={`absolute flex flex-col items-center justify-center bg-coral-ink leading-none
-          text-white shadow-[0_10px_22px_rgba(27,58,92,.28)] ${tagSize}`}
+        className={`absolute flex flex-col items-center justify-center border-[3px] border-amarillo
+          bg-rojo-ink leading-none text-white shadow-[0_10px_22px_rgba(20,30,50,.28)] ${tagSize}`}
       >
-        <span className={`font-display font-extrabold ${compact ? 'text-[1.1rem]' : 'text-[1.5rem]'}`}>
+        <span className={`rotulo ${compact ? 'text-[1.1rem]' : 'text-[1.5rem]'}`} style={{ '--rotulo-sombra': 'var(--color-azul)' }}>
           {isCover ? '★' : lesson.id}
         </span>
         {!isCover && !compact && (
@@ -153,7 +149,7 @@ export default function LessonCard({
             title={label}
             aria-label={label}
             className="absolute flex items-center justify-center rounded-full border-[3px]
-              border-white bg-coral-ink text-white shadow-[0_8px_18px_rgba(27,58,92,.25)]"
+              border-amarillo bg-azul text-white shadow-[0_8px_18px_rgba(20,30,50,.25)]"
             style={{
               width: badgeSize,
               height: badgeSize,

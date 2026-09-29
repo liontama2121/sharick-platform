@@ -41,21 +41,21 @@ export default function StudyExercise({ exercise, number, done, onDone }) {
   return (
     <li
       className={`rounded-2xl border bg-white p-5 shadow-soft transition-colors
-        ${done ? 'border-sage-ink/50' : 'border-navy/10'}`}
+        ${done ? 'border-verde-ink/50' : 'border-azul/10'}`}
     >
       <div className="mb-3 flex items-center gap-3">
         <span
           className={`flex h-8 w-8 items-center justify-center rounded-full font-display text-[1rem]
-            ${done ? 'bg-sage-ink text-white' : 'bg-coral-ink text-white'}`}
+            ${done ? 'bg-verde-ink text-white' : 'bg-rojo-ink text-white'}`}
         >
           {done ? <Check size={16} strokeWidth={3} /> : number}
         </span>
-        <span className="label-caps text-sage-ink">{TYPE_LABEL[exercise.type] ?? exercise.type}</span>
+        <span className="label-caps text-verde-ink">{TYPE_LABEL[exercise.type] ?? exercise.type}</span>
       </div>
       {Component ? (
         <Component exercise={exercise} onDone={onDone} idPrefix={`ex-${number}`} />
       ) : (
-        <p className="text-coral-ink">
+        <p className="text-rojo-ink">
           Unknown exercise type: <code>{exercise.type}</code>
         </p>
       )}

@@ -19,7 +19,7 @@ export default function RoutineBlock({ section }) {
   return (
     <section>
       <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
-        <SectionLabel tone="sage" leaf>
+        <SectionLabel tone="verde" leaf>
           {section.label ?? 'Through the day'}
         </SectionLabel>
         {section.title && <h3>{section.title}</h3>}
@@ -34,8 +34,8 @@ export default function RoutineBlock({ section }) {
             {item.clockTime && <AnalogClock time={item.clockTime} size={54} showDigital={false} />}
 
             <div className="min-w-0 flex-1">
-              <p className="label-caps text-coral-ink">{item.label ?? item.time}</p>
-              <p className="font-display text-[1.15rem] leading-tight text-navy">{item.greeting}</p>
+              <p className="label-caps text-rojo-ink">{item.label ?? item.time}</p>
+              <p className="font-display text-[1.15rem] leading-tight text-azul">{item.greeting}</p>
               {item.note && (
                 <p className="mt-0.5 text-[0.76rem] leading-snug text-ink-soft">{item.note}</p>
               )}

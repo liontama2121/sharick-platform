@@ -1,11 +1,10 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { hoverFloat } from '../../hooks/useFeedback'
-import Swirl from '../decor/Swirl'
-import Textile from '../decor/Textile'
-import TropicalFlower from '../decor/TropicalFlower'
+import Filete from '../decor/Filete'
+import Guarda from '../decor/Guarda'
 
-/** Card de libro en el Home. La portada conserva el tricolor de Colombia. */
+/** Card de libro en el Home: una ventana de la chiva con el nivel rotulado. */
 export default function BookCard({ book }) {
   const ref = useRef(null)
   const available = !!book.available
@@ -15,43 +14,37 @@ export default function BookCard({ book }) {
       ref={ref}
       onMouseEnter={() => available && hoverFloat(ref.current, true)}
       onMouseLeave={() => available && hoverFloat(ref.current, false)}
-      className={`flex h-full flex-col overflow-hidden rounded-2xl border border-navy/10
-        paper shadow-soft ${available ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'}`}
+      className={`flex h-full flex-col overflow-hidden rounded-[18px] border-[6px] bg-paper shadow-lift
+        ${available ? 'cursor-pointer border-madera' : 'cursor-not-allowed border-[#b9c3d0] opacity-70'}`}
     >
       <div
-        className={`relative flex h-32 items-center justify-center overflow-hidden
-          ${available ? 'grain bg-navy' : 'bg-ink-soft/40'}`}
+        className={`grain relative flex h-28 items-center justify-center
+          ${available ? 'bg-azul' : 'bg-ink-soft/50'}`}
       >
-        {available && (
-          <>
-            <span
-              aria-hidden="true"
-              className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#003DA5] via-[#FFD100] to-[#CE1126]"
-            />
-            <TropicalFlower
-              variant="heliconia"
-              size={96}
-              className="absolute -left-2 bottom-0 opacity-45"
-            />
-            <Textile variant="mola" height={12} className="absolute inset-x-0 bottom-0 h-3 w-full" />
-          </>
-        )}
-        <span className="font-display text-2xl text-white">{book.level ?? 'A1'}</span>
+        <span
+          className="rotulo text-[2.4rem] leading-none text-white"
+          style={{ '--rotulo-sombra': available ? 'var(--color-rojo)' : 'rgba(0,0,0,.25)' }}
+        >
+          {book.level ?? 'A1'}
+        </span>
       </div>
+      {available && <Filete variant="dientes" height={12} className="h-3 w-full" />}
 
-      <div className="flex flex-1 flex-col gap-1.5 p-5">
-        <h3>{book.name}</h3>
-        <Swirl width={72} />
-        <p className="label-caps text-sage-ink">{book.language ?? 'Próximamente'}</p>
+      <div className="flex flex-1 flex-col gap-2 p-5">
+        <h3 className="text-[1.2rem]">{book.name}</h3>
+        <Guarda width={72} />
+        <p className="text-[0.82rem] font-semibold uppercase tracking-[0.12em] text-verde-ink">
+          {book.language ?? 'Próximamente'}
+        </p>
         {book.description && (
-          <p className="text-[0.88rem] leading-relaxed text-ink-soft">{book.description}</p>
+          <p className="text-[0.9rem] leading-relaxed text-ink-soft">{book.description}</p>
         )}
         <span
-          className={`mt-auto inline-flex w-fit items-center rounded-full px-4 py-1.5
-            text-[0.78rem] font-semibold
-            ${available ? 'bg-coral-ink text-white' : 'bg-navy/10 text-ink-soft'}`}
+          className={`mt-auto inline-flex w-fit items-center rounded-full px-5 py-2
+            text-[0.85rem] font-semibold
+            ${available ? 'bg-rojo-ink text-white' : 'bg-azul/10 text-ink-soft'}`}
         >
-          {available ? 'Abrir el libro →' : 'Próximamente'}
+          {available ? 'Subir al libro →' : 'Próximamente'}
         </span>
       </div>
     </div>

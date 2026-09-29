@@ -92,17 +92,17 @@ export default function QuickQuiz({ game, onFinish, onExit }) {
       {question && (
         <div className="box-beige p-5">
           <div className="mb-2 flex items-center justify-between">
-            <p className="label-caps text-sage-ink">
+            <p className="label-caps text-verde-ink">
               Pregunta {index + 1} de {questions.length}
             </p>
-            <p className="label-caps text-coral-ink">Aciertos: {correct}</p>
+            <p className="label-caps text-rojo-ink">Aciertos: {correct}</p>
           </div>
 
-          <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-navy/10">
-            <div ref={barRef} className="h-full rounded-full bg-coral-ink" style={{ width: '100%' }} />
+          <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-azul/10">
+            <div ref={barRef} className="h-full rounded-full bg-rojo-ink" style={{ width: '100%' }} />
           </div>
 
-          <p className="mb-4 font-display text-[1.15rem] text-navy">{question.q}</p>
+          <p className="mb-4 font-display text-[1.15rem] text-azul">{question.q}</p>
 
           <div className="flex flex-col gap-2">
             {question.options.map((opt, i) => {
@@ -119,13 +119,13 @@ export default function QuickQuiz({ game, onFinish, onExit }) {
                   onClick={() => pick(i)}
                   className={`flex items-center gap-3 rounded-xl border bg-white px-4 py-3 text-left
                     text-[0.95rem] transition-colors
-                    ${isRight ? 'border-sage-ink/60 bg-tip' : ''}
-                    ${isWrong ? 'border-coral-ink' : ''}
-                    ${!chosen && !isRight ? 'border-navy/12 hover:border-coral-ink/55' : ''}`}
+                    ${isRight ? 'border-verde-ink/60 bg-tip' : ''}
+                    ${isWrong ? 'border-rojo-ink' : ''}
+                    ${!chosen && !isRight ? 'border-azul/12 hover:border-rojo-ink/55' : ''}`}
                 >
                   <span
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full
-                      border border-navy/15 font-display text-[0.85rem] text-coral-ink"
+                      border border-azul/15 font-display text-[0.85rem] text-rojo-ink"
                   >
                     {LETTERS[i]}
                   </span>
@@ -136,7 +136,7 @@ export default function QuickQuiz({ game, onFinish, onExit }) {
           </div>
 
           {picked?.option === -1 && (
-            <p className="mt-3 text-[0.85rem] text-coral-ink">¡Se acabó el tiempo!</p>
+            <p className="mt-3 text-[0.85rem] text-rojo-ink">¡Se acabó el tiempo!</p>
           )}
         </div>
       )}

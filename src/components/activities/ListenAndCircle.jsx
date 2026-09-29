@@ -34,7 +34,7 @@ function HandCircle({ ok }) {
         ref={ref}
         d="M30 8 C 90 -2, 190 4, 195 28 C 199 52, 110 60, 50 55 C 8 51, 2 30, 12 18 C 20 9, 40 5, 60 6"
         fill="none"
-        stroke={ok ? 'var(--color-sage-ink)' : 'var(--color-coral-ink)'}
+        stroke={ok ? 'var(--color-verde-ink)' : 'var(--color-rojo-ink)'}
         strokeWidth="3.5"
         strokeLinecap="round"
       />
@@ -45,7 +45,7 @@ function HandCircle({ ok }) {
 /**
  * "Listen and circle the correct answer." Cada ítem trae su botón de
  * audífono y dos opciones (a / b) en píldoras; al tocar una se dibuja un
- * círculo a mano: verde si acierta, coral y efímero si falla.
+ * círculo a mano: verde si acierta, rojo y efímero si falla.
  * section: { items: [{ audio, audioText, options: [..], correct }] }
  */
 export default function ListenAndCircle({ section, completed, score, onComplete }) {
@@ -108,9 +108,9 @@ export default function ListenAndCircle({ section, completed, score, onComplete 
                 key={qi}
                 data-bubble
                 className="grid grid-cols-[40px_52px_1fr] items-center gap-4 rounded-2xl border
-                  border-navy/10 bg-white px-5 py-2"
+                  border-azul/10 bg-white px-5 py-2"
               >
-                <span className="font-display text-[36px] leading-none text-coral-ink">{qi + 1}</span>
+                <span className="font-display text-[36px] leading-none text-rojo-ink">{qi + 1}</span>
                 <AudioButton src={item.audio} label={`Listen to item ${qi + 1}`} size={46} />
                 <div className="flex flex-col items-start gap-1">
                   {(item.options ?? []).map((opt, oi) => {
@@ -126,11 +126,11 @@ export default function ListenAndCircle({ section, completed, score, onComplete 
                         disabled={!!state?.ok}
                         onClick={() => pick(qi, oi)}
                         className={`relative flex items-center gap-3 rounded-full px-4 py-1 text-left
-                          font-body text-[21px] font-semibold text-navy transition-colors
+                          font-body text-[21px] font-semibold text-azul transition-colors
                           ${!state?.ok ? 'hover:bg-box' : ''}
                           ${state?.ok && !chosen ? 'opacity-40' : ''}`}
                       >
-                        <span className="font-display text-[22px] text-coral-ink">{LETTERS[oi]}</span>
+                        <span className="font-display text-[22px] text-rojo-ink">{LETTERS[oi]}</span>
                         {opt}
                         {chosen && <HandCircle key={`${qi}-${oi}-${state.ok}`} ok={state.ok} />}
                       </button>
@@ -154,7 +154,7 @@ export default function ListenAndCircle({ section, completed, score, onComplete 
                 {items.map((_, i) => (
                   <span
                     key={i}
-                    className={`h-2.5 flex-1 rounded-full ${answers[i]?.ok ? 'bg-sage-ink' : 'bg-navy/12'}`}
+                    className={`h-2.5 flex-1 rounded-full ${answers[i]?.ok ? 'bg-verde-ink' : 'bg-azul/12'}`}
                   />
                 ))}
               </span>

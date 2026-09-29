@@ -7,10 +7,10 @@ import { celebrate } from '../../hooks/useFeedback'
 function MicIcon({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <rect x="6" y="1.5" width="6" height="9" rx="3" fill="var(--color-coral-ink)" />
+      <rect x="6" y="1.5" width="6" height="9" rx="3" fill="var(--color-rojo-ink)" />
       <path
         d="M3.5 8.5a5.5 5.5 0 0 0 11 0M9 14v2.5"
-        stroke="var(--color-coral-ink)"
+        stroke="var(--color-rojo-ink)"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -104,10 +104,10 @@ export default function RecordPrompt({ section, completed, score, onComplete }) 
                   rows.current[i] = el
                 }}
                 className={`rounded-xl border px-3.5 py-3 transition-colors
-                  ${done ? 'border-sage-ink/45 bg-tip' : 'border-navy/12 bg-white'}`}
+                  ${done ? 'border-verde-ink/45 bg-tip' : 'border-azul/12 bg-white'}`}
               >
                 <div className="flex items-start gap-2.5">
-                  <span className="font-display text-[1.05rem] leading-6 text-coral-ink">
+                  <span className="font-display text-[1.05rem] leading-6 text-rojo-ink">
                     {i + 1}.
                   </span>
                   <span className="mt-1 shrink-0">
@@ -141,7 +141,7 @@ export default function RecordPrompt({ section, completed, score, onComplete }) 
             )
           })}
         </ol>
-        {recError && <p className="mt-2 text-[0.82rem] text-coral-ink">{recError}</p>}
+        {recError && <p className="mt-2 text-[0.82rem] text-rojo-ink">{recError}</p>}
       </ExerciseBlock>
 
       <FeedbackToast message={toast?.msg} type={toast?.type} onHide={() => setToast(null)} />

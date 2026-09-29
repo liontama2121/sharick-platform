@@ -1,13 +1,13 @@
-import Textile from '../decor/Textile'
+import Filete from '../decor/Filete'
 
-/** "Reading" / "Listening" / "Speaking"… en Playfair coral con una cinta tejida debajo. */
+/** "Reading" / "Listening"… rotulado en rojo con sombra amarilla y guarda de dientes. */
 export default function SectionHeading({ children, className = '' }) {
   if (!children) return null
   return (
     <div className={className}>
-      <h2 className="font-display text-[40px] leading-none text-coral-ink">{children}</h2>
-      <span aria-hidden="true" className="mt-2.5 block w-[90px] overflow-hidden rounded-[3px]">
-        <Textile variant="wayuu" height={12} className="h-3 w-full" />
+      <h2 className="rotulo text-[40px] leading-none text-rojo-ink">{children}</h2>
+      <span aria-hidden="true" className="mt-3 block w-[96px] overflow-hidden rounded-[3px]">
+        <Filete variant="dientes" height={12} className="h-3 w-full" />
       </span>
     </div>
   )

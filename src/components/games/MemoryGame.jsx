@@ -135,7 +135,7 @@ export default function MemoryGame({ game, onFinish, onExit }) {
   return (
     <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="label-caps text-sage-ink">
+        <p className="label-caps text-verde-ink">
           Parejas: {matched.length} de {pairs.length}
         </p>
         <p className="label-caps text-ink-soft">
@@ -168,7 +168,7 @@ export default function MemoryGame({ game, onFinish, onExit }) {
                 {/* Reverso: tricolor suave */}
                 <span
                   className="absolute inset-0 flex items-center justify-center rounded-xl
-                    border border-navy/12 shadow-soft"
+                    border border-azul/12 shadow-soft"
                   style={{
                     backfaceVisibility: 'hidden',
                     background:
@@ -185,8 +185,8 @@ export default function MemoryGame({ game, onFinish, onExit }) {
                   className={`absolute inset-0 flex items-center justify-center rounded-xl border
                     px-2 text-center font-display text-[0.86rem] leading-tight shadow-soft
                     ${isMatched
-                      ? 'border-sage-ink/50 bg-tip text-sage-ink'
-                      : 'border-navy/12 bg-white text-navy'}`}
+                      ? 'border-verde-ink/50 bg-tip text-verde-ink'
+                      : 'border-azul/12 bg-white text-azul'}`}
                   style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                 >
                   {card.text}

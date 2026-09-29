@@ -81,12 +81,12 @@ function AnalogBubbles({ section, completed, score, onComplete }) {
                   nodes.current[idx] = el
                 }}
                 className={`rounded-xl border p-3
-                  ${solved ? 'border-sage-ink/50 bg-tip' : 'border-navy/12 bg-white'}`}
+                  ${solved ? 'border-verde-ink/50 bg-tip' : 'border-azul/12 bg-white'}`}
               >
                 <div className="flex items-center gap-3">
                   <AnalogClock time={item.clockTime} size={64} showDigital={false} />
                   <div className="min-w-0 flex-1">
-                    <p className="label-caps text-coral-ink">{item.clockTime}</p>
+                    <p className="label-caps text-rojo-ink">{item.clockTime}</p>
                     {item.sceneLabel && (
                       <p className="mt-0.5 text-[0.78rem] leading-snug text-ink-soft">
                         {item.sceneLabel}
@@ -113,7 +113,7 @@ function AnalogBubbles({ section, completed, score, onComplete }) {
                     aria-hidden="true"
                   />
                   {solved ? (
-                    <p className="font-display text-[1.05rem] text-navy">“{solved}!”</p>
+                    <p className="font-display text-[1.05rem] text-azul">“{solved}!”</p>
                   ) : (
                     <p className="font-display text-[1.05rem] text-ink-soft/50">“___________”</p>
                   )}
@@ -125,9 +125,9 @@ function AnalogBubbles({ section, completed, score, onComplete }) {
                       <button
                         key={opt}
                         onClick={() => answer(idx, opt)}
-                        className="rounded-full border border-navy/15 bg-white px-3 py-1
-                          text-[0.78rem] font-semibold text-navy transition-colors
-                          hover:border-coral-ink hover:text-coral-ink"
+                        className="rounded-full border border-azul/15 bg-white px-3 py-1
+                          text-[0.78rem] font-semibold text-azul transition-colors
+                          hover:border-rojo-ink hover:text-rojo-ink"
                       >
                         {opt}
                       </button>

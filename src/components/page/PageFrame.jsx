@@ -1,14 +1,17 @@
-/** Marco coral de la página, con el número dentro de la esquina inferior derecha. */
+/**
+ * La página es una ventana de la chiva: marco de madera con filete amarillo
+ * por dentro e interior blanco. El número va en una placa amarilla.
+ */
 export default function PageFrame({ pageNumber, children }) {
   return (
     <div className="relative h-full w-full p-3">
-      <div className="relative h-full w-full rounded-[20px] border-[3px] border-coral-ink/70 paper">
+      <div className="ventana relative h-full w-full rounded-[22px]">
         {children}
 
         {pageNumber != null && (
           <span
-            className="absolute bottom-[104px] right-6 flex h-7 w-7 items-center justify-center
-              rounded-full bg-coral-ink font-display text-[0.85rem] text-white"
+            className="absolute bottom-[104px] right-6 flex h-9 w-9 items-center justify-center
+              rounded-full bg-amarillo font-display text-[1rem] text-azul shadow-soft"
           >
             {pageNumber}
           </span>

@@ -18,8 +18,8 @@ export default function DigitalClock({ time = '12:00', size = 'md', className = 
     <div
       role="img"
       aria-label={`Digital clock: ${text} ${suffix}`}
-      className={`inline-flex items-end gap-2 rounded-[14px] border-4 border-[#2A4A6E] bg-navy
-        shadow-[inset_0_3px_10px_rgba(0,0,0,.45),0_6px_14px_rgba(27,58,92,.25)]
+      className={`inline-flex items-end gap-2 rounded-[14px] border-4 border-[#2c4670] bg-azul
+        shadow-[inset_0_3px_10px_rgba(0,0,0,.45),0_6px_14px_rgba(20,30,50,.25)]
         ${big ? 'px-5 py-2.5' : 'px-4 py-2'} ${className}`}
     >
       <span className="relative font-mono font-bold tabular-nums leading-none tracking-[0.06em]">
@@ -35,7 +35,7 @@ export default function DigitalClock({ time = '12:00', size = 'md', className = 
         </span>
       </span>
       <span
-        className={`mb-0.5 font-mono font-bold uppercase text-gold ${big ? 'text-[20px]' : 'text-[16px]'}`}
+        className={`mb-0.5 font-mono font-bold uppercase text-amarillo ${big ? 'text-[20px]' : 'text-[16px]'}`}
       >
         {suffix}
       </span>

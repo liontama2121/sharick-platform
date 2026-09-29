@@ -13,6 +13,8 @@ import {
   SkipForward,
 } from 'lucide-react'
 
+import Filete from '../decor/Filete'
+
 const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -35,9 +37,9 @@ function ToolButton({ label, onClick, disabled, big = false, children }) {
       onMouseLeave={() => scaleTo(1)}
       onFocus={() => scaleTo(1.1)}
       onBlur={() => scaleTo(1)}
-      className={`flex items-center justify-center rounded-full text-white shadow-soft
+      className={`flex items-center justify-center rounded-full shadow-soft
         ${big ? 'h-[68px] w-[68px]' : 'h-[60px] w-[60px]'}
-        ${disabled ? 'cursor-not-allowed bg-ink-soft/35' : 'bg-coral-ink'}`}
+        ${disabled ? 'cursor-not-allowed bg-white/15 text-white/45' : 'bg-amarillo text-azul'}`}
     >
       {children}
     </button>
@@ -64,10 +66,12 @@ export default function BottomToolbar({
 }) {
   return (
     <div
-      className={`absolute inset-x-0 bottom-0 z-30 flex h-[88px] items-center justify-between
-        border-t border-box bg-paper px-6 transition-opacity duration-300
+      className={`grain absolute inset-x-0 bottom-0 z-30 flex h-[88px] items-center justify-between
+        rounded-b-[16px] bg-azul px-6 transition-opacity duration-300
         ${hidden ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
     >
+      {/* Parachoques: guarda de rombos sobre la banda azul */}
+      <Filete variant="rombos" height={10} className="absolute inset-x-0 top-0 h-2.5 w-full" />
       <ToolButton label="Menú del libro" onClick={onHome}>
         <Home size={24} strokeWidth={2.2} />
       </ToolButton>

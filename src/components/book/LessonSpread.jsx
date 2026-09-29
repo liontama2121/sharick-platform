@@ -22,7 +22,7 @@ export default function LessonSpread({
   meta,
   content,
   className = '',
-  frameClassName = 'rounded-lg border border-[#cfc3a9] shadow-lift',
+  frameClassName = 'rounded-lg border border-[#b9c3d0] shadow-lift',
 }) {
   const boxRef = useRef(null)
   const [width, setWidth] = useState(0)
@@ -94,10 +94,10 @@ export default function LessonSpread({
             className="pointer-events-none absolute inset-y-0 left-1/2 w-6 -translate-x-1/2"
             style={{
               background:
-                'linear-gradient(to right, transparent, rgba(27,58,92,.16) 50%, transparent)',
+                'linear-gradient(to right, transparent, rgba(20,30,50,.16) 50%, transparent)',
             }}
           />
-          <span className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-navy/20" />
+          <span className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-azul/20" />
         </>
       )}
     </div>

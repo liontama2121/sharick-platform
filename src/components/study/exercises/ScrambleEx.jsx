@@ -43,11 +43,11 @@ export default function ScrambleEx({ exercise, onDone }) {
       <div
         ref={rowRef}
         className={`mb-3 flex min-h-[52px] flex-wrap items-center gap-1.5 rounded-xl border-2 border-dashed
-          bg-white px-3 py-2 ${done ? 'border-sage-ink/60' : 'border-navy/20'}`}
+          bg-white px-3 py-2 ${done ? 'border-verde-ink/60' : 'border-azul/20'}`}
       >
         {built.length === 0 && <span className="text-[0.85rem] text-ink-soft/70">{S.tapInOrder}</span>}
         {built.map((i, n) => (
-          <span key={n} className="rounded-lg bg-tip px-2.5 py-1 font-display text-[1rem] text-sage-ink">
+          <span key={n} className="rounded-lg bg-tip px-2.5 py-1 font-display text-[1rem] text-verde-ink">
             {pool[i]}
           </span>
         ))}
@@ -63,8 +63,8 @@ export default function ScrambleEx({ exercise, onDone }) {
               onClick={() => tap(i)}
               className={`rounded-lg border px-3 py-1.5 font-display text-[1rem] transition-colors
                 ${used
-                  ? 'border-navy/8 bg-box text-ink-soft/40'
-                  : 'border-navy/15 bg-white text-navy hover:border-coral-ink hover:text-coral-ink'}`}
+                  ? 'border-azul/8 bg-box text-ink-soft/40'
+                  : 'border-azul/15 bg-white text-azul hover:border-rojo-ink hover:text-rojo-ink'}`}
             >
               {token}
             </button>
@@ -77,7 +77,7 @@ export default function ScrambleEx({ exercise, onDone }) {
             {S.clear}
           </Button>
         )}
-        {done && <span className="text-[0.9rem] font-semibold text-sage-ink">{S.correct}</span>}
+        {done && <span className="text-[0.9rem] font-semibold text-verde-ink">{S.correct}</span>}
       </div>
     </div>
   )

@@ -39,8 +39,8 @@ export default function PillButton({
         font-body text-sm font-semibold shadow-soft transition-colors
         disabled:cursor-not-allowed disabled:opacity-45
         ${active
-          ? 'border-coral-ink bg-coral-ink text-white'
-          : 'border-navy/15 bg-white text-navy hover:border-coral-ink/60 hover:text-coral-ink'}
+          ? 'border-rojo-ink bg-rojo-ink text-white'
+          : 'border-azul/15 bg-white text-azul hover:border-rojo-ink/60 hover:text-rojo-ink'}
         ${className}`}
       {...props}
     >

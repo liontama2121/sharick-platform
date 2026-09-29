@@ -4,18 +4,19 @@ import ExerciseBlock from './ExerciseBlock'
 import Button from '../ui/Button'
 import FeedbackToast from '../ui/FeedbackToast'
 import { popIn } from '../../hooks/useFeedback'
+import { RotateCw } from 'lucide-react'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 /* Rellenos de la rueda. Los tres primeros llevan texto blanco y el dorado
-   texto navy: así todos los segmentos pasan el contraste AA. */
+   texto azul: así todos los segmentos pasan el contraste AA. */
 const FILLS = [
-  { bg: 'var(--color-navy)', ink: '#ffffff' },
-  { bg: 'var(--color-coral-ink)', ink: '#ffffff' },
-  { bg: 'var(--color-sage-ink)', ink: '#ffffff' },
-  { bg: 'var(--color-gold)', ink: '#1b3a5c' },
+  { bg: 'var(--color-azul)', ink: '#ffffff' },
+  { bg: 'var(--color-rojo-ink)', ink: '#ffffff' },
+  { bg: 'var(--color-verde-ink)', ink: '#ffffff' },
+  { bg: 'var(--color-amarillo)', ink: '#1f3354' },
 ]
 
 const SPIN_MS = 3500
@@ -146,7 +147,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
               {segments.map((_, i) => (
                 <span
                   key={i}
-                  className={`h-2 w-5 rounded-full ${seen.includes(i) ? 'bg-coral-ink' : 'bg-navy/12'}`}
+                  className={`h-2 w-5 rounded-full ${seen.includes(i) ? 'bg-rojo-ink' : 'bg-azul/12'}`}
                 />
               ))}
             </span>
@@ -168,7 +169,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
               aria-hidden="true"
               className="absolute left-1/2 top-[-14px] z-10 -translate-x-1/2 drop-shadow"
             >
-              <path d="M13 20 2 2h22L13 20Z" fill="var(--color-coral-ink)" />
+              <path d="M13 20 2 2h22L13 20Z" fill="var(--color-rojo-ink)" />
             </svg>
 
             <div ref={wheelRef} className="w-[460px] max-w-full" style={{ willChange: 'transform' }}>
@@ -180,7 +181,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
                   cy={C}
                   r={R + 9}
                   fill="none"
-                  stroke="var(--color-navy)"
+                  stroke="var(--color-azul)"
                   strokeOpacity=".18"
                   strokeWidth="2"
                 />
@@ -231,7 +232,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
                   cy={C}
                   r="22"
                   fill="none"
-                  stroke="var(--color-navy)"
+                  stroke="var(--color-azul)"
                   strokeOpacity=".2"
                   strokeWidth="2"
                 />
@@ -241,7 +242,7 @@ export default function RouletteWheel({ section, completed, score, onComplete })
 
           <div className="flex w-[420px] max-w-full flex-col items-center gap-5">
             <Button onClick={spin} disabled={spinning} size="lg">
-              {spinning ? 'Spinning…' : '🎡 Spin!'}
+              {spinning ? 'Spinning…' : <><RotateCw size={20} strokeWidth={2.4} className="mr-2 inline -mt-0.5" aria-hidden="true" />Spin!</>}
             </Button>
 
             <div ref={cardRef} className="min-h-[150px] w-full">
@@ -253,10 +254,10 @@ export default function RouletteWheel({ section, completed, score, onComplete })
               {active && (
                 <div
                   data-bubble
-                  className="rounded-2xl border border-navy/12 bg-white px-6 py-5 text-center"
+                  className="rounded-2xl border border-azul/12 bg-white px-6 py-5 text-center"
                 >
-                  <p className="label-caps text-sage-ink">{active.label}</p>
-                  <p className="mt-2 font-display text-[30px] leading-snug text-navy">{active.prompt}</p>
+                  <p className="label-caps text-verde-ink">{active.label}</p>
+                  <p className="mt-2 font-display text-[30px] leading-snug text-azul">{active.prompt}</p>
                 </div>
               )}
             </div>

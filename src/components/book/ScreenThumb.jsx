@@ -23,7 +23,7 @@ export default function ScreenThumb({
   meta,
   content,
   className = '',
-  frameClassName = 'rounded-xl border border-navy/10 shadow-soft',
+  frameClassName = 'rounded-xl border border-azul/10 shadow-soft',
 }) {
   const boxRef = useRef(null)
   const [scale, setScale] = useState(0)

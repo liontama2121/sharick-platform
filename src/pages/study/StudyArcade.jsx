@@ -127,8 +127,8 @@ export default function StudyArcade() {
   return (
     <StudyShell bookId={bookId} title={S.arcadeTitle} subtitle={S.arcadeSubtitle(TOTAL, SECONDS)} intro="arcade">
       {phase === 'intro' && (
-        <div className="mx-auto max-w-xl rounded-2xl border border-navy/10 bg-white p-8 text-center shadow-soft">
-          <Timer size={44} strokeWidth={2} className="mx-auto text-coral-ink" />
+        <div className="mx-auto max-w-xl rounded-2xl border border-azul/10 bg-white p-8 text-center shadow-soft">
+          <Timer size={44} strokeWidth={2} className="mx-auto text-rojo-ink" />
           <h2 className="mt-3">{S.arcadeTitle}</h2>
           <p className="mt-2 text-[0.95rem] text-ink-soft">
             {unlockedTopics.length > 0 ? S.arcadeHint : S.arcadeNoTopics}
@@ -139,7 +139,7 @@ export default function StudyArcade() {
             </p>
           )}
           {study.arcadeBest > 0 && (
-            <p className="mt-3 font-semibold text-navy">
+            <p className="mt-3 font-semibold text-azul">
               🏆 {S.arcadeBest}: {study.arcadeBest}
             </p>
           )}
@@ -157,18 +157,18 @@ export default function StudyArcade() {
       {phase === 'play' && question && (
         <div className="mx-auto max-w-2xl">
           <div className="flex items-center justify-between">
-            <p className="label-caps text-coral-ink">{S.question(index + 1, questions.length)}</p>
-            <p className="label-caps text-sage-ink">
+            <p className="label-caps text-rojo-ink">{S.question(index + 1, questions.length)}</p>
+            <p className="label-caps text-verde-ink">
               {S.arcadeScore}: {correct}
             </p>
           </div>
           {/* Barra de tiempo */}
-          <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-navy/10">
-            <div ref={barRef} className="h-full rounded-full bg-gold" style={{ width: '100%' }} />
+          <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-azul/10">
+            <div ref={barRef} className="h-full rounded-full bg-amarillo" style={{ width: '100%' }} />
           </div>
 
-          <div className="mt-6 rounded-2xl border border-navy/10 bg-white p-7 shadow-soft">
-            <p className="font-display text-[1.35rem] text-navy">{question.q}</p>
+          <div className="mt-6 rounded-2xl border border-azul/10 bg-white p-7 shadow-soft">
+            <p className="font-display text-[1.35rem] text-azul">{question.q}</p>
             <div className="mt-5 flex flex-col gap-2.5">
               {question.options.map((opt, oi) => {
                 const chosen = picked?.option === oi
@@ -182,12 +182,12 @@ export default function StudyArcade() {
                     disabled={!!picked}
                     onClick={() => pick(oi)}
                     className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-[1rem] transition-colors
-                      ${chosen && picked.ok ? 'border-sage-ink bg-tip' : ''}
-                      ${chosen && !picked.ok ? 'border-coral-ink bg-[#fbeae6]' : ''}
-                      ${picked && !chosen && opt.ok ? 'border-sage-ink/60' : ''}
-                      ${!chosen ? 'border-navy/12 bg-white hover:border-coral-ink/55' : ''}`}
+                      ${chosen && picked.ok ? 'border-verde-ink bg-tip' : ''}
+                      ${chosen && !picked.ok ? 'border-rojo-ink bg-[#fde8ea]' : ''}
+                      ${picked && !chosen && opt.ok ? 'border-verde-ink/60' : ''}
+                      ${!chosen ? 'border-azul/12 bg-white hover:border-rojo-ink/55' : ''}`}
                   >
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-navy/15 font-display text-[0.85rem] text-coral-ink">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-azul/15 font-display text-[0.85rem] text-rojo-ink">
                       {LETTERS[oi]}
                     </span>
                     {opt.text}
@@ -195,19 +195,19 @@ export default function StudyArcade() {
                 )
               })}
             </div>
-            {picked?.option === -1 && <p className="mt-4 font-semibold text-coral-ink">⏰ {S.arcadeTimeUp}</p>}
+            {picked?.option === -1 && <p className="mt-4 font-semibold text-rojo-ink">⏰ {S.arcadeTimeUp}</p>}
           </div>
         </div>
       )}
 
       {phase === 'done' && (
-        <div className="mx-auto max-w-xl rounded-2xl border border-navy/10 bg-white p-8 text-center shadow-lift">
-          <Trophy size={44} strokeWidth={2} className="mx-auto text-gold" />
-          <p className="mt-3 label-caps text-sage-ink">{S.arcadeScore}</p>
-          <p className="font-display text-[3.2rem] font-extrabold leading-none text-navy">{score}</p>
+        <div className="mx-auto max-w-xl rounded-2xl border border-azul/10 bg-white p-8 text-center shadow-lift">
+          <Trophy size={44} strokeWidth={2} className="mx-auto text-amarillo" />
+          <p className="mt-3 label-caps text-verde-ink">{S.arcadeScore}</p>
+          <p className="font-display text-[3.2rem] font-extrabold leading-none text-azul">{score}</p>
           <p className="mt-1 text-[0.9rem] text-ink-soft">{S.score(correct, questions.length)}</p>
           {isRecord ? (
-            <p className="mt-3 font-display text-[1.2rem] text-coral-ink">{S.newRecord}</p>
+            <p className="mt-3 font-display text-[1.2rem] text-rojo-ink">{S.newRecord}</p>
           ) : (
             <p className="mt-3 text-[0.9rem] text-ink-soft">
               🏆 {S.arcadeBest}: {study.arcadeBest}

@@ -32,21 +32,21 @@ export default function StudyTeacher() {
 
       {modules.map((mod) => (
         <section key={mod.moduleId} className="mt-8">
-          <p className="label-caps text-coral-ink">{S.module(mod.moduleId)}</p>
+          <p className="label-caps text-rojo-ink">{S.module(mod.moduleId)}</p>
           <h2 className="mt-0.5">{mod.title}</h2>
 
-          <div className="mt-4 overflow-x-auto rounded-2xl border border-navy/10 bg-white shadow-soft">
+          <div className="mt-4 overflow-x-auto rounded-2xl border border-azul/10 bg-white shadow-soft">
             <table className="w-full min-w-[720px] border-collapse text-[0.88rem]">
               <thead>
                 <tr className="bg-box text-left">
-                  <th className="label-caps px-4 py-3 text-[0.66rem] text-sage-ink">{S.student}</th>
+                  <th className="label-caps px-4 py-3 text-[0.66rem] text-verde-ink">{S.student}</th>
                   {mod.topics.map((t, i) => (
                     <th key={t.id} className="px-2 py-3 text-center" title={t.title}>
-                      <span className="label-caps text-[0.66rem] text-navy">T{i + 1}</span>
+                      <span className="label-caps text-[0.66rem] text-azul">T{i + 1}</span>
                       <span className="block text-[0.7rem] font-normal text-ink-soft">{t.title}</span>
                     </th>
                   ))}
-                  <th className="label-caps px-4 py-3 text-right text-[0.66rem] text-sage-ink">{S.lastActivity}</th>
+                  <th className="label-caps px-4 py-3 text-right text-[0.66rem] text-verde-ink">{S.lastActivity}</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,9 +54,9 @@ export default function StudyTeacher() {
                   const st = readStudy(s.username)
                   const hasAny = Object.keys(st.passed).length > 0 || st.manualUnlocks.length > 0 || st.updatedAt
                   return (
-                    <tr key={s.username} className="border-t border-navy/8">
+                    <tr key={s.username} className="border-t border-azul/8">
                       <td className="px-4 py-3">
-                        <span className="font-display text-[1rem] text-navy">{s.name ?? s.username}</span>
+                        <span className="font-display text-[1rem] text-azul">{s.name ?? s.username}</span>
                         <span className="block text-[0.72rem] text-ink-soft">@{s.username}</span>
                         {!hasAny && <span className="block text-[0.7rem] italic text-ink-soft">{S.noProgress}</span>}
                       </td>
@@ -69,19 +69,19 @@ export default function StudyTeacher() {
                           <td key={t.id} className="px-2 py-3 text-center align-top">
                             <span
                               className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full text-white
-                                ${score != null ? 'bg-sage-ink' : open ? 'bg-gold text-navy' : 'bg-[#cfc3a9]'}`}
+                                ${score != null ? 'bg-verde-ink' : open ? 'bg-amarillo text-azul' : 'bg-[#b9c3d0]'}`}
                               title={score != null ? `${score}%` : open ? S.statusOpen : S.statusLocked}
                             >
                               {score != null ? <Check size={15} strokeWidth={3} /> : open ? <Unlock size={14} /> : <Lock size={14} />}
                             </span>
-                            {score != null && <span className="mt-1 block text-[0.72rem] font-semibold text-sage-ink">{score}%</span>}
+                            {score != null && <span className="mt-1 block text-[0.72rem] font-semibold text-verde-ink">{score}%</span>}
                             {i > 0 && score == null && (
                               <label className="mt-1.5 flex cursor-pointer items-center justify-center gap-1 text-[0.68rem] text-ink-soft">
                                 <input
                                   type="checkbox"
                                   checked={manual}
                                   onChange={() => toggleManualUnlock(s.username, t.id)}
-                                  className="accent-coral-ink"
+                                  className="accent-rojo-ink"
                                   aria-label={`${S.unlockManually}: ${s.username} · ${t.title}`}
                                 />
                                 {S.unlockManually}

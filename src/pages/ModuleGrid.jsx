@@ -16,8 +16,7 @@ import { useLevelIntro } from '../hooks/useLevelIntro'
 import { useProgress } from '../hooks/useProgress'
 import LessonCard from '../components/book/LessonCard'
 import RoundButton from '../components/nav/RoundButton'
-import Stitches from '../components/decor/Stitches'
-import Textile from '../components/decor/Textile'
+import Filete from '../components/decor/Filete'
 import CloseButton from '../components/page/CloseButton'
 
 const reduced = () =>
@@ -147,24 +146,22 @@ export default function ModuleGrid() {
 
   return (
     <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
-      {/* Marco general, como el de las páginas del libro */}
+      {/* Costado de la chiva: carrocería blanca con techo azul y faldón rojo;
+          cada lección es una ventana */}
       <div
-        className="relative mx-auto min-h-[calc(100vh-2.5rem)] w-full max-w-[1480px]
-          rounded-[20px] border-[3px] border-coral-ink/70 paper pb-24 shadow-page 3xl:max-w-[1820px]"
+        className="relative mx-auto w-full max-w-[1480px] overflow-hidden
+          rounded-[26px] border-[6px] border-azul bg-carroceria pb-[88px] shadow-page 3xl:max-w-[1820px]"
       >
-        {/* Banner del módulo: rojo, "Module N" en Playfair, cuadritos a la izquierda */}
+        {/* Techo: banda azul con guarda de rombos */}
+        <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-5 bg-azul" />
+        <Filete variant="rombos" height={12} className="absolute inset-x-0 top-5 h-3 w-full" />
+
+        {/* Rótulo del módulo: placa roja pintada, letra slab con sombra amarilla */}
         <div
-          className="relative -ml-[3px] -mt-[3px] inline-flex max-w-[calc(100%-120px)] items-center
-            gap-6 overflow-hidden rounded-br-[64px] rounded-tl-[20px] py-8 pl-8 pr-24 text-white
-            shadow-lift"
-          style={{
-            background:
-              'var(--tex-grain), linear-gradient(100deg, var(--color-coral-ink) 0%, var(--color-coral) 100%)',
-          }}
+          className="grain relative ml-5 mt-14 inline-flex max-w-[calc(100%-120px)] items-center
+            rounded-2xl border-4 border-amarillo bg-rojo-ink px-5 py-4 shadow-lift sm:ml-8 sm:px-8 sm:py-5"
         >
-          <Stitches tone="light" cell={9} className="absolute left-1 top-1/2 -translate-y-1/2" />
-          <Textile variant="wayuu" height={10} className="absolute inset-x-0 bottom-0 h-2.5 w-full opacity-90" />
-          <h1 className="relative ml-16 font-display text-[2.6rem] font-extrabold leading-none text-white sm:text-[3.4rem]">
+          <h1 className="rotulo whitespace-nowrap text-[1.9rem] leading-none text-white sm:text-[3.6rem]">
             Module {mod.moduleId}
           </h1>
         </div>
@@ -173,13 +170,13 @@ export default function ModuleGrid() {
 
         {/* Subtítulo + progreso, contado por pantallas */}
         <div className="px-8 pt-6 sm:px-10">
-          <h2 className="font-display text-[1.45rem] text-navy">{mod.moduleName}</h2>
+          <h2 className="text-[1.5rem] text-azul">{mod.moduleName}</h2>
           {mod.description && (
             <p className="mt-1 max-w-2xl text-[0.9rem] text-ink-soft">{mod.description}</p>
           )}
           <div className="mt-3 max-w-sm">
             <div
-              className="h-1.5 w-full overflow-hidden rounded-full bg-navy/10"
+              className="h-2 w-full overflow-hidden rounded-full bg-azul/10"
               role="progressbar"
               aria-valuenow={Math.round(pct)}
               aria-valuemin={0}
@@ -187,7 +184,7 @@ export default function ModuleGrid() {
               aria-label="Pantallas completadas del módulo"
             >
               <div
-                className="h-full rounded-full bg-coral-ink transition-[width] duration-700 ease-out"
+                className="h-full rounded-full bg-verde transition-[width] duration-700 ease-out"
                 style={{ width: `${pct}%` }}
               />
             </div>
@@ -198,7 +195,10 @@ export default function ModuleGrid() {
         </div>
 
         {/* Rejilla. El padding deja sitio a los tags y badges que sobresalen. */}
-        <div ref={gridRef} className="grid-pantallas gap-10 px-10 pt-10 sm:px-12">
+        {/* Banda de ventanas: franja verde pintada entre filetes amarillos,
+            como la fila de ventanas del costado de la chiva */}
+        <div className="grain mt-9 border-y-4 border-amarillo bg-verde px-9 py-12 sm:px-12">
+        <div ref={gridRef} className="grid-pantallas gap-x-10 gap-y-14">
           {tarjetas.map((item) => (
             <LessonCard
               key={item.key}
@@ -226,34 +226,42 @@ export default function ModuleGrid() {
             onMouseEnter={(e) => hover(e, true)}
             onMouseLeave={(e) => hover(e, false)}
             className="relative flex aspect-[2/1] cursor-pointer flex-col items-center
-              justify-center gap-1.5 rounded-lg border border-sage-ink/35 bg-tip p-4 text-center
+              justify-center gap-1.5 rounded-[14px] border-[5px] border-madera bg-tip p-4 text-center
               shadow-lift"
           >
             <span
               data-tag
               className="absolute -left-5 -top-5 flex h-16 w-16 items-center justify-center
-                rounded-[10px] bg-sage-ink text-white shadow-[0_10px_22px_rgba(27,58,92,.28)]"
+                rounded-[12px] border-[3px] border-amarillo bg-verde-ink text-white
+                shadow-[0_10px_22px_rgba(20,30,50,.28)]"
             >
               <Gamepad2 size={30} strokeWidth={2.2} />
             </span>
-            <span className="font-display text-[1.05rem] leading-tight text-navy">
+            <span className="font-display text-[1.1rem] leading-tight text-azul">
               Games · Module {mod.moduleId}
             </span>
             {games.length > 0 ? (
               <>
-                <span className="label-caps text-sage-ink">{games.length} juegos</span>
+                <span className="label-caps text-verde-ink">{games.length} juegos</span>
                 <span className="text-[0.74rem] text-ink-soft">
                   {gameStats.played} de {gameStats.total} jugados · ⭐ {gameStats.stars}
                 </span>
               </>
             ) : (
-              <span className="label-caps text-coral-ink">Próximamente</span>
+              <span className="label-caps text-rojo-ink">Próximamente</span>
             )}
           </div>
         </div>
+        </div>
 
-        {/* Botonera superpuesta a la esquina inferior izquierda del marco */}
-        <div className="absolute -bottom-6 left-7 z-30 flex items-center gap-3">
+        {/* Faldón: banda roja con guarda de dientes, como la parte baja de la chiva */}
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0">
+          <Filete variant="dientes" height={14} className="h-3.5 w-full" />
+          <div className="grain h-12 bg-rojo-ink" />
+        </div>
+
+        {/* Botonera sobre el faldón, esquina inferior izquierda */}
+        <div className="absolute bottom-4 left-7 z-30 flex items-center gap-3">
           <RoundButton
             label="Ir al menú del libro"
             onClick={toBook}

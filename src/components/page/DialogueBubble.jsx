@@ -1,12 +1,13 @@
 import { forwardRef } from 'react'
 
-/* Color fijo por letra de diálogo. */
+/* Color fijo por letra de diálogo: la pintura de la chiva.
+   `letter` es el color de la letra de fuera (legible sobre blanco). */
 export const BUBBLE_COLORS = {
-  A: { bg: '#8E7CC3', ink: '#ffffff' },
-  B: { bg: '#E05A47', ink: '#ffffff' },
-  C: { bg: '#3F86B8', ink: '#ffffff' },
-  D: { bg: '#6B9080', ink: '#ffffff' },
-  E: { bg: '#E9B44C', ink: '#1b3a5c' },
+  A: { bg: '#2A5CA8', ink: '#ffffff', letter: '#2A5CA8' },
+  B: { bg: '#C8283C', ink: '#ffffff', letter: '#C8283C' },
+  C: { bg: '#0F7A6E', ink: '#ffffff', letter: '#0F7A6E' },
+  D: { bg: '#6D3B8E', ink: '#ffffff', letter: '#6D3B8E' },
+  E: { bg: '#F5B700', ink: '#1f3354', letter: '#1f3354' },
 }
 
 /**
@@ -27,8 +28,8 @@ const DialogueBubble = forwardRef(function DialogueBubble(
     <div className={`relative pl-9 ${className}`}>
       {/* Letra fuera de la caja */}
       <span
-        className="absolute left-0 top-0 font-display text-[38px] leading-none"
-        style={{ color: color.bg }}
+        className="rotulo absolute left-0 top-0 text-[38px] leading-none"
+        style={{ color: color.letter ?? color.bg }}
       >
         {dialogue.letter}
       </span>
@@ -38,19 +39,25 @@ const DialogueBubble = forwardRef(function DialogueBubble(
         type="button"
         onClick={onSelect}
         className={`relative w-full rounded-[18px] px-6 text-left transition-shadow
-          ${compact ? 'py-3' : 'py-4'} ${selected ? 'ring-4 ring-gold' : ''}`}
+          ${compact ? 'py-3' : 'py-4'} ${selected ? 'ring-4 ring-amarillo' : ''}`}
         style={{
           background: color.bg,
           color: color.ink,
           boxShadow: playing
             ? `0 0 0 6px color-mix(in srgb, ${color.bg} 30%, transparent)`
-            : '0 4px 14px rgba(27,58,92,.14)',
+            : '0 4px 14px rgba(20,30,50,.16)',
         }}
       >
+        {/* Filete pintado por dentro del panel */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-[6px] rounded-[13px] border-2"
+          style={{ borderColor: `color-mix(in srgb, ${color.ink} 40%, transparent)` }}
+        />
         {/* Punta del bocadillo */}
         <span
           aria-hidden="true"
-          className="absolute -left-2 top-5 h-4 w-4 rotate-45 rounded-[3px]"
+          className="absolute -left-2 top-12 h-4 w-4 rotate-45 rounded-[3px]"
           style={{ background: color.bg }}
         />
 

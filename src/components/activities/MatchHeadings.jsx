@@ -7,11 +7,11 @@ import { useDragDrop } from '../../hooks/useDragDrop'
 
 /* Colores de las etiquetas, tal como los pidió Sharick. */
 export const HEADING_COLORS = {
-  red: { bg: '#CE3B2C', ink: '#ffffff' },
-  yellow: { bg: '#E9B44C', ink: '#1B3A5C' },
-  blue: { bg: '#3F86B8', ink: '#ffffff' },
-  purple: { bg: '#8E7CC3', ink: '#ffffff' },
-  sage: { bg: '#4F6F60', ink: '#ffffff' },
+  red: { bg: '#C8283C', ink: '#ffffff' },
+  yellow: { bg: '#F5B700', ink: '#1f3354' },
+  blue: { bg: '#2A5CA8', ink: '#ffffff' },
+  purple: { bg: '#6D3B8E', ink: '#ffffff' },
+  verde: { bg: '#0F7A6E', ink: '#ffffff' },
 }
 
 /** Píldora con el título de un diálogo. */
@@ -116,7 +116,7 @@ export default function MatchHeadings({
         {/* Etiquetas + ilustración */}
         <div className="flex min-h-0 flex-col gap-4">
           <div className="flex flex-col gap-3 rounded-[14px] bg-box px-5 py-4">
-            <span className="label-caps text-sage-ink">Headings</span>
+            <span className="label-caps text-verde-ink">Headings</span>
             {headings.map((h, idx) => {
               const done = placed.has(idx)
               const dragging = drag?.id === String(idx)
@@ -138,7 +138,7 @@ export default function MatchHeadings({
                   className={`touch-none transition-transform
                     ${done ? 'cursor-default opacity-25 shadow-none' : 'cursor-grab active:cursor-grabbing'}
                     ${dragging ? 'opacity-30' : ''}
-                    ${selected === idx ? 'scale-105 ring-4 ring-gold' : ''}`}
+                    ${selected === idx ? 'scale-105 ring-4 ring-amarillo' : ''}`}
                   {...bind(String(idx), done)}
                 />
               )
@@ -184,10 +184,10 @@ export default function MatchHeadings({
                     className={`flex h-12 min-w-[320px] items-center justify-center rounded-full
                       border-2 transition-colors
                       ${heading
-                        ? 'border-sage-ink bg-white'
+                        ? 'border-verde-ink bg-white'
                         : isOver
-                          ? 'border-gold bg-gold/20'
-                          : 'border-transparent bg-[#E3DED4] shadow-[inset_0_2px_6px_rgba(27,58,92,.18)]'}
+                          ? 'border-amarillo bg-amarillo/20'
+                          : 'border-transparent bg-[#E4E8EE] shadow-[inset_0_2px_6px_rgba(20,30,50,.18)]'}
                       ${selected != null && !heading ? 'cursor-pointer' : ''}`}
                   >
                     {heading ? (

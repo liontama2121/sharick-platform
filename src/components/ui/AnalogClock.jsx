@@ -22,8 +22,8 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
         role="img"
         aria-label={`Reloj marcando las ${time}`}
       >
-        <circle cx="60" cy="60" r={R + 6} fill="#ffffff" stroke="var(--color-navy)" strokeWidth="3" />
-        <circle cx="60" cy="60" r={R + 6} fill="none" stroke="var(--color-gold)" strokeWidth="1.5" opacity="0.7" />
+        <circle cx="60" cy="60" r={R + 6} fill="#ffffff" stroke="var(--color-azul)" strokeWidth="3" />
+        <circle cx="60" cy="60" r={R + 6} fill="none" stroke="var(--color-amarillo)" strokeWidth="1.5" opacity="0.7" />
 
         {ticks.map((i) => {
           const a = (i * 30 * Math.PI) / 180
@@ -55,7 +55,7 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
               fontSize="13"
               fontWeight="700"
               fontFamily="Nunito Sans, sans-serif"
-              fill="var(--color-navy)"
+              fill="var(--color-azul)"
             >
               {n}
             </text>
@@ -74,9 +74,9 @@ export default function AnalogClock({ time = '12:00', size = 120, showDigital = 
           x1="60" y1="60"
           x2={60 + 36 * Math.sin((minuteAngle * Math.PI) / 180)}
           y2={60 - 36 * Math.cos((minuteAngle * Math.PI) / 180)}
-          stroke="var(--color-coral-ink)" strokeWidth="3.5" strokeLinecap="round"
+          stroke="var(--color-rojo-ink)" strokeWidth="3.5" strokeLinecap="round"
         />
-        <circle cx="60" cy="60" r="4" fill="var(--color-navy)" />
+        <circle cx="60" cy="60" r="4" fill="var(--color-azul)" />
       </svg>
 
       {showDigital && (

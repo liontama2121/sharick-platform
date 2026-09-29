@@ -91,23 +91,23 @@ export default function ClockBubbles({ section, completed, score, onComplete }) 
                   }}
                   className={`relative mt-1 flex h-[60px] w-full items-center justify-center rounded-[22px]
                     border-[3px] bg-white px-4
-                    ${solved ? 'border-sage-ink' : 'border-navy/20'}`}
+                    ${solved ? 'border-verde-ink' : 'border-azul/20'}`}
                 >
                   <span
                     aria-hidden="true"
                     className={`absolute -top-[11px] left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 border-l-[3px]
-                      border-t-[3px] bg-white ${solved ? 'border-sage-ink' : 'border-navy/20'}`}
+                      border-t-[3px] bg-white ${solved ? 'border-verde-ink' : 'border-azul/20'}`}
                   />
                   <span
                     className="absolute -left-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full
-                      border-[3px] border-white bg-coral-ink font-display text-[18px] text-white shadow-soft"
+                      border-[3px] border-white bg-rojo-ink font-display text-[18px] text-white shadow-soft"
                   >
                     {idx + 1}
                   </span>
                   {solved ? (
-                    <p className="font-display text-[24px] text-navy">{solved}!</p>
+                    <p className="font-display text-[24px] text-azul">{solved}!</p>
                   ) : (
-                    <p className="font-display text-[24px] tracking-[0.2em] text-navy/25">…………</p>
+                    <p className="font-display text-[24px] tracking-[0.2em] text-azul/25">…………</p>
                   )}
                 </div>
 
@@ -121,10 +121,10 @@ export default function ClockBubbles({ section, completed, score, onComplete }) 
                       className={`rounded-full border px-2 py-1.5 font-body text-[16px] font-semibold
                         transition-colors
                         ${solved === opt
-                          ? 'border-sage-ink bg-tip text-sage-ink'
+                          ? 'border-verde-ink bg-tip text-verde-ink'
                           : solved
-                            ? 'border-navy/10 bg-white text-navy/35'
-                            : 'border-navy/15 bg-white text-navy hover:border-coral-ink hover:text-coral-ink'}`}
+                            ? 'border-azul/10 bg-white text-azul/35'
+                            : 'border-azul/15 bg-white text-azul hover:border-rojo-ink hover:text-rojo-ink'}`}
                     >
                       {opt}
                     </button>

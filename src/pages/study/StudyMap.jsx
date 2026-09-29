@@ -26,11 +26,11 @@ function TopicCard({ topic, index, status, score, manual, prevTitle, onOpen }) {
         <span
           className={`flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-white
             font-display text-[1.15rem] font-extrabold shadow-lift
-            ${passed ? 'bg-sage-ink text-white' : locked ? 'bg-[#cfc3a9] text-white' : 'bg-coral-ink text-white'}`}
+            ${passed ? 'bg-verde-ink text-white' : locked ? 'bg-[#b9c3d0] text-white' : 'bg-rojo-ink text-white'}`}
         >
           {passed ? <Check size={22} strokeWidth={3} /> : locked ? <Lock size={18} strokeWidth={2.6} /> : index + 1}
         </span>
-        <span aria-hidden="true" className="mt-1 w-0 flex-1 border-l-2 border-dotted border-[#d9cdb5]" />
+        <span aria-hidden="true" className="mt-1 w-0 flex-1 border-l-2 border-dotted border-[#c9d1dc]" />
       </div>
 
       <div
@@ -48,19 +48,19 @@ function TopicCard({ topic, index, status, score, manual, prevTitle, onOpen }) {
         }}
         className={`group mb-5 flex-1 rounded-2xl border bg-white p-5 shadow-soft transition-[box-shadow,transform]
           ${locked
-            ? 'cursor-not-allowed border-navy/8 opacity-70'
-            : 'cursor-pointer border-navy/10 hover:-translate-y-0.5 hover:shadow-lift'}
-          ${passed ? 'border-sage-ink/40' : ''}`}
+            ? 'cursor-not-allowed border-azul/8 opacity-70'
+            : 'cursor-pointer border-azul/10 hover:-translate-y-0.5 hover:shadow-lift'}
+          ${passed ? 'border-verde-ink/40' : ''}`}
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="label-caps text-coral-ink">Topic {index + 1}</p>
-            <h3 className="mt-0.5 font-display text-[1.25rem] text-navy">{topic.title}</h3>
+            <p className="label-caps text-rojo-ink">Topic {index + 1}</p>
+            <h3 className="mt-0.5 font-display text-[1.25rem] text-azul">{topic.title}</h3>
             <p className="mt-1 text-[0.9rem] text-ink-soft">{topic.summary}</p>
           </div>
           <span
             className={`label-caps shrink-0 rounded-full px-3 py-1 text-[0.66rem]
-              ${passed ? 'bg-tip text-sage-ink' : locked ? 'bg-box text-ink-soft' : 'bg-gold/25 text-navy'}`}
+              ${passed ? 'bg-tip text-verde-ink' : locked ? 'bg-box text-ink-soft' : 'bg-amarillo/25 text-azul'}`}
           >
             {passed ? S.statusPassed : locked ? S.statusLocked : S.statusOpen}
           </span>
@@ -68,13 +68,13 @@ function TopicCard({ topic, index, status, score, manual, prevTitle, onOpen }) {
 
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8rem] font-semibold text-ink-soft">
           <span>📚 Learn · ✏️ {topic.exercises?.length ?? 0} exercises · 🏆 {topic.quiz?.questions?.length ?? 0} questions</span>
-          {passed && <span className="text-sage-ink">{S.bestScore(score)}</span>}
+          {passed && <span className="text-verde-ink">{S.bestScore(score)}</span>}
           {manual && !passed && (
-            <span className="flex items-center gap-1 text-navy">
+            <span className="flex items-center gap-1 text-azul">
               <Unlock size={13} /> {S.manualUnlock}
             </span>
           )}
-          {locked && <span className="text-coral-ink">🔒 {S.lockedTooltip(prevTitle)}</span>}
+          {locked && <span className="text-rojo-ink">🔒 {S.lockedTooltip(prevTitle)}</span>}
         </div>
       </div>
     </li>
@@ -124,7 +124,7 @@ export default function StudyMap() {
               onClick={() => setModuleId(m.moduleId)}
               title={empty ? S.comingSoon : m.title}
               className={`rounded-full border px-4 py-1.5 font-body text-[0.85rem] font-bold transition-colors
-                ${active ? 'border-coral-ink bg-coral-ink text-white' : 'border-navy/15 bg-white text-navy hover:border-coral-ink/60'}
+                ${active ? 'border-rojo-ink bg-rojo-ink text-white' : 'border-azul/15 bg-white text-azul hover:border-rojo-ink/60'}
                 disabled:cursor-not-allowed disabled:opacity-45`}
             >
               {S.module(m.moduleId)}
@@ -137,18 +137,18 @@ export default function StudyMap() {
       {/* Cabecera del módulo + progreso + arcade */}
       <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <p className="label-caps text-coral-ink">{S.module(moduleId)}</p>
+          <p className="label-caps text-rojo-ink">{S.module(moduleId)}</p>
           <h2 className="mt-0.5">{mod?.title}</h2>
           <div className="mt-3 w-72 max-w-full">
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-navy/10" role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}>
-              <div className="h-full rounded-full bg-sage-ink transition-[width] duration-700 ease-out" style={{ width: `${pct}%` }} />
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-azul/10" role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}>
+              <div className="h-full rounded-full bg-verde-ink transition-[width] duration-700 ease-out" style={{ width: `${pct}%` }} />
             </div>
             <p className="mt-1.5 text-[0.8rem] font-semibold text-ink-soft">{S.progress(passedCount, topics.length)}</p>
           </div>
         </div>
 
         <div className="flex flex-col items-end gap-1">
-          <Button variant="navy" onClick={() => navigate(`/study/${bookId}/arcade`)} disabled={!anyUnlockedPassed && topics.length > 0}>
+          <Button variant="azul" onClick={() => navigate(`/study/${bookId}/arcade`)} disabled={!anyUnlockedPassed && topics.length > 0}>
             {S.arcade}
           </Button>
           <span className="text-[0.75rem] text-ink-soft">
@@ -159,9 +159,9 @@ export default function StudyMap() {
       </div>
 
       {mastered && (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-navy px-6 py-5 text-white shadow-lift">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-azul px-6 py-5 text-white shadow-lift">
           <div>
-            <p className="font-display text-[1.4rem] text-gold">{S.moduleMastered(moduleId)}</p>
+            <p className="font-display text-[1.4rem] text-amarillo">{S.moduleMastered(moduleId)}</p>
             <p className="text-[0.9rem] text-white/80">{S.moduleMasteredHint}</p>
           </div>
           <Button onClick={() => navigate(`/book/${bookId}/module/${moduleId}/games`)}>{S.goToGames}</Button>

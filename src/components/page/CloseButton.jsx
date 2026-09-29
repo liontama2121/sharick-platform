@@ -25,7 +25,7 @@ export default function CloseButton({ onClick, label = 'Cerrar la lección' }) {
       onFocus={() => scaleTo(1.1)}
       onBlur={() => scaleTo(1)}
       className="absolute right-6 top-6 z-30 flex h-16 w-16 items-center justify-center
-        rounded-full border-[3px] border-white bg-coral-ink text-white shadow-lift"
+        rounded-full border-4 border-amarillo bg-rojo-ink text-white shadow-lift"
     >
       <X size={28} strokeWidth={3} />
     </button>

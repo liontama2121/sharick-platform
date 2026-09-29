@@ -53,9 +53,9 @@ const IllustrationWithMarkers = forwardRef(function IllustrationWithMarkers(
             className={`absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center
               justify-center rounded-full border shadow-lift transition-transform
               ${letter
-                ? 'border-sage-ink bg-sage-ink text-white'
-                : 'border-navy/20 bg-white text-ink'}
-              ${isSelected ? 'ring-4 ring-gold' : ''}
+                ? 'border-verde-ink bg-verde-ink text-white'
+                : 'border-azul/20 bg-white text-ink'}
+              ${isSelected ? 'ring-4 ring-amarillo' : ''}
               ${hover === m.n ? 'scale-[1.2]' : ''}`}
             style={{ left: `${m.x}%`, top: `${m.y}%` }}
           >
@@ -64,7 +64,7 @@ const IllustrationWithMarkers = forwardRef(function IllustrationWithMarkers(
             {hover === m.n && m.label && (
               <span
                 className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap
-                  rounded-full bg-navy px-3 py-1 text-[13px] font-semibold text-white shadow-lift"
+                  rounded-full bg-azul px-3 py-1 text-[13px] font-semibold text-white shadow-lift"
               >
                 {m.label}
               </span>

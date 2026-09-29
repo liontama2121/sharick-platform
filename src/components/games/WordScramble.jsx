@@ -94,10 +94,10 @@ export default function WordScramble({ game, onFinish, onExit }) {
       {item && (
         <div className="box-beige p-5">
           <div className="mb-3 flex items-center justify-between">
-            <p className="label-caps text-sage-ink">
+            <p className="label-caps text-verde-ink">
               Frase {index + 1} de {items.length}
             </p>
-            <p className="label-caps text-coral-ink">Errores: {errors}</p>
+            <p className="label-caps text-rojo-ink">Errores: {errors}</p>
           </div>
 
           {item.hint && <p className="mb-3 text-[0.88rem] italic text-ink-soft">{item.hint}</p>}
@@ -106,7 +106,7 @@ export default function WordScramble({ game, onFinish, onExit }) {
           <div
             ref={rowRef}
             className="mb-5 flex min-h-[56px] flex-wrap items-center gap-1.5 rounded-xl
-              border-2 border-dashed border-navy/20 bg-white px-3 py-2.5"
+              border-2 border-dashed border-azul/20 bg-white px-3 py-2.5"
           >
             {built.length === 0 && (
               <span className="text-[0.85rem] text-ink-soft/70">
@@ -116,7 +116,7 @@ export default function WordScramble({ game, onFinish, onExit }) {
             {built.map((poolIndex, n) => (
               <span
                 key={n}
-                className="rounded-lg bg-tip px-2.5 py-1 font-display text-[1rem] text-sage-ink"
+                className="rounded-lg bg-tip px-2.5 py-1 font-display text-[1rem] text-verde-ink"
               >
                 {pool[poolIndex]}
               </span>
@@ -134,8 +134,8 @@ export default function WordScramble({ game, onFinish, onExit }) {
                   onClick={() => tap(token, i)}
                   className={`rounded-lg border px-3 py-2 font-display text-[1rem] transition-colors
                     ${used
-                      ? 'border-navy/8 bg-box text-ink-soft/40'
-                      : 'border-navy/15 bg-white text-navy hover:border-coral-ink hover:text-coral-ink'}`}
+                      ? 'border-azul/8 bg-box text-ink-soft/40'
+                      : 'border-azul/15 bg-white text-azul hover:border-rojo-ink hover:text-rojo-ink'}`}
                 >
                   {token}
                 </button>

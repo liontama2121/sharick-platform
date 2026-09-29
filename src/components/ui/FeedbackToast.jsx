@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 import { animate } from 'animejs'
 
 const STYLES = {
-  success: { bg: 'bg-tip', border: 'border-sage-ink/50', text: 'text-sage-ink', icon: '✓' },
-  error: { bg: 'bg-[#fbeae6]', border: 'border-coral-ink/50', text: 'text-coral-ink', icon: '↻' },
-  info: { bg: 'bg-box', border: 'border-navy/25', text: 'text-navy', icon: '•' },
+  success: { bg: 'bg-tip', border: 'border-verde-ink/50', text: 'text-verde-ink', icon: '✓' },
+  error: { bg: 'bg-[#fde8ea]', border: 'border-rojo-ink/50', text: 'text-rojo-ink', icon: '↻' },
+  info: { bg: 'bg-box', border: 'border-azul/25', text: 'text-azul', icon: '•' },
 }
 
 /** Toast de feedback. Visible mientras `message` no sea nulo. */

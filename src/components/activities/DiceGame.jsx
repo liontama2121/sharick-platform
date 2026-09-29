@@ -5,6 +5,7 @@ import Button from '../ui/Button'
 import FeedbackToast from '../ui/FeedbackToast'
 import SmartImage from '../ui/ImagePlaceholder'
 import { popIn } from '../../hooks/useFeedback'
+import { Dices } from 'lucide-react'
 
 /* Posiciones de los puntos del dado (grid 3x3) */
 const PIPS = {
@@ -26,12 +27,12 @@ function Dice({ value, size = 104 }) {
         height="106"
         rx="22"
         fill="#fff"
-        stroke="var(--color-navy)"
+        stroke="var(--color-azul)"
         strokeWidth="3"
       />
-      <rect x="7" y="7" width="106" height="106" rx="22" fill="var(--color-gold)" opacity=".1" />
+      <rect x="7" y="7" width="106" height="106" rx="22" fill="var(--color-amarillo)" opacity=".1" />
       {(PIPS[value] ?? []).map(([col, row], i) => (
-        <circle key={i} cx={col * 30} cy={row * 30} r="8.5" fill="var(--color-coral-ink)" />
+        <circle key={i} cx={col * 30} cy={row * 30} r="8.5" fill="var(--color-rojo-ink)" />
       ))}
     </svg>
   )
@@ -42,7 +43,7 @@ const reducedMotion = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 /* Colores de la pestaña por categoría (texto blanco, contraste AA). */
-const TAB_TONES = ['bg-coral-ink', 'bg-sage-ink', 'bg-navy']
+const TAB_TONES = ['bg-rojo-ink', 'bg-verde-ink', 'bg-azul']
 
 /** "1-2" -> incluye n */
 function inRange(key, n) {
@@ -142,7 +143,7 @@ export default function DiceGame({ section, completed, score, onComplete }) {
                 <Dice value={value} size={220} />
               </div>
               <Button onClick={roll} disabled={rolling} size="lg">
-                {rolling ? 'Rolling…' : '🎲 Roll the dice!'}
+                {rolling ? 'Rolling…' : <><Dices size={20} strokeWidth={2.4} className="mr-2 inline -mt-0.5" aria-hidden="true" />Roll the dice!</>}
               </Button>
 
               <div className="flex min-h-[96px] w-full items-center justify-center">
@@ -150,7 +151,7 @@ export default function DiceGame({ section, completed, score, onComplete }) {
                   <div
                     ref={tabRef}
                     className={`relative w-full rounded-[18px] px-6 py-4 text-center text-white
-                      shadow-[0_12px_26px_rgba(27,58,92,.28)] ${tone}`}
+                      shadow-[0_12px_26px_rgba(20,30,50,.28)] ${tone}`}
                   >
                     <span className="label-caps block text-white/85">You rolled {value}</span>
                     <span className="mt-1 block font-display text-[40px] font-extrabold leading-tight">
@@ -173,7 +174,7 @@ export default function DiceGame({ section, completed, score, onComplete }) {
                     key={k}
                     className={`flex items-center gap-2 whitespace-nowrap rounded-full border py-1 pl-1 pr-3
                       font-body text-[15px] font-semibold
-                      ${seen.includes(k) ? 'border-sage-ink/50 bg-tip text-sage-ink' : 'border-navy/12 bg-white text-navy'}`}
+                      ${seen.includes(k) ? 'border-verde-ink/50 bg-tip text-verde-ink' : 'border-azul/12 bg-white text-azul'}`}
                   >
                     <span className="flex items-center gap-2">
                       <span
@@ -220,7 +221,7 @@ export default function DiceGame({ section, completed, score, onComplete }) {
                 <span
                   key={k}
                   title={ranges[k].label}
-                  className={`h-2 w-7 rounded-full ${seen.includes(k) ? 'bg-coral-ink' : 'bg-navy/12'}`}
+                  className={`h-2 w-7 rounded-full ${seen.includes(k) ? 'bg-rojo-ink' : 'bg-azul/12'}`}
                 />
               ))}
             </span>
@@ -233,7 +234,7 @@ export default function DiceGame({ section, completed, score, onComplete }) {
               <Dice value={value} />
             </div>
             <Button onClick={roll} disabled={rolling} size="sm">
-              {rolling ? 'Rolling…' : '🎲 Roll the dice!'}
+              {rolling ? 'Rolling…' : <><Dices size={20} strokeWidth={2.4} className="mr-2 inline -mt-0.5" aria-hidden="true" />Roll the dice!</>}
             </Button>
           </div>
 
@@ -245,15 +246,15 @@ export default function DiceGame({ section, completed, score, onComplete }) {
             )}
             {active && (
               <>
-                <p className="label-caps text-sage-ink">You rolled {value}</p>
+                <p className="label-caps text-verde-ink">You rolled {value}</p>
                 <h3 className="mb-2.5">{active.label}</h3>
                 <ul className="flex flex-col gap-1.5">
                   {active.phrases.map((p, i) => (
                     <li
                       key={i}
                       data-bubble
-                      className="rounded-xl border border-navy/12 bg-white px-3 py-2
-                        font-display text-[1.05rem] text-navy"
+                      className="rounded-xl border border-azul/12 bg-white px-3 py-2
+                        font-display text-[1.05rem] text-azul"
                     >
                       “{p}”
                     </li>

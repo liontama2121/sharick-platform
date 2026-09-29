@@ -88,19 +88,19 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
                     className={`flex w-full items-center gap-2.5 rounded-xl border px-3 py-2
                       text-left text-[0.92rem] transition-colors
                       ${checked[i]
-                        ? 'border-sage-ink/50 bg-tip'
-                        : 'border-navy/12 bg-white hover:border-coral-ink/55'}`}
+                        ? 'border-verde-ink/50 bg-tip'
+                        : 'border-azul/12 bg-white hover:border-rojo-ink/55'}`}
                   >
                     <span
                       className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full
                         border text-[0.7rem] font-bold
                         ${checked[i]
-                          ? 'border-sage-ink bg-sage-ink text-white'
-                          : 'border-navy/25 text-transparent'}`}
+                          ? 'border-verde-ink bg-verde-ink text-white'
+                          : 'border-azul/25 text-transparent'}`}
                     >
                       ✓
                     </span>
-                    <span className="font-semibold text-navy">{p}</span>
+                    <span className="font-semibold text-azul">{p}</span>
                   </button>
                 </li>
               ))}
@@ -114,7 +114,7 @@ export default function SpeakingPrompt({ section, completed, score, onComplete }
                 {clipUrl && <audio controls src={clipUrl} className="h-8 max-w-[190px]" />}
               </div>
             )}
-            {recError && <p className="mt-2 text-[0.82rem] text-coral-ink">{recError}</p>}
+            {recError && <p className="mt-2 text-[0.82rem] text-rojo-ink">{recError}</p>}
           </div>
 
           {section.backgroundImage && (

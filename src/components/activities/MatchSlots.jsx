@@ -117,7 +117,7 @@ export default function MatchSlots({
       >
         <span
           className="flex h-12 w-12 items-center justify-center rounded-l-[10px] border-2 border-r-0
-            border-navy/25 bg-white font-display text-[24px] text-navy shadow-soft"
+            border-azul/25 bg-white font-display text-[24px] text-azul shadow-soft"
         >
           {m.n}
         </span>
@@ -133,13 +133,13 @@ export default function MatchSlots({
           }
           className={`flex h-12 w-14 items-center justify-center rounded-r-[10px] border-2 bg-white
             shadow-soft transition-colors
-            ${letter ? 'border-sage-ink' : isOver ? 'border-gold bg-gold/15' : 'border-dashed border-navy/35'}
+            ${letter ? 'border-verde-ink' : isOver ? 'border-amarillo bg-amarillo/15' : 'border-dashed border-azul/35'}
             ${selected && !letter ? 'cursor-pointer' : ''}`}
         >
           {letter ? (
             <LetterChip letter={letter} className="h-9 w-11 text-[22px] shadow-none" />
           ) : (
-            <span className="font-body text-[18px] text-navy/30">_</span>
+            <span className="font-body text-[18px] text-azul/30">_</span>
           )}
         </button>
       </div>
@@ -162,7 +162,7 @@ export default function MatchSlots({
           ))}
 
           <div className="mt-auto flex items-center gap-4 rounded-[14px] bg-box px-5 py-3">
-            <span className="label-caps text-sage-ink">Drag</span>
+            <span className="label-caps text-verde-ink">Drag</span>
             <div className="flex gap-3">
               {dialogues.map((d) => {
                 const done = placed.has(d.letter)
@@ -185,7 +185,7 @@ export default function MatchSlots({
                     className={`touch-none transition-transform
                       ${done ? 'cursor-default opacity-25 shadow-none' : 'cursor-grab active:cursor-grabbing'}
                       ${dragging ? 'opacity-30' : ''}
-                      ${selected === d.letter ? 'scale-110 ring-4 ring-gold' : ''}`}
+                      ${selected === d.letter ? 'scale-110 ring-4 ring-amarillo' : ''}`}
                     {...bind(d.letter, done)}
                   />
                 )

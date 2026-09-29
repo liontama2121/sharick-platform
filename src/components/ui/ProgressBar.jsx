@@ -32,12 +32,12 @@ export default function ProgressBar({ value = 0, label = 'Progreso', compact = f
     <div className="w-full">
       {!compact && (
         <div className="mb-1.5 flex items-baseline justify-between">
-          <span className="label-caps text-sage-ink">{label}</span>
-          <span className="font-display text-sm text-coral-ink">{shown}%</span>
+          <span className="label-caps text-verde-ink">{label}</span>
+          <span className="font-display text-sm text-rojo-ink">{shown}%</span>
         </div>
       )}
       <div
-        className="h-2 w-full overflow-hidden rounded-full bg-navy/10"
+        className="h-2 w-full overflow-hidden rounded-full bg-azul/10"
         role="progressbar"
         aria-valuenow={Math.round(value)}
         aria-valuemin={0}
@@ -47,7 +47,7 @@ export default function ProgressBar({ value = 0, label = 'Progreso', compact = f
         <div
           ref={fillRef}
           style={{ width: 0 }}
-          className="h-full rounded-full bg-gradient-to-r from-[#e9b44c] to-[#b23a28]"
+          className="h-full rounded-full bg-gradient-to-r from-amarillo to-rojo-ink"
         />
       </div>
     </div>

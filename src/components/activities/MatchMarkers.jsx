@@ -121,7 +121,7 @@ export default function MatchMarkers({
                 key={l.key}
                 d={`M ${l.a.x} ${l.a.y} Q ${mx} ${my} ${l.b.x} ${l.b.y}`}
                 fill="none"
-                stroke={l.ok ? 'var(--color-sage-ink)' : 'var(--color-coral-ink)'}
+                stroke={l.ok ? 'var(--color-verde-ink)' : 'var(--color-rojo-ink)'}
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeDasharray={l.ok ? '0' : '8 6'}

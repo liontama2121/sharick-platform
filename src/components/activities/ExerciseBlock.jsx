@@ -1,8 +1,7 @@
-import SectionLabel from '../ui/SectionLabel'
-
 /**
  * Envoltura editorial de toda actividad:
- * label "EXERCISE N" verde con hojita + instrucción en bold + contenido.
+ * título + instrucción en bold + contenido. Sin kicker "EXERCISE N": el número
+ * grande ya lo pone ExerciseInstruction en la cabecera de la pantalla.
  */
 export default function ExerciseBlock({
   number,
@@ -16,19 +15,16 @@ export default function ExerciseBlock({
 }) {
   return (
     <section className="pt-1">
-      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
-        <SectionLabel tone="sage" leaf>
-          {label ?? 'Exercise'}
-          {number != null ? ` ${number}` : ''}
-        </SectionLabel>
-        {completed && (
-          <span className="label-caps text-sage-ink">
-            ✓ Done{score != null ? ` · ${score}%` : ''}
-          </span>
-        )}
-      </div>
-
-      {title && <h3 className="mb-1">{title}</h3>}
+      {(title || completed) && (
+        <div className="mb-1 flex flex-wrap items-baseline justify-between gap-2">
+          {title && <h3>{title}</h3>}
+          {completed && (
+            <span className="ml-auto rounded-full bg-verde-ink px-3 py-0.5 text-[0.8rem] font-semibold text-white">
+              Done{score != null ? ` · ${score}%` : ''}
+            </span>
+          )}
+        </div>
+      )}
       {instructions && (
         <p className="mb-3 text-[0.92rem] font-semibold text-ink">{instructions}</p>
       )}

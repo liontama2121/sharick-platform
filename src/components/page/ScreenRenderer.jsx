@@ -138,7 +138,7 @@ export default function ScreenRenderer({
     const Component = ACTIVITIES[activity.activity]
     if (!Component) {
       return (
-        <p className={`font-body text-[16px] text-coral-ink ${className}`}>
+        <p className={`font-body text-[16px] text-rojo-ink ${className}`}>
           Unsupported activity: <code>{activity.activity}</code>
         </p>
       )

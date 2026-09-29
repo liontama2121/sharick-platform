@@ -129,7 +129,7 @@ export default function AudioPlayer({
 
   return (
     <div
-      className={`inline-flex flex-col gap-3 rounded-[14px] border-2 border-coral-ink/60 bg-box
+      className={`inline-flex flex-col gap-3 rounded-[14px] border-2 border-rojo-ink/60 bg-box
         shadow-soft ${compact ? 'px-4 py-3' : 'px-5 py-4'}`}
     >
       {src && (
@@ -177,7 +177,7 @@ export default function AudioPlayer({
               }}
               aria-pressed={i === trackIdx}
               className={`rounded-full px-3 py-1 font-body text-[13px] font-bold transition-colors
-                ${i === trackIdx ? 'bg-coral-ink text-white' : 'bg-white text-navy hover:bg-tip'}`}
+                ${i === trackIdx ? 'bg-rojo-ink text-white' : 'bg-white text-azul hover:bg-tip'}`}
             >
               {t.label ?? `Track ${i + 1}`}
             </button>
@@ -198,7 +198,7 @@ export default function AudioPlayer({
           className="audio-range h-1.5 w-[220px] cursor-pointer appearance-none rounded-full
             disabled:cursor-not-allowed"
           style={{
-            background: `linear-gradient(to right, var(--color-coral-ink) ${pct}%, #ddd2bd ${pct}%)`,
+            background: `linear-gradient(to right, var(--color-rojo-ink) ${pct}%, #d5dbe3 ${pct}%)`,
           }}
         />
         <span className="font-body text-[13px] font-semibold text-ink-soft">
@@ -207,10 +207,10 @@ export default function AudioPlayer({
       </div>
 
       <div className="flex items-center gap-2.5">
-        <RoundBtn label="Play" tone="bg-coral-ink" disabled={disabled} onClick={toggle}>
+        <RoundBtn label="Play" tone="bg-rojo-ink" disabled={disabled} onClick={toggle}>
           <Play size={20} strokeWidth={2.4} fill="currentColor" />
         </RoundBtn>
-        <RoundBtn label="Pause" tone="bg-navy" disabled={disabled || !playing} onClick={toggle}>
+        <RoundBtn label="Pause" tone="bg-azul" disabled={disabled || !playing} onClick={toggle}>
           <Pause size={20} strokeWidth={2.4} fill="currentColor" />
         </RoundBtn>
         <RoundBtn label="Stop" tone="bg-ink-soft" disabled={disabled} onClick={stop}>
@@ -218,7 +218,7 @@ export default function AudioPlayer({
         </RoundBtn>
 
         {label && !failed && (
-          <span className="ml-1 label-caps text-sage-ink">{label}</span>
+          <span className="ml-1 label-caps text-verde-ink">{label}</span>
         )}
         {failed && (
           <span className="ml-1 font-body text-[12px] italic text-ink-soft" title={src ?? ''}>

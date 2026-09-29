@@ -41,7 +41,7 @@ export default function FillInEx({ exercise, onDone }) {
       >
         <span>{before}</span>
         {state === 'ok' ? (
-          <span className="border-b-2 border-sage-ink px-1.5 font-semibold text-sage-ink">
+          <span className="border-b-2 border-verde-ink px-1.5 font-semibold text-verde-ink">
             {exercise.answer}
           </span>
         ) : (
@@ -55,9 +55,9 @@ export default function FillInEx({ exercise, onDone }) {
             onKeyDown={(e) => e.key === 'Enter' && check()}
             placeholder={exercise.hint ?? ''}
             aria-label={S.typeAnswer}
-            className={`rule-fill w-36 px-1 text-center font-semibold text-navy
+            className={`rule-fill w-36 px-1 text-center font-semibold text-azul
               placeholder:font-normal placeholder:text-ink-soft/60
-              ${state === 'bad' ? 'border-coral-ink' : ''}`}
+              ${state === 'bad' ? 'border-rojo-ink' : ''}`}
           />
         )}
         <span>{after}</span>
@@ -65,12 +65,12 @@ export default function FillInEx({ exercise, onDone }) {
 
       <div className="mt-3 flex items-center gap-3">
         {state !== 'ok' && (
-          <Button size="sm" variant="navy" onClick={check} disabled={!value.trim()}>
+          <Button size="sm" variant="azul" onClick={check} disabled={!value.trim()}>
             {S.check}
           </Button>
         )}
-        {state === 'ok' && <span className="text-[0.9rem] font-semibold text-sage-ink">{S.correct}</span>}
-        {state === 'bad' && <span className="text-[0.9rem] font-semibold text-coral-ink">{S.tryAgain}</span>}
+        {state === 'ok' && <span className="text-[0.9rem] font-semibold text-verde-ink">{S.correct}</span>}
+        {state === 'bad' && <span className="text-[0.9rem] font-semibold text-rojo-ink">{S.tryAgain}</span>}
       </div>
     </div>
   )

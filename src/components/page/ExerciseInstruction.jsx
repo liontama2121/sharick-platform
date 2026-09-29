@@ -15,12 +15,12 @@ export default function ExerciseInstruction({ number, skill = 'read', instructio
   return (
     <div className={`flex items-start gap-3 ${className}`}>
       {number != null && (
-        <span className="font-display text-[44px] leading-[0.9] text-coral-ink">{number}</span>
+        <span className="rotulo text-[44px] leading-[0.9] text-rojo-ink">{number}</span>
       )}
-      <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-tip text-sage-ink">
+      <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-tip text-verde-ink">
         <Icon size={20} strokeWidth={2.2} />
       </span>
-      <p className="mt-1 flex-1 font-body text-[22px] font-bold leading-snug text-navy">
+      <p className="mt-1 flex-1 font-body text-[22px] font-semibold leading-snug text-azul">
         {instruction}
       </p>
     </div>

@@ -33,7 +33,7 @@ export default function MultipleChoice({ questions = [], onAllAnswered, idPrefix
       {questions.map((q, qi) => (
         <li key={qi}>
           <p className="mb-2 text-[0.95rem]">
-            <span className="mr-1.5 font-display text-[1.05rem] text-coral-ink">{qi + 1}.</span>
+            <span className="mr-1.5 font-display text-[1.05rem] text-rojo-ink">{qi + 1}.</span>
             {q.q}
           </p>
           <div className="flex flex-col gap-1.5">
@@ -53,13 +53,13 @@ export default function MultipleChoice({ questions = [], onAllAnswered, idPrefix
                   onClick={() => pick(qi, oi, q.correct)}
                   className={`flex items-center gap-2.5 rounded-xl border bg-white px-3 py-2
                     text-left text-[0.88rem] transition-colors
-                    ${isRight ? 'border-sage-ink/60 bg-tip' : ''}
-                    ${isWrong ? 'border-coral-ink' : ''}
-                    ${!chosen ? 'border-navy/12 hover:border-coral-ink/55' : ''}`}
+                    ${isRight ? 'border-verde-ink/60 bg-tip' : ''}
+                    ${isWrong ? 'border-rojo-ink' : ''}
+                    ${!chosen ? 'border-azul/12 hover:border-rojo-ink/55' : ''}`}
                 >
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full
-                      border border-navy/15 font-display text-[0.8rem] text-coral-ink"
+                      border border-azul/15 font-display text-[0.8rem] text-rojo-ink"
                   >
                     {LETTERS[oi]}
                   </span>

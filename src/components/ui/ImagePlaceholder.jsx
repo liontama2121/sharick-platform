@@ -40,15 +40,15 @@ export default function SmartImage({
       role="img"
       aria-label={alt || 'Illustration coming soon'}
       className={`relative flex h-full w-full flex-col items-center justify-center gap-1.5
-        overflow-hidden border border-dashed border-sage/60 bg-box text-center
+        overflow-hidden border border-dashed border-verde/60 bg-box text-center
         ${compact ? 'p-1' : 'p-4'} ${rounded} ${className}`}
     >
       <span className={`opacity-80 ${compact ? 'text-xl' : 'text-3xl'}`} aria-hidden="true">
         {emoji}
       </span>
-      {alt && !compact && <span className="font-display text-[0.9rem] text-navy">{alt}</span>}
+      {alt && !compact && <span className="font-display text-[0.9rem] text-azul">{alt}</span>}
       {showPath && !compact && src && (
-        <code className="max-w-full break-all rounded-full bg-navy/8 px-2.5 py-0.5 text-[10px] text-ink-soft">
+        <code className="max-w-full break-all rounded-full bg-azul/8 px-2.5 py-0.5 text-[10px] text-ink-soft">
           {src}
         </code>
       )}

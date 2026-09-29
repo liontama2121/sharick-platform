@@ -31,7 +31,7 @@ export default function ListeningActivity({ section, completed, score, onComplet
           <div className="mb-4 box-beige p-3.5">
             {section.transcript.map((line, i) => (
               <p key={i} className="text-[0.88rem] leading-relaxed">
-                <span className="font-semibold text-navy">{line.speaker}: </span>
+                <span className="font-semibold text-azul">{line.speaker}: </span>
                 {line.text}
               </p>
             ))}

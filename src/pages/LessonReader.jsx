@@ -35,9 +35,9 @@ function typingInField() {
 
 function DoneOverlay({ moduleName, onBack, onGames }) {
   return (
-    <div className="absolute inset-0 z-40 flex items-center justify-center bg-navy/35 px-6">
+    <div className="absolute inset-0 z-40 flex items-center justify-center bg-azul/35 px-6">
       <div className="w-full max-w-md rounded-2xl bg-paper p-7 text-center shadow-lift">
-        <p className="label-caps text-sage-ink">Fin del módulo</p>
+        <p className="label-caps text-verde-ink">Fin del módulo</p>
         <h2 className="mt-1.5">¡Módulo completado!</h2>
         <p className="mt-2 text-[0.92rem] text-ink-soft">Llegaste al final de {moduleName}.</p>
         <div className="mt-5 flex flex-wrap justify-center gap-2.5">
@@ -55,7 +55,7 @@ function DoneOverlay({ moduleName, onBack, onGames }) {
     del Nivel 2 (portada + una miniatura por lección). */
 function IndexOverlay({ cards, meta, content, currentId, hechasDe, onPick, onClose }) {
   return (
-    <div className="absolute inset-0 z-40 flex items-center justify-center bg-navy/40 px-10">
+    <div className="absolute inset-0 z-40 flex items-center justify-center bg-azul/40 px-10">
       <div className="max-h-[86%] w-full max-w-[1240px] overflow-y-auto rounded-2xl bg-paper p-8 scrollbar-slim">
         <div className="mb-6 flex items-center justify-between">
           <h2>Índice de lecciones</h2>

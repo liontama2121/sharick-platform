@@ -3,3 +3,9 @@ dist
 .DS_Store
 *.local
 .vite
+
+# Impeccable: capturas de revisión y estado local
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/
+.impeccable/config.local.json

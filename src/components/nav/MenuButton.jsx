@@ -12,7 +12,7 @@ const reduced = () =>
  */
 export default function MenuButton({
   badge,
-  tone = 'coral',
+  tone = 'rojo',
   label,
   hint,
   available = true,
@@ -29,7 +29,7 @@ export default function MenuButton({
     })
   }
 
-  const badgeTone = tone === 'sage' ? 'bg-sage-ink' : 'bg-coral-ink'
+  const badgeTone = tone === 'verde' ? 'bg-verde-ink' : 'bg-rojo-ink'
 
   return (
     <button
@@ -40,22 +40,23 @@ export default function MenuButton({
       onFocus={() => hover(true)}
       onBlur={() => hover(false)}
       aria-disabled={!available}
-      className={`flex w-full items-center gap-4 overflow-hidden rounded-xl bg-box grain
+      className={`flex w-full items-center gap-4 overflow-hidden rounded-2xl border-[3px] bg-paper
         text-left transition-shadow
-        ${available ? 'shadow-soft hover:shadow-lift' : 'opacity-55 shadow-none'}`}
+        ${available ? 'border-azul shadow-soft hover:shadow-lift' : 'border-azul/20 shadow-none'}`}
       style={{ minHeight: 90 }}
     >
       <span
         className={`flex h-[90px] w-[74px] shrink-0 items-center justify-center
-          font-display text-2xl font-bold text-white grain ${badgeTone}`}
+          rotulo text-[1.8rem] text-white grain ${badgeTone} ${available ? '' : 'opacity-50'}`}
+        style={{ '--rotulo-sombra': 'var(--color-azul)' }}
       >
         {badge}
       </span>
       <span className="min-w-0 flex-1 py-3 pr-4">
-        <span className="block font-display text-[1.05rem] leading-tight text-navy">{label}</span>
+        <span className={`block font-display text-[1.1rem] leading-tight ${available ? 'text-azul' : 'text-ink-soft'}`}>{label}</span>
         {hint && <span className="mt-0.5 block text-[0.78rem] text-ink-soft">{hint}</span>}
         {!available && (
-          <span className="mt-1 inline-block label-caps text-coral-ink">Próximamente</span>
+          <span className="mt-1 inline-block text-[0.8rem] font-semibold text-rojo-ink">Próximamente</span>
         )}
       </span>
     </button>

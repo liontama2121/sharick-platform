@@ -33,26 +33,22 @@
     {
       "name": "Colombia",
       "places": "Cartagena · Bogotá · Medellín",
-      "textile": "vueltiao",
-      "craft": "Sombrero vueltiao"
+      "color": "rojo"
     },
     {
       "name": "Venezuela",
       "places": "Caracas",
-      "textile": "wayuu",
-      "craft": "Tejido wayuu"
+      "color": "amarillo"
     },
     {
       "name": "Bolivia",
       "places": "La Paz",
-      "textile": "aguayo",
-      "craft": "Aguayo andino"
+      "color": "verde"
     },
     {
       "name": "Panamá",
       "places": "Ciudad de Panamá",
-      "textile": "mola",
-      "craft": "Mola guna"
+      "color": "azul"
     }
   ]
 }

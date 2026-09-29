@@ -11,9 +11,9 @@ const reduced = () =>
 
 /* Semicírculos de fondo, suaves (solo relleno, nunca texto encima). */
 const TONES = {
-  pink: '#F6D5CE',
-  blue: '#D3E4F1',
-  yellow: '#F8E4B0',
+  pink: '#F9D3D8',
+  blue: '#D2DEF0',
+  yellow: '#FCE7A6',
 }
 
 /** Un bocadillo de habla con su título y frases, cada una con 🎧. */
@@ -22,16 +22,16 @@ function Bubble({ bubble, bi, said, onSay, tail }) {
   return (
     <div
       data-scene
-      className="relative rounded-[28px] border-[3px] border-navy/15 bg-white px-5 pb-4 pt-3
-        shadow-[0_10px_24px_rgba(27,58,92,.14)]"
+      className="relative rounded-[28px] border-[3px] border-azul/15 bg-white px-5 pb-4 pt-3
+        shadow-[0_10px_24px_rgba(20,30,50,.14)]"
     >
       {/* Cola del bocadillo hacia la persona */}
       <span
         aria-hidden="true"
-        className={`absolute bottom-[-15px] h-7 w-7 rotate-45 border-b-[3px] border-r-[3px] border-navy/15
+        className={`absolute bottom-[-15px] h-7 w-7 rotate-45 border-b-[3px] border-r-[3px] border-azul/15
           bg-white ${tail === 'right' ? 'right-12' : 'left-12'}`}
       />
-      <p className="mb-2 font-display text-[26px] font-extrabold text-coral-ink">{bubble.label}</p>
+      <p className="mb-2 font-display text-[26px] font-extrabold text-rojo-ink">{bubble.label}</p>
       <div className="grid gap-x-6" style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
         {cols.map((col, ci) => (
           <ul key={ci} className="flex flex-col gap-1.5">
@@ -46,12 +46,12 @@ function Bubble({ bubble, bi, said, onSay, tail }) {
                     aria-pressed={on}
                     className={`flex min-w-0 flex-1 items-center gap-2 rounded-xl px-2 py-1 text-left
                       font-body text-[21px] font-semibold transition-colors
-                      ${on ? 'bg-tip text-sage-ink' : 'text-navy hover:bg-box'}`}
+                      ${on ? 'bg-tip text-verde-ink' : 'text-azul hover:bg-box'}`}
                   >
                     <span
                       className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border
                         text-[12px] font-bold
-                        ${on ? 'border-sage-ink bg-sage-ink text-white' : 'border-navy/25 text-transparent'}`}
+                        ${on ? 'border-verde-ink bg-verde-ink text-white' : 'border-azul/25 text-transparent'}`}
                     >
                       ✓
                     </span>

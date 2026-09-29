@@ -6,7 +6,7 @@ import { useProgress } from '../hooks/useProgress'
 import { useLevelIntro } from '../hooks/useLevelIntro'
 import MenuButton from '../components/nav/MenuButton'
 import RoundButton from '../components/nav/RoundButton'
-import Swirl from '../components/decor/Swirl'
+import Guarda from '../components/decor/Guarda'
 
 /** Selector de módulo del botón Games del menú principal. */
 export default function GamesPicker() {
@@ -22,9 +22,8 @@ export default function GamesPicker() {
     <div ref={ref} className="mx-auto w-full max-w-[720px] px-5 py-7 sm:px-8">
       <header className="mb-7 flex items-start justify-between gap-4">
         <div>
-          <p className="label-caps text-sage-ink">Games</p>
-          <h1 className="mt-1">¿De qué módulo quieres jugar?</h1>
-          <Swirl width={104} className="mt-1.5" />
+          <h1 className="rotulo text-rojo-ink">¿De qué módulo quieres jugar?</h1>
+          <Guarda width={104} className="mt-1.5" />
           <p className="mt-2 text-[0.9rem] text-ink-soft">
             Cada módulo tiene sus propios juegos, con su vocabulario y sus diálogos.
           </p>
@@ -44,7 +43,7 @@ export default function GamesPicker() {
             <MenuButton
               key={mod.moduleId}
               badge={mod.moduleId}
-              tone="coral"
+              tone="rojo"
               label={mod.moduleName}
               hint={
                 available
