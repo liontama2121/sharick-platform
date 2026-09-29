@@ -1,9 +1,12 @@
+import { useLayoutEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { animate } from 'animejs'
 import { BookOpen, Gamepad2, PenLine, Trophy } from 'lucide-react'
 
 import { books, countries } from '../books'
 import BookCard from '../components/cards/BookCard'
 import Filete from '../components/decor/Filete'
+import RouteChiva from '../components/home/RouteChiva'
 import Button from '../components/ui/Button'
 import { usePageAnimation } from '../hooks/usePageAnimation'
 import { useSession } from '../hooks/useSession'
@@ -16,14 +19,41 @@ const FEATURE_ICONS = {
   arcade: Gamepad2,
 }
 
-/* Placa numerada de cada parada: el amarillo lleva número azul. */
-const STOP_INK = { amarillo: 'var(--color-azul)' }
+const reduced = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 export default function Home() {
   const ref = usePageAnimation('home')
   const navigate = useNavigate()
   const session = useSession()
   const startStudying = () => navigate(session ? '/study/english-a1' : '/study/login')
+  const signRef = useRef(null)
+  const guardTopRef = useRef(null)
+  const guardBottomRef = useRef(null)
+
+  /* Llegada de la cabecera: las guardas se pintan como una pincelada y el
+     rótulo amarillo entra colgado, se mece y se asienta. */
+  useLayoutEffect(() => {
+    if (reduced()) return
+    const sign = signRef.current
+    const top = guardTopRef.current
+    const bottom = guardBottomRef.current
+    if (!sign || !top || !bottom) return
+    sign.style.opacity = '0'
+    top.style.clipPath = 'inset(0% 100% 0% 0%)'
+    bottom.style.clipPath = 'inset(0% 0% 0% 100%)'
+    animate(top, { clipPath: ['inset(0% 100% 0% 0%)', 'inset(0% 0% 0% 0%)'], duration: 1000, ease: 'outQuart', delay: 120 })
+    animate(bottom, { clipPath: ['inset(0% 0% 0% 100%)', 'inset(0% 0% 0% 0%)'], duration: 1000, ease: 'outQuart', delay: 260 })
+    animate(sign, {
+      opacity: [0, 1],
+      translateY: [-34, 0],
+      rotate: [-6, 2, -0.8, 0],
+      duration: 1150,
+      ease: 'outQuart',
+      delay: 180,
+    })
+  }, [])
 
   return (
     <div ref={ref} className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-8 sm:py-10">
@@ -34,10 +64,15 @@ export default function Home() {
           text-center shadow-page"
       >
         <div aria-hidden="true" className="h-4 bg-azul" />
-        <Filete variant="rombos" height={12} className="h-3 w-full" />
+        <div ref={guardTopRef}>
+          <Filete variant="rombos" height={12} className="h-3 w-full" />
+        </div>
 
         <div className="px-5 pb-9 pt-8 sm:px-10">
-          <div className="mx-auto w-fit max-w-full rounded-2xl border-4 border-azul bg-amarillo px-6 py-4 shadow-lift sm:px-9">
+          <div
+            ref={signRef}
+            className="mx-auto w-fit max-w-full origin-top rounded-2xl border-4 border-azul bg-amarillo px-6 py-4 shadow-lift sm:px-9"
+          >
             <h1
               className="rotulo text-balance text-[clamp(1.7rem,4.6vw,3rem)] leading-[1.05] text-azul"
               style={{ '--rotulo-sombra': '#ffffff' }}
@@ -54,7 +89,9 @@ export default function Home() {
           </p>
         </div>
 
-        <Filete variant="dientes" colors={['rojo-ink', 'amarillo', 'azul']} height={14} className="h-3.5 w-full" />
+        <div ref={guardBottomRef}>
+          <Filete variant="dientes" colors={['rojo-ink', 'amarillo', 'azul']} height={14} className="h-3.5 w-full" />
+        </div>
         <div aria-hidden="true" className="h-5 bg-azul" />
       </header>
 
@@ -64,33 +101,7 @@ export default function Home() {
           <h2 id="ruta" className="text-center text-[1.6rem]">
             La ruta del libro
           </h2>
-          <ol className="relative mt-7 grid grid-cols-2 gap-y-8 sm:grid-cols-4">
-            {/* Carretera con línea central amarilla */}
-            <span
-              aria-hidden="true"
-              className="absolute left-[12.5%] right-[12.5%] top-[19px] hidden h-2.5 rounded-full bg-azul sm:block"
-              style={{
-                backgroundImage:
-                  'repeating-linear-gradient(90deg, var(--color-amarillo) 0 16px, transparent 16px 30px)',
-                backgroundSize: '100% 2px',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />
-            {countries.map((c, i) => (
-              <li key={c.name} className="relative flex flex-col items-center px-2 text-center">
-                <span
-                  className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-white
-                    font-display text-[1.2rem] text-white shadow-lift"
-                  style={{ background: `var(--color-${c.color})`, color: STOP_INK[c.color] }}
-                >
-                  {i + 1}
-                </span>
-                <h3 className="mt-3 text-[1.15rem]">{c.name}</h3>
-                <p className="mt-1 text-[0.82rem] leading-snug text-ink-soft">{c.places}</p>
-              </li>
-            ))}
-          </ol>
+          <RouteChiva countries={countries} />
         </section>
       )}
 

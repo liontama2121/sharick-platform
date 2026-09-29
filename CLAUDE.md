@@ -165,6 +165,8 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 
 | Elemento | Animación | Specs |
 |----------|-----------|-------|
+| **Llegada de la chiva (Home)** | carretera + bus | `home/RouteChiva.jsx`: la carretera se traza (scaleX, 1100ms `outExpo`), la chiva (`decor/ChivaBus.jsx`) entra y recorre las 4 paradas (720ms `inOutSine` por tramo, ruedas girando, rebote al frenar); en cada parada el letrero gira rotateY [90,0] `outBack(1.4)` y aparece el país. Después, hover sobre un país = la chiva maneja hasta él. Móvil: solo letreros en cascada. Reduced motion: bus estacionado, todo visible |
+| Cabecera del Home | rótulo colgado + pincelada | rótulo: rotate [-6,2,-0.8,0] + translateY [-34,0], 1150ms `outQuart`, `origin-top`; guardas: clipPath inset de 100% a 0 (1000ms) |
 | Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
 | Barras del menú (Nivel 1) | hover | translateX 6px, 260ms |
