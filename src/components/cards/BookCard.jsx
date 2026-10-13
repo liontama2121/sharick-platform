@@ -4,15 +4,17 @@ import { Link } from 'react-router-dom'
 import { hoverFloat } from '../../hooks/useFeedback'
 import Filete from '../decor/Filete'
 import Guarda from '../decor/Guarda'
-import LiveCover from '../book/LiveCover'
+import AndesScene from '../scene/AndesScene'
+
+const SCENES = { andes: AndesScene }
 
 /** Card de libro en el Home: una ventana de la chiva con el nivel rotulado.
-    Si el libro tiene portada (`book.cover` en registry.json), la cabecera es
-    esa portada animada en miniatura: English Route = el mapa con la ruta. */
+    Si el libro trae `scene` (registry.json), la cabecera es esa escena
+    animada: el A1 es Colombia andina (Bogotá y Medellín). */
 export default function BookCard({ book }) {
   const ref = useRef(null)
   const available = !!book.available
-  const hasCover = available && !!book.cover
+  const Scene = available ? SCENES[book.scene] : null
 
   const level = (
     <span
@@ -32,10 +34,10 @@ export default function BookCard({ book }) {
       className={`group flex h-full flex-col overflow-hidden rounded-[18px] border-[6px] bg-paper shadow-lift
         ${available ? 'cursor-pointer border-madera' : 'cursor-not-allowed border-[#b9c3d0] opacity-70'}`}
     >
-      {hasCover ? (
-        <div className="relative">
-          <LiveCover meta={book} lite />
-          <span className="absolute right-3 top-6">{level}</span>
+      {Scene ? (
+        <div className="relative aspect-[16/10] overflow-hidden">
+          <Scene />
+          <span className="absolute left-3 top-3">{level}</span>
         </div>
       ) : (
         <div

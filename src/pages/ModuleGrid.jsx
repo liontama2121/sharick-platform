@@ -18,11 +18,11 @@ import LessonCard from '../components/book/LessonCard'
 import RoundButton from '../components/nav/RoundButton'
 import Filete from '../components/decor/Filete'
 import CloseButton from '../components/page/CloseButton'
-import CartagenaStreet from '../components/scene/CartagenaStreet'
+import AndesScene from '../components/scene/AndesScene'
 
 /* Escena de fondo de la banda de lecciones según el módulo (`module.scene`
-   en modules.json). El Módulo 1 es Colombia: una calle de Cartagena. */
-const SCENES = { cartagena: CartagenaStreet }
+   en modules.json). El Módulo 1 es Colombia: los Andes de Bogotá y Medellín. */
+const SCENES = { andes: AndesScene }
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -153,8 +153,8 @@ export default function ModuleGrid() {
   return (
     <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
       {/* Costado de la chiva: techo azul con la trenza del sombrero vueltiao,
-          la banda de lecciones sobre la escena del módulo (Módulo 1: calle
-          de Cartagena) y abajo la calle empedrada. Sin franjas de bandera:
+          la banda de lecciones sobre la escena del módulo (Módulo 1: Andes
+          de Bogotá y Medellín) y abajo la calle empedrada. Sin franjas de bandera:
           blanco + verde + rojo se leía como México y el tricolor como
           bandera literal. */}
       <div

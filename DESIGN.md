@@ -206,7 +206,7 @@ Rechazos confirmados por el build: la hoja crema editorial con acuarela (el mund
 - Pintura plana con grano, filetes de color contrario y guardas pintadas en lugar de degradados.
 - Rotulado en slab gruesa con sombra plana de color, como los nombres pintados de las chivas.
 - Bordes gruesos de color (3-6px) y radios amplios en lugar de sombras duras.
-- Todo movimiento con Anime.js: la ruta se pinta en el mapa de la portada y la calle de Cartagena tiene banderines con brisa.
+- Todo movimiento con Anime.js: la ruta se pinta en el mapa de la portada y el paisaje andino del A1 vive en bucle (cabinas, nubes, pájaros, palmas).
 
 ## Colors
 
@@ -347,8 +347,8 @@ Panel `rojo-ink` con grano, borde azul de 6px y radio 24-28px, apilado de arriba
 ### Mapa de la ruta (portada y cabecera del Home)
 `RouteMap`: mapa real de Latinoamérica (Natural Earth, Mercator) en `carroceria` con fronteras `ink-soft` y costa amarilla sobre mar `azul`; los cuatro países del libro en su color. Ruta de puntos amarillos sobre hilo rojo que se pinta tramo a tramo (sin vehículo), pines numerados con onda amarilla al llegar, letreros blancos con bandera SVG unidos por línea guía. Movimiento reducido: ruta completa y quieta.
 
-### Calle de Cartagena (Nivel 2 del Módulo 1 y card del Home)
-`CartagenaStreet`: fachadas coloniales de colores (tokens aclarados con color-mix), balcones y ventanas de madera, buganvillas, cielo `cielo` y banderines de fiesta que se mecen. Guardas `vueltiao` (trenza del sombrero vueltiao) y `adoquines`. Colombia sin bandera literal.
+### Colombia andina (card A1, Nivel 1 y Nivel 2 del Módulo 1)
+`AndesScene`: paisaje por capas de Bogotá y Medellín (Monserrate con teleférico, torres de Bogotá, lomas de casitas de ladrillo con metrocable, guayacán amarillo, palmas de cera, cafetales), tokens mezclados con color-mix para la profundidad; nubes, pájaros, cabinas y flores en movimiento. Guardas `vueltiao` y `adoquines`. Colombia sin bandera literal.
 
 ### DayArc
 El día como cuatro paneles planos (amarillo claro #FCE7A6, celeste #CFE3F5, naranja #F4A259, azul noche) separados por filetes blancos, con soles amarillos y rojo y luna; los arcos se dibujan y los textos entran con stagger. Colores propios del componente, no tokens.

@@ -155,7 +155,7 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 - Dónde vive cada pieza: techo azul + rombos arriba, faldón rojo + dientes
   abajo (Nivel 1, Nivel 2, Home, portada), placas rotuladas amarillas o rojas
   para nombres, ventanas con marco de madera para lecciones y libros, banda
-  de lecciones con escena de Cartagena en el Nivel 2, ajedrez verde en la
+  de lecciones con la escena andina (Bogotá y Medellín) en el Nivel 2, ajedrez verde en la
   Study Zone. La ruta de los 4 países sale de `registry.json → countries` en
   la portada (que también es la cabecera del Home).
 
@@ -201,28 +201,39 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
   `still` (miniaturas) y reduced motion: ruta completa y quieta.
 - En `still` se omiten la retícula, los nombres y el filete grueso de la costa: a escala
   ~0.2 ese trazo cuelga el rasterizado de Chrome y no se distingue.
-- **La portada también es la cabecera del Home y la cabecera de la card A1**:
-  `book/LiveCover.jsx` escala el lienzo animado al ancho del contenedor;
-  `home/HomeHero.jsx` la enmarca en una `.ventana` y `cards/BookCard.jsx` la
-  usa con `lite` (anima la ruta sin nombres, retícula, costa ni letreros) y
-  la placa A1 encima. En `lite` el título es `<p>`, no `<h1>`. La página
+- **La portada también es la cabecera del Home**: `book/LiveCover.jsx` escala
+  el lienzo animado al ancho del contenedor y `home/HomeHero.jsx` la enmarca
+  en una `.ventana`. `LiveCover lite` (ruta animada sin nombres, retícula,
+  costa ni letreros; título en `<p>`) queda para miniaturas animadas. La página
   principal se llama "English Route" (`<title>` incluido). Ya no hay sección
   "La ruta del libro" con la chiva en el Home (quitada a pedido del cliente,
   2026-10-12; `RouteChiva` y `ChivaBus` se borraron).
 
-### Escena del Módulo 1: calle de Cartagena (`scene/CartagenaStreet.jsx`)
-El Módulo 1 es Colombia, pero **sin bandera** (pedido del cliente: ni franjas
-tricolor ni blanco + verde + rojo, que se leía como México). Es una calle del
-Centro Histórico de Cartagena dibujada en SVG: fachadas de colores (tokens
-aclarados con `color-mix`), ventanas altas y puertas con arco de madera,
-balcones corridos, buganvillas y cielo `cielo`. Animación: las casas suben
-escalonadas al entrar (translateY [40,0], stagger 60ms) y una guirnalda de
-banderines de fiesta se mece en bucle (rotate [-7,7], 1600ms alternado,
-stagger 90ms). Reduced motion: quieta.
-- Se elige por datos: `module.scene: "cartagena"` (modules.json), mapa
-  `SCENES` en `ModuleGrid`; un módulo nuevo = una escena nueva.
-- Guardas nuevas en `Filete`: `vueltiao` (trenza del sombrero vueltiao, techo
-  y borde de la card) y `adoquines` (calle empedrada del faldón).
+### Escena del A1: Colombia andina, Bogotá y Medellín (`scene/AndesScene.jsx`)
+El libro A1 es Colombia, pero **sin bandera** (ni franjas tricolor ni blanco +
+verde + rojo, que se leía como México) y **natural**, de Bogotá y Medellín
+(pedido del cliente, 2026-10-12; reemplaza a la calle de Cartagena, que le
+pareció simple). SVG por capas con profundidad (lo lejano más claro y azul):
+cielo en degradado, sol con halo que respira, nubes, cordillera lejana,
+Cerros Orientales con **Monserrate** (iglesia blanca de techo rojo) y su
+**teleférico**, torres de **Bogotá** al pie, lomas de **Medellín** llenas de
+casitas de ladrillo (algunas pintadas) con el **metrocable**, guayacán
+amarillo soltando flores, palmas de cera y cafetales con granos rojos.
+- Animación: las capas suben al entrar (translateY [36,0], stagger 110ms); en
+  bucle, las palmas se mecen y el halo del sol respira (Anime.js alternado),
+  y **un solo reloj** (`animate` de 0 a 120000 con `onUpdate`) mueve las
+  cabinas de los dos cables, las nubes, los pájaros aleteando y las flores
+  del guayacán cayendo. Reduced motion: quieta.
+- Monserrate va al centro (x≈980 del viewBox 1600x420): con
+  `preserveAspectRatio="xMidYMax slice"` es lo que se ve en la card y no lo
+  tapa el rótulo del menú.
+- Dónde vive (`scene: "andes"`): cabecera de la card A1 del Home
+  (`registry.json → books[0].scene`), cabecera del Nivel 1
+  (`BookMenu`, rótulo amarillo y datos en pastilla azul encima) y banda de
+  lecciones del Módulo 1 (`modules.json → module.scene`). Mapas `SCENES` en
+  `BookCard`, `BookMenu` y `ModuleGrid`.
+- Guardas en `Filete`: `vueltiao` (trenza del sombrero vueltiao: techo del
+  Nivel 1 y 2, borde de la card) y `adoquines` (calle empedrada del faldón).
 - `ScreenRenderer` acepta `still`; `ScreenThumb` y `LessonSpread` lo pasan
   siempre (en miniatura no se mueve nada).
 - `content/DayArc.jsx` pinta el día como cuatro paneles planos (amarillo claro,
@@ -237,7 +248,7 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 | Elemento | Animación | Specs |
 |----------|-----------|-------|
 | **Portada / Home** | ruta en el mapa | ver "Portada English Route": tramos que se pintan, pulso de pin, loop con fade |
-| **Calle de Cartagena (Nivel 2)** | fachadas + banderines | casas translateY [40,0] stagger 60ms; banderines rotate [-7,7] 1600ms en bucle |
+| **Escena andina (card A1, Nivel 1, Nivel 2)** | capas + reloj | capas translateY [36,0] stagger 110ms; palmas rotate ±1.6° y halo del sol en bucle; cabinas, nubes, pájaros y flores con un reloj de 120s |
 | Cabecera del Home | rótulo colgado + pincelada | rótulo: rotate [-6,2,-0.8,0] + translateY [-34,0], 1150ms `outQuart`, `origin-top`; guardas: clipPath inset de 100% a 0 (1000ms) |
 | Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
@@ -303,7 +314,7 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 
 - **Costado de la chiva**: carrocería blanca con borde azul, techo azul con la
   trenza `vueltiao`, la banda de lecciones sobre la escena del módulo
-  (Módulo 1: calle de Cartagena, enmarcada en madera) y faldón de
+  (Módulo 1: Andes de Bogotá y Medellín, enmarcada en madera) y faldón de
   `adoquines`. Sin franjas de bandera. Arriba a la izquierda, la **placa roja** con borde amarillo y
   "Module N" rotulado en blanco con sombra amarilla;
   debajo, nombre del módulo, descripción y barra de progreso (contada por
@@ -753,7 +764,7 @@ amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 - **HECHO:** setup, formato de pantalla completa, sistema editorial completo,
   todas las actividades, contenido del Módulo 1 (portada + lección única 1.1,
   14 pantallas), juegos por módulo, Nivel 2 con miniatura mosaico resumen,
-  portada English Route con mapa y ruta animada, card A1 con la portada animada en Home, mapa real de Latinoamérica con ruta por todas las capitales,
+  portada English Route con mapa y ruta animada, card A1, menú del libro y Módulo 1 con la escena andina de Bogotá y Medellín, mapa real de Latinoamérica con ruta por todas las capitales,
   Study Zone con login demo, 6 temas del Módulo 1, quiz con candados, arcade
   y modo profe.
 - **PENDIENTE:** imágenes (Gemini), audios (mp3), módulos 2-4 (libro y Study),

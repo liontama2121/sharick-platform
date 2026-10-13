@@ -27,6 +27,10 @@ import MenuButton from '../components/nav/MenuButton'
 import RoundButton from '../components/nav/RoundButton'
 import FeedbackToast from '../components/ui/FeedbackToast'
 import Filete from '../components/decor/Filete'
+import AndesScene from '../components/scene/AndesScene'
+
+/* Escena de la cabecera según el libro (`book.scene` en registry.json) */
+const SCENES = { andes: AndesScene }
 
 const RESOURCE_ICONS = {
   notebook: NotebookPen,
@@ -63,17 +67,26 @@ export default function BookMenu() {
     )
   }
 
+  const Scene = SCENES[meta.scene] ?? null
   const soon = (label) => setToast({ msg: `${label} — próximamente`, type: 'info' })
   const allIds = bookActivityIds(bookId)
   const doneAll = allIds.filter((id) => progress.completedActivities.includes(id)).length
 
   return (
     <div ref={ref} className="mx-auto w-full max-w-[1080px] px-5 py-7 sm:px-8">
-      {/* Frente de la chiva: rótulo del libro sobre la carrocería roja */}
-      <header className="grain relative mb-9 overflow-hidden rounded-[24px] border-[6px] border-azul bg-rojo-ink shadow-page">
-        <div aria-hidden="true" className="h-3 bg-azul" />
-        <Filete variant="rombos" height={12} className="h-3 w-full" />
-        <div className="flex items-center justify-between gap-4 px-5 py-6 sm:px-8">
+      {/* Frente de la chiva: el rótulo del libro sobre su paisaje (el A1 es
+          Colombia andina); sin escena, la carrocería roja de siempre */}
+      <header
+        className={`grain relative mb-9 overflow-hidden rounded-[24px] border-[6px] border-azul shadow-page
+          ${Scene ? 'bg-cielo' : 'bg-rojo-ink'}`}
+      >
+        <div aria-hidden="true" className="relative z-10 h-3 bg-azul" />
+        <Filete variant="vueltiao" height={12} className="relative z-10 h-3 w-full" />
+        {Scene && <Scene />}
+        <div
+          className={`relative flex items-start justify-between gap-4 px-5 sm:px-8
+            ${Scene ? 'min-h-[260px] pb-28 pt-6 sm:min-h-[300px]' : 'py-6'}`}
+        >
           <div className="min-w-0">
             <div className="w-fit max-w-full rounded-2xl border-4 border-azul bg-amarillo px-5 py-3 shadow-lift">
               <h1
@@ -83,7 +96,10 @@ export default function BookMenu() {
                 {meta.name.replace(/^(\S+) /, '$1 ')}
               </h1>
             </div>
-            <p className="mt-4 text-[0.95rem] text-white">
+            <p
+              className={`mt-4 w-fit text-[0.95rem] text-white
+                ${Scene ? 'rounded-full bg-azul/85 px-4 py-1.5 shadow-soft' : ''}`}
+            >
               {meta.language} · Nivel {meta.level} · {doneAll} de {allIds.length} actividades completadas
             </p>
           </div>
@@ -92,8 +108,8 @@ export default function BookMenu() {
             <X size={22} strokeWidth={2.6} />
           </RoundButton>
         </div>
-        <Filete variant="dientes" colors={['rojo-ink', 'amarillo', 'azul']} height={12} className="h-3 w-full" />
-        <div aria-hidden="true" className="h-4 bg-azul" />
+        <Filete variant="dientes" colors={['rojo-ink', 'amarillo', 'azul']} height={12} className="relative h-3 w-full" />
+        <div aria-hidden="true" className="relative h-4 bg-azul" />
       </header>
 
       <div className="grid gap-5 lg:grid-cols-2">
