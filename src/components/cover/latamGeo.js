@@ -4,7 +4,9 @@
    `latam.json` = todos los países de Latinoamérica (de México a Tierra del
    Fuego, con Centroamérica, las Antillas y las Guayanas) sacados de
    Natural Earth 1:50m (paquete world-atlas@2.0.2) y simplificados con
-   Douglas-Peucker a 0.06°. Contornos reales, no dibujados a mano.
+   Douglas-Peucker a 0.06°. Contornos reales, no dibujados a mano. Cada
+   país trae su capital (`capital: { name, lon, lat }`) y `tour` es el orden
+   en que la ruta de la portada las recorre.
 
    Proyección Mercator, la de los mapas escolares: el continente se ve como
    el estudiante lo conoce.
@@ -12,6 +14,10 @@
 import LATAM from './latam.json'
 
 export const COUNTRIES = LATAM.countries
+
+/* Orden del recorrido por TODAS las capitales: México, Centroamérica, los
+   Andes, el Cono Sur, Brasil, las Guayanas y el Caribe. */
+export const TOUR = LATAM.tour
 
 const rad = (d) => (d * Math.PI) / 180
 const mercY = (lat) => Math.log(Math.tan(Math.PI / 4 + rad(lat) / 2))

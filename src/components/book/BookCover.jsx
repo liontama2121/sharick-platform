@@ -10,52 +10,80 @@ const reduced = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 /**
- * Portada "English Route": el mar azul noche, el continente pintado de
- * blanco carrocería y la ruta del libro (Colombia → Venezuela → Panamá →
- * Bolivia) que un avión recorre en bucle. El título vive en el Pacífico,
- * abajo a la izquierda, que es el hueco natural del mapa.
- * Se dibuja siempre en el lienzo de 1600x1000. `still` = miniatura quieta.
+ * Portada "English Route": el mar azul noche y el mapa real de
+ * Latinoamérica con todos sus países; una ruta recorre todas las capitales
+ * en bucle y los cuatro países del libro llevan letrero. El título vive en
+ * el Pacífico, abajo a la izquierda, y entra letra a letra.
+ * Se dibuja siempre en el lienzo de 1600x1000. `still` = miniatura quieta;
+ * `lite` = card del Home (anima la ruta, sin el detalle fino del mapa).
  */
-const BookCover = forwardRef(function BookCover({ meta, still = false }, ref) {
+const BookCover = forwardRef(function BookCover({ meta, still = false, lite = false }, ref) {
   const titleRef = useRef(null)
   const cover = meta?.cover ?? {}
   const title = cover.title ?? meta?.name ?? 'Libro'
   const [first, ...rest] = title.split(' ')
+  /* En la card del Home ya hay un h1 en la página (la cabecera) */
+  const Heading = lite ? 'p' : 'h1'
 
   useEffect(() => {
     const el = titleRef.current
     if (!el || still || reduced()) return
+    /* Letras del título: caen y rebotan una a una, como rótulos que se
+       cuelgan; después entran subtítulo y autora. */
+    const chars = el.querySelectorAll('[data-char]')
     const parts = el.querySelectorAll('[data-in]')
-    animate(parts, {
+    const a1 = animate(chars, {
+      opacity: [0, 1],
+      translateY: [-70, 0],
+      rotate: [-14, 0],
+      duration: 900,
+      delay: stagger(55, { start: 150 }),
+      ease: 'outBack(1.8)',
+    })
+    const a2 = animate(parts, {
       opacity: [0, 1],
       translateY: [26, 0],
       duration: 760,
-      delay: stagger(120),
+      delay: stagger(140, { start: 150 + chars.length * 55 }),
       ease: 'outQuart',
     })
+    return () => {
+      a1.revert()
+      a2.revert()
+    }
   }, [still])
+
+  /* Cada letra en su span (inline-block para poder moverla) */
+  const letters = (word, key) =>
+    [...word].map((ch, k) => (
+      <span key={`${key}-${k}`} data-char className="inline-block">
+        {ch}
+      </span>
+    ))
 
   return (
     <div ref={ref} className="h-full w-full" data-density="hard">
       <div className="grain relative h-full overflow-hidden bg-azul">
-        <RouteMap countries={countries} route={cover.route ?? countries.map((c) => c.name)} still={still} />
+        <RouteMap countries={countries} still={still} lite={lite} />
 
         <Filete variant="rombos" height={20} className="absolute inset-x-0 top-0 h-5 w-full" />
 
         <div ref={titleRef} className="absolute bottom-[138px] left-[84px] max-w-[760px]">
-          <h1
-            data-in
+          <Heading
+            aria-label={title}
             className="rotulo text-[148px] leading-[0.92] text-amarillo"
             style={{ '--rotulo-sombra': 'var(--color-rojo-ink)' }}
           >
-            {first}
-            {rest.length > 0 && (
-              <>
-                <br />
-                {rest.join(' ')}
-              </>
-            )}
-          </h1>
+            <span aria-hidden="true">
+              {letters(first, 'a')}
+              {rest.length > 0 && (
+                <>
+                  <br />
+                  {letters(rest.join(' '), 'b')}
+                </>
+              )}
+            </span>
+          </Heading>
 
           {cover.subtitle && (
             <p data-in className="mt-9 font-body text-[30px] font-medium leading-snug text-paper">

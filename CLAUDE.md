@@ -174,26 +174,38 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
   cuatro del libro en su color (`countries[].color`, o `mapColor` si choca
   con el mar: Panamá usa `pan-blue`) con filete blanco. Costa con filete
   amarillo (cada país trazado grueso en amarillo debajo de los rellenos).
-  Nombres de los demás países en versalitas de atlas en su centroide
-  (`LABEL_TWEAK`: Chile en vertical, los muy pequeños sin nombre).
-- `cover/RouteMap.jsx`: pines numerados en orden de ruta + letreros con
-  `MiniFlag` (banderas SVG, NO emoji: en Windows salen como "CO") y ciudad,
-  unidos al pin por una línea guía
+  Nombres de TODOS los demás países en versalitas de atlas en su centroide,
+  tamaño según área (13 / 10.5 / 8.5px); `LABEL_TWEAK` corrige islas y
+  Centroamérica (Chile en vertical: el giro va en un `<g>` porque Anime.js
+  pisa el transform del `<text>`).
+- Cada país trae su capital en `latam.json` y `tour` es el orden del
+  recorrido: México → Centroamérica → Colombia → Andes → Cono Sur → Malvinas
+  → Paraguay/Bolivia → Brasil → Guayanas → Venezuela → Caribe.
+- `cover/RouteMap.jsx`: los cuatro países del libro llevan pin grande + letrero
+  con `MiniFlag` (banderas SVG, NO emoji: en Windows salen como "CO") y ciudad,
+  unido al pin por una línea guía
   (`countries[].pin = { lon, lat, city, flag, label: { dx, dy } }`).
 - Título "English Route" rotulado amarillo con sombra roja abajo a la
   izquierda (el Pacífico es el hueco natural), subtítulo y autora desde
   `books[0].cover`. Fuente: Alfa Slab One (no Playfair: eliminada del sistema).
-- Animación (loop, Anime.js `createTimeline`): **sin avión ni vehículo, la
-  línea ES la ruta** (pedido del cliente, 2026-10-12): por tramo, la ruta de
-  puntos amarillos sobre hilo rojo se revela con `strokeDashoffset` sobre una
-  **máscara** (la línea visible ya es dasharray); al llegar, el pin late
-  (scale [1,1.45,1] `outBack`) y suelta una onda amarilla; pausa 520ms; al
-  final 2s de espera, fade 600ms y vuelve a empezar. `still` (miniaturas) y
-  reduced motion: ruta completa, quieta.
+  Entra **letra a letra** (translateY [-70,0] + rotate [-14,0], `outBack(1.8)`,
+  stagger 55ms) y después subtítulo y autora.
+- Animación de la ruta (loop, `createTimeline`): **un solo path** por las 29
+  capitales (arcos con curvatura alterna), revelado con `strokeDashoffset`
+  sobre una máscara a velocidad constante (3.4 ms/px, `linear`), con una
+  **cabeza luminosa** que lo recorre (`createMotionPath`). Al llegar a cada
+  capital (largo acumulado del prefijo del path): el punto de la capital
+  aparece, el país **destella en amarillo** y queda teñido, su nombre da un
+  saltito y, si es del libro, el pin late con onda. Al final 2s de espera,
+  fade 600ms y vuelve a empezar. Sin avión ni vehículo (pedido del cliente).
+  `still` (miniaturas) y reduced motion: ruta completa y quieta.
 - En `still` se omiten la retícula, los nombres y el filete grueso de la costa: a escala
   ~0.2 ese trazo cuelga el rasterizado de Chrome y no se distingue.
-- **La portada también es la cabecera del Home** (`home/HomeHero.jsx`: el
-  mismo `BookCover` escalado al ancho dentro de una `.ventana`). La página
+- **La portada también es la cabecera del Home y la cabecera de la card A1**:
+  `book/LiveCover.jsx` escala el lienzo animado al ancho del contenedor;
+  `home/HomeHero.jsx` la enmarca en una `.ventana` y `cards/BookCard.jsx` la
+  usa con `lite` (anima la ruta sin nombres, retícula, costa ni letreros) y
+  la placa A1 encima. En `lite` el título es `<p>`, no `<h1>`. La página
   principal se llama "English Route" (`<title>` incluido). Ya no hay sección
   "La ruta del libro" con la chiva en el Home (quitada a pedido del cliente,
   2026-10-12; `RouteChiva` y `ChivaBus` se borraron).
@@ -207,9 +219,8 @@ balcones corridos, buganvillas y cielo `cielo`. Animación: las casas suben
 escalonadas al entrar (translateY [40,0], stagger 60ms) y una guirnalda de
 banderines de fiesta se mece en bucle (rotate [-7,7], 1600ms alternado,
 stagger 90ms). Reduced motion: quieta.
-- Se elige por datos: `module.scene: "cartagena"` (modules.json) en el
-  Nivel 2 y `book.scene` (registry.json) en la card del Home. Mapas
-  `SCENES` en `ModuleGrid` y `BookCard`; un módulo nuevo = una escena nueva.
+- Se elige por datos: `module.scene: "cartagena"` (modules.json), mapa
+  `SCENES` en `ModuleGrid`; un módulo nuevo = una escena nueva.
 - Guardas nuevas en `Filete`: `vueltiao` (trenza del sombrero vueltiao, techo
   y borde de la card) y `adoquines` (calle empedrada del faldón).
 - `ScreenRenderer` acepta `still`; `ScreenThumb` y `LessonSpread` lo pasan
@@ -742,7 +753,7 @@ amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 - **HECHO:** setup, formato de pantalla completa, sistema editorial completo,
   todas las actividades, contenido del Módulo 1 (portada + lección única 1.1,
   14 pantallas), juegos por módulo, Nivel 2 con miniatura mosaico resumen,
-  portada English Route con mapa y ruta animada, card A1 con la calle de Cartagena en Home, mapa real de Latinoamérica,
+  portada English Route con mapa y ruta animada, card A1 con la portada animada en Home, mapa real de Latinoamérica con ruta por todas las capitales,
   Study Zone con login demo, 6 temas del Módulo 1, quiz con candados, arcade
   y modo profe.
 - **PENDIENTE:** imágenes (Gemini), audios (mp3), módulos 2-4 (libro y Study),

@@ -1,46 +1,18 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { MapPin } from 'lucide-react'
 
 import { hoverFloat } from '../../hooks/useFeedback'
 import Filete from '../decor/Filete'
 import Guarda from '../decor/Guarda'
-import CartagenaStreet from '../scene/CartagenaStreet'
-
-const SCENES = { cartagena: CartagenaStreet }
-
-/* Mini ruta del libro: paradas sobre línea punteada y pin en la última.
-   Repite en pequeño el recorrido de la portada English Route. */
-function RouteGlyph({ stops = 4 }) {
-  const pts = Array.from({ length: stops }, (_, i) => [10 + i * 30, i % 2 ? 30 : 14])
-  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0]},${p[1]}`).join('')
-  const [lx, ly] = pts[pts.length - 1]
-  return (
-    <span className="relative block h-[44px] w-[112px]" aria-hidden="true">
-      <svg viewBox="0 0 112 44" className="absolute inset-0 h-full w-full">
-        <path d={d} fill="none" stroke="var(--color-azul)" strokeWidth="3" strokeDasharray="1 6" strokeLinecap="round" />
-        {pts.slice(0, -1).map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="5" fill="var(--color-azul)" stroke="var(--color-paper)" strokeWidth="2" />
-        ))}
-      </svg>
-      <MapPin
-        size={30}
-        strokeWidth={2.4}
-        className="absolute text-rojo-ink"
-        fill="var(--color-paper)"
-        style={{ left: lx - 15, top: ly - 28 }}
-      />
-    </span>
-  )
-}
+import LiveCover from '../book/LiveCover'
 
 /** Card de libro en el Home: una ventana de la chiva con el nivel rotulado.
-    Si el libro trae `scene` (registry.json), la cabecera es esa escena
-    animada: English Route = calle de Cartagena, la misma del Módulo 1. */
+    Si el libro tiene portada (`book.cover` en registry.json), la cabecera es
+    esa portada animada en miniatura: English Route = el mapa con la ruta. */
 export default function BookCard({ book }) {
   const ref = useRef(null)
   const available = !!book.available
-  const Scene = available ? SCENES[book.scene] : null
+  const hasCover = available && !!book.cover
 
   const level = (
     <span
@@ -60,15 +32,10 @@ export default function BookCard({ book }) {
       className={`group flex h-full flex-col overflow-hidden rounded-[18px] border-[6px] bg-paper shadow-lift
         ${available ? 'cursor-pointer border-madera' : 'cursor-not-allowed border-[#b9c3d0] opacity-70'}`}
     >
-      {Scene ? (
-        <div className="relative h-36 overflow-hidden">
-          <Scene />
-          <div className="absolute inset-x-4 bottom-3 flex items-end justify-between">
-            {level}
-            <span className="rounded-full bg-paper/90 px-1.5 shadow-soft">
-              <RouteGlyph />
-            </span>
-          </div>
+      {hasCover ? (
+        <div className="relative">
+          <LiveCover meta={book} lite />
+          <span className="absolute right-3 top-6">{level}</span>
         </div>
       ) : (
         <div
