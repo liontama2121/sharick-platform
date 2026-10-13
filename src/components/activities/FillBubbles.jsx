@@ -146,7 +146,7 @@ function AnalogBubbles({ section, completed, score, onComplete }) {
 }
 
 /* `clock: "digital"` = viñetas con reloj LCD, bocadillo numerado y mini arco
-   del día (1.2-s2). Si no, la lista con reloj analógico de siempre. */
+   del día (1.1-s5). Si no, la lista con reloj analógico de siempre. */
 export default function FillBubbles(props) {
   return props.section?.clock === 'digital' ? <ClockBubbles {...props} /> : <AnalogBubbles {...props} />
 }

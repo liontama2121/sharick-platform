@@ -85,12 +85,14 @@ export default function ScreenRenderer({
   resetKey,
   playingLetter,
   onPlayDialogue,
+  /** Miniatura: nada se mueve (la portada se queda con la ruta pintada). */
+  still = false,
 }) {
   const rootRef = useRef(null)
 
   useEffect(() => {
     const root = rootRef.current
-    if (!root || reduced()) return
+    if (!root || still || reduced()) return
     const items = root.querySelectorAll('[data-pop]')
     if (!items.length) return
     items.forEach((el) => {
@@ -159,7 +161,7 @@ export default function ScreenRenderer({
   if (screen.layout === 'cover') {
     return (
       <div ref={rootRef} className="h-full w-full overflow-hidden rounded-[17px]">
-        <BookCover meta={meta} content={content} />
+        <BookCover meta={meta} content={content} still={still} />
       </div>
     )
   }

@@ -12,6 +12,8 @@ const wide = () =>
 
 /* Letrero numerado de cada parada: el amarillo lleva número azul. */
 const STOP_INK = { amarillo: 'var(--color-azul)' }
+/* Blanco sobre verde puro no llega a 4.5:1: la placa usa verde-ink. */
+const STOP_BG = { verde: 'verde-ink' }
 
 const BUS_W = 84
 const WHEEL_CIRCUMFERENCE = 2 * Math.PI * 7.5 * (BUS_W / 96)
@@ -164,7 +166,7 @@ export default function RouteChiva({ countries }) {
               data-sign
               className="relative z-20 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white
                 font-display text-[1.2rem] text-white shadow-lift"
-              style={{ background: `var(--color-${c.color})`, color: STOP_INK[c.color] }}
+              style={{ background: `var(--color-${STOP_BG[c.color] ?? c.color})`, color: STOP_INK[c.color] }}
             >
               {i + 1}
             </span>

@@ -12,8 +12,12 @@ personajes, lugares, lecturas e ilustraciones salen de esos cuatro países, con
 La Paz y Ciudad de Panamá. Nada de México, Argentina, Perú, Chile, Ecuador ni
 Brasil. En `modules.json` el libro lleva `region: "Latin America"`,
 `baseCountry: "Colombia"` y `countries: ["Colombia","Venezuela","Bolivia","Panamá"]`;
-el Módulo 1 conserva `country: "Colombia"`. La portada dice "con Colombia,
-Venezuela, Bolivia y Panamá como escenario" (`registry.json`).
+el Módulo 1 conserva `country: "Colombia"`.
+
+**El libro se llama "English Route"** (nivel A1; antes "¡Hola English! A1").
+La portada es un mapa de Latinoamérica con la ruta Colombia → Venezuela →
+Panamá → Bolivia (`registry.json → books[0].cover.route`); `countries` va
+en ese mismo orden para que Home y portada numeren igual las paradas.
 
 ### Distribución (3 formatos, 1 código):
 1. **Web:** Cloudflare Pages (deploy automático con git push)
@@ -154,6 +158,31 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
   verde de ventanas en el Nivel 2, ajedrez verde en la Study Zone. La ruta de
   los 4 países (paradas numeradas sobre carretera azul con raya amarilla) sale
   de `registry.json → countries` en Home y portada.
+
+### Portada "English Route" (`book/BookCover.jsx` + `components/cover/`)
+- Mar azul noche (`bg-azul` + grano), continente en `carroceria` con filete
+  amarillo, los cuatro países en pintura plana con filete blanco
+  (`countries[].color`, o `mapColor` si choca con el mar: Panamá usa `pan-blue`),
+  retícula curva al 7 % y Antillas mayores como pista del Caribe.
+- `cover/latamGeo.js`: costa e islas en [lon, lat] simplificados, suavizados
+  con Catmull-Rom, y proyección **ojo de pez** (Sarkar-Brown, foco en
+  [-72, 2], m = 1.7) para que Bogotá, Caracas y Panamá no se pisen. El mapa
+  encaja en `MAP_BOX` (por encima de la barra inferior: la Patagonia se ve).
+- `cover/RouteMap.jsx`: pines numerados en orden de ruta + letreros con
+  `MiniFlag` (banderas SVG, NO emoji: en Windows salen como "CO") y ciudad
+  (`countries[].pin = { lon, lat, city, label: left|right|below, flag }`).
+- Título "English Route" rotulado amarillo con sombra roja abajo a la
+  izquierda (el Pacífico es el hueco natural), subtítulo y autora desde
+  `books[0].cover`. Fuente: Alfa Slab One (no Playfair: eliminada del sistema).
+- Animación (loop, Anime.js `createTimeline`): por tramo, la línea punteada se
+  revela con `strokeDashoffset` sobre una **máscara** (la línea visible ya es
+  dasharray) mientras el avión la recorre con `createMotionPath`; al llegar,
+  el pin late (scale [1,1.45,1] `outBack`) y suelta una onda amarilla; pausa
+  520ms; al final 2s de espera, fade 600ms y vuelve a empezar. El avión
+  aparece al arrancar el primer tramo. `still` (miniaturas) y reduced motion:
+  ruta completa y avión quieto en el último tramo.
+- `ScreenRenderer` acepta `still`; `ScreenThumb` y `LessonSpread` lo pasan
+  siempre (en miniatura no se mueve nada).
 - `content/DayArc.jsx` pinta el día como cuatro paneles planos (amarillo claro,
   celeste, naranja, azul noche) separados por filetes blancos.
 
@@ -224,7 +253,7 @@ alto 90px, radio 12px, fondo `box`, hover translateX 6px):
 
 ### Nivel 2 — lecciones del módulo (`pages/ModuleGrid.jsx`)
 **El Nivel 2 muestra UNA miniatura por LECCIÓN**, como el índice visual de
-Express Publishing: portada (★) y después [1.1] [1.2] [1.3]… Sin tarjetas por
+Express Publishing: portada (★) y después [1.1] [1.2]… (hoy: ★ + 1.1). Sin tarjetas por
 pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 `books/index.js`; la tarjeta es `book/LessonCard.jsx` y la miniatura
 `book/LessonSpread.jsx`.
@@ -238,7 +267,16 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   derecha; 🏠 y 🎮 (`RoundButton size="lg"`, borde amarillo) sobre el faldón.
   Las lecciones van sobre una **banda verde de ventanas** entre filetes
   amarillos; cada miniatura es una ventana con marco de madera de 5px.
-- **Miniatura = doble página** (`LessonSpread`): la lección se ve como un
+- **Miniatura = spread resumen (mosaico)**: si la lección trae
+  `lesson.thumbnailMosaic` (ids de pantalla, máx. 6) o tiene 6+ pantallas
+  (entonces toma 6 repartidas), cada página del spread es un MOSAICO de
+  mini-renders reales recortados tipo cover: izquierda = 2 pantallas
+  (diálogos arriba, match abajo), derecha = hasta 4 (Day Arc arriba,
+  relojes | listening al medio, dado abajo). La tarjeta con mosaico ocupa
+  **dos columnas** de la rejilla (`.span-feature` desde 560px): a una sola
+  columna el mosaico no se lee. Datos: `lessonMosaicScreens()` en
+  `books/index.js` → `item.mosaicScreens`.
+- **Miniatura sin mosaico = doble página** (`LessonSpread`): la lección se ve como un
   spread — página izquierda = pantalla 1, derecha = pantalla 2 — renderizadas
   de verdad con `ScreenRenderer`, escaladas al ancho de media tarjeta
   (`ResizeObserver`), `pointer-events: none` y progreso inerte
@@ -275,7 +313,7 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 
 ### Nivel 3 — doble página (`pages/LessonReader.jsx`)
 El libro de siempre (react-pageflip + esquinas), con una barra mínima
-(`layout/ReaderBar.jsx`): [🏠] → Nivel 1 · "Module 1 · 1.2" · [X] → Nivel 2.
+(`layout/ReaderBar.jsx`): [🏠] → Nivel 1 · "Module 1 · 1.1" · [X] → Nivel 2.
 Al pasar página se actualizan la URL y la etiqueta. Al intentar avanzar más
 allá de la última hoja aparece el overlay "¡Módulo completado!".
 
@@ -327,20 +365,34 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 14 pantallas, págs. 6 → 18)
+## 📖 CONTENIDO — MÓDULO 1 (portada + 1 lección · 14 pantallas, págs. 6 → 18)
 
 **⚠️ Contenido de Sharick. Títulos, diálogos y mecánicas exactos** (documento
 oficial de Sharick con referencias visuales de Express Publishing).
 
-### Lección 1.1 · **"Let's say Hi!"** (5 pantallas)
+### Lección única 1.1 · **"Let's say Hi!"** (13 pantallas)
+
+Desde el 2026-10-12 las antiguas 1.1 ("Let's say Hi!") y 1.2 ("Greeting
+people") son UNA lección, como en Express Publishing (reading + listening +
+speaking + juegos en la misma lección). "Greeting people" queda como rótulo de
+sección de la s4. Ejercicios renumerados 1-10 dentro de la lección (s7-s9
+comparten el 7).
 
 | Pantalla | Pág | Contenido |
 |---|---|---|
 | 1.1-s1 | 6 | Reading · Exercise 1 "Listen and read the dialogues (A-C)." Diálogos A/B/C + `audioTracks` (1-1-a/b/c.mp3) + ilustración `grupos-4-paises.png` |
 | 1.1-s2 | 7 | Exercise 2 "Match the dialogues (A-C) to the pictures (1-3)." `matchMarkers` con `style: "slots"` — cajitas [1][ _ ] sobre la ilustración, fichas A/B/C arrastrables. **Respuestas: 1→B, 2→C, 3→A** |
 | 1.1-s3 | 8 | Exercise 3 "Match the headings to the dialogues." `matchHeadings` — píldoras roja/dorada/azul a slots grises sobre cada diálogo |
-| 1.1-s4 | 9 | Speaking · Exercise 4 "Introduce yourself and say goodbye." (`speaking`) |
-| 1.1-s5 | 10 | Speaking · Exercise 5 Spin & Speak (`roulette`) |
+| 1.1-s4 | 9 | **Greeting people** · Exercise 4 "Read, listen and repeat." Bloque `dayArc` (**`content/DayArc.jsx`**): cielo de día → noche, sol / luna, arco + saludo sobre la curva (`textPath`) + rango (8AM - 12PM · 12PM - 6PM · 6PM - 12AM) + 🎧 (`greet-*.mp3`). Good night! lleva el badge (+) "We use this when we go to sleep." |
+| 1.1-s5 | 10 | Exercise 5 "Look at the clock. Say the greeting." `fillBubbles` con `clock: "digital"` → **`activities/ClockBubbles.jsx`**: reloj LCD (**8:00 AM · 1:30 PM · 9:45 PM · 10:11 PM** → morning / afternoon / evening / night) + personaje (`clock-scene-1..4.png`) + bocadillo 1-4 + chips. `helper` = mini `DayArc compact` |
+| 1.1-s6 | 11 | Listening · Exercise 6 "Listen and circle the correct answer." `listenCircle`: lista 1-5 (🎧 `listen-1..5.mp3`, a / b, círculo a mano animado); `AudioPlayer` general (`listen-all.mp3`) + `listening-friends.png`. La correcta siempre es la **a** |
+| 1.1-s7 | 12 | Speaking · Exercise 7 "Look at the expressions. Choose and say to your classmate." `speechScene` rosado: **Greet people** (Hi! How are you? · How's everything? · How's it going?) / **Respond** (Great. · I'm fine, (thanks). · I'm OK. · Not bad. · So-so.) |
+| 1.1-s8 | 13 | Exercise 7 · `speechScene` azul: **Introduce yourself** (Hi! I'm ... . · Hello! I'm ... .) / **Respond** (Nice to meet you. · It's a pleasure to meet you.) |
+| 1.1-s9 | 14 | Exercise 7 · `speechScene` amarillo: UN bocadillo **Say goodbye** a 2 columnas (Goodbye. · Bye. · See you. \| See you later. · See you tomorrow. · Take care.) |
+| 1.1-s10 | 15 | Speaking · Exercise 8 "Introduce yourself and say goodbye." (`speaking`) |
+| 1.1-s11 | 16 | Speaking · Exercise 9 Spin & Speak (`roulette`) |
+| 1.1-s12 | 17 | Exercise 10 **Roll and speak!** `diceGame` en modo categoría: 1-2 Say hi! · 3-4 Say goodbye! · 5-6 Introduce yourself! — **sin frases de ejemplo** |
+| 1.1-s13 | 18 | Can-do check unificado (say hi and introduce myself · introduce a friend · greet at any time of day · respond to greetings · say goodbye) + CULTURAL TIP "onces" en inglés |
 
 **Diálogos de 1.1 (texto EXACTO, con tildes: Lucía, Sofía, Andrés):**
 - **A** (azul #2A5CA8): Camila/Mateo se conocen — "Hi! I'm Camila." · "Hey, Camila.
@@ -355,27 +407,22 @@ La ilustración `grupos-4-paises.png` muestra tres grupos: **1** trío conocién
 (→ B), **2** despedida (→ C), **3** pareja conociéndose (→ A). Los `markers`
 del JSON (x/y en %) posicionan las cajitas.
 
-### Lección 1.2 · **"Greeting people"** (8 pantallas)
-
-Maquetadas según las referencias visuales que envió Sharick.
-
-| Pantalla | Pág | Contenido |
-|---|---|---|
-| 1.2-s1 | 11 | Vocabulary · Exercise 1 "Read, listen and repeat." Bloque `dayArc` (**`content/DayArc.jsx`**): paisaje SVG dibujado en código, cielo de día → noche de izquierda a derecha, montañas, sol saliendo / en lo alto / cayendo y luna con estrellas. Cada franja: arco con flecha + saludo sobre la curva (`textPath`) + rango (8AM - 12PM · 12PM - 6PM · 6PM - 12AM) + 🎧 (`greet-*.mp3`). Good night! lleva el badge (+) "We use this when we go to sleep." Entrada: los arcos se dibujan y los textos aparecen con stagger |
-| 1.2-s2 | 12 | Exercise 2 "Look at the clock. Say the greeting." `fillBubbles` con `clock: "digital"` → **`activities/ClockBubbles.jsx`**: 4 viñetas = reloj LCD (**8:00 AM · 1:30 PM · 9:45 PM · 10:11 PM** → morning / afternoon / evening / night) + personaje (`clock-scene-1..4.png`) + bocadillo numerado 1-4 + chips. `helper` = mini `DayArc compact` abajo a la izquierda |
-| 1.2-s3 | 13 | Listening · Exercise 3 "Listen and circle the correct answer." `listenCircle`: lista 1-5 a la izquierda (🎧 por ítem `listen-1..5.mp3`, a / b en líneas separadas, círculo a mano animado con Anime.js); `AudioPlayer` general (`listen-all.mp3`) + progreso + `listening-friends.png` a la derecha. La correcta siempre es la **a** |
-| 1.2-s4 | 14 | Speaking · Exercise 4 "Look at the expressions. Choose and say to your classmate." `speechScene` rosado: `speaking-greet.png` + bocadillos **Greet people** (Hi! How are you? · How's everything? · How's it going?) / **Respond** (Great. · I'm fine, (thanks). · I'm OK. · Not bad. · So-so.) |
-| 1.2-s5 | 15 | Exercise 4 · `speechScene` azul: `speaking-introduce.png` + **Introduce yourself** (Hi! I'm ... . · Hello! I'm ... .) / **Respond** (Nice to meet you. · It's a pleasure to meet you.) |
-| 1.2-s6 | 16 | Exercise 4 · `speechScene` amarillo: `speaking-goodbye.png` + UN bocadillo **Say goodbye** a 2 columnas (Goodbye. · Bye. · See you. \| See you later. · See you tomorrow. · Take care.) |
-| 1.2-s7 | 17 | Exercise 5 **Roll and speak!** `diceGame` en modo categoría: dado grande al centro, `greeting-person.png` a la izquierda y `goodbye-person.png` a la derecha; al caer, pestaña con 1-2 Say hi! · 3-4 Say goodbye! · 5-6 Introduce yourself! — **sin frases de ejemplo** |
-| 1.2-s8 | 18 | Can-do check (greet at any time of day · respond to greetings · introduce myself · say goodbye) + CULTURAL TIP "onces" en inglés |
-
 Cada frase de speaking lleva su 🎧 (`expr-*.mp3`, pedido explícito de Sharick).
 
-**Listening 1.2-s3 (texto EXACTO):** 1 "Hi, Julián! How's it going?" → I'm pretty good,
+**Listening 1.1-s6 (texto EXACTO):** 1 "Hi, Julián! How's it going?" → I'm pretty good,
 thanks. · 2 "Goodbye, Carolina!" → Bye, take care! · 3 "Kevin, this is my friend, Ana."
 → Nice to meet you, Ana. · 4 "Good morning, Carolina!" → Good morning, Julián! ·
 5 "What's your name?" → I'm Ana. Estos ítems también van en los quizzes de Study (T2-T6).
+
+### Fusión 1.2 → 1.1 (rutas y progreso)
+- `module.lessonRedirects` = `{ "1.2": { "to": "1.1", "screens": [4,5,6,7,8,9,12,13] } }`:
+  `LessonReader` redirige `…/lesson/1.2/screen/N` a la pantalla nueva
+  (`resolveLessonRedirect()` en `books/index.js`).
+- `module.legacyScreenIds` = ids viejos → nuevos (`1.2-s1` → `1.1-s4`,
+  `1.1-s4` → `1.1-s10`…). `useProgress` migra `sharick-progress` UNA vez al
+  cargar (actividades, puntajes, pantallas vistas, `currentPage`) y guarda la
+  firma del mapa en `legacyMap` para no repetirla (el mapa no es idempotente).
+- Para futuras fusiones: agregar entradas a esos dos campos; nada más.
 
 Las lecciones siguientes se agregan al array `lessons` de `modules.json`.
 
@@ -660,12 +707,31 @@ amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 ## 🚦 ESTADO
 
 - **HECHO:** setup, formato de pantalla completa, sistema editorial completo,
-  todas las actividades, contenido del Módulo 1 (14 pantallas), juegos por
-  módulo, Nivel 2 con miniaturas de doble página, Study Zone con login demo,
-  6 temas del Módulo 1, quiz con candados, arcade y modo profe.
+  todas las actividades, contenido del Módulo 1 (portada + lección única 1.1,
+  14 pantallas), juegos por módulo, Nivel 2 con miniatura mosaico resumen,
+  portada English Route con mapa y ruta animada, card A1 colombiana en Home,
+  Study Zone con login demo, 6 temas del Módulo 1, quiz con candados, arcade
+  y modo profe.
 - **PENDIENTE:** imágenes (Gemini), audios (mp3), módulos 2-4 (libro y Study),
   migración del login/progreso de Study a Cloudflare D1 + Pages Functions,
   deploy en Cloudflare Pages y Electron.
+
+---
+
+## 🎨 SKILLS DE DISEÑO OBLIGATORIAS
+
+Todo trabajo visual (pantallas, portada, cards, miniaturas, animaciones) pasa
+por las skills instaladas `taste-skill` e `impeccable`:
+- **taste-skill ANTES de maquetar:** design read en una línea + dials
+  (VARIANCE / MOTION / DENSITY). Para este libro: rediseño que preserva
+  La Chiva, ~6 / 6 / 5. Las reglas del proyecto ganan sobre sus defaults
+  (lucide-react, Alfa Slab, SVG dibujado a mano cuando el cliente lo pide).
+- **impeccable** durante y después: `shape` para planear, `animate` para
+  motion con propósito, `critique` (dos evaluaciones aisladas: revisión de
+  diseño + `impeccable detect` y navegador) y `polish` final contra los tokens.
+- **Ninguna pantalla nueva se da por terminada sin `critique` + `polish`.**
+- Todos los colores como tokens de `@theme` (las banderas también:
+  `col-*`, `ven-blue`, `pan-*`, `bol-*`).
 
 ---
 
@@ -676,7 +742,8 @@ amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
    del cliente. Cambios ya aprobados: lección 1.2 → **"Greeting people"** (documento
    oficial, 2026-09-23; antes "Hello, amigo!"), ruleta "Your city" → "Your country"
    y "Let's say hi to Colombia!" → **"Let's say Hi!"** (lección 1.1, documento
-   oficial de Sharick, 2026-09-13).
+   oficial de Sharick, 2026-09-13). 2026-10-12: el libro pasa a llamarse
+   **"English Route"** y 1.1 + 1.2 se fusionan en la lección única 1.1.
 2. **Todo en JSON** — cero contenido hardcodeado en componentes.
 3. **Todo animado** — Anime.js en cada interacción.
 4. **Carrocería pintada, cero dark mode.** Mundo visual: La Chiva.

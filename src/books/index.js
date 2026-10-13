@@ -81,6 +81,25 @@ export function findLesson(bookId, moduleId, lessonId) {
   return getLessons(bookId, moduleId).find((l) => l.id === lessonId) ?? null
 }
 
+/**
+ * Lecciones que ya no existen porque se fusionaron en otra
+ * (`module.lessonRedirects`, p. ej. 1.2 → 1.1). `screens[n-1]` es la
+ * pantalla nueva que corresponde a la pantalla n de la lección vieja.
+ * Devuelve la URL de destino o null si la lección no se redirige.
+ */
+export function resolveLessonRedirect(bookId, moduleId, lessonId, screenNo) {
+  const rule = getModule(bookId, moduleId)?.lessonRedirects?.[lessonId]
+  if (!rule) return null
+  const n = Math.max(1, Number(screenNo) || 1)
+  const target = rule.screens?.[n - 1] ?? rule.screens?.[0] ?? 1
+  return `/book/${bookId}/module/${moduleId}/lesson/${rule.to}/screen/${target}`
+}
+
+/** Ids de pantalla viejos → nuevos de todo el libro (para migrar progreso). */
+export function getLegacyScreenIds(bookId) {
+  return Object.assign({}, ...getModules(bookId).map((m) => m.legacyScreenIds ?? {}))
+}
+
 export function getScreens(lesson) {
   return lesson?.screens ?? []
 }
@@ -115,7 +134,7 @@ export function bookActivityIds(bookId) {
 
 /* ── Pantallas del módulo (Nivel 2: una miniatura por pantalla) ──────────
    El Nivel 2 ya no muestra una tarjeta por lección sino una por PANTALLA,
-   en el orden real del libro: portada → 1.1-s1 → 1.1-s2 → … → 1.2-s1 → …  */
+   en el orden real del libro: portada → 1.1-s1 → 1.1-s2 → … → 1.1-s13 → 1.2-s1 …  */
 
 /** Título corto de una pantalla. Usa `screen.title`; si falta, lo deduce. */
 export function screenTitle(screen, lesson) {
@@ -152,7 +171,7 @@ export function screenBadges(screen) {
   const set = new Set()
   if (screen?.audio !== undefined || screen?.audioTracks?.length) set.add('audio')
   if ((screen?.dialogues ?? []).some((d) => d.audio)) set.add('audio')
-  // Bloques con audio por frase (p. ej. el arco del día de la 1.2)
+  // Bloques con audio por frase (p. ej. el arco del día, 1.1-s4)
   if ((screen?.blocks ?? []).some((b) => [...(b.items ?? []), ...(b.zones ?? [])].some((it) => it?.audio)))
     set.add('audio')
   if (screen?.video) set.add('video')
@@ -184,9 +203,28 @@ export function lessonThumbScreens(lesson) {
     .filter(Boolean)
 }
 
+/**
+ * Pantallas del MOSAICO de la miniatura (spread resumen, como el índice
+ * visual de Express Publishing): `lesson.thumbnailMosaic` = ids de pantalla.
+ * Sin ese campo, una lección de 6 o más pantallas toma 6 repartidas a lo
+ * largo de la lección; con menos, no hay mosaico (spread clásico).
+ */
+export function lessonMosaicScreens(lesson) {
+  const screens = getScreens(lesson)
+  if (Array.isArray(lesson?.thumbnailMosaic)) {
+    return lesson.thumbnailMosaic
+      .map((id) => screens.find((s) => s.id === id))
+      .filter(Boolean)
+      .slice(0, 6)
+  }
+  if (lesson?.type === 'cover' || screens.length < 6) return []
+  const step = (screens.length - 1) / 5
+  return [...new Set([0, 1, 2, 3, 4, 5].map((i) => Math.round(i * step)))].map((i) => screens[i])
+}
+
 /* ── Lecciones del módulo (Nivel 2: una miniatura por LECCIÓN) ───────────
    Como el índice visual de Express Publishing: portada + una tarjeta por
-   lección, cada una con un spread de dos pantallas.                      */
+   lección, cada una con un spread (mosaico resumen si la lección es larga). */
 
 export function getModuleLessonCards(bookId, moduleId) {
   return getLessons(bookId, moduleId).map((lesson, pos) => ({
@@ -196,6 +234,7 @@ export function getModuleLessonCards(bookId, moduleId) {
     isCover: lesson.type === 'cover',
     screens: getScreens(lesson),
     thumbScreens: lessonThumbScreens(lesson),
+    mosaicScreens: lessonMosaicScreens(lesson),
     badges: lessonBadges(lesson),
     title: lesson.shortTitle ?? lesson.title ?? lesson.id,
   }))

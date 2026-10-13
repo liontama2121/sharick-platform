@@ -1,6 +1,6 @@
 {
   "bookId": "english-a1",
-  "bookName": "¡Hola English! A1",
+  "bookName": "English Route",
   "modules": [
     {
       "moduleId": 1,
@@ -29,7 +29,8 @@
           "title": "Let's say Hi!",
           "resources": [
             "audio",
-            "game"
+            "game",
+            "written"
           ],
           "screens": [
             {
@@ -364,103 +365,12 @@
             },
             {
               "id": "1.1-s4",
-              "title": "Speaking · Introduce yourself",
+              "title": "Greeting people · The arc of the day",
               "pageNumber": 9,
-              "section": "Speaking",
-              "layout": "two-columns",
-              "exercise": {
-                "number": 4,
-                "skill": "speak",
-                "instruction": "Introduce yourself and say goodbye."
-              },
-              "blocks": [],
-              "illustration": {
-                "src": "/images/english/module1/cuatro-paises.png",
-                "alt": "Cartagena, Caracas, La Paz and Panama City",
-                "emoji": "🏞️"
-              },
-              "activity": {
-                "type": "activity",
-                "activity": "speaking",
-                "id": "speaking",
-                "number": 4,
-                "title": "Introduce yourself",
-                "instructions": "Introduce yourself out loud and then say goodbye.",
-                "modelPhrases": [
-                  "Hello! My name is ...",
-                  "I'm from ...",
-                  "Nice to meet you!",
-                  "Goodbye! See you later!"
-                ]
-              }
-            },
-            {
-              "id": "1.1-s5",
-              "title": "Spin & Speak",
-              "pageNumber": 10,
-              "section": "Speaking",
+              "section": "Greeting people",
               "layout": "activity-full",
               "exercise": {
-                "number": 5,
-                "skill": "speak",
-                "instruction": "Spin the wheel and speak."
-              },
-              "blocks": [],
-              "activity": {
-                "type": "activity",
-                "activity": "roulette",
-                "id": "roulette",
-                "number": 5,
-                "title": "Spin & Speak!",
-                "instructions": "Spin the wheel and answer the prompt out loud.",
-                "segments": [
-                  {
-                    "label": "Your name",
-                    "prompt": "Say: My name is ___."
-                  },
-                  {
-                    "label": "Your country",
-                    "prompt": "Say: I'm from ___. (Colombia, Venezuela, Bolivia or Panama)"
-                  },
-                  {
-                    "label": "Formal hi",
-                    "prompt": "Greet someone formally."
-                  },
-                  {
-                    "label": "Friendly hi",
-                    "prompt": "Greet a friend informally."
-                  },
-                  {
-                    "label": "Goodbye",
-                    "prompt": "Say goodbye in two different ways."
-                  },
-                  {
-                    "label": "How are you?",
-                    "prompt": "Answer “How are you?”"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "id": "1.2",
-          "shortTitle": "Greeting people",
-          "title": "Greeting people",
-          "resources": [
-            "audio",
-            "written",
-            "game"
-          ],
-          "screens": [
-            {
-              "id": "1.2-s1",
-              "title": "Vocabulary · The arc of the day",
-              "pageNumber": 11,
-              "section": "Vocabulary",
-              "layout": "activity-full",
-              "exercise": {
-                "number": 1,
+                "number": 4,
                 "skill": "listen",
                 "instruction": "Read, listen and repeat."
               },
@@ -494,13 +404,13 @@
               ]
             },
             {
-              "id": "1.2-s2",
+              "id": "1.1-s5",
               "title": "Clocks · Say the greeting",
-              "pageNumber": 12,
+              "pageNumber": 10,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 2,
+                "number": 5,
                 "skill": "speak",
                 "instruction": "Look at the clock. Say the greeting."
               },
@@ -508,7 +418,7 @@
                 "type": "activity",
                 "activity": "fillBubbles",
                 "id": "fillBubbles",
-                "number": 2,
+                "number": 5,
                 "clock": "digital",
                 "options": [
                   "Good morning",
@@ -569,13 +479,13 @@
               }
             },
             {
-              "id": "1.2-s3",
+              "id": "1.1-s6",
               "title": "Listening · Circle the answer",
-              "pageNumber": 13,
+              "pageNumber": 11,
               "section": "Listening",
               "layout": "activity-full",
               "exercise": {
-                "number": 3,
+                "number": 6,
                 "skill": "listen",
                 "instruction": "Listen and circle the correct answer."
               },
@@ -583,7 +493,7 @@
                 "type": "activity",
                 "activity": "listenCircle",
                 "id": "listenCircle",
-                "number": 3,
+                "number": 6,
                 "items": [
                   {
                     "audio": "/audio/english/module1/listen-1.mp3",
@@ -641,13 +551,13 @@
               }
             },
             {
-              "id": "1.2-s4",
+              "id": "1.1-s7",
               "title": "Speaking · Greet people",
-              "pageNumber": 14,
+              "pageNumber": 12,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 4,
+                "number": 7,
                 "skill": "speak",
                 "instruction": "Look at the expressions. Choose and say to your classmate."
               },
@@ -705,17 +615,17 @@
                     ]
                   }
                 ],
-                "number": 4
+                "number": 7
               }
             },
             {
-              "id": "1.2-s5",
+              "id": "1.1-s8",
               "title": "Speaking · Introduce yourself",
-              "pageNumber": 15,
+              "pageNumber": 13,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 4,
+                "number": 7,
                 "skill": "speak",
                 "instruction": "Look at the expressions. Choose and say to your classmate."
               },
@@ -757,17 +667,17 @@
                     ]
                   }
                 ],
-                "number": 4
+                "number": 7
               }
             },
             {
-              "id": "1.2-s6",
+              "id": "1.1-s9",
               "title": "Speaking · Say goodbye",
-              "pageNumber": 16,
+              "pageNumber": 14,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 4,
+                "number": 7,
                 "skill": "speak",
                 "instruction": "Look at the expressions. Choose and say to your classmate."
               },
@@ -816,17 +726,96 @@
                     ]
                   }
                 ],
-                "number": 4
+                "number": 7
               }
             },
             {
-              "id": "1.2-s7",
+              "id": "1.1-s10",
+              "title": "Speaking · Introduce yourself",
+              "pageNumber": 15,
+              "section": "Speaking",
+              "layout": "two-columns",
+              "exercise": {
+                "number": 8,
+                "skill": "speak",
+                "instruction": "Introduce yourself and say goodbye."
+              },
+              "blocks": [],
+              "illustration": {
+                "src": "/images/english/module1/cuatro-paises.png",
+                "alt": "Cartagena, Caracas, La Paz and Panama City",
+                "emoji": "🏞️"
+              },
+              "activity": {
+                "type": "activity",
+                "activity": "speaking",
+                "id": "speaking",
+                "number": 8,
+                "title": "Introduce yourself",
+                "instructions": "Introduce yourself out loud and then say goodbye.",
+                "modelPhrases": [
+                  "Hello! My name is ...",
+                  "I'm from ...",
+                  "Nice to meet you!",
+                  "Goodbye! See you later!"
+                ]
+              }
+            },
+            {
+              "id": "1.1-s11",
+              "title": "Spin & Speak",
+              "pageNumber": 16,
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": 9,
+                "skill": "speak",
+                "instruction": "Spin the wheel and speak."
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "roulette",
+                "id": "roulette",
+                "number": 9,
+                "title": "Spin & Speak!",
+                "instructions": "Spin the wheel and answer the prompt out loud.",
+                "segments": [
+                  {
+                    "label": "Your name",
+                    "prompt": "Say: My name is ___."
+                  },
+                  {
+                    "label": "Your country",
+                    "prompt": "Say: I'm from ___. (Colombia, Venezuela, Bolivia or Panama)"
+                  },
+                  {
+                    "label": "Formal hi",
+                    "prompt": "Greet someone formally."
+                  },
+                  {
+                    "label": "Friendly hi",
+                    "prompt": "Greet a friend informally."
+                  },
+                  {
+                    "label": "Goodbye",
+                    "prompt": "Say goodbye in two different ways."
+                  },
+                  {
+                    "label": "How are you?",
+                    "prompt": "Answer “How are you?”"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "1.1-s12",
               "title": "Roll and speak!",
               "pageNumber": 17,
               "section": "Speaking",
               "layout": "activity-full",
               "exercise": {
-                "number": 5,
+                "number": 10,
                 "skill": "speak",
                 "instruction": "Roll the dice. Then, look at the number and say the expression."
               },
@@ -834,7 +823,7 @@
                 "type": "activity",
                 "activity": "diceGame",
                 "id": "rollAndSpeak",
-                "number": 5,
+                "number": 10,
                 "title": "Roll and speak!",
                 "ranges": {
                   "1-2": {
@@ -862,7 +851,7 @@
               }
             },
             {
-              "id": "1.2-s8",
+              "id": "1.1-s13",
               "title": "Can-do check",
               "pageNumber": 18,
               "section": "Review",
@@ -878,9 +867,10 @@
                   "label": "Can-do check",
                   "title": "Now I can…",
                   "items": [
+                    "I can say hi and introduce myself.",
+                    "I can introduce a friend.",
                     "I can greet people at any time of the day.",
                     "I can respond to greetings.",
-                    "I can introduce myself.",
                     "I can say goodbye."
                   ]
                 },
@@ -899,6 +889,14 @@
                 "emoji": "👋"
               }
             }
+          ],
+          "thumbnailMosaic": [
+            "1.1-s1",
+            "1.1-s2",
+            "1.1-s4",
+            "1.1-s5",
+            "1.1-s6",
+            "1.1-s12"
           ]
         }
       ],
@@ -908,7 +906,34 @@
         "Venezuela",
         "Bolivia",
         "Panamá"
-      ]
+      ],
+      "lessonRedirects": {
+        "1.2": {
+          "to": "1.1",
+          "screens": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            13
+          ]
+        }
+      },
+      "legacyScreenIds": {
+        "1.2-s1": "1.1-s4",
+        "1.2-s2": "1.1-s5",
+        "1.2-s3": "1.1-s6",
+        "1.2-s4": "1.1-s7",
+        "1.2-s5": "1.1-s8",
+        "1.2-s6": "1.1-s9",
+        "1.1-s4": "1.1-s10",
+        "1.1-s5": "1.1-s11",
+        "1.2-s7": "1.1-s12",
+        "1.2-s8": "1.1-s13"
+      }
     },
     {
       "moduleId": 2,

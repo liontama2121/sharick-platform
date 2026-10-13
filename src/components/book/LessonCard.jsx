@@ -67,7 +67,7 @@ export default function LessonCard({
   current = false,
   className = '',
 }) {
-  const { lesson, isCover, thumbScreens, screens, badges, title } = item
+  const { lesson, isCover, thumbScreens, mosaicScreens = [], screens, badges, title } = item
   const total = screens.length
 
   /* Hover: la tarjeta crece y el tag se inclina, como una pegatina. */
@@ -104,7 +104,7 @@ export default function LessonCard({
       }}
       onMouseEnter={(e) => hover(e, true)}
       onMouseLeave={(e) => hover(e, false)}
-      className={`group relative cursor-pointer ${className}`}
+      className={`group relative cursor-pointer ${mosaicScreens.length >= 3 ? 'span-feature' : ''} ${className}`}
     >
       {/* Anillo del pulso dorado al volver del libro */}
       <span
@@ -115,6 +115,7 @@ export default function LessonCard({
 
       <LessonSpread
         screens={thumbScreens}
+        mosaic={mosaicScreens}
         meta={meta}
         content={content}
         frameClassName={`rounded-[14px] border-[5px] shadow-lift
@@ -131,7 +132,7 @@ export default function LessonCard({
           {isCover ? '★' : lesson.id}
         </span>
         {!isCover && !compact && (
-          <span className="mt-1 font-body text-[0.6rem] font-semibold opacity-90">
+          <span className="mt-1 font-body text-[0.7rem] font-semibold opacity-90">
             {total} {total === 1 ? 'pantalla' : 'pantallas'}
           </span>
         )}

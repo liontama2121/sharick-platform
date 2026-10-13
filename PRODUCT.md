@@ -34,13 +34,13 @@ Navegación de 3 niveles: menú del libro → rejilla de lecciones del módulo �
 
 ## Brand Commitments
 
-- Nombre del libro: "¡Hola English! A1". Autora: Prof. Sharick Prieto.
+- Nombre del libro: "English Route" (A1; antes "¡Hola English! A1", renombrado el 2026-10-12). Autora: Prof. Sharick Prieto. La portada es el mapa de la ruta Colombia → Venezuela → Panamá → Bolivia.
 - Libro 1 sobre cuatro países: Colombia, Venezuela, Bolivia, Panamá.
 - Paleta, tipografía, colores de diálogo y tricolor en portada NO son compromisos: el usuario pidió un cambio visual total (2026-09-29).
 
 ## Evidence on Hand
 
-- Contenido del Módulo 1 (2 lecciones, 14 pantallas) en `src/books/english-a1/modules.json`.
+- Contenido del Módulo 1 (portada + lección única 1.1, 14 pantallas) en `src/books/english-a1/modules.json`.
 - Study Zone Módulo 1 (6 temas) en `src/study/english-a1/module1.json`.
 - Audios generados en `public/audio/`; ilustraciones parciales en `public/images/english/`.
 - Sin testimonios, cifras de estudiantes ni instituciones: no inventarlos.

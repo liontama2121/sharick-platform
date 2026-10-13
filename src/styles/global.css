@@ -36,6 +36,14 @@
   --color-col-yellow: #ffd100;
   --color-col-red: #ce1126;
 
+  /* Banderas de la portada English Route (los otros tres países) */
+  --color-ven-blue: #00247d;
+  --color-pan-blue: #005293;
+  --color-pan-red: #d21034;
+  --color-bol-red: #d52b1e;
+  --color-bol-yellow: #f9e300;
+  --color-bol-green: #007934;
+
   /* Monitor grande (el Nivel 2 ensancha su contenedor) */
   --breakpoint-3xl: 1800px;
 
@@ -141,10 +149,17 @@
   .grid-pantallas {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    /* Centradas: la tarjeta de mosaico es más alta que portada y Games */
+    align-items: center;
   }
   @media (min-width: 560px) {
     .grid-pantallas {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    /* Lección con mosaico resumen: ocupa dos columnas, es el plato fuerte
+       del módulo y a una sola columna el mosaico no se lee. */
+    .span-feature {
+      grid-column: span 2;
     }
   }
   @media (min-width: 768px) {

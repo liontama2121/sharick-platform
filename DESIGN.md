@@ -1,5 +1,5 @@
 ---
-name: "¡Hola English! A1 · La Chiva"
+name: "English Route A1 · La Chiva"
 description: "El libro es un bus pintado latinoamericano: la carrocería de colores lleva la navegación y las ventanas enmarcan el estudio."
 colors:
   rojo: "#d7263d"
@@ -189,7 +189,7 @@ components:
     textColor: "{colors.ink}"
 ---
 
-# Design System: ¡Hola English! A1 · La Chiva
+# Design System: English Route A1 · La Chiva
 
 ## Overview
 

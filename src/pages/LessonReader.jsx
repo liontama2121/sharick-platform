@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { animate } from 'animejs'
 
 import {
@@ -12,6 +12,7 @@ import {
   getModuleGames,
   getModuleLessonCards,
   getScreens,
+  resolveLessonRedirect,
 } from '../books'
 import { useProgress } from '../hooks/useProgress'
 import PageStage from '../components/page/PageStage'
@@ -81,8 +82,16 @@ function IndexOverlay({ cards, meta, content, currentId, hechasDe, onPick, onClo
   )
 }
 
-/** NIVEL 3 — la lección a pantalla completa, una pantalla a la vez. */
+/** Lecciones fusionadas (1.2 → 1.1): la URL vieja salta a la pantalla nueva. */
 export default function LessonReader() {
+  const { bookId, moduleId, lessonId, screenNo } = useParams()
+  const to = resolveLessonRedirect(bookId, moduleId, lessonId, screenNo)
+  if (to) return <Navigate to={to} replace />
+  return <LessonReaderView />
+}
+
+/** NIVEL 3 — la lección a pantalla completa, una pantalla a la vez. */
+function LessonReaderView() {
   const { bookId, moduleId, lessonId, screenNo } = useParams()
   const navigate = useNavigate()
 

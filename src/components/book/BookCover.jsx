@@ -1,61 +1,72 @@
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useRef } from 'react'
+import { animate, stagger } from 'animejs'
+
 import { countries } from '../../books'
 import Filete from '../decor/Filete'
+import RouteMap from '../cover/RouteMap'
 
-/* Placa numerada de cada parada: el amarillo lleva número azul. */
-const STOP_INK = { amarillo: 'var(--color-azul)' }
+const reduced = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 /**
- * Portada del libro: el frente de la chiva. Techo azul con guarda,
- * carrocería roja, rótulo amarillo con el nombre, la ruta por los cuatro
- * países y parachoques azul. Se dibuja siempre en el lienzo de 1600x1000.
+ * Portada "English Route": el mar azul noche, el continente pintado de
+ * blanco carrocería y la ruta del libro (Colombia → Venezuela → Panamá →
+ * Bolivia) que un avión recorre en bucle. El título vive en el Pacífico,
+ * abajo a la izquierda, que es el hueco natural del mapa.
+ * Se dibuja siempre en el lienzo de 1600x1000. `still` = miniatura quieta.
  */
-const BookCover = forwardRef(function BookCover({ meta }, ref) {
+const BookCover = forwardRef(function BookCover({ meta, still = false }, ref) {
+  const titleRef = useRef(null)
+  const cover = meta?.cover ?? {}
+  const title = cover.title ?? meta?.name ?? 'Libro'
+  const [first, ...rest] = title.split(' ')
+
+  useEffect(() => {
+    const el = titleRef.current
+    if (!el || still || reduced()) return
+    const parts = el.querySelectorAll('[data-in]')
+    animate(parts, {
+      opacity: [0, 1],
+      translateY: [26, 0],
+      duration: 760,
+      delay: stagger(120),
+      ease: 'outQuart',
+    })
+  }, [still])
+
   return (
     <div ref={ref} className="h-full w-full" data-density="hard">
-      <div className="grain relative flex h-full flex-col overflow-hidden bg-rojo-ink text-center">
-        <div aria-hidden="true" className="h-8 shrink-0 bg-azul" />
-        <Filete variant="rombos" height={20} className="h-5 w-full shrink-0" />
+      <div className="grain relative h-full overflow-hidden bg-azul">
+        <RouteMap countries={countries} route={cover.route ?? countries.map((c) => c.name)} still={still} />
 
-        <div className="flex flex-1 flex-col items-center justify-center px-16 pb-24">
-          <div className="rounded-[28px] border-[6px] border-azul bg-amarillo px-14 py-8 shadow-lift">
-            <h1 className="rotulo text-[104px] leading-none text-azul" style={{ '--rotulo-sombra': '#ffffff' }}>
-              {meta?.name ?? 'Libro'}
-            </h1>
-          </div>
+        <Filete variant="rombos" height={20} className="absolute inset-x-0 top-0 h-5 w-full" />
 
-          {countries.length > 0 && (
-            <ol className="mt-14 flex items-start gap-3">
-              {countries.map((c, i) => (
-                <li key={c.name} className="flex items-start gap-3">
-                  {i > 0 && (
-                    <span
-                      aria-hidden="true"
-                      className="mt-[23px] h-2.5 w-20 rounded-full bg-azul"
-                      style={{
-                        backgroundImage:
-                          'repeating-linear-gradient(90deg, var(--color-amarillo) 0 12px, transparent 12px 22px)',
-                        backgroundSize: '100% 2px',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                      }}
-                    />
-                  )}
-                  <span className="flex flex-col items-center">
-                    <span
-                      className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white font-display text-[24px] text-white shadow-lift"
-                      style={{ background: `var(--color-${c.color})`, color: STOP_INK[c.color] }}
-                    >
-                      {i + 1}
-                    </span>
-                    <span className="mt-2 font-display text-[24px] text-white">{c.name}</span>
-                  </span>
-                </li>
-              ))}
-            </ol>
+        <div ref={titleRef} className="absolute bottom-[138px] left-[84px] max-w-[760px]">
+          <h1
+            data-in
+            className="rotulo text-[148px] leading-[0.92] text-amarillo"
+            style={{ '--rotulo-sombra': 'var(--color-rojo-ink)' }}
+          >
+            {first}
+            {rest.length > 0 && (
+              <>
+                <br />
+                {rest.join(' ')}
+              </>
+            )}
+          </h1>
+
+          {cover.subtitle && (
+            <p data-in className="mt-9 font-body text-[30px] font-medium leading-snug text-paper">
+              {cover.subtitle}
+            </p>
           )}
-
-          <p className="mt-12 font-display text-[28px] text-amarillo">Prof. Sharick Prieto</p>
+          {cover.author && (
+            <p data-in className="mt-3 font-display text-[28px] text-amarillo">
+              {cover.author}
+            </p>
+          )}
         </div>
       </div>
     </div>

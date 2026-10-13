@@ -52,6 +52,7 @@ export default function ScreenThumb({
       className={`relative w-full overflow-hidden bg-paper ${frameClassName} ${className}`}
       style={{ aspectRatio: `${STAGE_W} / ${STAGE_H}` }}
       aria-hidden="true"
+      inert=""
     >
       <div
         style={{
@@ -70,6 +71,7 @@ export default function ScreenThumb({
           progress={INERT_PROGRESS}
           activityId={activityId}
           resetKey={0}
+          still
         />
       </div>
     </div>
