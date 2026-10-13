@@ -1,11 +1,10 @@
-import { useLayoutEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { animate } from 'animejs'
 import { BookOpen, Gamepad2, PenLine, Trophy } from 'lucide-react'
 
-import { books, countries } from '../books'
+import { books, countries, getBookMeta } from '../books'
 import BookCard from '../components/cards/BookCard'
 import Filete from '../components/decor/Filete'
+import HomeHero from '../components/home/HomeHero'
 import RouteChiva from '../components/home/RouteChiva'
 import Button from '../components/ui/Button'
 import { usePageAnimation } from '../hooks/usePageAnimation'
@@ -19,81 +18,24 @@ const FEATURE_ICONS = {
   arcade: Gamepad2,
 }
 
-const reduced = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-
 export default function Home() {
   const ref = usePageAnimation('home')
   const navigate = useNavigate()
   const session = useSession()
   const startStudying = () => navigate(session ? '/study/english-a1' : '/study/login')
-  const signRef = useRef(null)
-  const guardTopRef = useRef(null)
-  const guardBottomRef = useRef(null)
-
-  /* Llegada de la cabecera: las guardas se pintan como una pincelada y el
-     rótulo amarillo entra colgado, se mece y se asienta. */
-  useLayoutEffect(() => {
-    if (reduced()) return
-    const sign = signRef.current
-    const top = guardTopRef.current
-    const bottom = guardBottomRef.current
-    if (!sign || !top || !bottom) return
-    sign.style.opacity = '0'
-    top.style.clipPath = 'inset(0% 100% 0% 0%)'
-    bottom.style.clipPath = 'inset(0% 0% 0% 100%)'
-    animate(top, { clipPath: ['inset(0% 100% 0% 0%)', 'inset(0% 0% 0% 0%)'], duration: 1000, ease: 'outQuart', delay: 120 })
-    animate(bottom, { clipPath: ['inset(0% 0% 0% 100%)', 'inset(0% 0% 0% 0%)'], duration: 1000, ease: 'outQuart', delay: 260 })
-    animate(sign, {
-      opacity: [0, 1],
-      translateY: [-34, 0],
-      rotate: [-6, 2, -0.8, 0],
-      duration: 1150,
-      ease: 'outQuart',
-      delay: 180,
-    })
-  }, [])
+  /* La página principal es la portada del libro: English Route. */
+  const meta = getBookMeta('english-a1')
 
   return (
     <div ref={ref} className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-8 sm:py-10">
-      {/* Frente de la chiva: techo azul, carrocería roja, rótulo amarillo, parachoques */}
-      <header
-        data-anim
-        className="grain relative overflow-hidden rounded-[28px] border-[6px] border-azul bg-rojo-ink
-          text-center shadow-page"
-      >
-        <div aria-hidden="true" className="h-4 bg-azul" />
-        <div ref={guardTopRef}>
-          <Filete variant="rombos" height={12} className="h-3 w-full" />
-        </div>
-
-        <div className="px-5 pb-9 pt-8 sm:px-10">
-          <div
-            ref={signRef}
-            className="mx-auto w-fit max-w-full origin-top rounded-2xl border-4 border-azul bg-amarillo px-6 py-4 shadow-lift sm:px-9"
-          >
-            <h1
-              className="rotulo text-balance text-[clamp(1.7rem,4.6vw,3rem)] leading-[1.05] text-azul"
-              style={{ '--rotulo-sombra': '#ffffff' }}
-            >
-              Libros interactivos de idiomas
-            </h1>
-          </div>
-          <p className="mx-auto mt-6 max-w-xl text-[1rem] leading-relaxed text-white">
-            Súbete y aprende. Cada lección mezcla lectura, audio, juegos y práctica
-            oral, en un viaje por Colombia, Venezuela, Bolivia y Panamá.
-          </p>
-          <p className="mt-3 font-display text-[1.05rem] text-amarillo">
-            con la profesora Sharick Prieto
-          </p>
-        </div>
-
-        <div ref={guardBottomRef}>
-          <Filete variant="dientes" colors={['rojo-ink', 'amarillo', 'azul']} height={14} className="h-3.5 w-full" />
-        </div>
-        <div aria-hidden="true" className="h-5 bg-azul" />
-      </header>
+      {/* Portada: el mapa de la ruta, el mismo de la primera página del libro */}
+      <div data-anim>
+        <HomeHero meta={meta} />
+      </div>
+      <p data-anim className="mx-auto mt-6 max-w-xl text-center text-[1rem] leading-relaxed text-ink-soft">
+        Súbete y aprende. Cada lección mezcla lectura, audio, juegos y práctica
+        oral, en un viaje por Colombia, Venezuela, Panamá y Bolivia.
+      </p>
 
       {/* La ruta: una parada por país */}
       {countries.length > 0 && (

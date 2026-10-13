@@ -1,13 +1,11 @@
 import { useEffect, useId, useMemo, useRef } from 'react'
-import { animate, createMotionPath, createTimeline, stagger } from 'animejs'
-import { Plane } from 'lucide-react'
+import { animate, createTimeline, stagger } from 'animejs'
 
 import {
   COAST,
   COUNTRY_SHAPES,
   ISLANDS,
   arc,
-  arcPoint,
   makeProjector,
   polyline,
   smoothClosedPath,
@@ -18,8 +16,10 @@ const W = 1600
 const H = 1000
 
 /* Rectángulo del mapa dentro del lienzo: a la derecha, por encima de la
-   barra inferior (88px) para que la Patagonia no quede tapada. */
-const MAP_BOX = { x: 480, y: 30, w: 1060, h: 806 }
+   barra inferior (88px) para que la Patagonia no quede tapada. Arranca
+   por encima del lienzo: México queda fuera (el libro es de Colombia,
+   Venezuela, Panamá y Bolivia) y Suramérica gana tamaño. */
+const MAP_BOX = { x: 470, y: -40, w: 1080, h: 920 }
 
 /* Curvatura de cada tramo (ver `arc`): el tramo largo a Bolivia sale al
    Pacífico, como un vuelo; el de Venezuela a Panamá cruza el Caribe. */
@@ -35,8 +35,8 @@ const reduced = () =>
 
 /**
  * Mapa de Latinoamérica con la ruta del libro. La ruta se pinta tramo a
- * tramo mientras el avión la recorre; en cada país el pin late. Al final
- * espera 2s, se desvanece y vuelve a empezar.
+ * tramo (sin vehículo: la línea ES la ruta); en cada país el pin late.
+ * Al final espera 2s, se desvanece y vuelve a empezar.
  * `still` (miniatura del Nivel 2, reduced motion): ruta completa, quieta.
  */
 export default function RouteMap({ countries = [], route = [], still = false }) {
@@ -79,7 +79,6 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
       return {
         key: `${a.name}-${b.name}`,
         d: arc([a.x, a.y], [b.x, b.y], bend),
-        mid: arcPoint([a.x, a.y], [b.x, b.y], bend, 0.62),
       }
     })
     return { coast, islands, shapes, grid, stops, legs }
@@ -106,7 +105,6 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
     const paths = q('[data-leg-path]')
     const pins = q('[data-pin]')
     const rings = q('[data-ring]')
-    const plane = root.querySelector('[data-plane]')
     const routeGroup = root.querySelector('[data-route]')
     /* Cada tramo se revela con strokeDashoffset sobre la máscara (la línea
        visible ya es punteada, así que no puede llevar su propio dasharray). */
@@ -124,22 +122,19 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
 
     const tl = createTimeline({ loop: true, delay: 600 })
     tl.add(routeGroup, { opacity: [0, 1], duration: 300 }, 0)
-    // el avión aparece cuando arranca el primer tramo, ya sobre Colombia
-    tl.add(plane, { opacity: [0, 1], duration: 250 }, 650)
     arrive(tl, 0, 0)
 
     let t = 650
     legs.forEach((leg, i) => {
       const dur = Math.round(900 + lens[i] * 2.6)
       tl.add(leg, { strokeDashoffset: [lens[i], 0], duration: dur, ease: 'inOutSine' }, t)
-      tl.add(plane, { ...createMotionPath(paths[i]), duration: dur, ease: 'inOutSine' }, t)
       t += dur
       arrive(tl, i + 1, t - 60)
       t += 520
     })
 
     t += 2000
-    tl.add([routeGroup, plane], { opacity: [1, 0], duration: 600, ease: 'inQuad' }, t)
+    tl.add(routeGroup, { opacity: [1, 0], duration: 600, ease: 'inQuad' }, t)
     tl.add(pins, { scale: 1, duration: 1 }, t + 600)
     /* Ya invisible: los tramos vuelven a "sin pintar" para la siguiente vuelta */
     legs.forEach((leg, i) => tl.add(leg, { strokeDashoffset: lens[i], duration: 1 }, t + 600))
@@ -147,7 +142,6 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
     return () => tl.revert()
   }, [geo, still])
 
-  const last = geo.legs[geo.legs.length - 1]
   const showStatic = still || reduced()
 
   return (
@@ -169,18 +163,26 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
         </defs>
 
         {/* Retícula curva: la lente se nota y el mar deja de ser un plano */}
-        <g fill="none" stroke="var(--color-paper)" strokeWidth="1.5">
-          {geo.grid.map((g) => (
-            <path key={g.key} d={g.d} opacity={g.equator ? 0.22 : 0.07} strokeDasharray={g.equator ? '2 9' : undefined} strokeLinecap="round" />
-          ))}
-        </g>
+        {/* En miniatura (still) se omite: a ese tamaño no se vería. */}
+        {!still && (
+          <g fill="none" stroke="var(--color-paper)" strokeWidth="1.5">
+            {geo.grid.map((g) => (
+              <path key={g.key} d={g.d} opacity={g.equator ? 0.18 : 0.07} strokeLinecap="round" />
+            ))}
+          </g>
+        )}
 
         {/* Continente: carrocería blanca con filete amarillo por fuera */}
         <g>
           {geo.islands.map((d, i) => (
             <path key={i} d={d} fill="var(--color-carroceria)" stroke="var(--color-amarillo)" strokeWidth="3" />
           ))}
-          <path d={geo.coast} fill="var(--color-amarillo)" stroke="var(--color-amarillo)" strokeWidth="14" strokeLinejoin="round" />
+          {/* Filete amarillo de la costa. En miniatura (still) se omite: el trazo
+              grueso de esta costa larga, escalado a ~0.2, cuelga el rasterizado
+              de Chrome (y a ese tamaño no se distingue). */}
+          {!still && (
+            <path d={geo.coast} fill="var(--color-amarillo)" stroke="var(--color-amarillo)" strokeWidth="14" strokeLinejoin="round" />
+          )}
           <path d={geo.coast} fill="var(--color-carroceria)" />
         </g>
 
@@ -195,15 +197,15 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
         <g data-route>
           {geo.legs.map((leg, i) => (
             <g key={leg.key} mask={showStatic ? undefined : `url(#${uid}-leg${i})`}>
-              <path d={leg.d} fill="none" stroke="var(--color-azul)" strokeWidth="11" strokeLinecap="round" opacity="0.35" />
+              <path d={leg.d} fill="none" stroke="var(--color-rojo-ink)" strokeWidth="3" strokeLinecap="round" opacity="0.9" />
               <path
                 data-leg-path
                 d={leg.d}
                 fill="none"
                 stroke="var(--color-amarillo)"
-                strokeWidth="6"
+                strokeWidth="9"
                 strokeLinecap="round"
-                strokeDasharray="2 16"
+                strokeDasharray="1 17"
               />
             </g>
           ))}
@@ -257,26 +259,6 @@ export default function RouteMap({ countries = [], route = [], still = false }) 
         )
       })}
 
-      {/* El avión: recorre la ruta; quieto, se queda en el último tramo */}
-      {geo.legs.length > 0 && (
-        <div
-          data-plane
-          className="absolute left-0 top-0 h-0 w-0"
-          style={
-            showStatic && last
-              ? { transform: `translate(${last.mid.x}px, ${last.mid.y}px) rotate(${last.mid.angle}deg)` }
-              : { opacity: 0 }
-          }
-        >
-          <span
-            className="absolute -left-[27px] -top-[27px] flex h-[54px] w-[54px] items-center justify-center
-              rounded-full border-[3px] border-azul bg-amarillo text-azul shadow-lift"
-          >
-            {/* Lucide dibuja el avión hacia arriba a la derecha (-45°) */}
-            <Plane size={28} strokeWidth={2.4} className="rotate-45" fill="currentColor" />
-          </span>
-        </div>
-      )}
     </div>
   )
 }

@@ -155,7 +155,7 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 - Dónde vive cada pieza: techo azul + rombos arriba, faldón rojo + dientes
   abajo (Nivel 1, Nivel 2, Home, portada), placas rotuladas amarillas o rojas
   para nombres, ventanas con marco de madera para lecciones y libros, banda
-  verde de ventanas en el Nivel 2, ajedrez verde en la Study Zone. La ruta de
+  azul (Colombia) de ventanas en el Nivel 2, ajedrez verde en la Study Zone. La ruta de
   los 4 países (paradas numeradas sobre carretera azul con raya amarilla) sale
   de `registry.json → countries` en Home y portada.
 
@@ -174,13 +174,20 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 - Título "English Route" rotulado amarillo con sombra roja abajo a la
   izquierda (el Pacífico es el hueco natural), subtítulo y autora desde
   `books[0].cover`. Fuente: Alfa Slab One (no Playfair: eliminada del sistema).
-- Animación (loop, Anime.js `createTimeline`): por tramo, la línea punteada se
-  revela con `strokeDashoffset` sobre una **máscara** (la línea visible ya es
-  dasharray) mientras el avión la recorre con `createMotionPath`; al llegar,
-  el pin late (scale [1,1.45,1] `outBack`) y suelta una onda amarilla; pausa
-  520ms; al final 2s de espera, fade 600ms y vuelve a empezar. El avión
-  aparece al arrancar el primer tramo. `still` (miniaturas) y reduced motion:
-  ruta completa y avión quieto en el último tramo.
+- Animación (loop, Anime.js `createTimeline`): **sin avión ni vehículo, la
+  línea ES la ruta** (pedido del cliente, 2026-10-12): por tramo, la ruta de
+  puntos amarillos sobre hilo rojo se revela con `strokeDashoffset` sobre una
+  **máscara** (la línea visible ya es dasharray); al llegar, el pin late
+  (scale [1,1.45,1] `outBack`) y suelta una onda amarilla; pausa 520ms; al
+  final 2s de espera, fade 600ms y vuelve a empezar. `still` (miniaturas) y
+  reduced motion: ruta completa, quieta.
+- **México fuera del mapa**: `MAP_BOX` arranca por encima del lienzo
+  (y = -40), así solo asoma Centroamérica y Suramérica gana tamaño.
+- En `still` se omiten la retícula y el filete grueso de la costa: a escala
+  ~0.2 ese trazo cuelga el rasterizado de Chrome y no se distingue.
+- **La portada también es la cabecera del Home** (`home/HomeHero.jsx`: el
+  mismo `BookCover` escalado al ancho dentro de una `.ventana`). La página
+  principal se llama "English Route" (`<title>` incluido).
 - `ScreenRenderer` acepta `still`; `ScreenThumb` y `LessonSpread` lo pasan
   siempre (en miniatura no se mueve nada).
 - `content/DayArc.jsx` pinta el día como cuatro paneles planos (amarillo claro,
@@ -258,14 +265,16 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 `books/index.js`; la tarjeta es `book/LessonCard.jsx` y la miniatura
 `book/LessonSpread.jsx`.
 
-- **Costado de la chiva**: la vista entera es una carrocería blanca con borde
-  azul de 6px, techo azul + guarda de rombos arriba y faldón rojo + guarda de
-  dientes abajo. Arriba a la izquierda, la **placa roja** con borde amarillo y
+- **Costado de la chiva pintado con la bandera de Colombia** (de arriba
+  abajo): techo `col-yellow` + guarda de rombos tricolor, banda de ventanas
+  `col-blue` entre filetes `col-yellow` y faldón `col-red` con dientes
+  tricolor. Antes era blanco + banda verde + rojo y se leía como bandera de
+  México: **no volver al verde** en esta vista. Arriba a la izquierda, la **placa roja** con borde amarillo y
   "Module N" rotulado en blanco con sombra amarilla;
   debajo, nombre del módulo, descripción y barra de progreso (contada por
   pantallas de todas las lecciones, barra verde). `CloseButton` arriba a la
   derecha; 🏠 y 🎮 (`RoundButton size="lg"`, borde amarillo) sobre el faldón.
-  Las lecciones van sobre una **banda verde de ventanas** entre filetes
+  Las lecciones van sobre una **banda azul Colombia de ventanas** entre filetes
   amarillos; cada miniatura es una ventana con marco de madera de 5px.
 - **Miniatura = spread resumen (mosaico)**: si la lección trae
   `lesson.thumbnailMosaic` (ids de pantalla, máx. 6) o tiene 6+ pantallas

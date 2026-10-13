@@ -146,15 +146,16 @@ export default function ModuleGrid() {
 
   return (
     <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
-      {/* Costado de la chiva: carrocería blanca con techo azul y faldón rojo;
-          cada lección es una ventana */}
+      {/* Costado de la chiva pintado con la bandera de Colombia, de arriba
+          abajo: techo amarillo, banda azul de ventanas y faldón rojo. Antes
+          era blanco + banda verde + rojo y se leía como bandera de México. */}
       <div
         className="relative mx-auto w-full max-w-[1480px] overflow-hidden
           rounded-[26px] border-[6px] border-azul bg-carroceria pb-[88px] shadow-page 3xl:max-w-[1820px]"
       >
-        {/* Techo: banda azul con guarda de rombos */}
-        <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-5 bg-azul" />
-        <Filete variant="rombos" height={12} className="absolute inset-x-0 top-5 h-3 w-full" />
+        {/* Techo: banda amarilla con guarda de rombos tricolor */}
+        <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-7 bg-col-yellow" />
+        <Filete variant="rombos" colors={['col-blue', 'col-yellow', 'col-red']} height={12} className="absolute inset-x-0 top-7 h-3 w-full" />
 
         {/* Rótulo del módulo: placa roja pintada, letra slab con sombra amarilla */}
         <div
@@ -184,7 +185,7 @@ export default function ModuleGrid() {
               aria-label="Pantallas completadas del módulo"
             >
               <div
-                className="h-full rounded-full bg-verde transition-[width] duration-700 ease-out"
+                className="h-full rounded-full bg-col-blue transition-[width] duration-700 ease-out"
                 style={{ width: `${pct}%` }}
               />
             </div>
@@ -195,9 +196,9 @@ export default function ModuleGrid() {
         </div>
 
         {/* Rejilla. El padding deja sitio a los tags y badges que sobresalen. */}
-        {/* Banda de ventanas: franja verde pintada entre filetes amarillos,
+        {/* Banda de ventanas: franja azul Colombia entre filetes amarillos,
             como la fila de ventanas del costado de la chiva */}
-        <div className="grain mt-9 border-y-4 border-amarillo bg-verde px-9 py-12 sm:px-12">
+        <div className="grain mt-9 border-y-[6px] border-col-yellow bg-col-blue px-9 py-12 sm:px-12">
         <div ref={gridRef} className="grid-pantallas gap-x-10 gap-y-14">
           {tarjetas.map((item) => (
             <LessonCard
@@ -226,13 +227,13 @@ export default function ModuleGrid() {
             onMouseEnter={(e) => hover(e, true)}
             onMouseLeave={(e) => hover(e, false)}
             className="relative flex aspect-[2/1] cursor-pointer flex-col items-center
-              justify-center gap-1.5 rounded-[14px] border-[5px] border-madera bg-tip p-4 text-center
+              justify-center gap-1.5 rounded-[14px] border-[5px] border-madera bg-paper p-4 text-center
               shadow-lift"
           >
             <span
               data-tag
               className="absolute -left-5 -top-5 flex h-16 w-16 items-center justify-center
-                rounded-[12px] border-[3px] border-amarillo bg-verde-ink text-white
+                rounded-[12px] border-[3px] border-amarillo bg-azul text-white
                 shadow-[0_10px_22px_rgba(20,30,50,.28)]"
             >
               <Gamepad2 size={30} strokeWidth={2.2} />
@@ -242,7 +243,7 @@ export default function ModuleGrid() {
             </span>
             {games.length > 0 ? (
               <>
-                <span className="label-caps text-verde-ink">{games.length} juegos</span>
+                <span className="label-caps text-azul">{games.length} juegos</span>
                 <span className="text-[0.74rem] text-ink-soft">
                   {gameStats.played} de {gameStats.total} jugados · ⭐ {gameStats.stars}
                 </span>
@@ -256,8 +257,8 @@ export default function ModuleGrid() {
 
         {/* Faldón: banda roja con guarda de dientes, como la parte baja de la chiva */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0">
-          <Filete variant="dientes" height={14} className="h-3.5 w-full" />
-          <div className="grain h-12 bg-rojo-ink" />
+          <Filete variant="dientes" colors={['col-blue', 'col-yellow', 'col-red']} height={14} className="h-3.5 w-full" />
+          <div className="grain h-12 bg-col-red" />
         </div>
 
         {/* Botonera sobre el faldón, esquina inferior izquierda */}
