@@ -36,7 +36,7 @@ export default function BookCard({ book }) {
     >
       {Scene ? (
         <div className="relative aspect-[16/10] overflow-hidden">
-          <Scene />
+          <Scene chiva={{ x: 800, scale: 0.78 }} />
           <span className="absolute left-3 top-3">{level}</span>
         </div>
       ) : (

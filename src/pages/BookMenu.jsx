@@ -82,7 +82,13 @@ export default function BookMenu() {
       >
         <div aria-hidden="true" className="relative z-10 h-3 bg-azul" />
         <Filete variant="vueltiao" height={12} className="relative z-10 h-3 w-full" />
-        {Scene && <Scene />}
+        {/* La escena termina sobre la guarda inferior: la carretera y las
+            ruedas de la chiva quedan a la vista */}
+        {Scene && (
+          <div className="absolute inset-x-0 bottom-7 top-0">
+            <Scene chiva={{ x: 1180, scale: 0.72 }} />
+          </div>
+        )}
         <div
           className={`relative flex items-start justify-between gap-4 px-5 sm:px-8
             ${Scene ? 'min-h-[260px] pb-28 pt-6 sm:min-h-[300px]' : 'py-6'}`}

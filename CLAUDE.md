@@ -219,11 +219,23 @@ Cerros Orientales con **Monserrate** (iglesia blanca de techo rojo) y su
 **teleférico**, torres de **Bogotá** al pie, lomas de **Medellín** llenas de
 casitas de ladrillo (algunas pintadas) con el **metrocable**, guayacán
 amarillo soltando flores, palmas de cera y cafetales con granos rojos.
-- Animación: las capas suben al entrar (translateY [36,0], stagger 110ms); en
-  bucle, las palmas se mecen y el halo del sol respira (Anime.js alternado),
-  y **un solo reloj** (`animate` de 0 a 120000 con `onUpdate`) mueve las
-  cabinas de los dos cables, las nubes, los pájaros aleteando y las flores
-  del guayacán cayendo. Reduced motion: quieta.
+- **Acabado profesional, no plano** (pedido del cliente, 2026-10-12): cada
+  capa con degradado de luz, bruma blanca entre capas, resplandor de sol,
+  caras en sombra en torres y casitas, viñeta abajo.
+- **Movimiento contenido, sin bucles** (al cliente no le gustaron las
+  animaciones de caricatura): las capas se asientan una vez (translateY
+  [18,0], 1100ms `outExpo`, stagger 90ms) y, al pasar el puntero por la card
+  o la cabecera, **paralaje** por capas (`data-depth` 0.15-1, 700ms
+  `outQuart`). Reduced motion: quieta.
+- **LA CHIVA es el símbolo del libro y siempre está en el A1**
+  (`decor/Chiva.jsx`): vista lateral con volumen (degradados de luz,
+  cromados, parabrisas con reflejo, sombra en el suelo), parrilla cargada
+  (maletas, huacal, racimo de plátano), vanos abiertos con pasajeros, bandas
+  pintadas con rombos, "English Route" rotulado en el costado, capó azul,
+  faro, llantas de rin rojo. `AndesScene chiva={{ x, scale }}` la pone en
+  la carretera del primer plano: llega rodando una vez (translateX
+  [-1100,0], 2200ms `outExpo`, ruedas girando) y frena con el muelle.
+  Card A1: `{ x: 800, scale: 0.78 }` · menú del libro: `{ x: 1180, scale: 0.72 }`.
 - Monserrate va al centro (x≈980 del viewBox 1600x420): con
   `preserveAspectRatio="xMidYMax slice"` es lo que se ve en la card y no lo
   tapa el rótulo del menú.
@@ -248,7 +260,7 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 | Elemento | Animación | Specs |
 |----------|-----------|-------|
 | **Portada / Home** | ruta en el mapa | ver "Portada English Route": tramos que se pintan, pulso de pin, loop con fade |
-| **Escena andina (card A1, Nivel 1, Nivel 2)** | capas + reloj | capas translateY [36,0] stagger 110ms; palmas rotate ±1.6° y halo del sol en bucle; cabinas, nubes, pájaros y flores con un reloj de 120s |
+| **Escena andina + chiva (card A1, Nivel 1, Nivel 2)** | entrada + paralaje | capas translateY [18,0] 1100ms outExpo stagger 90ms; la chiva llega rodando (2200ms outExpo) y frena; paralaje por capas al pasar el puntero; sin bucles |
 | Cabecera del Home | rótulo colgado + pincelada | rótulo: rotate [-6,2,-0.8,0] + translateY [-34,0], 1150ms `outQuart`, `origin-top`; guardas: clipPath inset de 100% a 0 (1000ms) |
 | Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
