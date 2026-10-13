@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Gamepad2, PenLine, Trophy } from 'lucide-react'
 
-import { books, countries, getBookMeta } from '../books'
+import { books, getBookMeta } from '../books'
 import BookCard from '../components/cards/BookCard'
 import Filete from '../components/decor/Filete'
 import HomeHero from '../components/home/HomeHero'
-import RouteChiva from '../components/home/RouteChiva'
 import Button from '../components/ui/Button'
 import { usePageAnimation } from '../hooks/usePageAnimation'
 import { useSession } from '../hooks/useSession'
@@ -36,16 +35,6 @@ export default function Home() {
         Súbete y aprende. Cada lección mezcla lectura, audio, juegos y práctica
         oral, en un viaje por Colombia, Venezuela, Panamá y Bolivia.
       </p>
-
-      {/* La ruta: una parada por país */}
-      {countries.length > 0 && (
-        <section data-anim aria-labelledby="ruta" className="mt-12">
-          <h2 id="ruta" className="text-center text-[1.6rem]">
-            La ruta del libro
-          </h2>
-          <RouteChiva countries={countries} />
-        </section>
-      )}
 
       <section data-anim className="mt-14">
         <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">

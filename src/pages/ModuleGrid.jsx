@@ -18,6 +18,11 @@ import LessonCard from '../components/book/LessonCard'
 import RoundButton from '../components/nav/RoundButton'
 import Filete from '../components/decor/Filete'
 import CloseButton from '../components/page/CloseButton'
+import CartagenaStreet from '../components/scene/CartagenaStreet'
+
+/* Escena de fondo de la banda de lecciones según el módulo (`module.scene`
+   en modules.json). El Módulo 1 es Colombia: una calle de Cartagena. */
+const SCENES = { cartagena: CartagenaStreet }
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -39,6 +44,7 @@ export default function ModuleGrid() {
   const content = getBookContent(bookId)
   const mod = getModule(bookId, moduleId)
   const games = getModuleGames(bookId, moduleId)
+  const Scene = SCENES[mod?.scene] ?? null
 
   const { getModuleGameStats, isCompleted, isScreenVisited, progress } = useProgress(bookId)
   const gameStats = getModuleGameStats(moduleId, games.map((g) => g.id))
@@ -146,16 +152,18 @@ export default function ModuleGrid() {
 
   return (
     <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
-      {/* Costado de la chiva pintado con la bandera de Colombia, de arriba
-          abajo: techo amarillo, banda azul de ventanas y faldón rojo. Antes
-          era blanco + banda verde + rojo y se leía como bandera de México. */}
+      {/* Costado de la chiva: techo azul con la trenza del sombrero vueltiao,
+          la banda de lecciones sobre la escena del módulo (Módulo 1: calle
+          de Cartagena) y abajo la calle empedrada. Sin franjas de bandera:
+          blanco + verde + rojo se leía como México y el tricolor como
+          bandera literal. */}
       <div
         className="relative mx-auto w-full max-w-[1480px] overflow-hidden
           rounded-[26px] border-[6px] border-azul bg-carroceria pb-[88px] shadow-page 3xl:max-w-[1820px]"
       >
-        {/* Techo: banda amarilla con guarda de rombos tricolor */}
-        <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-7 bg-col-yellow" />
-        <Filete variant="rombos" colors={['col-blue', 'col-yellow', 'col-red']} height={12} className="absolute inset-x-0 top-7 h-3 w-full" />
+        {/* Techo: banda azul con la trenza del sombrero vueltiao */}
+        <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-5 bg-azul" />
+        <Filete variant="vueltiao" height={14} className="absolute inset-x-0 top-5 h-3.5 w-full" />
 
         {/* Rótulo del módulo: placa roja pintada, letra slab con sombra amarilla */}
         <div
@@ -185,7 +193,7 @@ export default function ModuleGrid() {
               aria-label="Pantallas completadas del módulo"
             >
               <div
-                className="h-full rounded-full bg-col-blue transition-[width] duration-700 ease-out"
+                className="h-full rounded-full bg-verde transition-[width] duration-700 ease-out"
                 style={{ width: `${pct}%` }}
               />
             </div>
@@ -196,10 +204,11 @@ export default function ModuleGrid() {
         </div>
 
         {/* Rejilla. El padding deja sitio a los tags y badges que sobresalen. */}
-        {/* Banda de ventanas: franja azul Colombia entre filetes amarillos,
-            como la fila de ventanas del costado de la chiva */}
-        <div className="grain mt-9 border-y-[6px] border-col-yellow bg-col-blue px-9 py-12 sm:px-12">
-        <div ref={gridRef} className="grid-pantallas gap-x-10 gap-y-14">
+        {/* Banda de lecciones: la escena del módulo detrás, enmarcada en
+            madera; las lecciones son ventanas delante */}
+        <div className="relative mt-9 overflow-hidden border-y-[6px] border-madera bg-azul px-9 pb-14 pt-24 sm:px-12">
+        {Scene && <Scene />}
+        <div ref={gridRef} className="grid-pantallas relative gap-x-10 gap-y-14">
           {tarjetas.map((item) => (
             <LessonCard
               key={item.key}
@@ -257,8 +266,8 @@ export default function ModuleGrid() {
 
         {/* Faldón: banda roja con guarda de dientes, como la parte baja de la chiva */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0">
-          <Filete variant="dientes" colors={['col-blue', 'col-yellow', 'col-red']} height={14} className="h-3.5 w-full" />
-          <div className="grain h-12 bg-col-red" />
+          <Filete variant="vueltiao" height={14} className="h-3.5 w-full" />
+          <Filete variant="adoquines" height={24} className="h-12 w-full" />
         </div>
 
         {/* Botonera sobre el faldón, esquina inferior izquierda */}

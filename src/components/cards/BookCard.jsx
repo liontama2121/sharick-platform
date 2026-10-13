@@ -5,6 +5,9 @@ import { MapPin } from 'lucide-react'
 import { hoverFloat } from '../../hooks/useFeedback'
 import Filete from '../decor/Filete'
 import Guarda from '../decor/Guarda'
+import CartagenaStreet from '../scene/CartagenaStreet'
+
+const SCENES = { cartagena: CartagenaStreet }
 
 /* Mini ruta del libro: paradas sobre línea punteada y pin en la última.
    Repite en pequeño el recorrido de la portada English Route. */
@@ -32,12 +35,12 @@ function RouteGlyph({ stops = 4 }) {
 }
 
 /** Card de libro en el Home: una ventana de la chiva con el nivel rotulado.
-    Si el libro trae `flagStripes`, la cabecera es su bandera en proporción
-    real (Colombia: amarillo 50 %, azul 25 %, rojo 25 %). */
+    Si el libro trae `scene` (registry.json), la cabecera es esa escena
+    animada: English Route = calle de Cartagena, la misma del Módulo 1. */
 export default function BookCard({ book }) {
   const ref = useRef(null)
   const available = !!book.available
-  const stripes = available ? book.flagStripes : null
+  const Scene = available ? SCENES[book.scene] : null
 
   const level = (
     <span
@@ -57,14 +60,14 @@ export default function BookCard({ book }) {
       className={`group flex h-full flex-col overflow-hidden rounded-[18px] border-[6px] bg-paper shadow-lift
         ${available ? 'cursor-pointer border-madera' : 'cursor-not-allowed border-[#b9c3d0] opacity-70'}`}
     >
-      {stripes ? (
-        <div className="grain relative flex h-36 flex-col">
-          {stripes.map((s, i) => (
-            <span key={i} style={{ flexGrow: s.weight, background: `var(--color-${s.color})` }} />
-          ))}
-          <div className="absolute inset-x-5 top-0 flex h-1/2 items-center justify-between">
+      {Scene ? (
+        <div className="relative h-36 overflow-hidden">
+          <Scene />
+          <div className="absolute inset-x-4 bottom-3 flex items-end justify-between">
             {level}
-            <RouteGlyph />
+            <span className="rounded-full bg-paper/90 px-1.5 shadow-soft">
+              <RouteGlyph />
+            </span>
           </div>
         </div>
       ) : (
@@ -81,12 +84,12 @@ export default function BookCard({ book }) {
         </div>
       )}
       {available && (
-        <Filete variant="dientes" colors={book.guardColors} height={12} className="h-3 w-full" />
+        <Filete variant="vueltiao" height={12} className="h-3 w-full" />
       )}
 
       <div className="flex flex-1 flex-col gap-2 p-5">
         <h3 className="text-[1.35rem]">{book.name}</h3>
-        <Guarda width={72} colors={book.guardColors} />
+        <Guarda width={72} />
         <p className="text-[0.82rem] font-semibold uppercase tracking-[0.12em] text-verde-ink">
           {book.language ?? 'Próximamente'}
         </p>

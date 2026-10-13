@@ -206,7 +206,7 @@ Rechazos confirmados por el build: la hoja crema editorial con acuarela (el mund
 - Pintura plana con grano, filetes de color contrario y guardas pintadas en lugar de degradados.
 - Rotulado en slab gruesa con sombra plana de color, como los nombres pintados de las chivas.
 - Bordes gruesos de color (3-6px) y radios amplios en lugar de sombras duras.
-- Todo movimiento con Anime.js, con la chiva como personaje en la llegada del Home.
+- Todo movimiento con Anime.js: la ruta se pinta en el mapa de la portada y la calle de Cartagena tiene banderines con brisa.
 
 ## Colors
 
@@ -344,8 +344,11 @@ Panel de pintura del color de su letra, radio 18px, filete interior de 2px al 40
 ### Frente de la chiva (Home, Nivel 1, portada)
 Panel `rojo-ink` con grano, borde azul de 6px y radio 24-28px, apilado de arriba abajo: techo azul, guarda de rombos, contenido con la placa amarilla, guarda de dientes (`rojo-ink` · amarillo · azul), parachoques azul. El costado del Nivel 2 repite el techo y el faldón sobre fondo `carroceria`.
 
-### Ruta de la chiva (Home)
-`RouteChiva`: carretera azul con raya amarilla discontinua y paradas numeradas en círculos del color del país con borde blanco de 4px (48px en Home, 56px en la portada; número azul sobre amarillo), colgadas de un poste azul. La carretera se traza (scaleX, 1100ms `outExpo`), el `ChivaBus` recorre las paradas (720ms `inOutSine` por tramo, ruedas girando) y cada letrero gira rotateY [90, 0] con `outBack(1.4)`. Hover sobre un país: la chiva maneja hasta él. Móvil: solo letreros en cascada. Movimiento reducido: bus estacionado, todo visible.
+### Mapa de la ruta (portada y cabecera del Home)
+`RouteMap`: mapa real de Latinoamérica (Natural Earth, Mercator) en `carroceria` con fronteras `ink-soft` y costa amarilla sobre mar `azul`; los cuatro países del libro en su color. Ruta de puntos amarillos sobre hilo rojo que se pinta tramo a tramo (sin vehículo), pines numerados con onda amarilla al llegar, letreros blancos con bandera SVG unidos por línea guía. Movimiento reducido: ruta completa y quieta.
+
+### Calle de Cartagena (Nivel 2 del Módulo 1 y card del Home)
+`CartagenaStreet`: fachadas coloniales de colores (tokens aclarados con color-mix), balcones y ventanas de madera, buganvillas, cielo `cielo` y banderines de fiesta que se mecen. Guardas `vueltiao` (trenza del sombrero vueltiao) y `adoquines`. Colombia sin bandera literal.
 
 ### DayArc
 El día como cuatro paneles planos (amarillo claro #FCE7A6, celeste #CFE3F5, naranja #F4A259, azul noche) separados por filetes blancos, con soles amarillos y rojo y luna; los arcos se dibujan y los textos entran con stagger. Colores propios del componente, no tokens.

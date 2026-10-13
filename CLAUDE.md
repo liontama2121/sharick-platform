@@ -155,22 +155,31 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
 - Dónde vive cada pieza: techo azul + rombos arriba, faldón rojo + dientes
   abajo (Nivel 1, Nivel 2, Home, portada), placas rotuladas amarillas o rojas
   para nombres, ventanas con marco de madera para lecciones y libros, banda
-  azul (Colombia) de ventanas en el Nivel 2, ajedrez verde en la Study Zone. La ruta de
-  los 4 países (paradas numeradas sobre carretera azul con raya amarilla) sale
-  de `registry.json → countries` en Home y portada.
+  de lecciones con escena de Cartagena en el Nivel 2, ajedrez verde en la
+  Study Zone. La ruta de los 4 países sale de `registry.json → countries` en
+  la portada (que también es la cabecera del Home).
 
 ### Portada "English Route" (`book/BookCover.jsx` + `components/cover/`)
-- Mar azul noche (`bg-azul` + grano), continente en `carroceria` con filete
-  amarillo, los cuatro países en pintura plana con filete blanco
-  (`countries[].color`, o `mapColor` si choca con el mar: Panamá usa `pan-blue`),
-  retícula curva al 7 % y Antillas mayores como pista del Caribe.
-- `cover/latamGeo.js`: costa e islas en [lon, lat] simplificados, suavizados
-  con Catmull-Rom, y proyección **ojo de pez** (Sarkar-Brown, foco en
-  [-72, 2], m = 1.7) para que Bogotá, Caracas y Panamá no se pisen. El mapa
-  encaja en `MAP_BOX` (por encima de la barra inferior: la Patagonia se ve).
+- Mar azul noche (`bg-azul` + grano). **Mapa real**: TODOS los países de
+  Latinoamérica (México a Tierra del Fuego, Centroamérica, Antillas,
+  Guayanas, Malvinas) con fronteras reales, de Natural Earth 1:50m
+  (world-atlas@2.0.2) simplificado con Douglas-Peucker a 0.06° →
+  `cover/latam.json` (29 países, ~43KB; `name` en español). Nada dibujado a
+  mano. Para regenerarlo: topojson-client + world-atlas, filtrar por nombre y
+  caja [-118.5, -56.5, -33, 33], descartar islotes < 0.04°².
+- Proyección **Mercator** (la de los atlas escolares), `cover/latamGeo.js`
+  (`makeProjector`, `ringPath`, `ringCentroid`, `arc`). El mapa encaja en
+  `MAP_BOX` por encima de la barra inferior (la Patagonia se ve).
+- Pintura: los países en `carroceria` con frontera `ink-soft` al 45 %; los
+  cuatro del libro en su color (`countries[].color`, o `mapColor` si choca
+  con el mar: Panamá usa `pan-blue`) con filete blanco. Costa con filete
+  amarillo (cada país trazado grueso en amarillo debajo de los rellenos).
+  Nombres de los demás países en versalitas de atlas en su centroide
+  (`LABEL_TWEAK`: Chile en vertical, los muy pequeños sin nombre).
 - `cover/RouteMap.jsx`: pines numerados en orden de ruta + letreros con
-  `MiniFlag` (banderas SVG, NO emoji: en Windows salen como "CO") y ciudad
-  (`countries[].pin = { lon, lat, city, label: left|right|below, flag }`).
+  `MiniFlag` (banderas SVG, NO emoji: en Windows salen como "CO") y ciudad,
+  unidos al pin por una línea guía
+  (`countries[].pin = { lon, lat, city, flag, label: { dx, dy } }`).
 - Título "English Route" rotulado amarillo con sombra roja abajo a la
   izquierda (el Pacífico es el hueco natural), subtítulo y autora desde
   `books[0].cover`. Fuente: Alfa Slab One (no Playfair: eliminada del sistema).
@@ -181,13 +190,28 @@ existe se queda deshabilitado con "Audio pendiente" — nunca rompe la página.
   (scale [1,1.45,1] `outBack`) y suelta una onda amarilla; pausa 520ms; al
   final 2s de espera, fade 600ms y vuelve a empezar. `still` (miniaturas) y
   reduced motion: ruta completa, quieta.
-- **México fuera del mapa**: `MAP_BOX` arranca por encima del lienzo
-  (y = -40), así solo asoma Centroamérica y Suramérica gana tamaño.
-- En `still` se omiten la retícula y el filete grueso de la costa: a escala
+- En `still` se omiten la retícula, los nombres y el filete grueso de la costa: a escala
   ~0.2 ese trazo cuelga el rasterizado de Chrome y no se distingue.
 - **La portada también es la cabecera del Home** (`home/HomeHero.jsx`: el
   mismo `BookCover` escalado al ancho dentro de una `.ventana`). La página
-  principal se llama "English Route" (`<title>` incluido).
+  principal se llama "English Route" (`<title>` incluido). Ya no hay sección
+  "La ruta del libro" con la chiva en el Home (quitada a pedido del cliente,
+  2026-10-12; `RouteChiva` y `ChivaBus` se borraron).
+
+### Escena del Módulo 1: calle de Cartagena (`scene/CartagenaStreet.jsx`)
+El Módulo 1 es Colombia, pero **sin bandera** (pedido del cliente: ni franjas
+tricolor ni blanco + verde + rojo, que se leía como México). Es una calle del
+Centro Histórico de Cartagena dibujada en SVG: fachadas de colores (tokens
+aclarados con `color-mix`), ventanas altas y puertas con arco de madera,
+balcones corridos, buganvillas y cielo `cielo`. Animación: las casas suben
+escalonadas al entrar (translateY [40,0], stagger 60ms) y una guirnalda de
+banderines de fiesta se mece en bucle (rotate [-7,7], 1600ms alternado,
+stagger 90ms). Reduced motion: quieta.
+- Se elige por datos: `module.scene: "cartagena"` (modules.json) en el
+  Nivel 2 y `book.scene` (registry.json) en la card del Home. Mapas
+  `SCENES` en `ModuleGrid` y `BookCard`; un módulo nuevo = una escena nueva.
+- Guardas nuevas en `Filete`: `vueltiao` (trenza del sombrero vueltiao, techo
+  y borde de la card) y `adoquines` (calle empedrada del faldón).
 - `ScreenRenderer` acepta `still`; `ScreenThumb` y `LessonSpread` lo pasan
   siempre (en miniatura no se mueve nada).
 - `content/DayArc.jsx` pinta el día como cuatro paneles planos (amarillo claro,
@@ -201,7 +225,8 @@ Helpers: `src/hooks/useFeedback.js` (`celebrate`, `shake`, `popIn`, `hoverFloat`
 
 | Elemento | Animación | Specs |
 |----------|-----------|-------|
-| **Llegada de la chiva (Home)** | carretera + bus | `home/RouteChiva.jsx`: la carretera se traza (scaleX, 1100ms `outExpo`), la chiva (`decor/ChivaBus.jsx`) entra y recorre las 4 paradas (720ms `inOutSine` por tramo, ruedas girando, rebote al frenar); en cada parada el letrero gira rotateY [90,0] `outBack(1.4)` y aparece el país. Después, hover sobre un país = la chiva maneja hasta él. Móvil: solo letreros en cascada. Reduced motion: bus estacionado, todo visible |
+| **Portada / Home** | ruta en el mapa | ver "Portada English Route": tramos que se pintan, pulso de pin, loop con fade |
+| **Calle de Cartagena (Nivel 2)** | fachadas + banderines | casas translateY [40,0] stagger 60ms; banderines rotate [-7,7] 1600ms en bucle |
 | Cabecera del Home | rótulo colgado + pincelada | rótulo: rotate [-6,2,-0.8,0] + translateY [-34,0], 1150ms `outQuart`, `origin-top`; guardas: clipPath inset de 100% a 0 (1000ms) |
 | Entrada de página | fadeIn + translateY | `[20,0]`, 600ms `outQuad`, stagger 80ms sobre `[data-anim]` |
 | Cards | hover float | scale 1.05, translateY -8, 300ms |
@@ -265,11 +290,10 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
 `books/index.js`; la tarjeta es `book/LessonCard.jsx` y la miniatura
 `book/LessonSpread.jsx`.
 
-- **Costado de la chiva pintado con la bandera de Colombia** (de arriba
-  abajo): techo `col-yellow` + guarda de rombos tricolor, banda de ventanas
-  `col-blue` entre filetes `col-yellow` y faldón `col-red` con dientes
-  tricolor. Antes era blanco + banda verde + rojo y se leía como bandera de
-  México: **no volver al verde** en esta vista. Arriba a la izquierda, la **placa roja** con borde amarillo y
+- **Costado de la chiva**: carrocería blanca con borde azul, techo azul con la
+  trenza `vueltiao`, la banda de lecciones sobre la escena del módulo
+  (Módulo 1: calle de Cartagena, enmarcada en madera) y faldón de
+  `adoquines`. Sin franjas de bandera. Arriba a la izquierda, la **placa roja** con borde amarillo y
   "Module N" rotulado en blanco con sombra amarilla;
   debajo, nombre del módulo, descripción y barra de progreso (contada por
   pantallas de todas las lecciones, barra verde). `CloseButton` arriba a la
@@ -718,7 +742,7 @@ amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
 - **HECHO:** setup, formato de pantalla completa, sistema editorial completo,
   todas las actividades, contenido del Módulo 1 (portada + lección única 1.1,
   14 pantallas), juegos por módulo, Nivel 2 con miniatura mosaico resumen,
-  portada English Route con mapa y ruta animada, card A1 colombiana en Home,
+  portada English Route con mapa y ruta animada, card A1 con la calle de Cartagena en Home, mapa real de Latinoamérica,
   Study Zone con login demo, 6 temas del Módulo 1, quiz con candados, arcade
   y modo profe.
 - **PENDIENTE:** imágenes (Gemini), audios (mp3), módulos 2-4 (libro y Study),

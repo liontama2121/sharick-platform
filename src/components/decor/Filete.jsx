@@ -11,6 +11,8 @@ const V = (name) => `var(--color-${name})`
  *   dientes · triángulos enfrentados (zigzag de dos colores)
  *   ajedrez · damero de dos filas
  *   franjas · bandas horizontales con filetes blancos
+ *   vueltiao · trenza del sombrero vueltiao (zigzag con rombitos)
+ *   adoquines · piedras de las calles de Cartagena
  */
 const TILES = {
   rombos: {
@@ -61,6 +63,38 @@ const TILES = {
       </>
     ),
   },
+  /* Trenza del sombrero vueltiao (Córdoba y Sucre, Colombia): zigzag claro
+     sobre fondo oscuro con un rombito en cada pico. */
+  vueltiao: {
+    w: 16,
+    h: 12,
+    body: (c) => (
+      <>
+        <rect width="16" height="12" fill={c[0]} />
+        <path d="M0 9 4 3l4 6 4-6 4 6" fill="none" stroke={c[1]} strokeWidth="2" strokeLinejoin="miter" />
+        <path d="M4 0.6 5.4 2 4 3.4 2.6 2Z" fill={c[1]} />
+        <path d="M12 0.6 13.4 2 12 3.4 10.6 2Z" fill={c[1]} />
+        <path d="M8 8.6 9.4 10 8 11.4 6.6 10Z" fill={c[1]} />
+      </>
+    ),
+  },
+  /* Adoquines de las calles de Cartagena: piedras irregulares en dos hiladas */
+  adoquines: {
+    w: 48,
+    h: 24,
+    body: (c) => (
+      <>
+        <rect width="48" height="24" fill={c[0]} />
+        <rect x="1" y="1" width="14" height="10" rx="3" fill={c[1]} />
+        <rect x="17" y="1.5" width="12" height="9.5" rx="3" fill={c[1]} />
+        <rect x="31" y="1" width="16" height="10" rx="3" fill={c[1]} />
+        <rect x="-7" y="13" width="14" height="10" rx="3" fill={c[1]} />
+        <rect x="9" y="13.5" width="16" height="9.5" rx="3" fill={c[1]} />
+        <rect x="27" y="13" width="12" height="10" rx="3" fill={c[1]} />
+        <rect x="41" y="13" width="14" height="10" rx="3" fill={c[1]} />
+      </>
+    ),
+  },
 }
 
 const DEFAULT_COLORS = {
@@ -68,6 +102,8 @@ const DEFAULT_COLORS = {
   dientes: ['azul', 'amarillo', 'rojo'],
   ajedrez: ['azul', 'amarillo'],
   franjas: ['rojo', 'amarillo', 'verde'],
+  vueltiao: ['ink', 'carroceria'],
+  adoquines: ['chasis', 'azul'],
 }
 
 /**

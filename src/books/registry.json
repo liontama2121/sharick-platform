@@ -20,25 +20,7 @@
           "Bolivia"
         ]
       },
-      "flagStripes": [
-        {
-          "color": "col-yellow",
-          "weight": 2
-        },
-        {
-          "color": "col-blue",
-          "weight": 1
-        },
-        {
-          "color": "col-red",
-          "weight": 1
-        }
-      ],
-      "guardColors": [
-        "azul",
-        "amarillo",
-        "rojo"
-      ]
+      "scene": "cartagena"
     },
     {
       "id": "portuguese-a1",
@@ -68,7 +50,10 @@
         "city": "Bogotá",
         "lon": -74.07,
         "lat": 4.71,
-        "label": "below",
+        "label": {
+          "dx": -200,
+          "dy": 105
+        },
         "flag": "colombia"
       }
     },
@@ -80,7 +65,10 @@
         "city": "Caracas",
         "lon": -66.9,
         "lat": 10.5,
-        "label": "right",
+        "label": {
+          "dx": 150,
+          "dy": -60
+        },
         "flag": "venezuela"
       }
     },
@@ -92,7 +80,10 @@
         "city": "Ciudad de Panamá",
         "lon": -79.52,
         "lat": 8.98,
-        "label": "left",
+        "label": {
+          "dx": -200,
+          "dy": -15
+        },
         "flag": "panama"
       },
       "mapColor": "pan-blue"
@@ -105,7 +96,10 @@
         "city": "La Paz",
         "lon": -68.15,
         "lat": -16.5,
-        "label": "left",
+        "label": {
+          "dx": -215,
+          "dy": 30
+        },
         "flag": "bolivia"
       }
     }

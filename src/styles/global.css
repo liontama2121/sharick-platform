@@ -36,6 +36,10 @@
   --color-col-yellow: #ffd100;
   --color-col-red: #ce1126;
 
+  /* Escena del Módulo 1 (calle de Cartagena) */
+  --color-chasis: #16243b;       /* azul noche del letterbox y de los adoquines */
+  --color-cielo: #d6ebf7;        /* cielo detrás de las fachadas */
+
   /* Banderas de la portada English Route (los otros tres países) */
   --color-ven-blue: #00247d;
   --color-pan-blue: #005293;
