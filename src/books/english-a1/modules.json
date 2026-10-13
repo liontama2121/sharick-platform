@@ -898,6 +898,624 @@
             "1.1-s6",
             "1.1-s12"
           ]
+        },
+        {
+          "id": "1.2",
+          "shortTitle": "Spell it!",
+          "title": "Spell it!",
+          "resources": [
+            "audio",
+            "written",
+            "game"
+          ],
+          "thumbnailMosaic": [
+            "1.2-s1",
+            "1.2-s2",
+            "1.2-s3",
+            "1.2-s5",
+            "1.2-s8",
+            "1.2-s9"
+          ],
+          "screens": [
+            {
+              "id": "1.2-s1",
+              "title": "Vocabulary · The alphabet",
+              "section": "Vocabulary · The alphabet",
+              "layout": "activity-full",
+              "audio": "/audio/english/module1/alphabet-full.mp3",
+              "audioLabel": "Listen and repeat",
+              "exercise": {
+                "number": "1a",
+                "skill": "listen",
+                "instruction": "Listen and repeat."
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "alphabetMural",
+                "id": "alphabetMural",
+                "audioPattern": "/audio/english/module1/letter-{l}.mp3",
+                "artist": {
+                  "src": "/images/english/module1/mural-artist.png",
+                  "alt": "A young artist painting the alphabet on a wall"
+                }
+              },
+              "pageNumber": 19
+            },
+            {
+              "id": "1.2-s2",
+              "title": "Write the missing letter",
+              "section": "Vocabulary · The alphabet",
+              "layout": "activity-full",
+              "exercise": {
+                "number": "1b",
+                "skill": "write",
+                "instruction": "Look at the wall. Write the missing letter."
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "missingLetter",
+                "id": "missingLetter",
+                "items": [
+                  {
+                    "sequence": [
+                      "F",
+                      "G",
+                      "_",
+                      "I",
+                      "J"
+                    ],
+                    "answer": "H"
+                  },
+                  {
+                    "sequence": [
+                      "_",
+                      "M",
+                      "N",
+                      "O",
+                      "P"
+                    ],
+                    "answer": "L"
+                  },
+                  {
+                    "sequence": [
+                      "Q",
+                      "R",
+                      "S",
+                      "_",
+                      "U"
+                    ],
+                    "answer": "T"
+                  },
+                  {
+                    "sequence": [
+                      "V",
+                      "W",
+                      "_",
+                      "Y",
+                      "Z"
+                    ],
+                    "answer": "X"
+                  }
+                ]
+              },
+              "pageNumber": 20
+            },
+            {
+              "id": "1.2-s3",
+              "title": "Listening · Circle the letter",
+              "section": "Listening",
+              "layout": "activity-full",
+              "exercise": {
+                "number": "2a",
+                "skill": "listen",
+                "instruction": "Listen. Circle the letter."
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "circleChoice",
+                "id": "circleLetters",
+                "variant": "letters",
+                "items": [
+                  {
+                    "audio": "/audio/english/module1/spell-listen-1.mp3",
+                    "audioText": "One. N.",
+                    "options": [
+                      "M",
+                      "N"
+                    ],
+                    "correct": 1
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-2.mp3",
+                    "audioText": "Two. E.",
+                    "options": [
+                      "E",
+                      "I"
+                    ],
+                    "correct": 0
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-3.mp3",
+                    "audioText": "Three. B.",
+                    "options": [
+                      "V",
+                      "B"
+                    ],
+                    "correct": 1
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-4.mp3",
+                    "audioText": "Four. J.",
+                    "options": [
+                      "J",
+                      "G"
+                    ],
+                    "correct": 0
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-5.mp3",
+                    "audioText": "Five. C.",
+                    "options": [
+                      "S",
+                      "C"
+                    ],
+                    "correct": 1
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-6.mp3",
+                    "audioText": "Six. Q.",
+                    "options": [
+                      "K",
+                      "Q"
+                    ],
+                    "correct": 1
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-7.mp3",
+                    "audioText": "Seven. T.",
+                    "options": [
+                      "T",
+                      "D"
+                    ],
+                    "correct": 0
+                  },
+                  {
+                    "audio": "/audio/english/module1/spell-listen-8.mp3",
+                    "audioText": "Eight. W.",
+                    "options": [
+                      "U",
+                      "W"
+                    ],
+                    "correct": 1
+                  }
+                ]
+              },
+              "pageNumber": 21
+            },
+            {
+              "id": "1.2-s4",
+              "title": "Listening · Circle the name",
+              "section": "Listening",
+              "layout": "activity-full",
+              "exercise": {
+                "number": "2b",
+                "skill": "listen",
+                "instruction": "Listen and circle the name. Then spell it."
+              },
+              "blocks": [
+                {
+                  "type": "note",
+                  "title": "Note",
+                  "text": "Names of people and places are proper names. They start with a capital letter.",
+                  "rows": [
+                    {
+                      "label": "People",
+                      "text": "Juliana, Carlos"
+                    },
+                    {
+                      "label": "Places",
+                      "text": "Colombia, Cali"
+                    }
+                  ],
+                  "extra": "Two same letters? Say double. LL = double L."
+                }
+              ],
+              "activity": {
+                "type": "activity",
+                "activity": "circleChoice",
+                "id": "circleNames",
+                "variant": "pills",
+                "items": [
+                  {
+                    "audio": "/audio/english/module1/name-1.mp3",
+                    "audioText": "A: Hi! What's your name? B: Ximena. A: How do you spell it? B: X–I–M–E–N–A.",
+                    "options": [
+                      "Jimena",
+                      "Ximena",
+                      "Gimena"
+                    ],
+                    "correct": 1,
+                    "spelling": "X–I–M–E–N–A"
+                  },
+                  {
+                    "audio": "/audio/english/module1/name-2.mp3",
+                    "audioText": "A: What's your last name? B: Vallejo. A: How do you spell it? B: V–A–double L–E–J–O.",
+                    "options": [
+                      "Valejo",
+                      "Vallejos",
+                      "Vallejo"
+                    ],
+                    "correct": 2,
+                    "spelling": "V–A–double L–E–J–O"
+                  },
+                  {
+                    "audio": "/audio/english/module1/name-3.mp3",
+                    "audioText": "A: What's your first name? B: Luis. A: How do you spell it? B: L–U–I–S. A: Thank you.",
+                    "options": [
+                      "Luis",
+                      "Luiz",
+                      "Louis"
+                    ],
+                    "correct": 0,
+                    "spelling": "L–U–I–S"
+                  }
+                ]
+              },
+              "pageNumber": 22
+            },
+            {
+              "id": "1.2-s5",
+              "title": "Grammar · Subject pronouns",
+              "section": "Grammar · Personal subject pronouns",
+              "layout": "activity-full",
+              "exercise": {
+                "number": "3a",
+                "skill": "read",
+                "instruction": "Look at the table. Study the examples."
+              },
+              "blocks": [
+                {
+                  "type": "pronounTable",
+                  "columns": [
+                    "Singular (1)",
+                    "Plural (2 or more)"
+                  ],
+                  "rows": [
+                    {
+                      "singular": {
+                        "word": "I",
+                        "emoji": "🙋"
+                      },
+                      "plural": {
+                        "word": "we",
+                        "emoji": "👥"
+                      }
+                    },
+                    {
+                      "singular": {
+                        "word": "you",
+                        "emoji": "👉"
+                      },
+                      "plural": {
+                        "word": "you",
+                        "emoji": "👉👥"
+                      }
+                    },
+                    {
+                      "singular": {
+                        "word": "he",
+                        "emoji": "👦",
+                        "example": "Diego → he"
+                      },
+                      "plural": {
+                        "word": "they",
+                        "emoji": "👦👦",
+                        "example": "Diego and Andrés → they"
+                      }
+                    },
+                    {
+                      "singular": {
+                        "word": "she",
+                        "emoji": "👧",
+                        "example": "Valentina → she"
+                      },
+                      "plural": {
+                        "word": "they",
+                        "emoji": "👧👧",
+                        "example": "Valentina and Lucía → they"
+                      }
+                    },
+                    {
+                      "singular": {
+                        "word": "it",
+                        "emoji": "🐶",
+                        "example": "Dog → it"
+                      },
+                      "plural": {
+                        "word": "they",
+                        "emoji": "🐶🐱",
+                        "example": "Dog and cat → they"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "note",
+                  "title": "Note",
+                  "text": "'You' is for one person or for many people. We use 'it' for things, animals, and places."
+                }
+              ],
+              "pageNumber": 23
+            },
+            {
+              "id": "1.2-s6",
+              "title": "Complete with he, she, it or they",
+              "section": "Grammar · Personal subject pronouns",
+              "layout": "activity-full",
+              "exercise": {
+                "number": "3b",
+                "skill": "write",
+                "instruction": "Look at the pictures. Complete with he, she, it or they."
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "pronounChoice",
+                "id": "pronounChoice",
+                "options": [
+                  "he",
+                  "she",
+                  "it",
+                  "they"
+                ],
+                "items": [
+                  {
+                    "image": "/images/english/module1/pronoun-1-mango.png",
+                    "alt": "A mango",
+                    "emoji": "🥭",
+                    "label": "A mango",
+                    "answer": "it"
+                  },
+                  {
+                    "image": "/images/english/module1/pronoun-2-diego.png",
+                    "alt": "Diego, a boy, smiling",
+                    "emoji": "👦",
+                    "label": "Diego",
+                    "answer": "he"
+                  },
+                  {
+                    "image": "/images/english/module1/pronoun-3-arepas.png",
+                    "alt": "Two arepas on a plate",
+                    "emoji": "🫓",
+                    "label": "Two arepas",
+                    "answer": "they"
+                  },
+                  {
+                    "image": "/images/english/module1/pronoun-4-valentina.png",
+                    "alt": "Valentina, a girl",
+                    "emoji": "👧",
+                    "label": "Valentina",
+                    "answer": "she"
+                  },
+                  {
+                    "image": "/images/english/module1/pronoun-5-dog.png",
+                    "alt": "A dog",
+                    "emoji": "🐶",
+                    "label": "A dog",
+                    "answer": "it"
+                  },
+                  {
+                    "image": "/images/english/module1/pronoun-6-camila-mateo.png",
+                    "alt": "Camila and Mateo together",
+                    "emoji": "👫",
+                    "label": "Camila and Mateo",
+                    "answer": "they"
+                  }
+                ]
+              },
+              "pageNumber": 24
+            },
+            {
+              "id": "1.2-s7",
+              "title": "Reading · Ask and spell",
+              "section": "Reading & Speaking",
+              "layout": "two-columns",
+              "audio": "/audio/english/module1/ask-spell.mp3",
+              "audioLabel": "Ask & spell",
+              "exercise": {
+                "number": "4a",
+                "skill": "listen",
+                "instruction": "Listen and read."
+              },
+              "blocks": [
+                {
+                  "type": "note",
+                  "title": "Note",
+                  "text": "Names of people and places are proper names. They start with a capital letter.",
+                  "rows": [
+                    {
+                      "label": "People",
+                      "text": "Juliana, Carlos"
+                    },
+                    {
+                      "label": "Places",
+                      "text": "Colombia, Cali"
+                    }
+                  ]
+                },
+                {
+                  "type": "dialogueCard",
+                  "lines": [
+                    {
+                      "speaker": "A",
+                      "text": "Hi! What's your name?"
+                    },
+                    {
+                      "speaker": "B",
+                      "text": "Juliana."
+                    },
+                    {
+                      "speaker": "A",
+                      "text": "And your last name?"
+                    },
+                    {
+                      "speaker": "B",
+                      "text": "Morales."
+                    },
+                    {
+                      "speaker": "A",
+                      "text": "How do you spell that?"
+                    },
+                    {
+                      "speaker": "B",
+                      "text": "M – O – R – A – L – E – S."
+                    }
+                  ]
+                }
+              ],
+              "illustration": {
+                "src": "/images/english/module1/juliana-smiling.png",
+                "alt": "Juliana, a smiling girl",
+                "emoji": "😊"
+              },
+              "pageNumber": 25
+            },
+            {
+              "id": "1.2-s8",
+              "title": "Speaking · Spell and guess!",
+              "section": "Speaking",
+              "layout": "activity-full",
+              "exercise": {
+                "number": "4b",
+                "skill": "speak",
+                "instruction": "Play with your partner. Spell and guess!"
+              },
+              "blocks": [
+                {
+                  "type": "note",
+                  "title": "Note",
+                  "text": "Names of people and places are proper names. They start with a capital letter.",
+                  "rows": [
+                    {
+                      "label": "People",
+                      "text": "Juliana, Carlos"
+                    },
+                    {
+                      "label": "Places",
+                      "text": "Colombia, Bogotá"
+                    }
+                  ]
+                }
+              ],
+              "activity": {
+                "type": "activity",
+                "activity": "spellingCards",
+                "id": "spellingCards",
+                "names": [
+                  "Daniela Castro",
+                  "Santiago Rojas",
+                  "Isabella Zapata",
+                  "Esteban Vargas",
+                  "Yeison Quintero",
+                  "Natalia Gomez",
+                  "Mariana Herrera",
+                  "Samuel Ortiz",
+                  "Valeria Salazar",
+                  "Felipe Duarte"
+                ]
+              },
+              "pageNumber": 26
+            },
+            {
+              "id": "1.2-s9",
+              "title": "Spelling Superstars!",
+              "section": "Speaking",
+              "layout": "full-bleed",
+              "exercise": {
+                "number": 5,
+                "skill": "speak",
+                "instruction": "Think of: 🎤 your favorite singer · 🎬 your favorite actor or actress"
+              },
+              "blocks": [],
+              "activity": {
+                "type": "activity",
+                "activity": "spellingSuperstars",
+                "id": "spellingSuperstars",
+                "number": 5,
+                "title": "Spelling Superstars!",
+                "instruction": "Think of:",
+                "categories": [
+                  {
+                    "icon": "🎤",
+                    "text": "your favorite singer"
+                  },
+                  {
+                    "icon": "🎬",
+                    "text": "your favorite actor or actress"
+                  }
+                ],
+                "stars": [
+                  {
+                    "name": "Shakira",
+                    "silhouette": "/images/english/module1/silhouette-shakira.png",
+                    "audio": "/audio/english/module1/superstar-shakira.mp3",
+                    "audioText": "Shakira. S–H–A–K–I–R–A."
+                  },
+                  {
+                    "name": "Maluma",
+                    "silhouette": "/images/english/module1/silhouette-maluma.png",
+                    "audio": "/audio/english/module1/superstar-maluma.mp3",
+                    "audioText": "Maluma. M–A–L–U–M–A."
+                  },
+                  {
+                    "name": "Sofía Vergara",
+                    "silhouette": "/images/english/module1/silhouette-sofia.png"
+                  }
+                ],
+                "howTo": [
+                  "Think of a star. Don't say the name!",
+                  "Spell the name. Only the letters!",
+                  "Your partner guesses.",
+                  "Change roles."
+                ],
+                "bonus": "Bonus: Spell a city or country!"
+              },
+              "pageNumber": 27
+            },
+            {
+              "id": "1.2-s10",
+              "title": "Can-do check",
+              "section": "Review",
+              "layout": "two-columns",
+              "exercise": {
+                "skill": "read",
+                "instruction": "Check what you can do now."
+              },
+              "blocks": [
+                {
+                  "type": "checklist",
+                  "id": "cando-1-2",
+                  "label": "Can-do check",
+                  "title": "Now I can…",
+                  "items": [
+                    "I can say the alphabet.",
+                    "I can spell names.",
+                    "I can ask \"How do you spell it?\"",
+                    "I can use he, she, it and they."
+                  ]
+                }
+              ],
+              "illustration": {
+                "src": "/images/english/module1/spelling-class.png",
+                "alt": "Students spelling their names in class",
+                "emoji": "🔤"
+              },
+              "pageNumber": 28
+            }
+          ]
         }
       ],
       "region": "Latin America",
@@ -907,21 +1525,6 @@
         "Bolivia",
         "Panamá"
       ],
-      "lessonRedirects": {
-        "1.2": {
-          "to": "1.1",
-          "screens": [
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            12,
-            13
-          ]
-        }
-      },
       "legacyScreenIds": {
         "1.2-s1": "1.1-s4",
         "1.2-s2": "1.1-s5",

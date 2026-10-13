@@ -149,6 +149,14 @@
               [
                 "I'm from…",
                 "Soy de…"
+              ],
+              [
+                "How do you spell it?",
+                "¿Cómo se deletrea?"
+              ],
+              [
+                "Last name",
+                "Apellido"
               ]
             ]
           }
@@ -158,7 +166,7 @@
           "type": "quiz",
           "icon": "⚡",
           "title": "Quick Quiz",
-          "blurb": "Diez preguntas contrarreloj sobre saludos y presentaciones.",
+          "blurb": "Trece preguntas contrarreloj sobre saludos, presentaciones y el abecedario.",
           "data": {
             "seconds": 15,
             "questions": [
@@ -251,6 +259,33 @@
                   "pana"
                 ],
                 "correct": 1
+              },
+              {
+                "q": "Which letter comes after K?",
+                "options": [
+                  "J",
+                  "L",
+                  "M"
+                ],
+                "correct": 1
+              },
+              {
+                "q": "“V–A–double L–E–J–O” spells…",
+                "options": [
+                  "Valejo",
+                  "Vallejo",
+                  "Vallejos"
+                ],
+                "correct": 1
+              },
+              {
+                "q": "You don’t know how to write a name. You ask…",
+                "options": [
+                  "How do you spell it?",
+                  "How are you?",
+                  "What’s up?"
+                ],
+                "correct": 0
               }
             ]
           }
@@ -287,6 +322,30 @@
                 "answer": "How are you today",
                 "hint": "Para preguntar cómo está alguien"
               }
+            ]
+          }
+        },
+        {
+          "id": "spelling-cards-m1",
+          "type": "spellingCards",
+          "icon": "🔡",
+          "title": "Spelling Cards",
+          "blurb": "Pick a name card and spell it letter by letter. Your partner listens and guesses the name.",
+          "data": {
+            "label": "Game",
+            "title": "Spell and guess!",
+            "instructions": "Pick a card. Spell the name. Your partner guesses.",
+            "names": [
+              "Daniela Castro",
+              "Santiago Rojas",
+              "Isabella Zapata",
+              "Esteban Vargas",
+              "Yeison Quintero",
+              "Natalia Gomez",
+              "Mariana Herrera",
+              "Samuel Ortiz",
+              "Valeria Salazar",
+              "Felipe Duarte"
             ]
           }
         }

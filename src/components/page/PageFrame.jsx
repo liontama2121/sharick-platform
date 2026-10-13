@@ -10,7 +10,7 @@ export default function PageFrame({ pageNumber, children }) {
 
         {pageNumber != null && (
           <span
-            className="absolute bottom-[104px] right-6 flex h-9 w-9 items-center justify-center
+            className="absolute bottom-[78px] right-3 z-20 flex h-9 w-9 items-center justify-center
               rounded-full bg-amarillo font-display text-[1rem] text-azul shadow-soft"
           >
             {pageNumber}

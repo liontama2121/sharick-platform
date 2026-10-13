@@ -13,6 +13,9 @@ import CulturalTip from '../content/CulturalTip'
 import Checklist from '../content/Checklist'
 import RoutineBlock from '../media/RoutineBlock'
 import DayArc from '../content/DayArc'
+import NoteBox from '../content/NoteBox'
+import DialogueCard from '../content/DialogueCard'
+import PronounTable from '../content/PronounTable'
 
 import MatchMarkers from '../activities/MatchMarkers'
 import MatchSlots from '../activities/MatchSlots'
@@ -29,6 +32,12 @@ import MultipleChoice from '../activities/MultipleChoice'
 import ExerciseBlock from '../activities/ExerciseBlock'
 import ListenAndCircle from '../activities/ListenAndCircle'
 import SpeechScene from '../activities/SpeechScene'
+import AlphabetMural from '../activities/AlphabetMural'
+import MissingLetter from '../activities/MissingLetter'
+import CircleChoice from '../activities/CircleChoice'
+import PronounChoice from '../activities/PronounChoice'
+import SpellingCards from '../activities/SpellingCards'
+import SpellingSuperstars from '../activities/SpellingSuperstars'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -46,6 +55,12 @@ const ACTIVITIES = {
   roulette: RouletteWheel,
   listenCircle: ListenAndCircle,
   speechScene: SpeechScene,
+  alphabetMural: AlphabetMural,
+  missingLetter: MissingLetter,
+  circleChoice: CircleChoice,
+  pronounChoice: PronounChoice,
+  spellingCards: SpellingCards,
+  spellingSuperstars: SpellingSuperstars,
   multipleChoice: ({ section, completed, score, onComplete }) => (
     <ExerciseBlock
       number={section.number}
@@ -66,6 +81,9 @@ function Block({ block }) {
   if (block.type === 'checklist') return <Checklist section={block} />
   if (block.type === 'routine') return <RoutineBlock section={block} />
   if (block.type === 'dayArc') return <DayArc block={block} />
+  if (block.type === 'note') return <NoteBox block={block} />
+  if (block.type === 'dialogueCard') return <DialogueCard block={block} />
+  if (block.type === 'pronounTable') return <PronounTable block={block} />
   if (block.type === 'text') {
     return <p className="font-body text-[19px] leading-relaxed text-ink">{block.text}</p>
   }
@@ -166,6 +184,16 @@ export default function ScreenRenderer({
     )
   }
 
+  /* Pantalla especial que se dibuja entera (p. ej. Spelling Superstars):
+     sin cabecera de sección; la actividad trae su número e instrucción. */
+  if (screen.layout === 'full-bleed') {
+    return (
+      <div ref={rootRef} className="h-full w-full">
+        {renderActivity('h-full')}
+      </div>
+    )
+  }
+
   const header = (
     <div className="flex items-start justify-between gap-6">
       <div>
@@ -227,13 +255,13 @@ export default function ScreenRenderer({
       )}
 
       {screen.layout === 'activity-full' && (
-        <div className="min-h-0 flex-1 overflow-hidden">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           {blocks.map((b, i) => (
             <div key={i} data-pop className="mb-4">
               <Block block={b} />
             </div>
           ))}
-          {renderActivity('')}
+          {renderActivity('min-h-0 flex-1')}
         </div>
       )}
 

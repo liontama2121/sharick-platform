@@ -398,11 +398,14 @@ src/
 │   ├── book/     BookCover · ScreenThumb · LessonSpread · LessonCard
 │   ├── nav/      MenuButton · RoundButton
 │   ├── decor/    Filete · Guarda · Leaf · SunBurst
-│   ├── content/  VocabularyBox · CulturalTip · Checklist · DayArc
+│   ├── content/  VocabularyBox · CulturalTip · Checklist · DayArc · NoteBox ·
+│   │              DialogueCard · PronounTable
 │   ├── activities/ ExerciseBlock · MatchActivity · MatchMarkers · MatchSlots ·
 │   │              MatchHeadings · MultipleChoice · FillBubbles ·
 │   │              FillInSentence · ListeningActivity · SpeakingPrompt ·
-│   │              RecordPrompt · DiceGame
+│   │              RecordPrompt · DiceGame · HandCircle · AlphabetMural ·
+│   │              MissingLetter · CircleChoice · PronounChoice ·
+│   │              SpellingCards · SpellingSuperstars
 │   ├── media/    AudioPlayer · AudioButton (🎧 por frase) · DialogueBlock · RoutineBlock
 │   ├── layout/   ReaderBar
 │   ├── cards/    BookCard
@@ -432,7 +435,7 @@ Crear el componente y registrarlo en `components/book/PageContent.jsx`
 
 ---
 
-## 📖 CONTENIDO — MÓDULO 1 (portada + 1 lección · 14 pantallas, págs. 6 → 18)
+## 📖 CONTENIDO — MÓDULO 1 (portada + 2 lecciones · 24 pantallas, págs. 6 → 28)
 
 **⚠️ Contenido de Sharick. Títulos, diálogos y mecánicas exactos** (documento
 oficial de Sharick con referencias visuales de Express Publishing).
@@ -482,14 +485,41 @@ thanks. · 2 "Goodbye, Carolina!" → Bye, take care! · 3 "Kevin, this is my fr
 5 "What's your name?" → I'm Ana. Estos ítems también van en los quizzes de Study (T2-T6).
 
 ### Fusión 1.2 → 1.1 (rutas y progreso)
-- `module.lessonRedirects` = `{ "1.2": { "to": "1.1", "screens": [4,5,6,7,8,9,12,13] } }`:
-  `LessonReader` redirige `…/lesson/1.2/screen/N` a la pantalla nueva
-  (`resolveLessonRedirect()` en `books/index.js`).
+- La redirección `module.lessonRedirects` (1.2 → 1.1) se QUITÓ al crear la
+  nueva 1.2 "Spell it!": `…/lesson/1.2/…` vuelve a ser una lección real. El
+  mecanismo (`resolveLessonRedirect()` en `books/index.js`) sigue disponible.
 - `module.legacyScreenIds` = ids viejos → nuevos (`1.2-s1` → `1.1-s4`,
   `1.1-s4` → `1.1-s10`…). `useProgress` migra `sharick-progress` UNA vez al
   cargar (actividades, puntajes, pantallas vistas, `currentPage`) y guarda la
   firma del mapa en `legacyMap` para no repetirla (el mapa no es idempotente).
 - Para futuras fusiones: agregar entradas a esos dos campos; nada más.
+
+### Lección 1.2 · **"Spell it!"** (10 pantallas, págs. 19 → 28)
+
+Documento oficial de Sharick (alfabeto y nombres, sobre la lección "Names" de
+la referencia Express). Contenido EXACTO y 100 % en inglés. Guiones de todos
+los audios + lista de mp3 esperados: `public/audio/english/module1/SCRIPTS.md`
+(41 archivos pendientes: `letter-a..z`, `alphabet-full`, `spell-listen-1..8`,
+`name-1..3`, `ask-spell`, `superstar-shakira`, `superstar-maluma`).
+
+| Pantalla | Ej. | Contenido |
+|---|---|---|
+| 1.2-s1 | 1a | Vocabulary · The alphabet · "Listen and repeat." `alphabetMural` (**`activities/AlphabetMural.jsx`**): muro de ladrillo (patrón SVG) con el alfabeto Aa–Zz en letras de grafiti (Alfa Slab, contorno con `-webkit-text-stroke` + `paint-order`, inclinación determinista), manchas de aerosol en gradientes CSS. Cada letra es un botón: `audioPattern` `letter-{l}.mp3` + pulso; se completa al escuchar las 26. Al lado `mural-artist.png` y progreso. 🎧 general = `screen.audio` `alphabet-full.mp3` |
+| 1.2-s2 | 1b | "Look at the wall. Write the missing letter." `missingLetter` (**`MissingLetter.jsx`**): tira del muro como pista + 4 píldoras de color (rojo, naranja, morado, verde) con ladrillos; el hueco es un input de 1 letra. **H · L · T · X** |
+| 1.2-s3 | 2a | Listening · "Listen. Circle the letter." `circleChoice` `variant: "letters"` (**`CircleChoice.jsx`**): 8 tarjetas con 🎧 y DOS letras grandes; círculo a mano (`HandCircle`). **N · E · B · J · C · Q · T · W** (`spell-listen-1..8`) |
+| 1.2-s4 | 2b | "Listen and circle the name. Then spell it." NOTE proper names + "Two same letters? Say double. LL = double L." `circleChoice` `variant: "pills"`: 3 ítems con 3 píldoras; al acertar aparece el deletreo. **Ximena · Vallejo · Luis** (`name-1..3`, dos voces) |
+| 1.2-s5 | 3a | Grammar · Personal subject pronouns · bloque `pronounTable` (**`content/PronounTable.jsx`**): Singular (1) / Plural (2 or more) con emoji y ejemplos (Diego → he…) + NOTE "'You' is for one person or for many people…" |
+| 1.2-s6 | 3b | "Complete with he, she, it or they." `pronounChoice` (**`PronounChoice.jsx`**): 6 tarjetas con imagen `pronoun-1-mango.png` … `pronoun-6-camila-mateo.png` y chips. **it · he · they · she · it · they** |
+| 1.2-s7 | 4a | Reading & Speaking · "Listen and read." NOTE + bloque `dialogueCard` (**`content/DialogueCard.jsx`**, caja amarilla A/B: Juliana Morales, M–O–R–A–L–E–S) + `juliana-smiling.png` · audio `ask-spell.mp3` |
+| 1.2-s8 | 4b | Speaking · "Play with your partner. Spell and guess!" `spellingCards` (**`SpellingCards.jsx`**): mazo con reversos de naipe (amarillo, azul, rojo), la carta sale volteándose en 3D (rotateY 180→0, 820ms) con un nombre grande; barajados sin repetir; tabla Player 1 / Player 2 con +1 y Reset (por partida, sin localStorage). Usa `@container` para servir en el lienzo y en el hub de Games. NOTE proper names (Bogotá) |
+| 1.2-s9 | 5 | **Spelling Superstars!** `spellingSuperstars` (**`SpellingSuperstars.jsx`**), layout `full-bleed`: noche de estreno en SVG/CSS — cielo azul noche con estrellas, 4 reflectores que barren (rotate ±14°, loop alternado), piso con estrellas del Paseo de la Fama, alfombra roja en diagonal con postes y cordón, letrero de cine con bombillitas que parpadean en ola, dos estrellas de categoría (🎤 singer · 🎬 actor or actress), siluetas dibujadas de Shakira, Maluma y Sofía Vergara (`silhouette-*.png` si existen), 🎧 de ejemplo que **enciende un reflector sobre su silueta** (`superstar-shakira/maluma.mp3`; sin mp3 el reflector igual se ve 3s), ⭐ que abre "Bonus: Spell a city or country!" y tarjeta HOW TO PLAY |
+| 1.2-s10 | — | Can-do check: I can say the alphabet · spell names · ask "How do you spell it?" · use he, she, it and they + `spelling-class.png` |
+
+Miniatura del Nivel 2: mosaico `thumbnailMosaic` [s1, s2, s3, s5, s8, s9];
+badges 🔊 ✏️ 🎮. Games del Módulo 1: juego `spelling-cards-m1`
+(`type: "spellingCards"`, registrado en `ACTIVITY_GAMES` de `ModuleGames`);
+Memory y Quick Quiz llevan además pares/preguntas del alfabeto. Study: tema
+**T7 "The alphabet & spelling"**.
 
 Las lecciones siguientes se agregan al array `lessons` de `modules.json`.
 
@@ -518,12 +548,17 @@ ponen el `AudioPlayer` en la cabecera de la pantalla.
 La portada es `{ "id": "cover", "type": "cover", "screens": [{ "layout": "cover" }] }`.
 
 **Layouts** (`layout`): `dialogues-left-image-right` · `two-columns` ·
-`image-top-activity-bottom` · `activity-full` · `dialogues-only` · `cover`.
+`image-top-activity-bottom` · `activity-full` · `dialogues-only` · `cover` ·
+`full-bleed` (la actividad ocupa la página entera, sin cabecera: trae su
+propio número e instrucción; p. ej. Spelling Superstars). En `activity-full`
+la actividad recibe `min-h-0 flex-1` para poder usar `h-full`.
 `dialogues-left-image-right` dibuja la actividad si la hay (`matchMarkers`,
 `matchHeadings`) y, si no, los diálogos a la izquierda y la ilustración a la
 derecha.
 Los bloques de contenido (`blocks`) reutilizan `vocabulary`, `culturalTip`,
-`routine`, `checklist` y `text`.
+`routine`, `checklist` y `text`, más `note` (caja punteada verde:
+`text`, `rows: [{label, text}]`, `extra`), `dialogueCard` (caja amarilla A/B)
+y `pronounTable`.
 
 `title` es el rótulo corto que sale bajo la miniatura del Nivel 2. Si falta,
 `screenTitle()` lo deduce, pero conviene escribirlo a mano.
@@ -556,6 +591,12 @@ y se registran en el mapa `ACTIVITIES` de `components/book/PageContent.jsx`.
 | `speaking` | SpeakingPrompt | Checklist de frases modelo + grabación | todas marcadas |
 | — | MemoryGame · QuickQuiz · WordScramble | solo en el hub de Games, ver más abajo | — |
 | `recordPrompt` | RecordPrompt | Preguntas numeradas para responder en voz alta | todas respondidas |
+| `alphabetMural` | AlphabetMural | Mural de grafiti con el alfabeto; cada letra suena | las 26 escuchadas |
+| `missingLetter` | MissingLetter | Secuencias con la letra que falta (input de 1 letra) | todas |
+| `circleChoice` | CircleChoice | Escuchar y encerrar: `variant` `letters` (2 letras) o `pills` (3 nombres) | todas correctas |
+| `pronounChoice` | PronounChoice | Imagen + he / she / it / they | todas |
+| `spellingCards` | SpellingCards | Baraja de nombres para deletrear y adivinar + puntos | mazo agotado |
+| `spellingSuperstars` | SpellingSuperstars | Noche de estreno: deletrear famosos (layout `full-bleed`) | escuchó los 🎧 de ejemplo |
 
 ### Drag & drop (`hooks/useDragDrop.js`)
 `MatchSlots` y `MatchHeadings` arrastran con **Pointer Events** (mouse, dedo y
@@ -709,7 +750,8 @@ Tema = `{ id, title, summary, learn[], exercises[], quiz: { passScore, questions
   Se registran en `STUDY_EXERCISES` de `components/study/StudyExercise.jsx`.
 - `quiz.questions[]`: 8-10 de opción múltiple (`q, options, correct`).
 - Módulo 1: T1 Greetings · T2 Introducing yourself · T3 Introducing others ·
-  T4 Saying goodbye · T5 Times of the day · T6 How are you?. Módulos 2-4
+  T4 Saying goodbye · T5 Times of the day · T6 How are you? · T7 The
+  alphabet & spelling (lección 1.2). Módulos 2-4
   registrados vacíos en `study/index.js` → "Coming soon".
 
 ### Pantallas

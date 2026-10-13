@@ -164,6 +164,12 @@ const ACTIVITY_BADGE = {
   recordPrompt: 'speaking',
   diceGame: 'game',
   roulette: 'game',
+  alphabetMural: 'audio',
+  missingLetter: 'written',
+  circleChoice: 'audio',
+  pronounChoice: 'written',
+  spellingCards: 'game',
+  spellingSuperstars: 'speaking',
 }
 
 /** Badges de UNA pantalla: audio · game · video · written · speaking. */

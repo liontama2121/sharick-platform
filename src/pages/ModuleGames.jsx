@@ -16,6 +16,7 @@ import WordScramble from '../components/games/WordScramble'
 import DiceGame from '../components/activities/DiceGame'
 import RouletteWheel from '../components/activities/RouletteWheel'
 import MatchActivity from '../components/activities/MatchActivity'
+import SpellingCards from '../components/activities/SpellingCards'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -26,6 +27,7 @@ const ACTIVITY_GAMES = {
   diceGame: DiceGame,
   roulette: RouletteWheel,
   match: MatchActivity,
+  spellingCards: SpellingCards,
 }
 
 const starsFor = (score) => (score >= 90 ? 3 : score >= 70 ? 2 : 1)

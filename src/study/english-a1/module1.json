@@ -850,6 +850,158 @@
           }
         ]
       }
+    },
+    {
+      "id": "t7",
+      "title": "The alphabet & spelling",
+      "summary": "A to Z — say the letters, spell your name and ask \"How do you spell it?\".",
+      "learn": [
+        {
+          "type": "text",
+          "text": "The English alphabet has 26 letters: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z. Five of them are vowels: A, E, I, O, U. When you hear a name you don't know, ask \"How do you spell it?\" and listen to each letter."
+        },
+        {
+          "type": "tip",
+          "title": "Capital letters",
+          "text": "Names of people and places always start with a capital letter. People: Juliana, Carlos · Places: Colombia, Cali."
+        },
+        {
+          "type": "tip",
+          "title": "Double letters",
+          "text": "Two same letters? Say double. LL = double L. Vallejo: V – A – double L – E – J – O."
+        },
+        {
+          "type": "phrases",
+          "title": "Key phrases",
+          "items": [
+            { "en": "What's your name?", "es": "¿Cómo te llamas?", "note": "ask the first name" },
+            { "en": "What's your last name?", "es": "¿Cuál es tu apellido?", "note": "ask the last name" },
+            { "en": "How do you spell it?", "es": "¿Cómo se deletrea?", "note": "ask for the letters" },
+            { "en": "How do you spell that?", "es": "¿Cómo se deletrea eso?", "note": "same question" },
+            { "en": "Thank you.", "es": "Gracias.", "note": "say it at the end" }
+          ]
+        },
+        {
+          "type": "dialogue",
+          "letter": "A",
+          "title": "At the library in Medellín",
+          "lines": [
+            { "speaker": "Andrés", "text": "Hi! What's your name?" },
+            { "speaker": "Juliana", "text": "Juliana." },
+            { "speaker": "Andrés", "text": "And your last name?" },
+            { "speaker": "Juliana", "text": "Morales." },
+            { "speaker": "Andrés", "text": "How do you spell that?" },
+            { "speaker": "Juliana", "text": "M – O – R – A – L – E – S." }
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fillIn",
+          "sentence": "F, G, ___, I, J",
+          "answer": "H",
+          "hint": "the missing letter"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "___, M, N, O, P",
+          "answer": "L",
+          "hint": "the missing letter"
+        },
+        {
+          "type": "fillIn",
+          "sentence": "V, W, ___, Y, Z",
+          "answer": "X",
+          "hint": "the missing letter"
+        },
+        {
+          "type": "multipleChoice",
+          "q": "Which letter comes after M?",
+          "options": ["L", "N", "O"],
+          "correct": 1
+        },
+        {
+          "type": "multipleChoice",
+          "q": "You hear: \"X – I – M – E – N – A\". The name is…",
+          "options": ["Jimena", "Ximena", "Gimena"],
+          "correct": 1
+        },
+        {
+          "type": "multipleChoice",
+          "q": "You hear: \"V – A – double L – E – J – O\". The last name is…",
+          "options": ["Valejo", "Vallejos", "Vallejo"],
+          "correct": 2
+        },
+        {
+          "type": "scramble",
+          "answer": "S P E L L",
+          "hint": "Order the letters: to say the letters of a word"
+        },
+        {
+          "type": "match",
+          "pairs": [
+            ["What's your name?", "Juliana."],
+            ["What's your last name?", "Morales."],
+            ["How do you spell it?", "M – O – R – A – L – E – S."],
+            ["Thank you.", "You're welcome."]
+          ]
+        }
+      ],
+      "quiz": {
+        "passScore": 80,
+        "questions": [
+          {
+            "q": "Which letter is missing? Q, R, S, ___, U",
+            "options": ["V", "T", "P"],
+            "correct": 1
+          },
+          {
+            "q": "Which letter comes before C?",
+            "options": ["B", "D", "A"],
+            "correct": 0
+          },
+          {
+            "q": "How many letters are in the English alphabet?",
+            "options": ["24", "27", "26"],
+            "correct": 2
+          },
+          {
+            "q": "How do you say \"LL\" when you spell?",
+            "options": ["L L", "double L", "two L"],
+            "correct": 1
+          },
+          {
+            "q": "\"L – U – I – S\" spells…",
+            "options": ["Luis", "Luiz", "Louis"],
+            "correct": 0
+          },
+          {
+            "q": "\"V – A – double L – E – J – O\" spells…",
+            "options": ["Valejo", "Vallejo", "Vallejos"],
+            "correct": 1
+          },
+          {
+            "q": "How do you spell \"Morales\"?",
+            "options": ["M – A – R – O – L – E – S", "M – O – R – A – L – L – E – S", "M – O – R – A – L – E – S"],
+            "correct": 2
+          },
+          {
+            "q": "A new classmate says \"I'm Ximena.\" You want to write her name. You ask…",
+            "options": ["How do you spell it?", "How are you?", "Where are you from?"],
+            "correct": 0
+          },
+          {
+            "q": "Which sentence is correct?",
+            "options": ["I live in cali, colombia.", "I live in Cali, Colombia.", "i live in Cali, colombia."],
+            "correct": 1
+          },
+          {
+            "q": "Names of people and places start with…",
+            "options": ["a small letter", "a number", "a capital letter"],
+            "correct": 2
+          }
+        ]
+      }
     }
   ]
 }
