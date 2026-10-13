@@ -167,10 +167,10 @@ export default function ModuleGrid() {
 
         {/* Rótulo del módulo: placa roja pintada, letra slab con sombra amarilla */}
         <div
-          className="grain relative ml-5 mt-14 inline-flex max-w-[calc(100%-120px)] items-center
-            rounded-2xl border-4 border-amarillo bg-rojo-ink px-5 py-4 shadow-lift sm:ml-8 sm:px-8 sm:py-5"
+          className="grain relative ml-5 mt-10 inline-flex max-w-[calc(100%-120px)] items-center
+            rounded-2xl border-4 border-amarillo bg-rojo-ink px-5 py-3 shadow-lift sm:ml-8 sm:px-7 sm:py-3.5"
         >
-          <h1 className="rotulo whitespace-nowrap text-[1.9rem] leading-none text-white sm:text-[3.6rem]">
+          <h1 className="rotulo whitespace-nowrap text-[1.9rem] leading-none text-white sm:text-[2.9rem]">
             Module {mod.moduleId}
           </h1>
         </div>
@@ -178,7 +178,7 @@ export default function ModuleGrid() {
         <CloseButton label="Volver al menú del libro" onClick={toBook} />
 
         {/* Subtítulo + progreso, contado por pantallas */}
-        <div className="px-8 pt-6 sm:px-10">
+        <div className="px-8 pt-4 sm:px-10">
           <h2 className="text-[1.5rem] text-azul">{mod.moduleName}</h2>
           {mod.description && (
             <p className="mt-1 max-w-2xl text-[0.9rem] text-ink-soft">{mod.description}</p>
@@ -206,7 +206,7 @@ export default function ModuleGrid() {
         {/* Rejilla. El padding deja sitio a los tags y badges que sobresalen. */}
         {/* Banda de lecciones: la escena del módulo detrás, enmarcada en
             madera; las lecciones son ventanas delante */}
-        <div className="relative mt-9 overflow-hidden border-y-[6px] border-madera bg-azul px-9 pb-14 pt-24 sm:px-12">
+        <div className="relative mt-6 overflow-hidden border-y-[6px] border-madera bg-azul px-9 pb-12 pt-16 sm:px-12">
         {Scene && <Scene />}
         <div ref={gridRef} className="grid-pantallas relative gap-x-10 gap-y-14">
           {tarjetas.map((item) => (

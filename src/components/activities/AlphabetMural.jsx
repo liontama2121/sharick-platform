@@ -4,6 +4,7 @@ import { animate, stagger } from 'animejs'
 import { Check } from 'lucide-react'
 
 import SmartImage from '../ui/ImagePlaceholder'
+import { audioExists, speak, stopSpeaking } from '../../utils/speak'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -64,19 +65,39 @@ export default function AlphabetMural({ section, completed, onComplete }) {
     return () => a.revert()
   }, [section.id])
 
+  /* Letras sin mp3 todavía (se leen con la voz del navegador) */
+  const missing = useRef(new Set())
+  useEffect(() => {
+    ALPHABET.forEach((L) => {
+      const src = (section.audioPattern ?? '').replace('{l}', L.toLowerCase())
+      audioExists(src).then((ok) => !ok && missing.current.add(L))
+    })
+  }, [section.audioPattern])
+
   const play = (letter, el) => {
     if (el && !reduced()) {
       animate(el, { scale: [1, 1.28, 1], rotate: [0, -6, 4, 0], duration: 520, ease: 'outQuad' })
     }
     const src = (section.audioPattern ?? '').replace('{l}', letter.toLowerCase())
     currentClip?.pause()
-    if (src) {
+    if (missing.current.has(letter)) {
+      /* Ya se sabe que no hay mp3: se lee en el mismo clic */
+      setPlaying(letter)
+      if (!speak(`${letter}.`, { rate: 0.8, onEnd: () => setPlaying((p) => (p === letter ? null : p)) })) setPlaying(null)
+    } else if (src) {
       const clip = new Audio(src)
       currentClip = clip
       setPlaying(letter)
-      clip.onended = () => setPlaying((p) => (p === letter ? null : p))
-      clip.onerror = () => setPlaying((p) => (p === letter ? null : p))
-      clip.play().catch(() => setPlaying((p) => (p === letter ? null : p)))
+      const done = () => setPlaying((p) => (p === letter ? null : p))
+      /* Sin mp3 todavía: la letra la dice la voz del navegador */
+      const fallback = () => {
+        if (!speak(`${letter}.`, { rate: 0.8, onEnd: done })) done()
+      }
+      clip.onended = done
+      clip.onerror = fallback
+      clip.play().catch((err) => {
+        if (err?.name !== 'NotAllowedError' && err?.name !== 'AbortError') fallback()
+      })
     }
     setHeard((prev) => {
       if (prev.has(letter)) return prev
@@ -90,7 +111,13 @@ export default function AlphabetMural({ section, completed, onComplete }) {
     })
   }
 
-  useEffect(() => () => currentClip?.pause(), [])
+  useEffect(
+    () => () => {
+      currentClip?.pause()
+      stopSpeaking()
+    },
+    [],
+  )
 
   const rows = [ALPHABET.slice(0, 7), ALPHABET.slice(7, 14), ALPHABET.slice(14, 20), ALPHABET.slice(20)]
 

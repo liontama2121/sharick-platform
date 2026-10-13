@@ -2,6 +2,8 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { animate, stagger } from 'animejs'
 import { Headphones, Star, X } from 'lucide-react'
 
+import { audioExists, speak, stopSpeaking } from '../../utils/speak'
+
 const reduced = () =>
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -67,6 +69,12 @@ export default function SpellingSuperstars({ section, onComplete }) {
   const [lit, setLit] = useState(null)
   const [bonus, setBonus] = useState(false)
   const heard = useRef(new Set())
+  const missing = useRef(new Set())
+  useEffect(() => {
+    ;(section.stars ?? []).forEach((s) => {
+      if (s.audio) audioExists(s.audio).then((ok) => !ok && missing.current.add(s.name))
+    })
+  }, [section.stars])
   const reported = useRef(false)
   const offTimer = useRef(null)
   const uid = useId().replace(/:/g, '')
@@ -104,6 +112,7 @@ export default function SpellingSuperstars({ section, onComplete }) {
   useEffect(
     () => () => {
       clip?.pause()
+      stopSpeaking()
       clearTimeout(offTimer.current)
     },
     [],
@@ -120,11 +129,20 @@ export default function SpellingSuperstars({ section, onComplete }) {
       clearTimeout(offTimer.current)
       offTimer.current = setTimeout(() => setLit((n) => (n === s.name ? null : n)), ms)
     }
-    if (s.audio) {
+    if (s.audio && missing.current.has(s.name)) {
+      /* Ya se sabe que no hay mp3: lo deletrea la voz del navegador */
+      if (!s.audioText || !speak(s.audioText, { onEnd: () => off(400) })) off(3000)
+    } else if (s.audio) {
       clip = new Audio(s.audio)
+      /* Sin mp3: lo deletrea la voz del navegador y el reflector dura lo que dure */
+      const fallback = () => {
+        if (!s.audioText || !speak(s.audioText, { onEnd: () => off(400) })) off(3000)
+      }
       clip.onended = () => off()
-      clip.onerror = () => off(3000)
-      clip.play().catch(() => off(3000))
+      clip.onerror = fallback
+      clip.play().catch((err) => {
+        if (err?.name !== 'NotAllowedError' && err?.name !== 'AbortError') fallback()
+      })
     } else off(3000)
     heard.current.add(s.name)
     const withAudio = (section.stars ?? []).filter((x) => x.audio).length

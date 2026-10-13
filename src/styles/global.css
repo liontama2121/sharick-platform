@@ -146,39 +146,18 @@
     border-radius: 12px;
   }
 
-  /* Rejilla del Nivel 2: una miniatura por PANTALLA.
-     Va en CSS y no con utilidades responsive porque Tailwind ordena el
-     breakpoint 3xl ANTES que xl, y la regla de 4 columnas le ganaba a la
-     de 5 a partir de 1800px. */
+  /* Rejilla del Nivel 2: una miniatura por LECCIÓN (+ portada y Games).
+     Todas en UNA fila para que el módulo se vea entero sin desplazarse
+     (pedido del cliente): auto-fit con mínimo de 200px, así 4 tarjetas
+     caben en fila desde ~900px de ancho. En el móvil, una columna. */
   .grid-pantallas {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    /* Centradas: la tarjeta de mosaico es más alta que portada y Games */
     align-items: center;
   }
   @media (min-width: 560px) {
     .grid-pantallas {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    /* Lección con mosaico resumen: ocupa dos columnas, es el plato fuerte
-       del módulo y a una sola columna el mosaico no se lee. */
-    .span-feature {
-      grid-column: span 2;
-    }
-  }
-  @media (min-width: 768px) {
-    .grid-pantallas {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 1280px) {
-    .grid-pantallas {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 1800px) {
-    .grid-pantallas {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
   }
 

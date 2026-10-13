@@ -1,5 +1,8 @@
 # Guiones de grabación — Módulo 1 · Lección 1.2 "Spell it!"
 
+
+> Mientras estos mp3 no existan, la app lee cada texto con la voz del navegador (ver `src/utils/speak.js`). Al copiar aquí el mp3 con el nombre exacto, el archivo grabado reemplaza la lectura automáticamente.
+
 Guiones para que Sharick grabe los audios de la lección del abecedario y el
 deletreo. Los textos que se leen van **en inglés, exactamente como aparecen
 aquí**. Cada archivo se guarda en `public/audio/english/module1/` con el nombre

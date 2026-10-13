@@ -940,7 +940,8 @@
                   "alt": "A young artist painting the alphabet on a wall"
                 }
               },
-              "pageNumber": 19
+              "pageNumber": 19,
+              "audioText": "A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z."
             },
             {
               "id": "1.2-s2",
@@ -1381,7 +1382,8 @@
                 "alt": "Juliana, a smiling girl",
                 "emoji": "😊"
               },
-              "pageNumber": 25
+              "pageNumber": 25,
+              "audioText": "A: Hi! What's your name? B: Juliana. A: And your last name? B: Morales. A: How do you spell that? B: M – O – R – A – L – E – S."
             },
             {
               "id": "1.2-s8",

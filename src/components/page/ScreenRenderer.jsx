@@ -211,7 +211,7 @@ export default function ScreenRenderer({
         <AudioPlayer tracks={screen.audioTracks} label={screen.audioLabel ?? 'Audio'} />
       ) : (
         screen.audio !== undefined && (
-          <AudioPlayer src={screen.audio} label={screen.audioLabel ?? 'Audio'} />
+          <AudioPlayer src={screen.audio} text={screen.audioText} label={screen.audioLabel ?? 'Audio'} />
         )
       )}
     </div>

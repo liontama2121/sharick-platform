@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import { Pause, Play, Square } from 'lucide-react'
+import { audioExists, canSpeak, speak, stopSpeaking } from '../../utils/speak'
 
 const reduced = () =>
   typeof window !== 'undefined' &&
@@ -40,9 +41,11 @@ function RoundBtn({ onClick, label, tone, disabled, children }) {
  * Reproductor de la página, estilo casete: barra de progreso arrastrable y
  * botones play / pause / stop. Si el mp3 todavía no existe se queda
  * deshabilitado con el aviso "Audio pendiente", pero nunca rompe la página.
+ * Con `text`, mientras falte el mp3 lo lee la voz del navegador.
  */
 export default function AudioPlayer({
   src: singleSrc,
+  text,
   tracks,
   label,
   compact = false,
@@ -51,6 +54,7 @@ export default function AudioPlayer({
   /* `tracks` = varias pistas (p. ej. Dialogue A / B / C): salen como pills
      y al terminar una sigue sola con la siguiente. */
   const [trackIdx, setTrackIdx] = useState(0)
+  useEffect(() => () => stopSpeaking(), [])
   const list = tracks?.length ? tracks : null
   const src = list ? list[Math.min(trackIdx, list.length - 1)]?.src : singleSrc
 
@@ -61,6 +65,14 @@ export default function AudioPlayer({
   const [failed, setFailed] = useState(!src)
   const [time, setTime] = useState(0)
   const [duration, setDuration] = useState(0)
+
+  useEffect(() => {
+    let live = true
+    if (src) audioExists(src).then((ok) => live && !ok && setFailed(true))
+    return () => {
+      live = false
+    }
+  }, [src])
 
   useEffect(() => {
     setFailed(!src)
@@ -125,7 +137,22 @@ export default function AudioPlayer({
   }
 
   const pct = duration ? (time / duration) * 100 : 0
-  const disabled = failed || !ready
+  /* Respaldo: sin mp3 pero con texto, play / pause / stop leen en voz alta */
+  const tts = failed && !!text && canSpeak()
+  const disabled = tts ? false : failed || !ready
+  const ttsToggle = () => {
+    if (playing) {
+      stopSpeaking()
+      setPlaying(false)
+    } else {
+      setPlaying(true)
+      speak(text, { onEnd: () => setPlaying(false) })
+    }
+  }
+  const ttsStop = () => {
+    stopSpeaking()
+    setPlaying(false)
+  }
 
   return (
     <div
@@ -207,20 +234,20 @@ export default function AudioPlayer({
       </div>
 
       <div className="flex items-center gap-2.5">
-        <RoundBtn label="Play" tone="bg-rojo-ink" disabled={disabled} onClick={toggle}>
+        <RoundBtn label="Play" tone="bg-rojo-ink" disabled={disabled} onClick={tts ? ttsToggle : toggle}>
           <Play size={20} strokeWidth={2.4} fill="currentColor" />
         </RoundBtn>
-        <RoundBtn label="Pause" tone="bg-azul" disabled={disabled || !playing} onClick={toggle}>
+        <RoundBtn label="Pause" tone="bg-azul" disabled={disabled || !playing} onClick={tts ? ttsToggle : toggle}>
           <Pause size={20} strokeWidth={2.4} fill="currentColor" />
         </RoundBtn>
-        <RoundBtn label="Stop" tone="bg-ink-soft" disabled={disabled} onClick={stop}>
+        <RoundBtn label="Stop" tone="bg-ink-soft" disabled={disabled} onClick={tts ? ttsStop : stop}>
           <Square size={17} strokeWidth={2.6} fill="currentColor" />
         </RoundBtn>
 
-        {label && !failed && (
+        {label && (!failed || tts) && (
           <span className="ml-1 label-caps text-verde-ink">{label}</span>
         )}
-        {failed && (
+        {failed && !tts && (
           <span className="ml-1 font-body text-[12px] italic text-ink-soft" title={src ?? ''}>
             Audio coming soon
           </span>

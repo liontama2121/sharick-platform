@@ -109,7 +109,7 @@ export default function CircleChoice({ section, onComplete }) {
               >
                 <span className="flex w-full items-center justify-between">
                   <span className="font-display text-[34px] leading-none text-rojo-ink">{qi + 1}</span>
-                  <AudioButton src={item.audio} label={`Listen to item ${qi + 1}`} size={56} />
+                  <AudioButton src={item.audio} text={item.audioText} label={`Listen to item ${qi + 1}`} size={56} />
                 </span>
                 <span className="flex gap-4">
                   {item.options.map((L, oi) => option(qi, oi, L, TONES[(qi + oi) % TONES.length], true))}
@@ -126,7 +126,7 @@ export default function CircleChoice({ section, onComplete }) {
                 className="flex items-center gap-6 rounded-[22px] border-[3px] border-azul/12 bg-paper px-6 py-4 shadow-soft"
               >
                 <span className="w-9 font-display text-[38px] leading-none text-rojo-ink">{qi + 1}</span>
-                <AudioButton src={item.audio} label={`Listen to item ${qi + 1}`} size={58} />
+                <AudioButton src={item.audio} text={item.audioText} label={`Listen to item ${qi + 1}`} size={58} />
                 <span className="flex flex-wrap gap-5">
                   {item.options.map((name, oi) => option(qi, oi, name, TONES[oi % TONES.length], false))}
                 </span>

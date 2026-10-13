@@ -339,9 +339,8 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   (entonces toma 6 repartidas), cada página del spread es un MOSAICO de
   mini-renders reales recortados tipo cover: izquierda = 2 pantallas
   (diálogos arriba, match abajo), derecha = hasta 4 (Day Arc arriba,
-  relojes | listening al medio, dado abajo). La tarjeta con mosaico ocupa
-  **dos columnas** de la rejilla (`.span-feature` desde 560px): a una sola
-  columna el mosaico no se lee. Datos: `lessonMosaicScreens()` en
+  relojes | listening al medio, dado abajo). La tarjeta con mosaico ocupa una
+  columna como las demás (el módulo cabe en una pantalla). Datos: `lessonMosaicScreens()` en
   `books/index.js` → `item.mosaicScreens`.
 - **Miniatura sin mosaico = doble página** (`LessonSpread`): la lección se ve como un
   spread — página izquierda = pantalla 1, derecha = pantalla 2 — renderizadas
@@ -364,7 +363,10 @@ pantalla ni separadores. Los datos salen de `getModuleLessonCards()` en
   `listening`, `listenCircle`) · ✏️ (`match`, `matchMarkers`, `matchHeadings`, `fillBubbles`,
   `fillInSentence`, `multipleChoice`) · 🎮 (`diceGame`, `roulette`) · 🎙️
   (`speaking`, `recordPrompt`, `speechScene`) · 🎬 video.
-- **Rejilla** `.grid-pantallas` (definida en `global.css`): 1 columna bajo 560px, 2 desde 560px,
+- **Rejilla** `.grid-pantallas` (definida en `global.css`): **todas las tarjetas en UNA fila**
+  (`repeat(auto-fit, minmax(200px, 1fr))` desde 560px; 1 columna en el móvil) para que el
+  módulo entero se vea sin desplazarse (pedido del cliente); cabecera y banda compactas.
+  Ya no hay tarjetas a doble ancho (`.span-feature` se quitó). Antes: 1 columna bajo 560px, 2 desde 560px,
   3 desde 768px, 4 desde 1280px y 5 desde 1800px. Va en CSS y **no** con
   utilidades responsive porque Tailwind ordena un breakpoint `3xl` ANTES que
   `xl` y la regla de 4 columnas le ganaba a la de 5. Gap de 40px (`gap-10`)
@@ -809,7 +811,18 @@ amarillo al volver a la rejilla). Los escribe `visitScreen(screenId)` desde
   Caracas, La Paz, Ciudad de Panamá).
 - Mientras no exista el archivo, `SmartImage` muestra un marco punteado con emoji y
   **la ruta exacta** que falta (`compact` para miniaturas: solo emoji).
-- Audio: si falta el mp3, `AudioPlayer` muestra "Audio próximamente" sin romper nada.
+- Audio: si falta el mp3 y el ítem trae texto (`audioText`, o la letra en el
+  mural), **lo lee la voz del navegador** (`utils/speak.js`, Web Speech API):
+  la voz inglesa más natural disponible (Edge: "Microsoft … Online (Natural)";
+  Chrome: "Google US English"), una voz por hablante en diálogos "A: … B: …"
+  y deletreos "X–I–M" letra por letra, más despacio. `audioExists()` pregunta
+  con HEAD si el mp3 existe (el servidor de desarrollo responde index.html con
+  200 a lo que falta) para leer en el MISMO clic: el navegador exige el gesto
+  del usuario. Cuando Sharick grabe el mp3, el archivo gana solo. Sin texto,
+  `AudioPlayer` muestra "Audio coming soon" sin romper nada.
+- Generar mp3 con edge-tts ya NO funciona (2026-10-12): el servicio de Microsoft
+  responde 403 aun con la versión de Edge actualizada; los 1.1 se hicieron así
+  antes. Las voces locales de Windows (David, Zira, Mark) son robóticas: no usar.
 
 ---
 

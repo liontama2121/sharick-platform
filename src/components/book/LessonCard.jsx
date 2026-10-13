@@ -104,7 +104,7 @@ export default function LessonCard({
       }}
       onMouseEnter={(e) => hover(e, true)}
       onMouseLeave={(e) => hover(e, false)}
-      className={`group relative cursor-pointer ${mosaicScreens.length >= 3 ? 'span-feature' : ''} ${className}`}
+      className={`group relative cursor-pointer ${className}`}
     >
       {/* Anillo del pulso dorado al volver del libro */}
       <span
