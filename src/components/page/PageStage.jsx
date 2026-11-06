@@ -8,7 +8,7 @@ export const STAGE_H = 1000
  * Todo el contenido de una pantalla se maqueta a ese tamaño y nunca hay scroll:
  * el sobrante se rellena con cream (letterbox).
  */
-export default function PageStage({ children }) {
+export default function PageStage({ className = '', children }) {
   const [scale, setScale] = useState(1)
 
   useLayoutEffect(() => {
@@ -25,7 +25,7 @@ export default function PageStage({ children }) {
   }, [])
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center overflow-hidden chasis">
+    <div className={`chasis fixed inset-0 flex items-center justify-center overflow-hidden ${className}`}>
       <div
         style={{
           width: STAGE_W,

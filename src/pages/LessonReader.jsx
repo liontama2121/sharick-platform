@@ -265,7 +265,7 @@ function LessonReaderView() {
   const toGames = () => navigate(`/book/${bookId}/module/${moduleId}/games`)
 
   return (
-    <PageStage>
+    <PageStage className={mod.theme ? `tema-${mod.theme}` : ''}>
       <PageFrame pageNumber={screen.pageNumber}>
         {lesson.type !== 'cover' && (
           <LessonTag id={lesson.id} title={lesson.shortTitle ?? lesson.title} />

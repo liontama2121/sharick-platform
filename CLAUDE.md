@@ -91,6 +91,15 @@ verde-ink 6.1:1. `rojo`, `verde` y `amarillo` puros son rellenos; sobre
 amarillo el texto va siempre en azul. Los nombres de token antiguos
 (coral/sage/gold/navy) ya no existen.
 
+**Tema por módulo** (`modules.json → module.theme`, pedido del cliente
+2026-11-06): el Módulo 1 lleva `"theme": "colombia"`. `ModuleGrid` y
+`LessonReader` (vía `PageStage className`) ponen la clase `.tema-colombia`,
+que reescribe los tokens: azul `#003893`, amarillo `#FCD116`, rojo `#CE1126`,
+rojo-ink `#A8101F`, verde cafetal `#00965E`/`#00704A`, carrocería y cajas en
+amarillo claro, chasis azul Colombia y ventanas con doble filete
+amarillo + rojo. Sin franjas de bandera (rechazadas antes). Para que un
+componente siga el tema, usar `var(--color-*)`, nunca hex fijos.
+
 ### Tipografía
 - **Rótulos y títulos:** `Alfa Slab One` (un solo peso, 400) → `font-display`.
   `font-synthesis-weight: none`: nunca negrita sintética.

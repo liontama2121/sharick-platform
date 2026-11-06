@@ -151,7 +151,10 @@ export default function ModuleGrid() {
   const pct = totalPantallas ? (hechas / totalPantallas) * 100 : 0
 
   return (
-    <div ref={ref} className="min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5">
+    <div
+      ref={ref}
+      className={`min-h-screen px-4 pb-12 pt-4 sm:px-6 sm:pt-5 ${mod.theme ? `tema-${mod.theme}` : ''}`}
+    >
       {/* Costado de la chiva: techo azul con la trenza del sombrero vueltiao,
           la banda de lecciones sobre la escena del módulo (Módulo 1: Andes
           de Bogotá y Medellín) y abajo la calle empedrada. Sin franjas de bandera:

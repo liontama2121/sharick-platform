@@ -1539,7 +1539,8 @@
         "1.2-s7": "1.1-s12",
         "1.2-s8": "1.1-s13"
       },
-      "scene": "andes"
+      "scene": "andes",
+      "theme": "colombia"
     },
     {
       "moduleId": 2,

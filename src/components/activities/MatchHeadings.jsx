@@ -8,7 +8,7 @@ import { useDragDrop } from '../../hooks/useDragDrop'
 /* Colores de las etiquetas, tal como los pidió Sharick. */
 export const HEADING_COLORS = {
   red: { bg: '#C8283C', ink: '#ffffff' },
-  yellow: { bg: '#F5B700', ink: '#1f3354' },
+  yellow: { bg: 'var(--color-amarillo)', ink: 'var(--color-azul)' },
   blue: { bg: '#2A5CA8', ink: '#ffffff' },
   purple: { bg: '#6D3B8E', ink: '#ffffff' },
   verde: { bg: '#0F7A6E', ink: '#ffffff' },

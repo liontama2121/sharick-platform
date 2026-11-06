@@ -72,6 +72,27 @@
   );
 }
 
+/* ═══ Tema por módulo: Colombia (Módulo 1 · modules.json → "theme": "colombia") ═══
+   Repinta la chiva con los colores de Colombia sin dibujar la bandera:
+   azul, amarillo y rojo del tricolor + verde cafetal, carrocería en
+   amarillo claro. Todo sale de los tokens, así que guardas, placas,
+   toolbar y ventanas cambian solas. Contraste: azul 10.6:1 · rojo-ink
+   7.7:1 · verde-ink 6.1:1 sobre blanco; azul sobre amarillo 7.2:1. */
+.tema-colombia {
+  --color-azul: #003893;
+  --color-amarillo: #fcd116;
+  --color-rojo: #ce1126;
+  --color-rojo-ink: #a8101f;
+  --color-verde: #00965e;
+  --color-verde-ink: #00704a;
+  --color-carroceria: #fff8e1;
+  --color-box: #fff3cc;
+  --color-tip: #e3f5ea;
+  --color-chasis: #0a2463;
+  --color-madera: #7a4a1e;
+  background-color: var(--color-carroceria);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -192,7 +213,7 @@
 
   /* Chasis: azul noche detrás del lienzo del lector (letterbox) */
   .chasis {
-    background-color: #16243b;
+    background-color: var(--color-chasis);
     background-image: var(--tex-grain);
   }
 
@@ -217,6 +238,13 @@
     border-radius: 16px;
     box-shadow:
       inset 0 0 0 2px var(--color-amarillo),
+      var(--shadow-lift);
+  }
+  /* Colombia: doble filete por dentro, amarillo y rojo */
+  .tema-colombia .ventana {
+    box-shadow:
+      inset 0 0 0 3px var(--color-amarillo),
+      inset 0 0 0 6px var(--color-rojo),
       var(--shadow-lift);
   }
 

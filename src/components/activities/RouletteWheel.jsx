@@ -16,7 +16,7 @@ const FILLS = [
   { bg: 'var(--color-azul)', ink: '#ffffff' },
   { bg: 'var(--color-rojo-ink)', ink: '#ffffff' },
   { bg: 'var(--color-verde-ink)', ink: '#ffffff' },
-  { bg: 'var(--color-amarillo)', ink: '#1f3354' },
+  { bg: 'var(--color-amarillo)', ink: 'var(--color-azul)' },
 ]
 
 const SPIN_MS = 3500
