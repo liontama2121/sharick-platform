@@ -25,6 +25,7 @@
   --color-amarillo: #f5b700;
   --color-madera: #8a5a2b;       /* marcos de ventana, escalera */
   --color-morado: #6d3b8e;
+  --color-acento: #1b998b;       /* tercer color de las guardas (verde; azul en Colombia) */
 
   /* Variantes legibles para texto y fondos con texto blanco */
   --color-rojo-ink: #b01e31;     /* 6.9:1 sobre blanco · blanco encima 6.9:1 */
@@ -90,7 +91,38 @@
   --color-tip: #e3f5ea;
   --color-chasis: #0a2463;
   --color-madera: #7a4a1e;
+  --color-acento: #003893;
   background-color: var(--color-carroceria);
+}
+
+/* Banda amarillo · azul · rojo (proporción 2:1:1 del tricolor) */
+.franja-colombia {
+  background: linear-gradient(
+    to bottom,
+    #fcd116 0 50%,
+    #003893 50% 75%,
+    #ce1126 75% 100%
+  );
+}
+/* El lector del Módulo 1 conserva el letterbox azul Colombia */
+.tema-colombia.chasis {
+  background-color: var(--color-chasis);
+}
+/* Ventanas del Módulo 1: banda tricolor arriba */
+.tema-colombia .ventana::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 20px;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(
+    to bottom,
+    #fcd116 0 50%,
+    #003893 50% 75%,
+    #ce1126 75% 100%
+  );
+  z-index: 15;
+  pointer-events: none;
 }
 
 @layer base {

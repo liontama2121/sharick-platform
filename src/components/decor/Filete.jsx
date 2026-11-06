@@ -98,10 +98,10 @@ const TILES = {
 }
 
 const DEFAULT_COLORS = {
-  rombos: ['rojo', 'amarillo', 'verde'],
+  rombos: ['rojo', 'amarillo', 'acento'],
   dientes: ['azul', 'amarillo', 'rojo'],
   ajedrez: ['azul', 'amarillo'],
-  franjas: ['rojo', 'amarillo', 'verde'],
+  franjas: ['rojo', 'amarillo', 'acento'],
   vueltiao: ['ink', 'carroceria'],
   adoquines: ['chasis', 'azul'],
 }

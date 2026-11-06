@@ -149,6 +149,7 @@ export default function ModuleGrid() {
   }
 
   const pct = totalPantallas ? (hechas / totalPantallas) * 100 : 0
+  const colombia = mod.theme === 'colombia'
 
   return (
     <div
@@ -164,9 +165,16 @@ export default function ModuleGrid() {
         className="relative mx-auto w-full max-w-[1480px] overflow-hidden
           rounded-[26px] border-[6px] border-azul bg-carroceria pb-[88px] shadow-page 3xl:max-w-[1820px]"
       >
-        {/* Techo: banda azul con la trenza del sombrero vueltiao */}
-        <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-5 bg-azul" />
-        <Filete variant="vueltiao" height={14} className="absolute inset-x-0 top-5 h-3.5 w-full" />
+        {/* Techo: banda azul con la trenza del sombrero vueltiao, o el
+            tricolor amarillo · azul · rojo si el módulo lleva tema Colombia */}
+        {colombia ? (
+          <div aria-hidden="true" className="franja-colombia grain absolute inset-x-0 top-0 h-8" />
+        ) : (
+          <>
+            <div aria-hidden="true" className="grain absolute inset-x-0 top-0 h-5 bg-azul" />
+            <Filete variant="vueltiao" height={14} className="absolute inset-x-0 top-5 h-3.5 w-full" />
+          </>
+        )}
 
         {/* Rótulo del módulo: placa roja pintada, letra slab con sombra amarilla */}
         <div
@@ -196,7 +204,7 @@ export default function ModuleGrid() {
               aria-label="Pantallas completadas del módulo"
             >
               <div
-                className="h-full rounded-full bg-verde transition-[width] duration-700 ease-out"
+                className={`h-full rounded-full transition-[width] duration-700 ease-out ${colombia ? 'bg-azul' : 'bg-verde'}`}
                 style={{ width: `${pct}%` }}
               />
             </div>
@@ -209,7 +217,11 @@ export default function ModuleGrid() {
         {/* Rejilla. El padding deja sitio a los tags y badges que sobresalen. */}
         {/* Banda de lecciones: la escena del módulo detrás, enmarcada en
             madera; las lecciones son ventanas delante */}
-        <div className="relative mt-6 overflow-hidden border-y-[6px] border-madera bg-azul px-9 pb-12 pt-16 sm:px-12">
+        <div
+          className={`relative mt-6 overflow-hidden bg-azul px-9 pb-12 pt-16 sm:px-12 ${
+            colombia ? 'border-t-[10px] border-b-[10px] border-t-amarillo border-b-rojo' : 'border-y-[6px] border-madera'
+          }`}
+        >
         {Scene && <Scene />}
         <div ref={gridRef} className="grid-pantallas relative gap-x-10 gap-y-14">
           {tarjetas.map((item) => (
@@ -269,8 +281,17 @@ export default function ModuleGrid() {
 
         {/* Faldón: banda roja con guarda de dientes, como la parte baja de la chiva */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0">
-          <Filete variant="vueltiao" height={14} className="h-3.5 w-full" />
-          <Filete variant="adoquines" height={24} className="h-12 w-full" />
+          {colombia ? (
+            <>
+              <Filete variant="dientes" height={14} className="h-3.5 w-full" />
+              <div className="franja-colombia grain h-12 w-full" />
+            </>
+          ) : (
+            <>
+              <Filete variant="vueltiao" height={14} className="h-3.5 w-full" />
+              <Filete variant="adoquines" height={24} className="h-12 w-full" />
+            </>
+          )}
         </div>
 
         {/* Botonera sobre el faldón, esquina inferior izquierda */}
