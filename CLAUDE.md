@@ -97,7 +97,12 @@ amarillo el texto va siempre en azul. Los nombres de token antiguos
 que reescribe los tokens: azul `#003893`, amarillo `#FCD116`, rojo `#CE1126`,
 rojo-ink `#A8101F`, verde cafetal `#00965E`/`#00704A`, carrocería y cajas en
 amarillo claro, chasis azul Colombia y ventanas con doble filete
-amarillo + rojo. Sin franjas de bandera (rechazadas antes). Para que un
+amarillo + rojo. El cliente pidió el tricolor VISIBLE en el módulo:
+`.franja-colombia` (amarillo 50 % · azul 25 % · rojo 25 %) en techo y
+faldón del Nivel 2, banda de lecciones entre bordes amarillo/rojo, barra de
+progreso azul y banda tricolor de 20px arriba de cada página
+(`.tema-colombia .ventana::before`). Las guardas usan `--color-acento`
+(verde por defecto, azul en Colombia). La escena andina sigue sin bandera. Para que un
 componente siga el tema, usar `var(--color-*)`, nunca hex fijos.
 
 ### Tipografía
